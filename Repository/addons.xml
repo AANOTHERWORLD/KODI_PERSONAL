@@ -25,9 +25,10 @@
          name="AANOTHERWORLD Wizard"
          version="1.0.0"
          provider-name="AANOTHERWORLD">
-    <extension point="xbmc.python.pluginsource" library="default.py">
-      <provides>executable</provides>
-    </extension>
+    <requires>
+      <import addon="xbmc.python" version="3.0.0"/>
+    </requires>
+    <extension point="xbmc.python.script" library="addon.py" />
     <extension point="xbmc.addon.metadata">
       <summary>AANOTHERWORLD Wizard</summary>
       <description>Installs, updates, and manages your AANOTHERWORLD Kodi build directly from GitHub.</description>
