@@ -2,7 +2,15 @@
 <builds>
   <build name="AANOTHERWORLD Personal Build" version="1.0.0">
     <!-- Direct ZIP download of your GitHub repo’s main branch -->
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <url>https://drive.google.com/uc?export=download&id=1tbKoLyQltslJqANW6Z4C9hHKGuNy8Hr1</url>
+=======
     <url>https://github.com/AANOTHERWORLD/kodi_personal/archive/refs/heads/main.zip</url>
+>>>>>>> parent of 158c586b (Add AANOTHERWORLD Personal Build ZIP file)
+=======
+    <url>https://github.com/AANOTHERWORLD/kodi_personal/archive/refs/heads/main.zip</url>
+>>>>>>> parent of 158c586b (Add AANOTHERWORLD Personal Build ZIP file)
 
     <!-- Optional MD5 checksum for integrity verification -->
     <!-- <md5>PUT_MD5_HASH_HERE</md5> -->
