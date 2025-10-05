@@ -1,20 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <addons>
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.program.aanotherworldwizard"
-       name="AANOTHERWORLD Wizard"
-       version="1.0.0"
-       provider-name="AANOTHERWORLD">
+  <!-- AANOTHERWORLD Repository Add-on -->
+  <addon id="repository.aanotherworld"
+         name="AANOTHERWORLD Repo"
+         version="1.0.0"
+         provider-name="AANOTHERWORLD">
     <requires>
-        <import addon="xbmc.python" version="3.0.0"/>
+      <import addon="xbmc.addon" version="16.1.000"/>
     </requires>
-    <extension point="xbmc.python.script" library="addon.py" />
-    <extension point="xbmc.addon.metadata">
-        <summary lang="en_GB">Simple self-updating build wizard that installs your GitHub-hosted build</summary>
-        <description lang="en_GB">Checks a remote manifest, downloads your build ZIP, verifies MD5, and extracts the build into Kodi.</description>
-        <platform>all</platform>
-        <license>MIT</license>
-        <source>https://github.com/AANOTHERWORLD/kodi_personal</source>
+    <extension point="xbmc.addon.repository" name="AANOTHERWORLD Repo">
+      <info compressed="false">https://raw.githubusercontent.com/AANOTHERWORLD/KODI_PERSONAL/main/Repository/addons.xml</info>
+      <checksum>https://raw.githubusercontent.com/AANOTHERWORLD/KODI_PERSONAL/main/Repository/addons.xml.md5</checksum>
+      <datadir zip="true">https://raw.githubusercontent.com/AANOTHERWORLD/KODI_PERSONAL/main/Repository/zips/</datadir>
     </extension>
-</addon>
+    <extension point="xbmc.addon.metadata">
+      <summary>Personal Kodi repository hosting the AANOTHERWORLD Wizard</summary>
+      <description>Install this repository to access and auto-update your AANOTHERWORLD Wizard and other add-ons.</description>
+      <platform>all</platform>
+    </extension>
+  </addon>
 
+  <!-- AANOTHERWORLD Wizard Add-on -->
+  <addon id="plugin.program.aanotherworldwizard"
+         name="AANOTHERWORLD Wizard"
+         version="1.0.0"
+         provider-name="AANOTHERWORLD">
+    <extension point="xbmc.python.pluginsource" library="default.py">
+      <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+      <summary>AANOTHERWORLD Wizard</summary>
+      <description>Installs, updates, and manages your AANOTHERWORLD Kodi build directly from GitHub.</description>
+      <platform>all</platform>
+    </extension>
+  </addon>
 </addons>
