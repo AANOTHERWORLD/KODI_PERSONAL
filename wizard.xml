@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<builds>
+  <build name="AANOTHERWORLD Personal Build" version="1.0.0">
+    <!-- Direct ZIP download of your GitHub repo’s main branch -->
+    <url>https://github.com/AANOTHERWORLD/kodi_personal/archive/refs/heads/main.zip</url>
+
+    <!-- Optional MD5 checksum for integrity verification -->
+    <!-- <md5>PUT_MD5_HASH_HERE</md5> -->
+
+    <theme>Default</theme>
+    <preview></preview>
+    <adult>false</adult>
+
+    <changelog>
+      Initial public build hosted on GitHub.
+    </changelog>
+
+    <notes>
+      Updates are fetched directly from GitHub. 
+      To update your build, push changes to the main branch and refresh in OpenWizard.
+    </notes>
+  </build>
+</builds>
