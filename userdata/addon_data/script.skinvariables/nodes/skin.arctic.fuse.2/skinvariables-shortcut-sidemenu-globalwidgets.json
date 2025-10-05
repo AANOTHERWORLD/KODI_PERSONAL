@@ -1,0 +1,16 @@
+[
+    {
+        "label": "Recommended TV Shows",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=trakt_recommendations&tmdb_type=tv&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+        "icon": "special://skin/extras/icons/hands.png",
+        "target": "videos",
+        "guid": "guid-83ad0f87"
+    },
+    {
+        "label": "Recommended Movies",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=trakt_recommendations&tmdb_type=movie&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+        "icon": "special://skin/extras/icons/hands-clapping.png",
+        "target": "videos",
+        "guid": "guid-93ebab6f"
+    }
+]

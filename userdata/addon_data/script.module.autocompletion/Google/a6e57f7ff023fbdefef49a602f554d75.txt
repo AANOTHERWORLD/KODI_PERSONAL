@@ -1,0 +1,1 @@
+["[COLORred]NBC (KNBC) Los Angeles, CA[/COLO", ["colorred nbc (knbc) los angeles ca /colored", "colorred nbc (knbc) los angeles ca /colour"], [], {"google:suggestsubtypes": [[10, 160], [10, 160]], "google:suggesttype": ["TAIL", "TAIL"]}]

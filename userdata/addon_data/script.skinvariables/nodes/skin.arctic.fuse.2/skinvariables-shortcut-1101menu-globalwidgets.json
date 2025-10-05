@@ -1,0 +1,10 @@
+[
+    {
+        "label": "Latest New Episodes",
+        "path": "plugin://plugin.video.themoviedb.helper/?startdate=-14&days=14&info=trakt_calendar&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+        "icon": "special://skin/extras/icons/tv.png",
+        "target": "videos",
+        "guid": "guid-885097ab",
+        "widget_style": "Placard"
+    }
+]

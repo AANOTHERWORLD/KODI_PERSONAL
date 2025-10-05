@@ -1,0 +1,1 @@
+["GloTrending Seires", ["glotrending seirese", "glotrending seiress"], [], {"google:suggestsubtypes": [[160], [160]], "google:suggesttype": ["TAIL", "TAIL"]}]

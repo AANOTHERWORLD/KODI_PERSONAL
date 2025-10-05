@@ -1,0 +1,1 @@
+["[COLORred]FOX (KTTV) Los Angeles, CA[/COLOR]     ([COLO", ["colorred fox (kttv) los angeles ca /color ( color", "colorred fox (kttv) los angeles ca /color ( colour"], [], {"google:suggestsubtypes": [[10, 160], [10, 160]], "google:suggesttype": ["TAIL", "TAIL"]}]

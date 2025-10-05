@@ -1,0 +1,10 @@
+<settings version="2">
+    <setting id="Enable_Debugging" default="true">false</setting>
+    <setting id="Disable_Maintenance" default="true">false</setting>
+    <setting id="Disable_Cache">true</setting>
+    <setting id="LastURL">http://mirrors.kodi.tv/releases/windows/win64/</setting>
+    <setting id="LastPath">special://home/userdata\addon_data\script.kodi.windows.update\kodi-21.0-Omega-x64.exe</setting>
+    <setting id="Platform">AMD64</setting>
+    <setting id="Version">Windows 11 24H2 (kernel: Windows NT 10.0.26100.3194)</setting>
+    <setting id="Build" default="true">{&quot;major&quot;: 21, &quot;minor&quot;: 1, &quot;revision&quot;: &quot;20240817-183eb85f10&quot;, &quot;tag&quot;: &quot;stable&quot;}</setting>
+</settings>

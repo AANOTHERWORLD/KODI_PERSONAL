@@ -1,0 +1,1 @@
+["[COLORred]Syfy HDTV (SYFYHD)[/COLOR", ["colorred syfy hdtv (syfyhd) /colored s", "colorred syfy hdtv (syfyhd) /colored tv"], [], {"google:suggestsubtypes": [[10, 160], [10, 160]], "google:suggesttype": ["TAIL", "TAIL"]}]

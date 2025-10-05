@@ -1,0 +1,18 @@
+[
+    {
+        "label": "",
+        "icon": "",
+        "path": "",
+        "target": "",
+        "submenu": [],
+        "widgets": [],
+        "guid": "guid-994b5836"
+    },
+    {
+        "label": "Your Next Episodes",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=trakt_nextepisodes&tmdb_type=tv&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+        "icon": "image://C%3a%5cUsers%5cJamelWilliams%5cAppData%5cRoaming%5cKodi%5caddons%5cplugin.video.themoviedb.helper%5c%2fresources%2ficons%2ftrakt%2finprogress.png/",
+        "target": "videos",
+        "guid": "guid-ed3b1fb7"
+    }
+]

@@ -1,0 +1,1 @@
+["Live TV Favs", ["live tv favs app", "live tv favs reddit", "live tv favs not working"], [], {"google:suggestsubtypes": [[160], [160], [160]], "google:suggesttype": ["TAIL", "TAIL", "TAIL"]}]

@@ -1,0 +1,1 @@
+["[COLORred]AMC East[/COLOR]     ([COLORorange]US Enter", ["colorred amc east /color ( colororange us entertainment", "colorred amc east /color ( colororange us enterprise)", "colorred amc east /color ( colororange us entertainment district)"], [], {"google:suggestsubtypes": [[10, 160], [10, 160], [10, 160]], "google:suggesttype": ["TAIL", "TAIL", "TAIL"]}]

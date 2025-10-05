@@ -1,0 +1,1 @@
+["T-1", ["t-1000", "t-111 siding", "t-14 armata", "t-15 star wars", "t-16 star wars", "t-15 barbaris", "t-1", "t-10m", "t-1000 terminator", "t-100"], [], {"google:suggestsubtypes": [[512, 433], [512], [512], [512], [512], [512], [512], [512], [512], [512]], "google:suggesttype": ["QUERY", "QUERY", "QUERY", "QUERY", "QUERY", "QUERY", "QUERY", "QUERY", "QUERY", "QUERY"]}]

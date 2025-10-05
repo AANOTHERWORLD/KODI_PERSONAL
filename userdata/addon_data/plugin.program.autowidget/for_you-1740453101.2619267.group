@@ -1,0 +1,53 @@
+{
+    "label": "For You",
+    "type": "shortcut",
+    "paths": [
+        {
+            "label": "Your TV shows Calendar",
+            "content": "videos",
+            "file": {
+                "file": "plugin://plugin.video.themoviedb.helper/?info=dir_calendar_trakt&tmdb_type=tv&widget=True",
+                "filetype": "directory",
+                "art": {
+                    "icon": "special://home/addons\\plugin.video.themoviedb.helper\\/resources/icons/trakt/calendar.png",
+                    "landscape": "special://home/addons\\plugin.video.themoviedb.helper\\/fanart.jpg"
+                },
+                "votes": "0"
+            },
+            "color": "white",
+            "window": "videos",
+            "target": "shortcut",
+            "id": "your_tv_shows_calendar-1740453109.0300999",
+            "version": "3.7.0"
+        },
+        {
+            "label": "Combined Watchlist",
+            "content": "videos",
+            "file": {
+                "file": "plugin://plugin.video.themoviedb.helper/?info=trakt_watchlist&list_name=Combined%20Watchlist&tmdb_type=both&widget=True",
+                "filetype": "directory",
+                "art": {
+                    "icon": "special://home/addons\\plugin.video.themoviedb.helper\\/resources/icons/trakt/watchlist.png",
+                    "landscape": "special://home/addons\\plugin.video.themoviedb.helper\\/fanart.jpg"
+                },
+                "votes": "0"
+            },
+            "color": "white",
+            "window": "videos",
+            "target": "shortcut",
+            "id": "combined_watchlist-1740453285.2284358",
+            "version": "3.7.0"
+        }
+    ],
+    "id": "for_you-1740453101.2619267",
+    "art": {
+        "banner": "special://home/addons\\plugin.program.autowidget\\resources\\media\\banner\\folder-shortcut.png",
+        "fanart": "special://home/addons\\plugin.program.autowidget\\resources\\media\\fanart\\folder-shortcut.png",
+        "icon": "special://home/addons\\plugin.program.autowidget\\resources\\media\\icon\\folder-shortcut.png",
+        "poster": "special://home/addons\\plugin.program.autowidget\\resources\\media\\poster\\folder-shortcut.png",
+        "thumb": "special://home/addons\\plugin.program.autowidget\\resources\\media\\icon\\folder-shortcut.png"
+    },
+    "version": "3.7.0",
+    "content": "",
+    "sort_order": "6"
+}

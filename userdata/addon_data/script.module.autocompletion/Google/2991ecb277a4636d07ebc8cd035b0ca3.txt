@@ -1,0 +1,1 @@
+["[COLORred]Black Entertai", ["colorred black entertainment center", "colorred black entertainment", "colorred black entertainment screen", "colorred black entertainment earth"], [], {"google:suggestsubtypes": [[10, 160], [10, 160], [10, 160], [10, 160]], "google:suggesttype": ["TAIL", "TAIL", "TAIL", "TAIL"]}]

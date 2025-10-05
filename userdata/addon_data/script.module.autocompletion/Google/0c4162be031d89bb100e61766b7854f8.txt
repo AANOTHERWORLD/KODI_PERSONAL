@@ -1,0 +1,1 @@
+["[COLORred]Black Entertainment Television HDTV (East)", ["colorred black entertainment television hdtv (east) tv", "colorred black entertainment television hdtv (east) for sale", "colorred black entertainment television hdtv (east) antenna"], [], {"google:suggestsubtypes": [[10, 160], [10, 160], [10, 160]], "google:suggesttype": ["TAIL", "TAIL", "TAIL"]}]

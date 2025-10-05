@@ -1,0 +1,1 @@
+["[COLORred]Boomerang (BOOM)[/COLOR]     ([COLORorange", ["colorred boomerang (boom) /color ( colororange)"], [], {"google:suggestsubtypes": [[10, 160]], "google:suggesttype": ["TAIL"]}]

@@ -1,0 +1,1 @@
+["[COLORred]BBC America HDTV (East) (BBC)[", ["colorred bbc america hdtv (east) (bbc) channel", "colorred bbc america hdtv (east) (bbc) uk", "colorred bbc america hdtv (east) (bbc) app"], [], {"google:suggestsubtypes": [[10, 160], [10, 160], [10, 160]], "google:suggesttype": ["TAIL", "TAIL", "TAIL"]}]

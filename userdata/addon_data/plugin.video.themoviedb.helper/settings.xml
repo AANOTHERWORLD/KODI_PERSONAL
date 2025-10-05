@@ -1,0 +1,99 @@
+<settings version="2">
+    <setting id="mpaa_prefix" default="true">Rated</setting>
+    <setting id="language" default="true">18</setting>
+    <setting id="ignore_regionreleasefilter" default="true">false</setting>
+    <setting id="local_db" default="true">false</setting>
+    <setting id="tmdb_details">true</setting>
+    <setting id="artwork_quality" default="true">0</setting>
+    <setting id="default_select" default="true">0</setting>
+    <setting id="hide_unaired_movies">true</setting>
+    <setting id="hide_unaired_episodes">true</setting>
+    <setting id="nodate_is_unaired" default="true">true</setting>
+    <setting id="special_folders" default="true">0</setting>
+    <setting id="flatten_seasons" default="true">false</setting>
+    <setting id="widgets_nextpage">true</setting>
+    <setting id="widgets_hidewatched" default="true">false</setting>
+    <setting id="calendar_flatten" default="true">true</setting>
+    <setting id="nextaired_linklibrary" default="true">true</setting>
+    <setting id="calendar_art" default="true">0</setting>
+    <setting id="trakt_nextepisodesort">recentlywatched</setting>
+    <setting id="nextepisodes_usecalendar" default="true">false</setting>
+    <setting id="movies_library" default="true">special://profile/addon_data/plugin.video.themoviedb.helper/movies/</setting>
+    <setting id="tvshows_library" default="true">special://profile/addon_data/plugin.video.themoviedb.helper/tvshows/</setting>
+    <setting id="auto_update" default="true">true</setting>
+    <setting id="library_autoupdate" default="true">false</setting>
+    <setting id="library_autoupdate_hour" default="true">0</setting>
+    <setting id="monitor_userlist" default="true" />
+    <setting id="monitor_userslug" default="true" />
+    <setting id="last_autoupdate" default="true" />
+    <setting id="ignore_folderchecking" default="true">false</setting>
+    <setting id="alternative_nfo" default="true">false</setting>
+    <setting id="legacy_conversion" default="true">false</setting>
+    <setting id="update_skinshortcuts" default="true">false</setting>
+    <setting id="omdb_apikey">9507ed8</setting>
+    <setting id="omdb_apikey_access" default="true">false</setting>
+    <setting id="mdblist_apikey">nnj8qh237u76njfjkfj44yw02</setting>
+    <setting id="mdblist_apikey_access" default="true">false</setting>
+    <setting id="fanarttv_clientkey" default="true" />
+    <setting id="fanarttv_lookup" default="true">false</setting>
+    <setting id="widget_fanarttv_lookup" default="true">false</setting>
+    <setting id="service_fanarttv_lookup" default="true">false</setting>
+    <setting id="fanarttv_clientkey_access" default="true">false</setting>
+    <setting id="fanarttv_secondpref" default="true">false</setting>
+    <setting id="fanarttv_enfallback" default="true">true</setting>
+    <setting id="tvdb_token" default="true" />
+    <setting id="tvdb_token_access" default="true">false</setting>
+    <setting id="tmdb_user_token" default="true" />
+    <setting id="tmdb_user_token_access" default="true">false</setting>
+    <setting id="trakt_token">{&quot;access_token&quot;:&quot;5d8c02102b0a231fd234496938bc8636226f7f47cd51e175874f8501c085a626&quot;,&quot;token_type&quot;:&quot;Bearer&quot;,&quot;expires_in&quot;:86399,&quot;refresh_token&quot;:&quot;9dc120b7cef269b04f60b3b56b633f7fcf8a2a2f722d4d450ac2d8bcb237f29d&quot;,&quot;scope&quot;:&quot;public&quot;,&quot;created_at&quot;:1759624863}</setting>
+    <setting id="trakt_token_access" default="true">false</setting>
+    <setting id="trakt_becausewatchedseed" default="true">5</setting>
+    <setting id="trakt_watchedindicators">true</setting>
+    <setting id="trakt_watchedinprogress" default="true">true</setting>
+    <setting id="trakt_sortignorearticle" default="true">false</setting>
+    <setting id="trakt_cacheownlists" default="true">true</setting>
+    <setting id="trakt_playprogress" default="true">false</setting>
+    <setting id="default_player_movies">seren.json play_movie</setting>
+    <setting id="default_player_episodes">seren.smartplay.json play_episode</setting>
+    <setting id="default_player_provider" default="true">true</setting>
+    <setting id="default_player_kodi">0</setting>
+    <setting id="combined_players" default="true">true</setting>
+    <setting id="bundled_players" default="true">true</setting>
+    <setting id="players_url">http://bit.ly/tmdbplayers</setting>
+    <setting id="provider_allowlist" default="true" />
+    <setting id="service_container_content_fallback" default="true">false</setting>
+    <setting id="service_listitem_read_ahead" default="true">false</setting>
+    <setting id="pagemulti_library" default="true">2</setting>
+    <setting id="pagemulti_tmdb">2</setting>
+    <setting id="pagemulti_trakt">2</setting>
+    <setting id="pagemulti_sync">2</setting>
+    <setting id="contextmenu_related_lists" default="true">true</setting>
+    <setting id="contextmenu_sync_trakt" default="true">true</setting>
+    <setting id="contextmenu_sync_tmdb" default="true">true</setting>
+    <setting id="contextmenu_manage_artwork">false</setting>
+    <setting id="contextmenu_refresh_details">false</setting>
+    <setting id="contextmenu_add_to_library">false</setting>
+    <setting id="contextmenu_make_node" default="true">true</setting>
+    <setting id="genre_icon_location" default="true" />
+    <setting id="trakt_genre_icon_location" default="true" />
+    <setting id="provider_icon_location" default="true" />
+    <setting id="startup_notifications">false</setting>
+    <setting id="connection_notifications" default="true">true</setting>
+    <setting id="dummy_duration" default="true">1.0</setting>
+    <setting id="dummy_delay" default="true">1.0</setting>
+    <setting id="dummy_waitresolve" default="true">true</setting>
+    <setting id="only_resolve_strm" default="true">false</setting>
+    <setting id="force_xbmcplayer" default="true">true</setting>
+    <setting id="trakt_localhack" default="true">false</setting>
+    <setting id="force_recache_kodidb" default="true">false</setting>
+    <setting id="use_alternate_api_url" default="true">false</setting>
+    <setting id="max_threads" default="true">0</setting>
+    <setting id="cache_location" default="true" />
+    <setting id="image_location" default="true" />
+    <setting id="mem_cache_level" default="true">0</setting>
+    <setting id="timer_reports" default="true">false</setting>
+    <setting id="debug_logging" default="true">false</setting>
+    <setting id="rebuild_listitem_offscreen" default="true">false</setting>
+    <setting id="service_listitem_readahead" default="true">true</setting>
+    <setting id="use_mem_cache" default="true">false</setting>
+</settings>

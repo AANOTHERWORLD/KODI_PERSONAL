@@ -1,0 +1,47 @@
+<settings version="2">
+    <setting id="package.folder" default="true">homelanderscrapers</setting>
+    <setting id="write.settings">ok</setting>
+    <setting id="provider.furk" default="true">false</setting>
+    <setting id="provider.scenerls">true</setting>
+    <setting id="url.scenerls" default="true" />
+    <setting id="provider.1337x">true</setting>
+    <setting id="url.1337x" default="true" />
+    <setting id="provider.bitlord">true</setting>
+    <setting id="url.bitlord" default="true" />
+    <setting id="provider.glodls">true</setting>
+    <setting id="url.glodls" default="true" />
+    <setting id="provider.kickass2">true</setting>
+    <setting id="url.kickass2" default="true" />
+    <setting id="provider.limetorrents">true</setting>
+    <setting id="url.limetorrents" default="true" />
+    <setting id="provider.magnetdl">true</setting>
+    <setting id="url.magnetdl" default="true" />
+    <setting id="provider.nyaa">true</setting>
+    <setting id="url.nyaa" default="true" />
+    <setting id="provider.piratebay">true</setting>
+    <setting id="url.piratebay" default="true" />
+    <setting id="provider.tordl">true</setting>
+    <setting id="url.tordl" default="true" />
+    <setting id="provider.torrentdownloads">true</setting>
+    <setting id="url.torrentdownloads" default="true" />
+    <setting id="provider.yourbt">true</setting>
+    <setting id="url.yourbt" default="true" />
+    <setting id="provider.yts">true</setting>
+    <setting id="url.yts" default="true" />
+    <setting id="provider.easynews" default="true">false</setting>
+    <setting id="easynews.user" default="true" />
+    <setting id="easynews.pass" default="true" />
+    <setting id="easynews.title.chk">true</setting>
+    <setting id="provider.orionoid" default="true">false</setting>
+    <setting id="install.orion" default="true" />
+    <setting id="provider.orionoid.settings" default="true" />
+    <setting id="orionoid.streamtype" default="true">0</setting>
+    <setting id="orion.extra.info">true</setting>
+    <setting id="orion.info.filename" default="true">false</setting>
+    <setting id="provider.filepursuit" default="true">false</setting>
+    <setting id="filepursuit.text" default="true" />
+    <setting id="filepursuit.api" default="true" />
+    <setting id="provider.ororo" default="true">false</setting>
+    <setting id="ororo.user" default="true" />
+    <setting id="ororo.pass" default="true" />
+</settings>

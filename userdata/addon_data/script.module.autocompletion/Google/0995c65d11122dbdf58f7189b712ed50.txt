@@ -1,0 +1,1 @@
+["[COLORred]Boomerang (B", ["colorred boomerang (band)", "colorred boomerang (blue)", "colorred boomerang (black)", "colorred boomerang (boomerang)"], [], {"google:suggestsubtypes": [[10, 160], [10, 160], [10, 160], [10, 160]], "google:suggesttype": ["TAIL", "TAIL", "TAIL", "TAIL"]}]

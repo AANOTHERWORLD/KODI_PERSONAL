@@ -1,0 +1,30 @@
+[
+    {
+        "icon": "special://skin/extras/icons/settings.png",
+        "label": "$LOCALIZE[5]",
+        "path": "ActivateWindow(settings)",
+        "target": "",
+        "guid": "guid-d6f4e0f7"
+    },
+    {
+        "icon": "special://skin/extras/icons/update.png",
+        "label": "$LOCALIZE[31364]",
+        "path": "ReloadSkin()",
+        "target": "",
+        "guid": "guid-325603f7"
+    },
+    {
+        "icon": "special://skin/extras/icons/power.png",
+        "label": "$LOCALIZE[13009]",
+        "path": "Quit()",
+        "target": "",
+        "guid": "guid-209981c9"
+    },
+    {
+        "label": "[COLOR limegreen]Open[/COLOR]Wizard",
+        "path": "plugin://plugin.program.openwizard",
+        "icon": "image://C%3a%5cUsers%5cJamelWilliams%5cAppData%5cRoaming%5cKodi%5caddons%5cplugin.program.openwizard%5cicon.png/",
+        "target": "programs",
+        "guid": "guid-dee78c79"
+    }
+]

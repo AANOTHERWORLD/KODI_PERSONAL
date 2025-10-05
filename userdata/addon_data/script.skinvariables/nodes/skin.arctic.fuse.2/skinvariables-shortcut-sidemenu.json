@@ -1,0 +1,343 @@
+[
+    {
+        "label": "Discover",
+        "icon": "special://skin/extras/icons/binoculars.png",
+        "path": "ActivateWindow(1105)",
+        "expression": "home",
+        "forced": "True",
+        "target": "",
+        "widgets": [
+            {
+                "label": "US Trending Shows",
+                "icon": "",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=mdblist_userlist&list_name=US+Trending+Shows&list_id=55167&plugin_category=US+Trending+Shows&dynamic=true&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "target": "videos",
+                "submenu": [],
+                "widgets": [],
+                "guid": "guid-6781487f",
+                "widget_style": "Placard"
+            },
+            {
+                "label": "New TV Shows",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=mdblist_userlist&list_name=New+TV+Shows&list_id=55168&plugin_category=New+TV+Shows&dynamic=true&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://C%3a%5cUsers%5cJamelWilliams%5cAppData%5cRoaming%5cKodi%5caddons%5cplugin.video.themoviedb.helper%5c%2fresources%2ficons%2fmdblist%2fmdblist.png/",
+                "target": "videos",
+                "guid": "guid-537afa4c",
+                "widget_style": "Poster"
+            },
+            {
+                "label": "Trending Movies",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=trending_day&tmdb_type=movie&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "special://skin/extras/icons/list-ol.png",
+                "target": "videos",
+                "guid": "guid-05ffb283",
+                "widget_style": "Placard"
+            },
+            {
+                "label": "In Theatres",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=now_playing&tmdb_type=movie&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://C%3a%5cUsers%5cJamelWilliams%5cAppData%5cRoaming%5cKodi%5caddons%5cplugin.video.themoviedb.helper%5c%2fresources%2ficons%2fthemoviedb%2fintheatres.png/",
+                "target": "videos",
+                "guid": "guid-f3b57cf5"
+            },
+            {
+                "label": "Latest Releases",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&tmdb_id=None&with_id=True&sort_by=release_date.desc&primary_release_date.lte=T-1&region=US&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://C%3a%5cUsers%5cJamelWilliams%5cAppData%5cRoaming%5cKodi%5caddons%5cplugin.video.themoviedb.helper%5c%2fresources%2ficons%2fmdblist%2fmdblist.png/",
+                "target": "videos",
+                "guid": "guid-38873327",
+                "widget_style": "Poster"
+            }
+        ],
+        "guid": "guid-c8214e84",
+        "spotlight_label": "Trending This Week",
+        "spotlight_path": "plugin://plugin.video.themoviedb.helper/?info=trending_week&tmdb_type=tv&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+        "spotlight_icon": "image://C%3a%5cUsers%5cJamelWilliams%5cAppData%5cRoaming%5cKodi%5caddons%5cplugin.video.themoviedb.helper%5c%2fresources%2ficons%2fthemoviedb%2fupcoming.png/",
+        "spotlight_target": "videos"
+    },
+    {
+        "label": "For You",
+        "path": "ActivateWindow(1101)",
+        "icon": "special://skin/extras/icons/diagram-project.png",
+        "target": "",
+        "guid": "guid-e3665f44",
+        "widgets": [
+            {
+                "label": "Your Next Episodes",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=trakt_nextepisodes&tmdb_type=tv&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://C%3a%5cUsers%5cJamelWilliams%5cAppData%5cRoaming%5cKodi%5caddons%5cplugin.video.themoviedb.helper%5c%2fresources%2ficons%2ftrakt%2finprogress.png/",
+                "target": "videos",
+                "guid": "guid-172f8395",
+                "widget_style": "Placard"
+            },
+            {
+                "label": "Latest Episodes",
+                "icon": "",
+                "path": "plugin://plugin.video.themoviedb.helper/?startdate=0&days=14&info=trakt_calendar&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "target": "videos",
+                "submenu": [],
+                "widgets": [],
+                "guid": "guid-a7775b2b",
+                "widget_style": "Poster"
+            },
+            {
+                "label": "Your Watchlist",
+                "path": "plugin://plugin.video.themoviedb.helper/?tmdb_type=both&list_name=Combined+Watchlist&tmdb_id=None&info=trakt_watchlist&sort_by=added&sort_how=desc&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://C%3a%5cUsers%5cJamelWilliams%5cAppData%5cRoaming%5cKodi%5caddons%5cplugin.video.themoviedb.helper%5c%2fresources%2ficons%2fthemoviedb%2fdefault.png/",
+                "target": "videos",
+                "guid": "guid-4cb6a9a7",
+                "widget_style": "Placard"
+            },
+            {
+                "label": "TV shows Recommended For You",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=trakt_recommendations&tmdb_type=tv&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://C%3a%5cUsers%5cJamelWilliams%5cAppData%5cRoaming%5cKodi%5caddons%5cplugin.video.themoviedb.helper%5c%2fresources%2ficons%2ftrakt%2frecommended.png/",
+                "target": "videos",
+                "guid": "guid-f5125ab8",
+                "widget_style": "Poster"
+            },
+            {
+                "label": "Movies Recommended For You",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=trakt_recommendations&tmdb_type=movie&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://C%3a%5cUsers%5cJamelWilliams%5cAppData%5cRoaming%5cKodi%5caddons%5cplugin.video.themoviedb.helper%5c%2fresources%2ficons%2ftrakt%2frecommended.png/",
+                "target": "videos",
+                "guid": "guid-e7a2eb7b",
+                "widget_style": "Poster"
+            }
+        ],
+        "spotlight_label": "Your Next Episodes",
+        "spotlight_path": "plugin://plugin.video.themoviedb.helper/?info=trakt_nextepisodes&tmdb_type=tv&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+        "spotlight_icon": "image://C%3a%5cUsers%5cJamelWilliams%5cAppData%5cRoaming%5cKodi%5caddons%5cplugin.video.themoviedb.helper%5c%2fresources%2ficons%2ftrakt%2finprogress.png/",
+        "spotlight_target": "videos"
+    },
+    {
+        "label": "Netflix",
+        "path": "ActivateWindow(1102)",
+        "icon": "special://skin/extras/icons/tv.png",
+        "target": "",
+        "guid": "guid-755c3383",
+        "widgets": [
+            {
+                "label": "Latest Series",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=mdblist_userlist&list_name=Netflix+Shows&list_id=63045&plugin_category=Netflix+Shows&dynamic=true&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://C%3a%5cUsers%5cJamelWilliams%5cAppData%5cRoaming%5cKodi%5caddons%5cplugin.video.themoviedb.helper%5c%2fresources%2ficons%2fmdblist%2fmdblist.png/",
+                "target": "videos",
+                "guid": "guid-351408a0",
+                "widget_style": "Placard"
+            },
+            {
+                "label": "Trending Series",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=8&watch_region=US&with_id=True&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://https%3a%2f%2fimage.tmdb.org%2ft%2fp%2foriginal%2fpbpMk2JmcoNnQwx5JGpXngfoWtp.jpg/",
+                "target": "videos",
+                "guid": "guid-ea78a78f",
+                "widget_sortby": "default",
+                "widget_style": "Poster"
+            },
+            {
+                "label": "Latest Movies",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=mdblist_userlist&list_name=Netflix+Movies&list_id=63077&plugin_category=Netflix+Movies&dynamic=true&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://C%3a%5cUsers%5cJamelWilliams%5cAppData%5cRoaming%5cKodi%5caddons%5cplugin.video.themoviedb.helper%5c%2fresources%2ficons%2fmdblist%2fmdblist.png/",
+                "target": "videos",
+                "guid": "guid-6b0fd21c",
+                "widget_style": "Placard"
+            },
+            {
+                "label": "Trending Movies",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=8&watch_region=US&with_id=True&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://https%3a%2f%2fimage.tmdb.org%2ft%2fp%2foriginal%2fpbpMk2JmcoNnQwx5JGpXngfoWtp.jpg/",
+                "target": "videos",
+                "guid": "guid-67d889c8",
+                "widget_style": "Poster"
+            }
+        ],
+        "spotlight_label": "Netflix",
+        "spotlight_path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=8&watch_region=US&with_id=True&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+        "spotlight_icon": "image://https%3a%2f%2fimage.tmdb.org%2ft%2fp%2foriginal%2fpbpMk2JmcoNnQwx5JGpXngfoWtp.jpg/",
+        "spotlight_target": "videos"
+    },
+    {
+        "label": "Max",
+        "path": "ActivateWindow(1103)",
+        "icon": "special://skin/extras/icons/songs.png",
+        "target": "",
+        "guid": "guid-53f9b4ae",
+        "widgets": [
+            {
+                "label": "Latest Episodes",
+                "icon": "",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=mdblist_userlist&list_name=Max+New+Series&list_id=63047&plugin_category=Max+New+Series&dynamic=true&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "target": "videos",
+                "submenu": [],
+                "widgets": [],
+                "guid": "guid-f692855c",
+                "widget_style": "Placard"
+            },
+            {
+                "label": "Trending Series",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=1899&watch_region=US&with_id=True&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://https%3a%2f%2fimage.tmdb.org%2ft%2fp%2foriginal%2ffksCUZ9QDWZMUwL2LgMtLckROUN.jpg/",
+                "target": "videos",
+                "guid": "guid-e2aaf3af",
+                "widget_style": "Poster"
+            },
+            {
+                "label": "LatestMovies",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=mdblist_userlist&list_name=Max+Movies&list_id=63078&plugin_category=Max+Movies&dynamic=true&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://C%3a%5cUsers%5cJamelWilliams%5cAppData%5cRoaming%5cKodi%5caddons%5cplugin.video.themoviedb.helper%5c%2fresources%2ficons%2fmdblist%2fmdblist.png/",
+                "target": "videos",
+                "guid": "guid-27974aa8",
+                "widget_style": "Placard"
+            },
+            {
+                "label": "Trending Movies",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=1899&watch_region=US&with_id=True&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://https%3a%2f%2fimage.tmdb.org%2ft%2fp%2foriginal%2ffksCUZ9QDWZMUwL2LgMtLckROUN.jpg/",
+                "target": "videos",
+                "guid": "guid-2874b477",
+                "widget_style": "Poster"
+            }
+        ],
+        "spotlight_label": "Max",
+        "spotlight_path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=1899&watch_region=US&with_id=True&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+        "spotlight_icon": "image://https%3a%2f%2fimage.tmdb.org%2ft%2fp%2foriginal%2ffksCUZ9QDWZMUwL2LgMtLckROUN.jpg/",
+        "spotlight_target": "videos"
+    },
+    {
+        "label": "Apple TV+",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=mdblist_userlist&list_name=AppleTV%2B+Series&list_id=55638&plugin_category=AppleTV%2B+Series&dynamic=true&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+        "icon": "special://skin/extras/icons/livetv.png",
+        "target": "videos",
+        "guid": "guid-d1938260",
+        "widgets": [
+            {
+                "label": "Latest Episodes",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=mdblist_userlist&list_name=AppleTV%2B+Series&list_id=55638&plugin_category=AppleTV%2B+Series&dynamic=true&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://C%3a%5cUsers%5cJamelWilliams%5cAppData%5cRoaming%5cKodi%5caddons%5cplugin.video.themoviedb.helper%5c%2fresources%2ficons%2fmdblist%2fmdblist.png/",
+                "target": "videos",
+                "guid": "guid-3cb6c8a3",
+                "widget_style": "Placard"
+            },
+            {
+                "label": "Trending Series",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=350&watch_region=US&with_id=True&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://https%3a%2f%2fimage.tmdb.org%2ft%2fp%2foriginal%2f2E03IAZsX4ZaUqM7tXlctEPMGWS.jpg/",
+                "target": "videos",
+                "guid": "guid-d257be38"
+            },
+            {
+                "label": "Latest Movies",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=mdblist_userlist&list_name=Apple+TV%2B+Movies&list_id=65282&plugin_category=Apple+TV%2B+Movies&dynamic=true&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://C%3a%5cUsers%5cJamelWilliams%5cAppData%5cRoaming%5cKodi%5caddons%5cplugin.video.themoviedb.helper%5c%2fresources%2ficons%2fmdblist%2fmdblist.png/",
+                "target": "videos",
+                "guid": "guid-e875eb68",
+                "widget_style": "Placard"
+            },
+            {
+                "label": "Trending Movies",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=350&watch_region=US&with_id=True&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://https%3a%2f%2fimage.tmdb.org%2ft%2fp%2foriginal%2f2E03IAZsX4ZaUqM7tXlctEPMGWS.jpg/",
+                "target": "videos",
+                "guid": "guid-a14bb0d5"
+            }
+        ],
+        "spotlight_label": "Apple TV Plus",
+        "spotlight_path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=350&watch_region=US&with_id=True&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+        "spotlight_icon": "image://https%3a%2f%2fimage.tmdb.org%2ft%2fp%2foriginal%2f2E03IAZsX4ZaUqM7tXlctEPMGWS.jpg/",
+        "spotlight_target": "videos"
+    },
+    {
+        "label": "Disney+",
+        "path": "ActivateWindow(1105)",
+        "icon": "special://skin/extras/icons/binoculars.png",
+        "target": "",
+        "guid": "guid-e36f67c0",
+        "widgets": [
+            {
+                "label": "Latest Episodes",
+                "icon": "",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=mdblist_userlist&list_name=Disney+Plus+Series&list_id=63048&plugin_category=Disney+Plus+Series&dynamic=true&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "target": "videos",
+                "submenu": [],
+                "widgets": [],
+                "guid": "guid-01351098",
+                "widget_style": "Placard"
+            },
+            {
+                "label": "Trending Series",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=337&watch_region=US&with_id=True&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://https%3a%2f%2fimage.tmdb.org%2ft%2fp%2foriginal%2f97yvRBw1GzX7fXprcF80er19ot.jpg/",
+                "target": "videos",
+                "guid": "guid-23c88e9f",
+                "widget_style": "Poster"
+            },
+            {
+                "label": "Latest Movies",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=mdblist_userlist&list_name=Disney%2B+Movies&list_id=63081&plugin_category=Disney%2B+Movies&dynamic=true&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://C%3a%5cUsers%5cJamelWilliams%5cAppData%5cRoaming%5cKodi%5caddons%5cplugin.video.themoviedb.helper%5c%2fresources%2ficons%2fmdblist%2fmdblist.png/",
+                "target": "videos",
+                "guid": "guid-a825754e",
+                "widget_style": "Placard"
+            },
+            {
+                "label": "Trending Movies",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=337&watch_region=US&with_id=True&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://https%3a%2f%2fimage.tmdb.org%2ft%2fp%2foriginal%2f97yvRBw1GzX7fXprcF80er19ot.jpg/",
+                "target": "videos",
+                "guid": "guid-ac1d1967",
+                "widget_style": "Poster"
+            }
+        ],
+        "spotlight_label": "Disney Plus",
+        "spotlight_path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=337&watch_region=US&with_id=True&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+        "spotlight_icon": "image://https%3a%2f%2fimage.tmdb.org%2ft%2fp%2foriginal%2f97yvRBw1GzX7fXprcF80er19ot.jpg/",
+        "spotlight_target": "videos"
+    },
+    {
+        "label": "Hulu",
+        "path": "ActivateWindow(1106)",
+        "icon": "special://skin/extras/icons/diagram-project.png",
+        "target": "",
+        "guid": "guid-17c27b83",
+        "widgets": [
+            {
+                "label": "Latest Episodes",
+                "icon": "",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=mdblist_userlist&list_name=Hulu+Series&list_id=46252&plugin_category=Hulu+Series&dynamic=true&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "target": "videos",
+                "submenu": [],
+                "widgets": [],
+                "guid": "guid-65ee93d2",
+                "widget_style": "Placard"
+            },
+            {
+                "label": "Trending Series",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=15&watch_region=US&with_id=True&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://https%3a%2f%2fimage.tmdb.org%2ft%2fp%2foriginal%2fbxBlRPEPpMVDc4jMhSrTf2339DW.jpg/",
+                "target": "videos",
+                "guid": "guid-b5bbcafa",
+                "widget_style": "Poster"
+            },
+            {
+                "label": "Latest Movies",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=mdblist_userlist&list_name=Hulu+Movies&list_id=63080&plugin_category=Hulu+Movies&dynamic=true&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://C%3a%5cUsers%5cJamelWilliams%5cAppData%5cRoaming%5cKodi%5caddons%5cplugin.video.themoviedb.helper%5c%2fresources%2ficons%2fmdblist%2fmdblist.png/",
+                "target": "videos",
+                "guid": "guid-4f8daadb",
+                "widget_style": "Placard"
+            },
+            {
+                "label": "Trending Movies",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=15&watch_region=US&with_id=True&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+                "icon": "image://https%3a%2f%2fimage.tmdb.org%2ft%2fp%2foriginal%2fbxBlRPEPpMVDc4jMhSrTf2339DW.jpg/",
+                "target": "videos",
+                "guid": "guid-829b2ee7",
+                "widget_style": "Poster"
+            }
+        ],
+        "spotlight_label": "Hulu",
+        "spotlight_path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=15&watch_region=US&with_id=True&widget=true&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",
+        "spotlight_icon": "image://https%3a%2f%2fimage.tmdb.org%2ft%2fp%2foriginal%2fbxBlRPEPpMVDc4jMhSrTf2339DW.jpg/",
+        "spotlight_target": "videos"
+    }
+]

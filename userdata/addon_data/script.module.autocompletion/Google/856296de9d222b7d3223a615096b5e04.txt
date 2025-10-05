@@ -1,0 +1,1 @@
+["[COLORred]A and E[/COL", ["colorred a and e /colored a and e", "colorred a and e /colorado", "colorred a and e /colored a", "colorred a and e /colored a and b", "colorred a and e /colored c"], [], {"google:suggestsubtypes": [[10, 160], [10, 160], [10, 160], [10, 160], [10, 160]], "google:suggesttype": ["TAIL", "TAIL", "TAIL", "TAIL", "TAIL"]}]

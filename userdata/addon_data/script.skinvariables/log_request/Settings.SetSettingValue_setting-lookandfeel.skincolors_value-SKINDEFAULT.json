@@ -1,0 +1,12 @@
+{
+  "method": "Settings.SetSettingValue",
+  "params": {
+    "setting": "lookandfeel.skincolors",
+    "value": "SKINDEFAULT"
+  },
+  "result": {
+    "id": 1,
+    "jsonrpc": "2.0",
+    "result": true
+  }
+}

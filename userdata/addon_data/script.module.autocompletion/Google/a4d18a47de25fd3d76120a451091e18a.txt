@@ -1,0 +1,1 @@
+["f114ne", ["f114 nighthawk", "f114 engine", "f114", "f114 plane", "f114r"], [], {"google:suggestsubtypes": [[512, 546], [512, 546], [512, 546], [512, 546], [751]], "google:suggesttype": ["QUERY", "QUERY", "QUERY", "QUERY", "QUERY"]}]

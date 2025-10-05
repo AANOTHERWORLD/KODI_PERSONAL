@@ -1,0 +1,1 @@
+["aanother-kodi", ["#kodi2023", "#kodi20", "#kodi20nexus"], [], {"google:suggestsubtypes": [[751], [751], [751]], "google:suggesttype": ["QUERY", "QUERY", "QUERY"]}]

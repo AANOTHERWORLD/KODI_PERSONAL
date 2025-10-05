@@ -1,0 +1,1 @@
+["aanother-k", ["another k", "another'", "another kin", "anotherother dk"], [], {"google:suggestsubtypes": [[751], [512, 546], [751], [751]], "google:suggesttype": ["QUERY", "QUERY", "QUERY", "QUERY"]}]

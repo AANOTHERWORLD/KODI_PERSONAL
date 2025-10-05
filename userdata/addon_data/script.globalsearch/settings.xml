@@ -1,0 +1,14 @@
+<settings version="2">
+    <setting id="movies" default="true">true</setting>
+    <setting id="actors" default="true">false</setting>
+    <setting id="directors" default="true">false</setting>
+    <setting id="tvshows" default="true">true</setting>
+    <setting id="episodes" default="true">true</setting>
+    <setting id="tvactors" default="true">false</setting>
+    <setting id="musicvideos">false</setting>
+    <setting id="livetv" default="true">false</setting>
+    <setting id="artists">false</setting>
+    <setting id="albums">false</setting>
+    <setting id="songs">false</setting>
+    <setting id="view" default="true">50</setting>
+</settings>

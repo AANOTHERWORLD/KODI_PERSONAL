@@ -1,0 +1,1 @@
+["[COLORred]Bravo HD", ["colorred bravo hd film", "colorred bravo hdmi cable", "colorred bravo hd camera", "colorred bravo hdmi", "colorred bravo hdd"], [], {"google:suggestsubtypes": [[10, 160], [10, 160], [10, 160], [10, 160], [10, 160]], "google:suggesttype": ["TAIL", "TAIL", "TAIL", "TAIL", "TAIL"]}]

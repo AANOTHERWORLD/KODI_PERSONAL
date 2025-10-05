@@ -1,0 +1,1 @@
+["[COLORred]CBS (KCBS) Los Angeles, CA[/COLOR]     ([COLORorange]US LOCAL[/CO", ["colorred cbs (kcbs) los angeles ca /color ( colororange us local /co los angeles"], [], {"google:suggestsubtypes": [[402]], "google:suggesttype": ["TAIL"]}]

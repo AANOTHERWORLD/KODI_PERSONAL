@@ -1,0 +1,45 @@
+<sources>
+    <programs>
+        <default pathversion="1"></default>
+    </programs>
+    <video>
+        <default pathversion="1"></default>
+    </video>
+    <music>
+        <default pathversion="1"></default>
+    </music>
+    <pictures>
+        <default pathversion="1"></default>
+    </pictures>
+    <files>
+        <default pathversion="1"></default>
+        <source>
+            <name>Open Wizard</name>
+            <path pathversion="1">https://a4k-openproject.github.io/repository.openwizard/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+        <source>
+            <name>repository.ivarbrandt</name>
+            <path pathversion="1">https://ivarbrandt.github.io/repository.ivarbrandt/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+        <source>
+            <name>Umbrella Repo</name>
+            <path pathversion="1">https://umbrellaplug.github.io/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+        <source>
+            <name>coco scrapers</name>
+            <path pathversion="1">https://cocojoe2411.github.io/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+        <source>
+            <name>AANOTHER-KODI</name>
+            <path pathversion="1">https://aanotherworld.github.io/AANOTHER-KODI/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+    </files>
+    <games>
+        <default pathversion="1"></default>
+    </games>
+</sources>

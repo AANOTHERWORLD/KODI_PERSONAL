@@ -1,0 +1,1 @@
+["[COLORred]A and E[/COLOR]     ([COLO", ["colorred a and e /color ( colored a and ", "colorred a and e /color ( color a and e"], [], {"google:suggestsubtypes": [[10, 160], [10, 160]], "google:suggesttype": ["TAIL", "TAIL"]}]

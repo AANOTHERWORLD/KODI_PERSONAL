@@ -1,0 +1,163 @@
+{
+    "label": "Discover",
+    "type": "shortcut",
+    "paths": [
+        {
+            "label": "Trending Today",
+            "content": "videos",
+            "file": {
+                "file": "plugin://plugin.video.themoviedb.helper/?info=trending_day&tmdb_type=tv&widget=True",
+                "filetype": "directory",
+                "art": {
+                    "icon": "special://home/addons\\plugin.video.themoviedb.helper\\/resources/icons/themoviedb/upcoming.png",
+                    "landscape": "special://home/addons\\plugin.video.themoviedb.helper\\/fanart.jpg"
+                },
+                "votes": "0"
+            },
+            "color": "white",
+            "window": "videos",
+            "target": "shortcut",
+            "id": "trending_today-1740452590.6474035",
+            "version": "3.7.0"
+        },
+        {
+            "label": "US Trending Shows",
+            "content": "videos",
+            "file": {
+                "file": "plugin://plugin.video.themoviedb.helper/?dynamic=true&info=mdblist_userlist&list_id=55167&list_name=US%20Trending%20Shows&plugin_category=US%20Trending%20Shows&widget=True",
+                "filetype": "directory",
+                "art": {
+                    "icon": "special://home/addons\\plugin.video.themoviedb.helper\\/resources/icons/mdblist/mdblist.png"
+                },
+                "plot": "TV series trending in the United States",
+                "studio": "jtwilliams88",
+                "votes": "0"
+            },
+            "color": "white",
+            "window": "videos",
+            "target": "shortcut",
+            "id": "us_trending_shows-1740452643.2315433",
+            "version": "3.7.0"
+        },
+        {
+            "label": "New TV Shows",
+            "content": "videos",
+            "file": {
+                "file": "plugin://plugin.video.themoviedb.helper/?dynamic=true&info=mdblist_userlist&list_id=55168&list_name=New%20TV%20Shows&plugin_category=New%20TV%20Shows&widget=True",
+                "filetype": "directory",
+                "art": {
+                    "icon": "special://home/addons\\plugin.video.themoviedb.helper\\/resources/icons/mdblist/mdblist.png"
+                },
+                "plot": "New TV series released in the US in the last 90 days",
+                "studio": "jtwilliams88",
+                "votes": "0"
+            },
+            "color": "white",
+            "window": "videos",
+            "target": "shortcut",
+            "id": "new_tv_shows-1740452666.6329181",
+            "version": "3.7.0"
+        },
+        {
+            "label": "Latest Releases ",
+            "content": "videos",
+            "file": {
+                "file": "plugin://plugin.video.themoviedb.helper/?dynamic=true&info=mdblist_userlist&list_id=960&list_name=Latest%20Releases&plugin_category=Latest%20Releases&widget=True",
+                "filetype": "directory",
+                "art": {
+                    "icon": "special://home/addons\\plugin.video.themoviedb.helper\\/resources/icons/mdblist/mdblist.png"
+                },
+                "studio": "linaspurinis",
+                "votes": "0"
+            },
+            "color": "white",
+            "window": "videos",
+            "target": "shortcut",
+            "id": "latest_releases_-1740452929.7461538",
+            "version": "3.7.0"
+        },
+        {
+            "label": "Trending Today",
+            "content": "videos",
+            "file": {
+                "file": "plugin://plugin.video.themoviedb.helper/?info=trending_day&tmdb_type=movie&widget=True",
+                "filetype": "directory",
+                "art": {
+                    "icon": "special://home/addons\\plugin.video.themoviedb.helper\\/resources/icons/themoviedb/upcoming.png",
+                    "landscape": "special://home/addons\\plugin.video.themoviedb.helper\\/fanart.jpg"
+                },
+                "votes": "0"
+            },
+            "color": "white",
+            "window": "videos",
+            "target": "shortcut",
+            "id": "trending_today-1740452966.680938",
+            "version": "3.7.0"
+        },
+        {
+            "label": "In Theatres",
+            "content": "videos",
+            "file": {
+                "file": "plugin://plugin.video.themoviedb.helper/?info=now_playing&tmdb_type=movie&widget=True",
+                "filetype": "directory",
+                "art": {
+                    "icon": "special://home/addons\\plugin.video.themoviedb.helper\\/resources/icons/themoviedb/intheatres.png",
+                    "landscape": "special://home/addons\\plugin.video.themoviedb.helper\\/fanart.jpg"
+                },
+                "votes": "0"
+            },
+            "color": "white",
+            "window": "videos",
+            "target": "shortcut",
+            "id": "in_theatres-1740452986.6459515",
+            "version": "3.7.0"
+        },
+        {
+            "label": "Movies Recommended For You",
+            "content": "videos",
+            "file": {
+                "file": "plugin://plugin.video.themoviedb.helper/?info=trakt_recommendations&tmdb_type=movie&widget=True",
+                "filetype": "directory",
+                "art": {
+                    "icon": "special://home/addons\\plugin.video.themoviedb.helper\\/resources/icons/trakt/recommended.png",
+                    "landscape": "special://home/addons\\plugin.video.themoviedb.helper\\/fanart.jpg"
+                },
+                "votes": "0"
+            },
+            "color": "white",
+            "window": "videos",
+            "target": "shortcut",
+            "id": "movies_recommended_for_you-1740453164.2453244",
+            "version": "3.7.0"
+        },
+        {
+            "label": "TV shows Recommended For You",
+            "content": "videos",
+            "file": {
+                "file": "plugin://plugin.video.themoviedb.helper/?info=trakt_recommendations&tmdb_type=tv&widget=True",
+                "filetype": "directory",
+                "art": {
+                    "icon": "special://home/addons\\plugin.video.themoviedb.helper\\/resources/icons/trakt/recommended.png",
+                    "landscape": "special://home/addons\\plugin.video.themoviedb.helper\\/fanart.jpg"
+                },
+                "votes": "0"
+            },
+            "color": "white",
+            "window": "videos",
+            "target": "shortcut",
+            "id": "tv_shows_recommended_for_you-1740453184.5113442",
+            "version": "3.7.0"
+        }
+    ],
+    "id": "discover-1740452421.4367518",
+    "art": {
+        "banner": "special://home/addons\\plugin.program.autowidget\\resources\\media\\banner\\folder-shortcut.png",
+        "fanart": "special://home/addons\\plugin.program.autowidget\\resources\\media\\fanart\\folder-shortcut.png",
+        "icon": "special://home/addons\\plugin.program.autowidget\\resources\\media\\icon\\folder-shortcut.png",
+        "poster": "special://home/addons\\plugin.program.autowidget\\resources\\media\\poster\\folder-shortcut.png",
+        "thumb": "special://home/addons\\plugin.program.autowidget\\resources\\media\\icon\\folder-shortcut.png"
+    },
+    "version": "3.7.0",
+    "content": "",
+    "sort_order": "4"
+}

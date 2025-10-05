@@ -1,0 +1,73 @@
+<settings version="2">
+    <setting id="simpleMode" default="true">false</setting>
+    <setting id="stopAfterClose" default="true">true</setting>
+    <setting id="enablePopupSkin" default="true">true</setting>
+    <setting id="popupPosition">2</setting>
+    <setting id="popupAccentColour" default="true">0</setting>
+    <setting id="popupCustomAccentColour" default="true">FFFF4081</setting>
+    <setting id="popupCustomAccentColourA" default="true">255</setting>
+    <setting id="popupCustomAccentColourR" default="true">255</setting>
+    <setting id="popupCustomAccentColourG" default="true">64</setting>
+    <setting id="popupCustomAccentColourB" default="true">129</setting>
+    <setting id="widgetListLimit" default="true">25</setting>
+    <setting id="widgetRefreshPeriod" default="true">10</setting>
+    <setting id="widgetRefreshAll" default="true">false</setting>
+    <setting id="widgetEnableCast" default="true">false</setting>
+    <setting id="widgetEnableTags" default="true">false</setting>
+    <setting id="widgetIncludeWatched" default="true">true</setting>
+    <setting id="pluginMainLabelToken1" default="true">1</setting>
+    <setting id="pluginMainLabelToken2" default="true">2</setting>
+    <setting id="pluginMainLabelToken3" default="true">3</setting>
+    <setting id="pluginSecondaryLabelToken1" default="true">0</setting>
+    <setting id="pluginSecondaryLabelToken2" default="true">0</setting>
+    <setting id="pluginSecondaryLabelToken3" default="true">0</setting>
+    <setting id="autoPlayMode">1</setting>
+    <setting id="enableStillWatching" default="true">true</setting>
+    <setting id="playedInARow">5</setting>
+    <setting id="markWatched" default="true">1</setting>
+    <setting id="enableResume" default="true">true</setting>
+    <setting id="pauseUntilNext" default="true">false</setting>
+    <setting id="includeWatched" default="true">true</setting>
+    <setting id="nextSeason" default="true">true</setting>
+    <setting id="enablePlaylist" default="true">true</setting>
+    <setting id="enableMovieset" default="true">true</setting>
+    <setting id="autoPlayCountdown" default="true">5</setting>
+    <setting id="customAutoPlayTime">true</setting>
+    <setting id="autoPlaySeasonTime" default="true">10</setting>
+    <setting id="autoPlayTimeXS" default="true">15</setting>
+    <setting id="autoPlayTimeS" default="true">30</setting>
+    <setting id="autoPlayTimeM" default="true">40</setting>
+    <setting id="autoPlayTimeL" default="true">50</setting>
+    <setting id="autoPlayTimeXL" default="true">60</setting>
+    <setting id="detectPlayTime" default="true">true</setting>
+    <setting id="detectPeriod" default="true">300</setting>
+    <setting id="forceDefaultAction" default="true">false</setting>
+    <setting id="enableQueue" default="true">true</setting>
+    <setting id="earlyQueueReset" default="true">true</setting>
+    <setting id="enableTMDBHelper" default="true">true</setting>
+    <setting id="importTMDBHelper" default="true">true</setting>
+    <setting id="exactTMDBMatch" default="true">false</setting>
+    <setting id="queueFromTMDB">false</setting>
+    <setting id="resumeFromEnd" default="true">10</setting>
+    <setting id="logLevel" default="true">0</setting>
+    <setting id="startDelay" default="true">5</setting>
+    <setting id="apiRetryAttempts" default="true">3</setting>
+    <setting id="disableNextUp" default="true">false</setting>
+    <setting id="detectorSavePath" default="true">special://profile/addon_data/service.upnext/detector/</setting>
+    <setting id="detectorThreads" default="true">3</setting>
+    <setting id="detectorDataLimit" default="true">32</setting>
+    <setting id="detectorFilter" default="true">true</setting>
+    <setting id="detectorResizeMethod" default="true">1</setting>
+    <setting id="detectLevel" default="true">90</setting>
+    <setting id="detectSignificance" default="true">25</setting>
+    <setting id="detectMatches" default="true">5</setting>
+    <setting id="detectMismatches" default="true">3</setting>
+    <setting id="enableSimMode" default="true">false</setting>
+    <setting id="simSeek" default="true">0</setting>
+    <setting id="simCue" default="true">0</setting>
+    <setting id="simPlugin" default="true">false</setting>
+    <setting id="detectorDebug" default="true">false</setting>
+    <setting id="detectorDebugSave" default="true">false</setting>
+    <setting id="widgetDebug" default="true">false</setting>
+    <setting id="startTrigger" default="true">false</setting>
+</settings>

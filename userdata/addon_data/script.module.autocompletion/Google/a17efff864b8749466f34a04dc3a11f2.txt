@@ -1,0 +1,1 @@
+["[COLORred]Bravo HDTV (East) (BRAVOD)[/COLOR", ["colorred bravo hdtv (east) (bravod) /colored ", "colorred bravo hdtv (east) (bravod) /colorado"], [], {"google:suggestsubtypes": [[10, 160], [10, 160]], "google:suggesttype": ["TAIL", "TAIL"]}]
