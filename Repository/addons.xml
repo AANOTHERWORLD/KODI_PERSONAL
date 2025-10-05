@@ -1,0 +1,20 @@
+<addons>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.program.aanotherworldwizard"
+       name="AANOTHERWORLD Wizard"
+       version="1.0.0"
+       provider-name="AANOTHERWORLD">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+    </requires>
+    <extension point="xbmc.python.script" library="addon.py" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Simple self-updating build wizard that installs your GitHub-hosted build</summary>
+        <description lang="en_GB">Checks a remote manifest, downloads your build ZIP, verifies MD5, and extracts the build into Kodi.</description>
+        <platform>all</platform>
+        <license>MIT</license>
+        <source>https://github.com/AANOTHERWORLD/kodi_personal</source>
+    </extension>
+</addon>
+
+</addons>

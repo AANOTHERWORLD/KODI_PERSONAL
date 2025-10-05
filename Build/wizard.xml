@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<builds>
+  <!-- Single-build example -->
+  <build name="My Personal Kodi Build" version="1.0.0">
+    <!-- Direct ZIP of your repo's main branch -->
+    <url>https://github.com/<your_github_username>/kodi_personal/archive/refs/heads/main.zip</url>
+
+    <!-- Optional fields (nice to have, but not required) -->
+    <!-- <md5>PUT_MD5_OF_ZIP_HERE</md5> -->
+    <!-- <size>0</size> -->
+
+    <!-- Cosmetic/metadata (OpenWizard ignores unknown tags harmlessly) -->
+    <theme>Default</theme>
+    <preview></preview>
+    <adult>false</adult>
+    <changelog>
+      Initial public wizard pointing to GitHub main ZIP.
+    </changelog>
+    <notes>
+      Updates: push to main. Devices: run OpenWizard → Builds to reinstall/update.
+    </notes>
+  </build>
+</builds>
