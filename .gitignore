@@ -1,0 +1,20 @@
+# Tooling and editor state, never part of the repo
+.claude/
+.vscode/
+.idea/
+*.pyc
+__pycache__/
+.DS_Store
+
+# Secrets and device state, never commit these
+# Accounts are authenticated on device by the user, not stored here.
+guisettings.xml
+**/guisettings.xml
+*token*.json
+*token*.txt
+*.apikey
+*apikey*
+*api_key*
+*premiumize*
+*.pem
+secrets.*

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Setup service for the ThoughtStream layer. Applies accent and seeds the home menu. -->
+<addon id="service.kodipersonal.setup"
+       name="KODI Personal Setup"
+       version="0.1.0"
+       provider-name="AANOTHERWORLD">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+  </requires>
+  <extension point="xbmc.service" library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Personal setup service for the ThoughtStream layer</summary>
+    <description lang="en_GB">Applies the ThoughtStream accent and writes the home menu and widget rows that ride on top of Arctic Fuse 3. Does not modify the skin. Logs to its own profile folder.</description>
+    <platform>all</platform>
+    <license>MIT</license>
+  </extension>
+</addon>

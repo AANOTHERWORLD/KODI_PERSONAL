@@ -1,0 +1,112 @@
+#!/usr/bin/env python3
+# Build step for the thin personal layer.
+#
+# Walks every addon under src/, zips each into zips/<addon.id>/<addon.id>-<version>.zip,
+# copies the addon.xml next to the zip, and regenerates the repo addons.xml plus its
+# md5. This is intentionally the only build step, per the project rules.
+#
+# No secrets are read or written here. No em dashes used anywhere. Logging goes to
+# stdout so the run is visible in CI or a terminal.
+
+import hashlib
+import os
+import sys
+import xml.etree.ElementTree as ET
+import zipfile
+
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SRC_DIR = os.path.join(REPO_ROOT, "src")
+ZIPS_DIR = os.path.join(REPO_ROOT, "zips")
+
+
+def log(message):
+    print("[generate_repo] " + message)
+
+
+def find_addons(src_dir):
+    # An addon is any immediate subfolder of src/ that has an addon.xml.
+    addons = []
+    if not os.path.isdir(src_dir):
+        log("no src directory at " + src_dir)
+        return addons
+    for name in sorted(os.listdir(src_dir)):
+        path = os.path.join(src_dir, name)
+        if os.path.isdir(path) and os.path.isfile(os.path.join(path, "addon.xml")):
+            addons.append(path)
+    return addons
+
+
+def read_addon_meta(addon_path):
+    addon_xml = os.path.join(addon_path, "addon.xml")
+    tree = ET.parse(addon_xml)
+    root = tree.getroot()
+    addon_id = root.get("id")
+    version = root.get("version")
+    if not addon_id or not version:
+        raise ValueError("addon.xml missing id or version at " + addon_xml)
+    return addon_id, version, addon_xml
+
+
+def zip_addon(addon_path, addon_id, version):
+    out_dir = os.path.join(ZIPS_DIR, addon_id)
+    os.makedirs(out_dir, exist_ok=True)
+    zip_path = os.path.join(out_dir, addon_id + "-" + version + ".zip")
+
+    # The zip must contain a top level folder named after the addon id, which is
+    # what Kodi expects when installing from a zip.
+    with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
+        for base, _dirs, files in os.walk(addon_path):
+            for fname in files:
+                full = os.path.join(base, fname)
+                rel = os.path.relpath(full, addon_path)
+                arc = os.path.join(addon_id, rel)
+                zf.write(full, arc)
+    log("wrote " + os.path.relpath(zip_path, REPO_ROOT))
+
+    # Copy addon.xml next to the zip so a repository can serve metadata directly.
+    src_xml = os.path.join(addon_path, "addon.xml")
+    dst_xml = os.path.join(out_dir, "addon.xml")
+    with open(src_xml, "rb") as r, open(dst_xml, "wb") as w:
+        w.write(r.read())
+    return zip_path
+
+
+def build_addons_xml(addons):
+    root = ET.Element("addons")
+    for addon_path in addons:
+        tree = ET.parse(os.path.join(addon_path, "addon.xml"))
+        root.append(tree.getroot())
+    return root
+
+
+def write_addons_xml(root):
+    os.makedirs(ZIPS_DIR, exist_ok=True)
+    addons_xml_path = os.path.join(ZIPS_DIR, "addons.xml")
+    data = ET.tostring(root, encoding="utf-8")
+    with open(addons_xml_path, "wb") as f:
+        f.write(b'<?xml version="1.0" encoding="UTF-8"?>\n')
+        f.write(data)
+    md5 = hashlib.md5(open(addons_xml_path, "rb").read()).hexdigest()
+    with open(addons_xml_path + ".md5", "w") as f:
+        f.write(md5)
+    log("wrote zips/addons.xml and addons.xml.md5")
+
+
+def main():
+    log("repo root " + REPO_ROOT)
+    addons = find_addons(SRC_DIR)
+    if not addons:
+        log("nothing to build, exiting")
+        return 0
+    for addon_path in addons:
+        addon_id, version, _xml = read_addon_meta(addon_path)
+        log("packaging " + addon_id + " " + version)
+        zip_addon(addon_path, addon_id, version)
+    root = build_addons_xml(addons)
+    write_addons_xml(root)
+    log("done, " + str(len(addons)) + " addon(s)")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

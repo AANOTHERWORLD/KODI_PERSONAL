@@ -1,0 +1,157 @@
+{
+  "_comment": "Home menu rows for the ThoughtStream layer on Arctic Fuse 3. Provider IDs are US TMDb watch_provider values and need on-device verification, especially Max and Prime Video. Trakt info ids are TMDb Helper internal ids and should be confirmed against the installed TMDb Helper version. Final verification happens on the ONN.",
+  "watch_region": "US",
+  "tmdbhelper": "plugin.video.themoviedb.helper",
+  "services": [
+    { "key": "netflix",  "label": "Netflix",     "provider_id": 8,    "note": "US Netflix" },
+    { "key": "max",      "label": "Max",          "provider_id": 1899, "note": "Max, formerly HBO Max 384, verify on device" },
+    { "key": "appletv",  "label": "Apple TV+",    "provider_id": 350,  "note": "Apple TV Plus, distinct from Apple TV store id 2" },
+    { "key": "disney",   "label": "Disney+",      "provider_id": 337,  "note": "Disney Plus US" },
+    { "key": "prime",    "label": "Prime Video",  "provider_id": 9,    "note": "Amazon Prime Video, id 119 also seen in some regions, verify" }
+  ],
+  "widget_kinds": [
+    { "key": "new",       "label": "New",       "sort_by": "primary_release_date.desc", "extra": "" },
+    { "key": "trending",  "label": "Trending",  "sort_by": "popularity.desc",            "extra": "" },
+    { "key": "toprated",  "label": "Top Rated", "sort_by": "vote_average.desc",          "extra": "&vote_count.gte=200" }
+  ],
+  "rows": [
+    {
+      "group": "For You",
+      "id": "foryou_upnext",
+      "label": "Up Next",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=trakt_upnext&tmdb_type=tv"
+    },
+    {
+      "group": "For You",
+      "id": "foryou_continue",
+      "label": "Continue Watching",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=trakt_inprogress&tmdb_type=both"
+    },
+    {
+      "group": "For You",
+      "id": "foryou_calendar",
+      "label": "My Calendar",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=trakt_calendar&tmdb_type=tv&startdate=-1&days=8"
+    },
+    {
+      "group": "For You",
+      "id": "foryou_recommended",
+      "label": "Recommended",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=trakt_recommendations&tmdb_type=both"
+    },
+
+    {
+      "group": "Netflix",
+      "id": "netflix_new",
+      "label": "New on Netflix",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=8&watch_region=US&sort_by=primary_release_date.desc"
+    },
+    {
+      "group": "Netflix",
+      "id": "netflix_trending",
+      "label": "Trending on Netflix",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=8&watch_region=US&sort_by=popularity.desc"
+    },
+    {
+      "group": "Netflix",
+      "id": "netflix_toprated",
+      "label": "Top Rated on Netflix",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=8&watch_region=US&sort_by=vote_average.desc&vote_count.gte=200"
+    },
+
+    {
+      "group": "Max",
+      "id": "max_new",
+      "label": "New on Max",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=1899&watch_region=US&sort_by=primary_release_date.desc"
+    },
+    {
+      "group": "Max",
+      "id": "max_trending",
+      "label": "Trending on Max",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=1899&watch_region=US&sort_by=popularity.desc"
+    },
+    {
+      "group": "Max",
+      "id": "max_toprated",
+      "label": "Top Rated on Max",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=1899&watch_region=US&sort_by=vote_average.desc&vote_count.gte=200"
+    },
+
+    {
+      "group": "Apple TV+",
+      "id": "appletv_new",
+      "label": "New on Apple TV+",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=350&watch_region=US&sort_by=primary_release_date.desc"
+    },
+    {
+      "group": "Apple TV+",
+      "id": "appletv_trending",
+      "label": "Trending on Apple TV+",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=350&watch_region=US&sort_by=popularity.desc"
+    },
+    {
+      "group": "Apple TV+",
+      "id": "appletv_toprated",
+      "label": "Top Rated on Apple TV+",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=350&watch_region=US&sort_by=vote_average.desc&vote_count.gte=200"
+    },
+
+    {
+      "group": "Disney+",
+      "id": "disney_new",
+      "label": "New on Disney+",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=337&watch_region=US&sort_by=primary_release_date.desc"
+    },
+    {
+      "group": "Disney+",
+      "id": "disney_trending",
+      "label": "Trending on Disney+",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=337&watch_region=US&sort_by=popularity.desc"
+    },
+    {
+      "group": "Disney+",
+      "id": "disney_toprated",
+      "label": "Top Rated on Disney+",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=337&watch_region=US&sort_by=vote_average.desc&vote_count.gte=200"
+    },
+
+    {
+      "group": "Prime Video",
+      "id": "prime_new",
+      "label": "New on Prime Video",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=9&watch_region=US&sort_by=primary_release_date.desc"
+    },
+    {
+      "group": "Prime Video",
+      "id": "prime_trending",
+      "label": "Trending on Prime Video",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=9&watch_region=US&sort_by=popularity.desc"
+    },
+    {
+      "group": "Prime Video",
+      "id": "prime_toprated",
+      "label": "Top Rated on Prime Video",
+      "target": "videos",
+      "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=9&watch_region=US&sort_by=vote_average.desc&vote_count.gte=200"
+    }
+  ]
+}

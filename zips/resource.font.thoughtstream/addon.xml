@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Font resource for the ThoughtStream layer. Libre Baskerville 700 and Inter 400 and 600. -->
+<addon id="resource.font.thoughtstream"
+       name="ThoughtStream Fonts"
+       version="0.1.0"
+       provider-name="AANOTHERWORLD">
+  <requires>
+    <import addon="kodi.resource" version="1.0.0" />
+  </requires>
+  <extension point="kodi.resource.fonts" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">ThoughtStream font set, Libre Baskerville and Inter</summary>
+    <description lang="en_GB">Open licensed fonts for the ThoughtStream layer. Libre Baskerville 700 for titles, Inter 400 and 600 for UI. Referenced over resource:// in the same way Arctic Fuse 3 references its own font resource addon.</description>
+    <platform>all</platform>
+    <license>SIL Open Font License 1.1</license>
+  </extension>
+</addon>
