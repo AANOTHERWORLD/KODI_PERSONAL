@@ -102,6 +102,53 @@ def write_repo_alias(repo_zip_path):
     log("wrote repo.zip alias from " + os.path.relpath(repo_zip_path, REPO_ROOT))
 
 
+def _write_index(dir_path, entries, title):
+    rows = "\n".join(
+        '    <li><a href="{0}">{0}</a></li>'.format(name) for name in entries
+    )
+    html = (
+        "<!DOCTYPE html>\n"
+        '<html lang="en">\n<head>\n<meta charset="utf-8" />\n'
+        "<title>{title}</title>\n</head>\n<body>\n"
+        "<h1>{title}</h1>\n<ul>\n{rows}\n</ul>\n</body>\n</html>\n"
+    ).format(title=title, rows=rows)
+    with open(os.path.join(dir_path, "index.html"), "w", encoding="utf-8") as f:
+        f.write(html)
+
+
+def write_html_indexes():
+    # GitHub Pages and raw.githubusercontent do not serve browsable directory
+    # listings, which Kodi needs to locate a zip in Install from zip file. We
+    # emit simple HTML index pages whose <a href> links Kodi parses as a
+    # directory listing. This makes the folder URLs browsable on device.
+
+    # Root landing page: the clean repo install entry point.
+    _write_index(REPO_ROOT, ["repo.zip", "zips/"], "KODI_PERSONAL")
+    log("wrote index.html (root)")
+
+    if not os.path.isdir(ZIPS_DIR):
+        return
+
+    # zips listing: addons.xml, checksum, and one folder per addon.
+    top = []
+    for name in sorted(os.listdir(ZIPS_DIR)):
+        if name == "index.html":
+            continue
+        full = os.path.join(ZIPS_DIR, name)
+        top.append(name + "/" if os.path.isdir(full) else name)
+    _write_index(ZIPS_DIR, top, "KODI_PERSONAL zips")
+    log("wrote zips/index.html")
+
+    # Per addon folder listing so each zip is browsable too.
+    for name in sorted(os.listdir(ZIPS_DIR)):
+        full = os.path.join(ZIPS_DIR, name)
+        if not os.path.isdir(full):
+            continue
+        files = [f for f in sorted(os.listdir(full)) if f != "index.html"]
+        _write_index(full, files, "KODI_PERSONAL " + name)
+    log("wrote per addon index.html files")
+
+
 def main():
     log("repo root " + REPO_ROOT)
     addons = find_addons(SRC_DIR)
@@ -120,7 +167,8 @@ def main():
     if repo_zip_path:
         write_repo_alias(repo_zip_path)
     else:
-        log("no repository addon found, skipping repo.zip alias", )
+        log("no repository addon found, skipping repo.zip alias")
+    write_html_indexes()
     log("done, " + str(len(addons)) + " addon(s)")
     return 0
 
