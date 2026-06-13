@@ -2,7 +2,7 @@
 <!-- Setup service. Applies the personal TMDb Helper build defaults on first run and after each update. -->
 <addon id="service.kodipersonal.setup"
        name="KODI Personal Setup"
-       version="0.3.0"
+       version="0.3.1"
        provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />

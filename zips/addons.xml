@@ -23,7 +23,7 @@
     <platform>all</platform>
     <license>SIL Open Font License 1.1</license>
   </extension>
-</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.3.0" provider-name="AANOTHERWORLD">
+</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.3.1" provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
   </requires>
