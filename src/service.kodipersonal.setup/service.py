@@ -2,8 +2,8 @@
 # KODI Personal Setup service
 # Applies the personal build defaults (TMDb Helper behavior + source-player slot)
 # on first run and after each update, so every home device stays consistent.
-# Also copies the ThoughtStream colour set into Arctic Fuse 3 on every start so
-# the theme self-heals after an AF3 update overwrites its colors folder.
+# Also copies the ThoughtStream colour set and background into Arctic Fuse 3 on
+# every start so the theme self-heals after an AF3 update overwrites those files.
 # Logging is verbose by design to support later monitoring.
 
 import os
@@ -23,7 +23,9 @@ PROFILE = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
 
 CONFIG_DIR = os.path.join(ADDON_PATH, 'resources', 'config')
 COLORS_DIR = os.path.join(ADDON_PATH, 'resources', 'colors')
+BACKGROUNDS_DIR = os.path.join(ADDON_PATH, 'resources', 'backgrounds')
 COLOUR_FILE = 'ThoughtStream.xml'
+BACKGROUND_FILE = 'thoughtstream_bg.png'
 AF3_ID = 'skin.arctic.fuse.3'
 LOG_TAG = '[KODIPERSONAL]'
 LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
@@ -92,6 +94,34 @@ def _read_bytes(path):
         return None
 
 
+def resolve_af3_path():
+    # Returns the on-disk path to the installed AF3 skin, or None if not present.
+    try:
+        af3 = xbmcaddon.Addon(AF3_ID)
+    except Exception:
+        return None
+    return xbmcvfs.translatePath(af3.getAddonInfo('path'))
+
+
+def _copy_if_different(src_data, dest_dir, dest, label):
+    # Copy bytes to dest only if missing or different. Returns True when the file
+    # ends up in place (copied or already current), False when the copy failed.
+    if _read_bytes(dest) == src_data:
+        log('{} already current at destination; nothing to copy.'.format(label))
+        return True
+    try:
+        if not os.path.isdir(dest_dir):
+            os.makedirs(dest_dir, exist_ok=True)
+        with open(dest, 'wb') as fh:
+            fh.write(src_data)
+        log('{} copied into AF3.'.format(label))
+        return True
+    except Exception as exc:
+        log('Could not copy {} to {}: {}. The skin folder may be read only; '
+            'place the file there manually.'.format(label, dest, exc), xbmc.LOGWARNING)
+        return False
+
+
 def apply_colour_theme():
     # Runs on EVERY start, not gated by the version check. AF3 owns its colors
     # folder, and an AF3 update can wipe our overlay, so we re-copy it whenever
@@ -102,32 +132,51 @@ def apply_colour_theme():
         log('Colour set source missing at {}; skipping copy.'.format(src), xbmc.LOGERROR)
         return
 
-    try:
-        af3 = xbmcaddon.Addon(AF3_ID)
-    except Exception:
+    af3_path = resolve_af3_path()
+    if not af3_path:
         log('{} is not installed; skipping colour set copy this pass.'.format(AF3_ID))
         return
 
-    af3_path = xbmcvfs.translatePath(af3.getAddonInfo('path'))
     dest_dir = os.path.join(af3_path, 'colors')
     dest = os.path.join(dest_dir, COLOUR_FILE)
     log('Colour set source: {}'.format(src))
     log('Colour set destination: {}'.format(dest))
+    _copy_if_different(src_data, dest_dir, dest, 'Colour set')
 
-    if _read_bytes(dest) == src_data:
-        log('Colour set already current at destination; nothing to copy.')
+
+def apply_background():
+    # Runs on EVERY start, same self-healing pattern as the colour set. After the
+    # file is in place we point AF3 at it with a skin string, but only when AF3
+    # is the active skin so we never change another skin's settings.
+    src = os.path.join(BACKGROUNDS_DIR, BACKGROUND_FILE)
+    src_data = _read_bytes(src)
+    if src_data is None:
+        log('Background source missing at {}; skipping copy.'.format(src), xbmc.LOGERROR)
         return
 
-    try:
-        if not os.path.isdir(dest_dir):
-            os.makedirs(dest_dir, exist_ok=True)
-        with open(dest, 'wb') as fh:
-            fh.write(src_data)
-        log('Colour set copied into AF3 colors folder.')
-    except Exception as exc:
-        log('Could not copy colour set to {}: {}. The skin folder may be read '
-            'only; place {} in that colors folder manually.'.format(dest, exc, COLOUR_FILE),
-            xbmc.LOGWARNING)
+    af3_path = resolve_af3_path()
+    if not af3_path:
+        log('{} is not installed; skipping background copy this pass.'.format(AF3_ID))
+        return
+
+    dest_dir = os.path.join(af3_path, 'extras', 'backgrounds')
+    dest = os.path.join(dest_dir, BACKGROUND_FILE)
+    log('Background source: {}'.format(src))
+    log('Background destination: {}'.format(dest))
+    in_place = _copy_if_different(src_data, dest_dir, dest, 'Background image')
+    if not in_place:
+        return
+
+    if xbmc.getSkinDir() == AF3_ID:
+        xbmc.executebuiltin(
+            'Skin.SetString(Background.Image,'
+            'special://skin/extras/backgrounds/{})'.format(BACKGROUND_FILE))
+        log('Set Background.Image to the ThoughtStream background.')
+        xbmc.executebuiltin('Skin.SetString(Background.DialogImage,Chalk)')
+        log('Set Background.DialogImage to Chalk.')
+    else:
+        log('Active skin is {}, not {}; left background skin strings unchanged.'.format(
+            xbmc.getSkinDir(), AF3_ID))
 
 
 def needs_apply():
@@ -158,8 +207,9 @@ def main():
     if monitor.waitForAbort(20):
         return
 
-    # Colour set self-heals on every start, independent of the version gate.
+    # Theme assets self-heal on every start, independent of the version gate.
     apply_colour_theme()
+    apply_background()
 
     # TMDb Helper defaults stay version-gated so they only reapply after updates.
     if needs_apply():

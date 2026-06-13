@@ -23,14 +23,14 @@
     <platform>all</platform>
     <license>SIL Open Font License 1.1</license>
   </extension>
-</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.2.0" provider-name="AANOTHERWORLD">
+</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.3.0" provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
   </requires>
   <extension point="xbmc.service" library="service.py" />
   <extension point="xbmc.addon.metadata">
     <summary lang="en_GB">Personal setup service for the lightweight build</summary>
-    <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set into Arctic Fuse 3 on every start so the theme self-heals after a skin update. Stores no secrets. Logs to its own profile folder.</description>
+    <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set and background into Arctic Fuse 3 on every start so the theme self-heals after a skin update. Stores no secrets. Logs to its own profile folder.</description>
     <platform>all</platform>
     <license>MIT</license>
   </extension>
