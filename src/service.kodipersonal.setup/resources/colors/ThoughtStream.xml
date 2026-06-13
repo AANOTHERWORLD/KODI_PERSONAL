@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ThoughtStream colour set for Arctic Fuse 3.
+  A light, flat, stone-neutral theme. Loaded as an overlay on top of AF3's
+  colors/defaults.xml. AARRGGBB throughout (alpha first).
+
+  Palette source: thoughtstream-DESIGN.md
+    warm white  fafaf9   background
+    surface     f5f5f4   panels / dialogs
+    raised      efedeb   raised panels
+    stone       78716c   accent
+    warm black  1c1917   text / emphasis / highlight
+    secondary   57534e   metadata
+    sage        a8a29e   dim labels / dividers
+    border      d6d3d1   medium border
+    gold        ca8a04   ratings
+
+  Note: this is a v1 to tune on the device. Shadows are reduced rather than
+  fully removed, because on a TV a faint scrim keeps labels legible over poster
+  art. Adjust the shadow_* and main_bg_* opacities on-screen if needed.
+-->
+<colors>
+    <!-- Main: foreground is warm black, background is warm white -->
+    <color name="main_fg_100">ff1c1917</color>
+    <color name="main_fg_90">e71c1917</color>
+    <color name="main_fg_70">b31c1917</color>
+    <color name="main_fg_50">801c1917</color>
+    <color name="main_fg_30">4d1c1917</color>
+    <color name="main_fg_12">1f1c1917</color>
+    <color name="main_fg_06">0f1c1917</color>
+
+    <color name="main_bg_100">fffafaf9</color>
+    <color name="main_bg_90">e7fafaf9</color>
+    <color name="main_bg_70">b3fafaf9</color>
+    <color name="main_bg_50">80fafaf9</color>
+    <color name="main_bg_30">4dfafaf9</color>
+    <color name="main_bg_12">1ffafaf9</color>
+
+    <color name="main_soft">33a8a29e</color>
+    <color name="main_hard">b3a8a29e</color>
+    <color name="main_back">ffd6d3d1</color>
+    <color name="main_logo">ff78716c</color>
+
+    <!-- Dialogs: stone nib, warm-black text on surface -->
+    <color name="dialog_nib">ff78716c</color>
+    <color name="dialog_overlay">991c1917</color>
+
+    <color name="dialog_fg_100">ff1c1917</color>
+    <color name="dialog_fg_90">e71c1917</color>
+    <color name="dialog_fg_70">b31c1917</color>
+    <color name="dialog_fg_50">801c1917</color>
+    <color name="dialog_fg_30">4d1c1917</color>
+    <color name="dialog_fg_12">1f1c1917</color>
+    <color name="dialog_fg_06">0f1c1917</color>
+
+    <color name="dialog_bg_100">fff5f5f4</color>
+    <color name="dialog_bg_90">e7f5f5f4</color>
+    <color name="dialog_bg_70">b3f5f5f4</color>
+    <color name="dialog_bg_50">80f5f5f4</color>
+    <color name="dialog_bg_30">4df5f5f4</color>
+    <color name="dialog_bg_12">1ff5f5f4</color>
+
+    <!-- Panels: raised surface, warm-black text -->
+    <color name="panel_bg_70">b3efedeb</color>
+    <color name="panel_bg_50">80efedeb</color>
+    <color name="panel_bg_12">1fefedeb</color>
+    <color name="panel_fg_100">ff1c1917</color>
+    <color name="panel_fg_90">e71c1917</color>
+    <color name="panel_fg_70">b31c1917</color>
+    <color name="panel_fg_50">801c1917</color>
+    <color name="panel_fg_30">4d1c1917</color>
+    <color name="panel_fg_12">1f1c1917</color>
+
+    <!-- Overlay: subtle warm-black touches for hover/raised states -->
+    <color name="overlay_soft">0f1c1917</color>
+    <color name="overlay_hard">1f1c1917</color>
+
+    <!-- Shadow: reduced for a flat look, kept faint for legibility over art -->
+    <color name="shadow_soft">0f1c1917</color>
+    <color name="shadow_hard">331c1917</color>
+    <color name="shadow_full">661c1917</color>
+    <color name="shadow_back">33000000</color>
+
+    <!-- Misc -->
+    <color name="yellow_star">ffca8a04</color>
+</colors>
