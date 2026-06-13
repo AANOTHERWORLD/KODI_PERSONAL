@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Setup service for the ThoughtStream layer. Applies accent and seeds the home menu. -->
+<!-- Setup service. Applies the personal TMDb Helper build defaults on first run and after each update. -->
 <addon id="service.kodipersonal.setup"
        name="KODI Personal Setup"
-       version="0.1.0"
+       version="0.1.1"
        provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
   </requires>
   <extension point="xbmc.service" library="service.py" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en_GB">Personal setup service for the ThoughtStream layer</summary>
-    <description lang="en_GB">Applies the ThoughtStream accent and writes the home menu and widget rows that ride on top of Arctic Fuse 3. Does not modify the skin. Logs to its own profile folder.</description>
+    <summary lang="en_GB">Personal setup service for the lightweight build</summary>
+    <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Stores no secrets. Logs to its own profile folder.</description>
     <platform>all</platform>
     <license>MIT</license>
   </extension>

@@ -1,0 +1,39 @@
+{
+  "_comment": "Behavior-defining TMDb Helper settings applied to every device by the setup service. NO secrets are stored here. Trakt and any API keys are authenticated on-device by the user. Values mirror the scrubbed backup so the For You / calendar / scrobble behavior matches the original build.",
+  "target_addon": "plugin.video.themoviedb.helper",
+  "settings": {
+    "players_url": "https://oldmanjax.github.io/jsonplayers.zip",
+    "bundled_players": "true",
+    "combined_players": "true",
+    "default_player_movies": "redlight.auto.json play_movie",
+    "default_player_episodes": "redlight.auto.json play_episode",
+
+    "trakt_scrobbling": "true",
+    "trakt_watchedindicators": "true",
+    "trakt_watchedinprogress": "true",
+    "trakt_nextepisodesort": "recentlywatched",
+    "trakt_cacheownlists": "true",
+
+    "calendar_flatten": "true",
+    "nextaired_linklibrary": "true",
+    "nextepisodes_usecalendar": "false",
+    "seasons_upnext": "true",
+    "seasons_anticipated": "true",
+    "seasons_specials": "true",
+
+    "hide_unaired_movies": "true",
+    "hide_unaired_episodes": "false",
+    "mpaa_prefix": "Rated",
+    "ignore_regionreleasefilter": "true",
+    "widgets_nextpage": "true",
+
+    "pagemulti_tmdb": "2",
+    "pagemulti_trakt": "2",
+    "pagemulti_sync": "2",
+    "pagemulti_library": "2",
+
+    "startup_notifications": "false",
+    "sync_notifications": "false",
+    "connection_notifications": "true"
+  }
+}

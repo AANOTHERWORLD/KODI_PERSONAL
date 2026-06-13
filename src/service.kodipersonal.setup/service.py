@@ -1,121 +1,123 @@
-# Setup service for the ThoughtStream layer on Arctic Fuse 3 (AF3).
-#
-# Strict no-edit design. This service never writes into the AF3 addon. It only
-# touches the user profile and the running skin's settings, both of which are
-# reversible by the user from the skin settings screen.
-#
-# What it does on start:
-#   1. Logs to setup.log in this addon's own profile folder, matching the
-#      existing setup service pattern.
-#   2. Applies the ThoughtStream accent to AF3 with Skin.SetString, which AF3
-#      reads as focuscolor.name. No skin edit needed.
-#   3. Reads resources/config/lists.json and seeds the home menu and widget
-#      rows into the script.skinvariables profile data so AF3 can pick them up.
-#      AF3 drives its home menu through script.skinvariables, and that addon
-#      keeps user data under special://profile/addon_data/script.skinvariables/.
-#      The exact node layout is confirmed on the ONN during the first push and
-#      check pass, so this writes a clearly named seed file and logs every
-#      intended binding rather than guessing a format silently.
-#
-# No secrets are read or written. No em dashes.
+# -*- coding: utf-8 -*-
+# KODI Personal Setup service
+# Applies the personal build defaults (TMDb Helper behavior + source-player slot)
+# on first run and after each update, so every home device stays consistent.
+# Logging is verbose by design to support later monitoring.
 
-import json
 import os
+import json
 import time
 
 import xbmc
 import xbmcaddon
+import xbmcgui
 import xbmcvfs
 
 ADDON = xbmcaddon.Addon()
-ADDON_ID = ADDON.getAddonId()
-PROFILE = xbmcvfs.translatePath(ADDON.getAddonInfo("profile"))
-CONFIG = xbmcvfs.translatePath(
-    os.path.join(ADDON.getAddonInfo("path"), "resources", "config", "lists.json")
-)
+ADDON_ID = ADDON.getAddonInfo('id')
+ADDON_VERSION = ADDON.getAddonInfo('version')
+ADDON_PATH = xbmcvfs.translatePath(ADDON.getAddonInfo('path'))
+PROFILE = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
 
-# Where script.skinvariables keeps its user data. Confirmed from the addon
-# source: resources/lib/method.py uses special://profile/addon_data/script.skinvariables/.
-SKINVARS_DATA = xbmcvfs.translatePath(
-    "special://profile/addon_data/script.skinvariables/kodipersonal/"
-)
-
-# ThoughtStream accent, AARRGGBB. stone.accent from THEME_THOUGHTSTREAM.md.
-ACCENT = "ff8a7b6b"
-AF3_ID = "skin.arctic.fuse.3"
+CONFIG_DIR = os.path.join(ADDON_PATH, 'resources', 'config')
+LOG_TAG = '[KODIPERSONAL]'
+LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 
-def _ensure_dir(path):
-    if not os.path.isdir(path):
-        os.makedirs(path, exist_ok=True)
-
-
-def log(message, level=xbmc.LOGINFO):
-    # Log to the Kodi log and to our own profile log file.
-    xbmc.log("[%s] %s" % (ADDON_ID, message), level)
+def log(msg, level=xbmc.LOGINFO):
+    line = '{} {}'.format(LOG_TAG, msg)
+    xbmc.log(line, level)
     try:
-        _ensure_dir(PROFILE)
-        line = "%s  %s\n" % (time.strftime("%Y-%m-%d %H:%M:%S"), message)
-        with open(os.path.join(PROFILE, "setup.log"), "a", encoding="utf-8") as f:
-            f.write(line)
-    except Exception as exc:
-        xbmc.log("[%s] could not write profile log: %s" % (ADDON_ID, exc), xbmc.LOGWARNING)
+        if not xbmcvfs.exists(PROFILE):
+            xbmcvfs.mkdirs(PROFILE)
+        stamp = time.strftime('%Y-%m-%d %H:%M:%S')
+        with open(LOGFILE, 'a', encoding='utf-8') as fh:
+            fh.write('{} {}\n'.format(stamp, msg))
+    except Exception as exc:  # never let logging crash the service
+        xbmc.log('{} logfile write failed: {}'.format(LOG_TAG, exc), xbmc.LOGWARNING)
 
 
-def current_skin():
-    return xbmc.getSkinDir()
+def notify(message):
+    if ADDON.getSettingBool('show_notifications'):
+        xbmcgui.Dialog().notification('KODI Personal', message,
+                                      xbmcgui.NOTIFICATION_INFO, 4000)
 
 
-def apply_accent():
-    if current_skin() != AF3_ID:
-        log("skin is %s, not %s, skipping accent" % (current_skin(), AF3_ID))
-        return
-    xbmc.executebuiltin("Skin.SetString(focuscolor.name,%s)" % ACCENT)
-    log("applied accent focuscolor.name %s" % ACCENT)
-
-
-def load_lists():
+def load_config(name):
+    path = os.path.join(CONFIG_DIR, name)
     try:
-        with open(CONFIG, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        rows = data.get("rows", [])
-        log("loaded %d rows from lists.json" % len(rows))
+        with open(path, 'r', encoding='utf-8') as fh:
+            data = json.load(fh)
+        log('Loaded config {}'.format(name))
         return data
     except Exception as exc:
-        log("could not read lists.json: %s" % exc, xbmc.LOGERROR)
-        return {"rows": []}
+        log('Failed to load config {}: {}'.format(name, exc), xbmc.LOGERROR)
+        return None
 
 
-def seed_home_menu(data):
-    # Write the rows as a seed file into the skinvariables profile data and log
-    # every intended binding. The first ONN pass confirms the exact node layout
-    # AF3 expects, after which the copy target here is finalised.
-    rows = data.get("rows", [])
+def apply_tmdbhelper_settings():
+    cfg = load_config('tmdbhelper_settings.json')
+    if not cfg:
+        return False
+    target = cfg.get('target_addon', 'plugin.video.themoviedb.helper')
     try:
-        _ensure_dir(SKINVARS_DATA)
-        seed_path = os.path.join(SKINVARS_DATA, "thoughtstream_home_rows.json")
-        with open(seed_path, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2)
-        log("seeded %d rows to %s" % (len(rows), seed_path))
-    except Exception as exc:
-        log("could not seed home rows: %s" % exc, xbmc.LOGERROR)
+        helper = xbmcaddon.Addon(target)
+    except Exception:
+        log('{} is not installed yet; skipping settings apply this pass.'.format(target),
+            xbmc.LOGWARNING)
+        return False
 
-    for row in rows:
-        log("intended binding group=%s id=%s target=%s path=%s"
-            % (row.get("group"), row.get("id"), row.get("target"), row.get("path")))
-    log("home menu seed written, confirm node layout on device")
-
-
-def run_once():
-    log("setup service start, skin=%s" % current_skin())
-    apply_accent()
-    seed_home_menu(load_lists())
-    log("setup service done")
+    applied, failed = 0, 0
+    for key, value in cfg.get('settings', {}).items():
+        try:
+            helper.setSetting(key, str(value))
+            applied += 1
+        except Exception as exc:
+            failed += 1
+            log('Could not set {}={} : {}'.format(key, value, exc), xbmc.LOGWARNING)
+    log('TMDb Helper settings applied: {} ok, {} failed.'.format(applied, failed))
+    return failed == 0
 
 
-if __name__ == "__main__":
-    # Wait briefly for the GUI so getSkinDir and Skin.SetString are meaningful,
-    # then run once. waitForAbort returns True if Kodi is shutting down.
+def needs_apply():
+    if not ADDON.getSettingBool('apply_on_update'):
+        last = ADDON.getSetting('last_applied_version')
+        return last == ''  # only ever run once if re-apply is disabled
+    return ADDON.getSetting('last_applied_version') != ADDON_VERSION
+
+
+def run_setup():
+    log('===== Setup pass start (addon v{}) ====='.format(ADDON_VERSION))
+    ok = apply_tmdbhelper_settings()
+    if ok:
+        ADDON.setSetting('last_applied_version', ADDON_VERSION)
+        notify('Build defaults applied.')
+        log('Setup pass complete; recorded version {}.'.format(ADDON_VERSION))
+    else:
+        log('Setup pass incomplete; will retry on next start.', xbmc.LOGWARNING)
+    log('===== Setup pass end =====')
+
+
+def main():
     monitor = xbmc.Monitor()
-    if not monitor.waitForAbort(5):
-        run_once()
+    log('Service started on {} (Kodi build: {})'.format(
+        xbmc.getInfoLabel('System.BuildVersion'), ADDON_VERSION))
+
+    # Give Kodi a moment to finish loading addons before we touch TMDb Helper.
+    if monitor.waitForAbort(20):
+        return
+
+    if needs_apply():
+        run_setup()
+    else:
+        log('Defaults already current for v{}; nothing to do.'.format(ADDON_VERSION))
+
+    # Idle. The service exists mainly to run the setup pass after updates.
+    while not monitor.abortRequested():
+        if monitor.waitForAbort(3600):
+            break
+    log('Service stopping.')
+
+
+if __name__ == '__main__':
+    main()
