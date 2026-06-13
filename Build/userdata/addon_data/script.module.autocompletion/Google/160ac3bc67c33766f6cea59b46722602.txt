@@ -1,1 +1,0 @@
-["aanother-ko", ["ankotheyonko", "ko-ann", "another ko", "another'", "another kyo"], [], {"google:suggestsubtypes": [[751], [751], [751], [512, 546], [751]], "google:suggesttype": ["QUERY", "QUERY", "QUERY", "QUERY", "QUERY"]}]
