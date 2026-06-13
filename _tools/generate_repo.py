@@ -92,18 +92,35 @@ def write_addons_xml(root):
     log("wrote zips/addons.xml and addons.xml.md5")
 
 
+def write_repo_alias(repo_zip_path):
+    # Copy the repository addon zip to a stable short name at the repo root so it
+    # can be installed in Kodi from one clean URL, for example
+    # https://<user>.github.io/<repo>/repo.zip, without a versioned path.
+    alias = os.path.join(REPO_ROOT, "repo.zip")
+    with open(repo_zip_path, "rb") as r, open(alias, "wb") as w:
+        w.write(r.read())
+    log("wrote repo.zip alias from " + os.path.relpath(repo_zip_path, REPO_ROOT))
+
+
 def main():
     log("repo root " + REPO_ROOT)
     addons = find_addons(SRC_DIR)
     if not addons:
         log("nothing to build, exiting")
         return 0
+    repo_zip_path = None
     for addon_path in addons:
         addon_id, version, _xml = read_addon_meta(addon_path)
         log("packaging " + addon_id + " " + version)
-        zip_addon(addon_path, addon_id, version)
+        zpath = zip_addon(addon_path, addon_id, version)
+        if addon_id.startswith("repository."):
+            repo_zip_path = zpath
     root = build_addons_xml(addons)
     write_addons_xml(root)
+    if repo_zip_path:
+        write_repo_alias(repo_zip_path)
+    else:
+        log("no repository addon found, skipping repo.zip alias", )
     log("done, " + str(len(addons)) + " addon(s)")
     return 0
 
