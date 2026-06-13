@@ -1,0 +1,32 @@
+[
+    {
+        "slot": "1101",
+        "name": "For You",
+        "toggle": "true"
+    },
+    {
+        "slot": "1102",
+        "name": "Netflix",
+        "toggle": "true"
+    },
+    {
+        "slot": "1103",
+        "name": "Max",
+        "toggle": "true"
+    },
+    {
+        "slot": "1104",
+        "name": "Apple TV+",
+        "toggle": "true"
+    },
+    {
+        "slot": "1105",
+        "name": "Disney+",
+        "toggle": "true"
+    },
+    {
+        "slot": "1106",
+        "name": "Prime Video",
+        "toggle": "true"
+    }
+]
