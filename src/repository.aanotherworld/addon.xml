@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="repository.aanotherworld" name="KODI_PERSONAL Repository"
+       version="1.0.0" provider-name="AANOTHERWORLD">
+    <extension point="xbmc.addon.repository" name="KODI_PERSONAL">
+        <dir>
+            <info compressed="false">https://raw.githubusercontent.com/AANOTHERWORLD/KODI_PERSONAL/main/zips/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/AANOTHERWORLD/KODI_PERSONAL/main/zips/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/AANOTHERWORLD/KODI_PERSONAL/main/zips/</datadir>
+        </dir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Personal Kodi repository</summary>
+        <description lang="en">Hosts the personal lightweight build addons so every device updates from one source.</description>
+        <platform>all</platform>
+    </extension>
+</addon>
