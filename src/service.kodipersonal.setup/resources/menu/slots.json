@@ -1,6 +1,11 @@
 {
     "active_slots": [
         {
+            "slot": "home",
+            "name": "Discover",
+            "toggle": ""
+        },
+        {
             "slot": "1101",
             "name": "For You",
             "toggle": "true"

@@ -2,6 +2,7 @@
 # KODI_PERSONAL build: menu generator.
 # Reads service.kodipersonal.setup/resources/config/lists.json and writes the
 # AF3 skinvariables files into service.kodipersonal.setup/resources/menu/:
+#   - the home (Discover) widget file (rows shown on the home section)
 #   - one widget file per home slot (rows shown on that section)
 #   - a 1104 submenu file (More Providers -> Apple TV+ / Disney+ / Prime Video)
 #   - one sub-page node file per submenu provider (Latest Series / Latest Movies)
@@ -10,6 +11,12 @@
 # AF3 only renders widget rows on home + slots 1101-1104 (the 5-slot cap, taken
 # from the skin's own generator). Extra providers therefore live under the 1104
 # submenu, each opening its own sub-page rather than a home row.
+#
+# A widget row may define its TMDb Helper query in one of three ways:
+#   - "params": an ordered map of query keys to values (used for the bespoke
+#               Discover and For You rows, e.g. trakt calendars with date ranges)
+#   - "info" + "tmdb_type": the lean Trakt list form
+#   - neither: a provider discover row, built from the section provider_id
 #
 # Run:  python3 _tools/generate_menu.py
 # Verbose logging by design so a later monitoring agent can parse the output.
@@ -50,6 +57,14 @@ def load_lists():
     return data
 
 
+def params_path(cfg, params, as_widget):
+    # Build a TMDb Helper query from an ordered params map. Insertion order is
+    # preserved so the generated path reads the same way every run.
+    query = "&".join("{}={}".format(k, v) for k, v in params.items())
+    url = "{tmdbh}?{query}".format(tmdbh=cfg["tmdbh"], query=query)
+    return url + cfg["widget_suffix"] if as_widget else url
+
+
 def discover_path(cfg, tmdb_type, provider_id, sort_by, as_widget):
     # Standard TMDb Helper discover URL for a watch provider. as_widget adds the
     # widget reload token + widget=true for home rows; navigation items omit it.
@@ -65,10 +80,21 @@ def discover_path(cfg, tmdb_type, provider_id, sort_by, as_widget):
 
 
 def info_path(cfg, info, tmdb_type, as_widget):
-    # TMDb Helper info list (used for the Trakt rows in For You).
+    # TMDb Helper info list (the lean Trakt row form).
     url = "{tmdbh}?info={info}&tmdb_type={t}".format(
         tmdbh=cfg["tmdbh"], info=info, t=tmdb_type)
     return url + cfg["widget_suffix"] if as_widget else url
+
+
+def widget_path(cfg, w, section, as_widget=True):
+    # Resolve a single widget row's path from params, info/tmdb_type, or a
+    # provider discover fallback.
+    if "params" in w:
+        return params_path(cfg, w["params"], as_widget)
+    if "info" in w:
+        return info_path(cfg, w["info"], w["tmdb_type"], as_widget)
+    return discover_path(cfg, w["tmdb_type"], section.get("provider_id", ""),
+                         w.get("sort_by", "popularity.desc"), as_widget)
 
 
 def node_url(provider_key):
@@ -109,16 +135,18 @@ def build():
         slot = section["slot"]
         name = section["name"]
         kind = section.get("type", "provider")
-        slots.append({"slot": slot, "name": name, "toggle": "true"})
+        # The home slot is always present in AF3, so it is never toggled. The
+        # custom slots (1101-1104) are toggled on.
+        slots.append({
+            "slot": slot,
+            "name": name,
+            "toggle": "" if slot == "home" else "true",
+        })
 
         if kind == "widgets":
             items = []
             for w in section["widgets"]:
-                if "info" in w:
-                    p = info_path(cfg, w["info"], w["tmdb_type"], as_widget=True)
-                else:
-                    p = discover_path(cfg, w["tmdb_type"], section.get("provider_id", ""),
-                                      w.get("sort_by", "popularity.desc"), as_widget=True)
+                p = widget_path(cfg, w, section, as_widget=True)
                 items.append(row(w["label"], p, guid_for(slot, w["label"])))
             fname = "{}{}widgets.json".format(FILE_PREFIX, slot)
             write_menu(fname, items)

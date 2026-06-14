@@ -31,6 +31,9 @@ BACKGROUND_FILE = 'thoughtstream_bg.png'
 AF3_ID = 'skin.arctic.fuse.3'
 SKINVARS_NODES = 'special://profile/addon_data/script.skinvariables/nodes/skin.arctic.fuse.3/'
 SKINVARS_RELOAD_PROP = 'SkinVariables.ShortcutsNode.Reload'
+SKIN_SETTINGS_FILE = 'skin_settings.json'
+VIEWTYPES_FILE = 'viewtypes.json'
+VIEWTYPES_DEST = 'special://profile/addon_data/script.skinvariables/skin.arctic.fuse.3-viewtypes.json'
 LOG_TAG = '[KODIPERSONAL]'
 LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
@@ -290,12 +293,17 @@ def deploy_menu():
     for entry in active_slots:
         slot = entry.get('slot')
         name = entry.get('name')
+        toggle = str(entry.get('toggle', 'true')).lower()
         if not slot:
             continue
         xbmc.executebuiltin('Skin.SetString(HomeSwitcher.{}.Name,{})'.format(slot, name))
-        xbmc.executebuiltin('Skin.SetString(homeswitcher.{}.toggle,true)'.format(slot))
+        # The home slot is always present, so it carries no toggle; the custom
+        # slots (1101-1104) are toggled on.
+        if toggle == 'true':
+            xbmc.executebuiltin('Skin.SetString(homeswitcher.{}.toggle,true)'.format(slot))
         xbmc.executebuiltin('Skin.SetString(homeswitcher.{}.mode,Standard)'.format(slot))
-        log('Set HomeSwitcher slot {} ({}): Name, toggle, mode.'.format(slot, name))
+        log('Set HomeSwitcher slot {} ({}): Name{}, mode.'.format(
+            slot, name, ', toggle' if toggle == 'true' else ''))
 
     # Tell SkinVariables to regenerate its node-driven includes, then reload the
     # skin. Setting the reload property is what makes new widget rows actually
@@ -308,6 +316,56 @@ def deploy_menu():
         log('Menu files changed; reloaded skin so the menu appears.')
     else:
         log('No menu file changes; skin reload not needed.')
+
+
+def apply_skin_settings():
+    # Apply the curated, portable AF3 skin settings that define the ThoughtStream
+    # look: bools via Skin.SetBool / Skin.Reset, strings via Skin.SetString. Runs
+    # only when AF3 is the active skin, and self-heals the look on every start.
+    if xbmc.getSkinDir() != AF3_ID:
+        log('Active skin is not {}; skipping skin settings.'.format(AF3_ID))
+        return
+    cfg = load_config(SKIN_SETTINGS_FILE)
+    if not cfg:
+        return
+    bools = cfg.get('bools', {})
+    strings = cfg.get('strings', {})
+    nb = 0
+    for sid, val in bools.items():
+        try:
+            if val is True or str(val).lower() == 'true':
+                xbmc.executebuiltin('Skin.SetBool({})'.format(sid))
+            else:
+                xbmc.executebuiltin('Skin.Reset({})'.format(sid))
+            nb += 1
+        except Exception as exc:
+            log('Could not set bool {}: {}'.format(sid, exc), xbmc.LOGWARNING)
+    ns = 0
+    for sid, val in strings.items():
+        if val is None or val == '':
+            continue
+        try:
+            # Quote the value so paths with brackets, parentheses or commas pass
+            # through the builtin parser intact (e.g. the spotlight $INFO path).
+            xbmc.executebuiltin('Skin.SetString({},"{}")'.format(sid, val))
+            ns += 1
+        except Exception as exc:
+            log('Could not set string {}: {}'.format(sid, exc), xbmc.LOGWARNING)
+    log('Applied skin settings: {} bool(s), {} string(s).'.format(nb, ns))
+
+
+def apply_viewtypes():
+    # Deploy the SkinVariables view-type map so list and poster views match the
+    # build. Self-healing copy, same pattern as the theme assets.
+    src = os.path.join(CONFIG_DIR, VIEWTYPES_FILE)
+    src_data = _read_bytes(src)
+    if src_data is None:
+        log('View types source missing at {}; skipping.'.format(src), xbmc.LOGERROR)
+        return
+    dest = xbmcvfs.translatePath(VIEWTYPES_DEST)
+    dest_dir = os.path.dirname(dest)
+    log('View types destination: {}'.format(dest))
+    _copy_if_different(src_data, dest_dir, dest, 'View types')
 
 
 def needs_apply():
@@ -341,10 +399,12 @@ def main():
     # Make sure the required stack is present/enabled before we depend on it.
     verify_dependencies()
 
-    # Theme assets and the home menu self-heal on every start, independent of the
-    # version gate.
+    # Theme assets, skin settings, view types and the home menu self-heal on
+    # every start, independent of the version gate.
     apply_colour_theme()
     apply_background()
+    apply_skin_settings()
+    apply_viewtypes()
     deploy_menu()
 
     # TMDb Helper defaults stay version-gated so they only reapply after updates.

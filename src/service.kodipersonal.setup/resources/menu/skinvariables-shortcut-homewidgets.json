@@ -1,0 +1,44 @@
+[
+    {
+        "label": "Trending Series",
+        "icon": "",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=trending_week&tmdb_type=tv&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "target": "videos",
+        "guid": "guid-2ff9963e"
+    },
+    {
+        "label": "New Series",
+        "icon": "",
+        "path": "plugin://plugin.video.themoviedb.helper/?startdate=-14&days=14&info=trakt_calendar&endpoint=new&user=false&tmdb_type=tv&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "target": "videos",
+        "guid": "guid-256776dc"
+    },
+    {
+        "label": "Recent Episodes",
+        "icon": "",
+        "path": "plugin://plugin.video.themoviedb.helper/?startdate=-7&days=7&info=trakt_calendar&endpoint=premieres&user=false&tmdb_type=tv&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "target": "videos",
+        "guid": "guid-8475b74e"
+    },
+    {
+        "label": "Trending Movies",
+        "icon": "",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=trending_week&tmdb_type=movie&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "target": "videos",
+        "guid": "guid-3c0dac72"
+    },
+    {
+        "label": "New Movies",
+        "icon": "",
+        "path": "plugin://plugin.video.themoviedb.helper/?startdate=-14&days=14&info=trakt_moviecalendar&user=false&tmdb_type=movie&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "target": "videos",
+        "guid": "guid-a94782e0"
+    },
+    {
+        "label": "Documentaries",
+        "icon": "",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_genres=99&with_id=True&plugin_category=Documentary&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "target": "videos",
+        "guid": "guid-2545269f"
+    }
+]
