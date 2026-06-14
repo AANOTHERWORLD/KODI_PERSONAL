@@ -150,14 +150,21 @@ def build():
             written.add(fname)
 
         elif kind == "submenu":
-            # 1) Landing rows for the slot itself: one "New on <provider>" movie
-            #    row per provider, so the section is never empty.
+            # 1) Landing rows for the slot itself: a "New Movies on <provider>"
+            #    and a "New Series on <provider>" row per provider, so the section
+            #    shows newest movies and series without the memory cost of merging
+            #    both types into one list (kept light for low-RAM devices). The
+            #    per-provider submenu still offers Latest Series / Latest Movies.
             landing = []
             for prov in section["submenu"]:
-                p = discover_path(cfg, "movie", prov["provider_id"],
-                                  "primary_release_date.desc", as_widget=True)
-                landing.append(row("New on {}".format(prov["name"]), p,
-                                   guid_for(slot, "landing", prov["name"])))
+                pm = discover_path(cfg, "movie", prov["provider_id"],
+                                   "primary_release_date.desc", as_widget=True)
+                landing.append(row("New Movies on {}".format(prov["name"]), pm,
+                                   guid_for(slot, "landing-movie", prov["name"])))
+                pt = discover_path(cfg, "tv", prov["provider_id"],
+                                   "first_air_date.desc", as_widget=True)
+                landing.append(row("New Series on {}".format(prov["name"]), pt,
+                                   guid_for(slot, "landing-series", prov["name"])))
             fname = "{}{}widgets.json".format(FILE_PREFIX, slot)
             write_menu(fname, landing)
             written.add(fname)

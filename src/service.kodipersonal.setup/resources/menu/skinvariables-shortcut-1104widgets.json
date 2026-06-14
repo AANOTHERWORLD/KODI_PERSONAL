@@ -1,23 +1,44 @@
 [
     {
-        "label": "New on Apple TV+",
+        "label": "New Movies on Apple TV+",
         "icon": "",
         "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=350&watch_region=US&with_watch_monetization_types=flatrate&sort_by=primary_release_date.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
         "target": "videos",
-        "guid": "guid-d9e5cbaa"
+        "guid": "guid-c7131138"
     },
     {
-        "label": "New on Disney+",
+        "label": "New Series on Apple TV+",
+        "icon": "",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=350&watch_region=US&with_watch_monetization_types=flatrate&sort_by=first_air_date.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "target": "videos",
+        "guid": "guid-4f2e65c7"
+    },
+    {
+        "label": "New Movies on Disney+",
         "icon": "",
         "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=337&watch_region=US&with_watch_monetization_types=flatrate&sort_by=primary_release_date.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
         "target": "videos",
-        "guid": "guid-2a1c4453"
+        "guid": "guid-9add1084"
     },
     {
-        "label": "New on Prime Video",
+        "label": "New Series on Disney+",
+        "icon": "",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=337&watch_region=US&with_watch_monetization_types=flatrate&sort_by=first_air_date.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "target": "videos",
+        "guid": "guid-7593c4c8"
+    },
+    {
+        "label": "New Movies on Prime Video",
         "icon": "",
         "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=9&watch_region=US&with_watch_monetization_types=flatrate&sort_by=primary_release_date.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
         "target": "videos",
-        "guid": "guid-24d06355"
+        "guid": "guid-05c3ddf9"
+    },
+    {
+        "label": "New Series on Prime Video",
+        "icon": "",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=9&watch_region=US&with_watch_monetization_types=flatrate&sort_by=first_air_date.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "target": "videos",
+        "guid": "guid-5d8be13d"
     }
 ]
