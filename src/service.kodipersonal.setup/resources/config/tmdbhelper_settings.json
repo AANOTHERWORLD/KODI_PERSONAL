@@ -27,10 +27,10 @@
     "ignore_regionreleasefilter": "true",
     "widgets_nextpage": "true",
 
-    "pagemulti_tmdb": "2",
-    "pagemulti_trakt": "2",
-    "pagemulti_sync": "2",
-    "pagemulti_library": "2",
+    "pagemulti_tmdb": "1",
+    "pagemulti_trakt": "1",
+    "pagemulti_sync": "1",
+    "pagemulti_library": "1",
 
     "startup_notifications": "false",
     "sync_notifications": "false",
