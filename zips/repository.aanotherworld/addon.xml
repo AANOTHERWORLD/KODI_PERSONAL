@@ -1,16 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Multi-source repository. The first dir serves this build's own addons. The
+     remaining dirs aggregate the upstream repos the build depends on (jurialmunkey
+     for the skin, TMDb Helper, SkinVariables and the jurialmunkey module; The Red
+     Repo for Red Light and, via its Gujal00 dir, ResolveURL) so a clean device can
+     resolve the whole stack from this one repo in a single pass. The dirs are copied
+     verbatim from each upstream repo addon, including their Kodi version gates. If an
+     upstream ever moves its hosting, update the matching dir below and rebuild. -->
 <addon id="repository.aanotherworld" name="KODI_PERSONAL Repository"
-       version="1.0.0" provider-name="AANOTHERWORLD">
+       version="1.1.0" provider-name="AANOTHERWORLD">
     <extension point="xbmc.addon.repository" name="KODI_PERSONAL">
+        <!-- This build's own addons -->
         <dir>
             <info compressed="false">https://raw.githubusercontent.com/AANOTHERWORLD/KODI_PERSONAL/main/zips/addons.xml</info>
             <checksum>https://raw.githubusercontent.com/AANOTHERWORLD/KODI_PERSONAL/main/zips/addons.xml.md5</checksum>
             <datadir zip="true">https://raw.githubusercontent.com/AANOTHERWORLD/KODI_PERSONAL/main/zips/</datadir>
         </dir>
+
+        <!-- jurialmunkey: skin.arctic.fuse.3, plugin.video.themoviedb.helper,
+             script.skinvariables, script.module.jurialmunkey -->
+        <dir>
+            <info compressed="false">https://raw.githubusercontent.com/jurialmunkey/repository.jurialmunkey/master/repo/zips/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/jurialmunkey/repository.jurialmunkey/master/repo/zips/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/jurialmunkey/repository.jurialmunkey/master/repo/zips/</datadir>
+        </dir>
+        <dir minversion="19.9.1" maxversion="20.9.0">
+            <info compressed="false">https://raw.githubusercontent.com/jurialmunkey/repository.jurialmunkey/master/nexusrepo/zips/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/jurialmunkey/repository.jurialmunkey/master/nexusrepo/zips/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/jurialmunkey/repository.jurialmunkey/master/nexusrepo/zips/</datadir>
+        </dir>
+        <dir minversion="20.9.1">
+            <info compressed="false">https://raw.githubusercontent.com/jurialmunkey/repository.jurialmunkey/master/omega/zips/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/jurialmunkey/repository.jurialmunkey/master/omega/zips/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/jurialmunkey/repository.jurialmunkey/master/omega/zips/</datadir>
+        </dir>
+
+        <!-- The Red Repo: plugin.video.redlight -->
+        <dir>
+            <info compressed="false">https://repo.redwizard.xyz/redwizardrepo/main/addons.xml</info>
+            <checksum>https://repo.redwizard.xyz/redwizardrepo/main/addons.xml.md5</checksum>
+            <datadir zip="true">https://repo.redwizard.xyz/redwizardrepo/main/</datadir>
+        </dir>
+        <dir minversion="20.9.0" maxversion="21.8.9">
+            <info compressed="false">https://repo.redwizard.xyz/redwizardrepo/21omega/addons.xml</info>
+            <checksum>https://repo.redwizard.xyz/redwizardrepo/21omega/addons.xml.md5</checksum>
+            <datadir zip="true">https://repo.redwizard.xyz/redwizardrepo/21omega/</datadir>
+        </dir>
+        <dir minversion="21.9.0" maxversion="22.8.9">
+            <info compressed="false">https://repo.redwizard.xyz/redwizardrepo/22piers/addons.xml</info>
+            <checksum>https://repo.redwizard.xyz/redwizardrepo/22piers/addons.xml.md5</checksum>
+            <datadir zip="true">https://repo.redwizard.xyz/redwizardrepo/22piers/</datadir>
+        </dir>
+
+        <!-- ResolveURL (Gujal00 SMR), as bundled by The Red Repo -->
+        <dir>
+            <info compressed="false">https://raw.githubusercontent.com/Gujal00/smrzips/master/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/Gujal00/smrzips/master/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/Gujal00/smrzips/master/zips/</datadir>
+        </dir>
     </extension>
     <extension point="xbmc.addon.metadata">
         <summary lang="en">Personal Kodi repository</summary>
-        <description lang="en">Hosts the personal lightweight build addons so every device updates from one source.</description>
+        <description lang="en">Hosts the personal lightweight build addons and aggregates the upstream repos it depends on, so every device installs and updates the whole stack from one source.</description>
         <platform>all</platform>
     </extension>
 </addon>
