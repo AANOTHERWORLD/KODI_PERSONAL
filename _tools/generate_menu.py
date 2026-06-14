@@ -4,8 +4,9 @@
 # AF3 skinvariables files into service.kodipersonal.setup/resources/menu/:
 #   - the home (Discover) widget file (rows shown on the home section)
 #   - one widget file per home slot (rows shown on that section)
-#   - a 1104 submenu file (More Providers -> Apple TV+ / Disney+ / Prime Video)
-#   - one sub-page node file per submenu provider (Latest Series / Latest Movies)
+#   - a 1104 submenu file (More Providers) built with AF3 native Custom_Submenu
+#     subgroups: each provider (Apple TV+ / Disney+ / Prime Video) nests its own
+#     rows (Latest Series / Latest Movies) the way the skin generator expects
 #   - slots.json (the slot manifest the setup service applies)
 #
 # AF3 only renders widget rows on home + slots 1101-1104 (the 5-slot cap, taken
@@ -97,14 +98,6 @@ def widget_path(cfg, w, section, as_widget=True):
                          w.get("sort_by", "popularity.desc"), as_widget)
 
 
-def node_url(provider_key):
-    # Opens a skinvariables node as a browsable folder (the provider sub-page).
-    return (
-        "plugin://script.skinvariables/?info=get_shortcuts_node"
-        "&menu={menu}&skin={skin}"
-    ).format(menu=provider_key, skin=SKIN_ID)
-
-
 def row(label, path, guid, target="videos", icon=""):
     return {"label": label, "icon": icon, "path": path, "target": target, "guid": guid}
 
@@ -114,12 +107,6 @@ def write_menu(name, items):
     with open(path, "w", encoding="utf-8") as handle:
         json.dump(items, handle, indent=4)
     log("Wrote {} ({} item(s))".format(name, len(items)))
-
-
-def provider_key(name):
-    # apple tv+ -> appletv ; prime video -> primevideo
-    key = "".join(ch for ch in name.lower() if ch.isalnum())
-    return "moreprov-{}".format(key)
 
 
 def build():
@@ -175,29 +162,30 @@ def build():
             write_menu(fname, landing)
             written.add(fname)
 
-            # 2) Submenu entries: each opens that provider's sub-page node.
+            # 2) Submenu using AF3 native Custom_Submenu subgroups. Each provider
+            #    is a Custom_Submenu whose nested submenu carries that provider's
+            #    rows (Latest Series, Latest Movies). The skinvariables generator
+            #    compiles this into the SubGroup.IsVisible show/hide wiring, which
+            #    is how the build's working submenu is structured.
             submenu = []
             for prov in section["submenu"]:
-                pkey = provider_key(prov["name"])
-                submenu.append(row(prov["name"], node_url(pkey),
-                                   guid_for(slot, "submenu", prov["name"])))
+                children = []
+                for r in cfg["provider_rows"]:
+                    p = discover_path(cfg, r["tmdb_type"], prov["provider_id"],
+                                      r["sort_by"], as_widget=True)
+                    children.append(row(r["label"], p,
+                                        guid_for(prov["name"], r["label"])))
+                submenu.append({
+                    "label": prov["name"],
+                    "path": "Custom_Submenu",
+                    "icon": "special://skin/extras/icons/bars.png",
+                    "target": "",
+                    "guid": guid_for(slot, "submenu", prov["name"]),
+                    "submenu": children,
+                })
             sname = "{}{}submenu.json".format(FILE_PREFIX, slot)
             write_menu(sname, submenu)
             written.add(sname)
-
-            # 3) One sub-page node per provider: Latest Series + Latest Movies,
-            #    as browsable folders (navigation, so no widget suffix).
-            for prov in section["submenu"]:
-                pkey = provider_key(prov["name"])
-                page = []
-                for r in cfg["provider_rows"]:
-                    p = discover_path(cfg, r["tmdb_type"], prov["provider_id"],
-                                      r["sort_by"], as_widget=False)
-                    page.append(row("{} {}".format(prov["name"], r["label"]), p,
-                                    guid_for(pkey, r["label"])))
-                pfname = "{}{}.json".format(FILE_PREFIX, pkey)
-                write_menu(pfname, page)
-                written.add(pfname)
         else:
             log("WARNING: unknown section type '{}' for slot {}".format(kind, slot))
 

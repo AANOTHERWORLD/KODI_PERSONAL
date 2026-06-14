@@ -9,7 +9,7 @@
      checker (resources/lib/dependencies.py) heals anything the resolver misses. -->
 <addon id="service.kodipersonal.setup"
        name="KODI Personal Setup"
-       version="0.6.0"
+       version="0.6.1"
        provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />

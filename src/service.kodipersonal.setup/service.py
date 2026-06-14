@@ -30,7 +30,6 @@ COLOUR_FILE = 'ThoughtStream.xml'
 BACKGROUND_FILE = 'thoughtstream_bg.png'
 AF3_ID = 'skin.arctic.fuse.3'
 SKINVARS_NODES = 'special://profile/addon_data/script.skinvariables/nodes/skin.arctic.fuse.3/'
-SKINVARS_RELOAD_PROP = 'SkinVariables.ShortcutsNode.Reload'
 SKIN_SETTINGS_FILE = 'skin_settings.json'
 VIEWTYPES_FILE = 'viewtypes.json'
 VIEWTYPES_DEST = 'special://profile/addon_data/script.skinvariables/skin.arctic.fuse.3-viewtypes.json'
@@ -211,6 +210,19 @@ def _read_slots_manifest():
     return data, []  # legacy flat list
 
 
+def _is_managed_node(name):
+    # Files this build owns and may retire on a device: the numbered home slots
+    # (11xx widgets/submenu) and the old More Providers sub-page nodes from an
+    # earlier version. Home, power and search nodes are left untouched so we
+    # never clobber menus we do not manage.
+    if not (name.startswith('skinvariables-shortcut-') and name.endswith('.json')):
+        return False
+    if 'moreprov-' in name:
+        return True
+    core = name[len('skinvariables-shortcut-'):-len('.json')]
+    return core[:2] == '11' and core[:4].isdigit()
+
+
 def deploy_menu():
     # Runs on EVERY start, not version-gated. Deploys all skinvariables menu
     # files into the AF3 node folder, sets the HomeSwitcher slot strings, clears
@@ -259,13 +271,12 @@ def deploy_menu():
             log('Could not deploy menu file {} to {}: {}'.format(name, dest, exc),
                 xbmc.LOGWARNING)
 
-    # Remove stale node files in the target that we no longer ship (e.g. an old
-    # provider sub-page renamed, or a removed slot's widget file).
+    # Remove only the node files we manage and no longer ship (old 11xx slots
+    # like 1105/1106, and the retired moreprov sub-page nodes). Home, power and
+    # search nodes are deliberately left in place.
     try:
         for existing in os.listdir(target_dir):
-            if (existing.startswith('skinvariables-shortcut-')
-                    and existing.endswith('.json')
-                    and existing not in deployed_names):
+            if existing not in deployed_names and _is_managed_node(existing):
                 os.remove(os.path.join(target_dir, existing))
                 changed = True
                 log('Removed stale deployed node file {}'.format(existing))
@@ -288,6 +299,7 @@ def deploy_menu():
             xbmc.executebuiltin('Skin.Reset(HomeSwitcher.{}.Name)'.format(slot))
             xbmc.executebuiltin('Skin.Reset(homeswitcher.{}.toggle)'.format(slot))
             xbmc.executebuiltin('Skin.Reset(homeswitcher.{}.mode)'.format(slot))
+            changed = True
             log('Cleared stale HomeSwitcher slot {}.'.format(slot))
 
     for entry in active_slots:
@@ -305,17 +317,18 @@ def deploy_menu():
         log('Set HomeSwitcher slot {} ({}): Name{}, mode.'.format(
             slot, name, ', toggle' if toggle == 'true' else ''))
 
-    # Tell SkinVariables to regenerate its node-driven includes, then reload the
-    # skin. Setting the reload property is what makes new widget rows actually
-    # appear without a cold restart.
-    xbmc.executebuiltin('SetProperty({},{},Home)'.format(SKINVARS_RELOAD_PROP, time.time()))
-    log('Signalled SkinVariables node reload.')
-
+    # The home menu is compiled by SkinVariables into a generator includes file
+    # (script-skinvariables-generator-includes-.xml); dropping node JSON alone
+    # does not update it, and the generator's own hash check ignores node-data
+    # changes. So when anything changed we force a rebuild: action=buildtemplate
+    # with force bypasses that gate, recompiles the includes from our nodes
+    # (including the More Providers Custom_Submenu subgroups), and reloads the
+    # skin itself, so the new rows actually appear without a cold restart.
     if changed:
-        xbmc.executebuiltin('ReloadSkin()')
-        log('Menu files changed; reloaded skin so the menu appears.')
+        xbmc.executebuiltin('RunScript(script.skinvariables,action=buildtemplate,force=1)')
+        log('Menu changed; forced SkinVariables template rebuild and skin reload.')
     else:
-        log('No menu file changes; skin reload not needed.')
+        log('No menu changes; SkinVariables rebuild not needed.')
 
 
 def apply_skin_settings():
