@@ -1,0 +1,16 @@
+[
+    {
+        "label": "Disney+ Latest Series",
+        "icon": "",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=337&watch_region=US&with_watch_monetization_types=flatrate&sort_by=first_air_date.desc",
+        "target": "videos",
+        "guid": "guid-5287de6a"
+    },
+    {
+        "label": "Disney+ Latest Movies",
+        "icon": "",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=337&watch_region=US&with_watch_monetization_types=flatrate&sort_by=primary_release_date.desc",
+        "target": "videos",
+        "guid": "guid-ceee69cf"
+    }
+]

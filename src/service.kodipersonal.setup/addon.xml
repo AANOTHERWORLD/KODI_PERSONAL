@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Setup service. Applies the personal TMDb Helper build defaults on first run and after each update. -->
+<!-- Setup service. Applies the personal build defaults on first run and after each
+     update, and declares the whole build stack as dependencies so Kodi auto-installs
+     them from the enabled repos. Imports are marked optional so a temporarily missing
+     repo never blocks this addon from installing; the runtime dependency checker
+     (resources/lib/dependencies.py) heals anything the resolver could not. -->
 <addon id="service.kodipersonal.setup"
        name="KODI Personal Setup"
-       version="0.4.0"
+       version="0.5.0"
        provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
+    <import addon="skin.arctic.fuse.3" version="3.0.0" optional="true" />
+    <import addon="plugin.video.themoviedb.helper" version="6.0.0" optional="true" />
+    <import addon="script.skinvariables" version="2.0.0" optional="true" />
+    <import addon="script.module.jurialmunkey" version="2.0.0" optional="true" />
+    <import addon="script.trakt" version="3.0.0" optional="true" />
+    <import addon="plugin.video.redlight" version="1.0.0" optional="true" />
+    <import addon="script.module.resolveurl" version="5.0.0" optional="true" />
   </requires>
   <extension point="xbmc.service" library="service.py" />
   <extension point="xbmc.addon.metadata">
     <summary lang="en_GB">Personal setup service for the lightweight build</summary>
-    <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set and background and deploys the home menu widget files into Arctic Fuse 3 on every start so the theme and menu self-heal after a skin update. Stores no secrets. Logs to its own profile folder.</description>
+    <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set and background and deploys the home menu files into Arctic Fuse 3 on every start so the theme and menu self-heal after a skin update. Declares the build stack as dependencies so Kodi installs them automatically, and verifies them on startup, healing anything missing or disabled. Stores no secrets. Logs to its own profile folder.</description>
     <platform>all</platform>
     <license>MIT</license>
   </extension>

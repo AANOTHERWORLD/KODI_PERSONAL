@@ -1,0 +1,23 @@
+[
+    {
+        "label": "Apple TV+",
+        "icon": "",
+        "path": "plugin://script.skinvariables/?info=get_shortcuts_node&menu=moreprov-appletv&skin=skin.arctic.fuse.3",
+        "target": "videos",
+        "guid": "guid-c73ac471"
+    },
+    {
+        "label": "Disney+",
+        "icon": "",
+        "path": "plugin://script.skinvariables/?info=get_shortcuts_node&menu=moreprov-disney&skin=skin.arctic.fuse.3",
+        "target": "videos",
+        "guid": "guid-23f54acd"
+    },
+    {
+        "label": "Prime Video",
+        "icon": "",
+        "path": "plugin://script.skinvariables/?info=get_shortcuts_node&menu=moreprov-primevideo&skin=skin.arctic.fuse.3",
+        "target": "videos",
+        "guid": "guid-55b9ad5a"
+    }
+]

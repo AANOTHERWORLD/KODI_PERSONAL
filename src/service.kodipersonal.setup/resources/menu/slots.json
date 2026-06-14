@@ -1,32 +1,34 @@
-[
-    {
-        "slot": "1101",
-        "name": "For You",
-        "toggle": "true"
-    },
-    {
-        "slot": "1102",
-        "name": "Netflix",
-        "toggle": "true"
-    },
-    {
-        "slot": "1103",
-        "name": "Max",
-        "toggle": "true"
-    },
-    {
-        "slot": "1104",
-        "name": "Apple TV+",
-        "toggle": "true"
-    },
-    {
-        "slot": "1105",
-        "name": "Disney+",
-        "toggle": "true"
-    },
-    {
-        "slot": "1106",
-        "name": "Prime Video",
-        "toggle": "true"
-    }
-]
+{
+    "active_slots": [
+        {
+            "slot": "1101",
+            "name": "For You",
+            "toggle": "true"
+        },
+        {
+            "slot": "1102",
+            "name": "Netflix",
+            "toggle": "true"
+        },
+        {
+            "slot": "1103",
+            "name": "Max",
+            "toggle": "true"
+        },
+        {
+            "slot": "1104",
+            "name": "More Providers",
+            "toggle": "true"
+        }
+    ],
+    "known_slots": [
+        "1101",
+        "1102",
+        "1103",
+        "1104",
+        "1105",
+        "1106",
+        "1107",
+        "1108"
+    ]
+}

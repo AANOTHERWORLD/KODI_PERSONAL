@@ -1,0 +1,18 @@
+{
+  "_comment": "Required repos and add-ons for the KODI_PERSONAL build. dependencies.py verifies each is installed AND enabled on startup, logs the result, and notifies if any are missing. 'critical': true means the build cannot function without it. Edit this list freely; no code change needed.",
+  "repositories": [
+    { "id": "repository.aanotherworld", "name": "AANOTHERWORLD Repo",   "critical": true },
+    { "id": "repository.jurialmunkey",  "name": "Jurialmunkey Repo",     "critical": true },
+    { "id": "repository.redwizard",     "name": "Red Wizard (Red Repo)", "critical": false }
+  ],
+  "addons": [
+    { "id": "skin.arctic.fuse.3",            "name": "Arctic Fuse 3",        "critical": true },
+    { "id": "plugin.video.themoviedb.helper","name": "TMDb Helper",          "critical": true },
+    { "id": "script.skinvariables",          "name": "SkinVariables",        "critical": true },
+    { "id": "script.module.jurialmunkey",    "name": "Jurialmunkey Module",  "critical": true },
+    { "id": "script.trakt",                  "name": "Trakt",                "critical": false },
+    { "id": "plugin.video.redlight",         "name": "Red Light (source)",   "critical": false },
+    { "id": "script.module.resolveurl",      "name": "ResolveURL",           "critical": false },
+    { "id": "service.kodipersonal.setup",    "name": "KodiPersonal Setup",   "critical": true }
+  ]
+}

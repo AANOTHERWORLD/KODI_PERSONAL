@@ -2,10 +2,10 @@
 # KODI Personal Setup service
 # Applies the personal build defaults (TMDb Helper behavior + source-player slot)
 # on first run and after each update, so every home device stays consistent.
-# Also copies the ThoughtStream colour set and background, and deploys the home
-# menu widget files, into Arctic Fuse 3 on every start so the theme and menu
-# self-heal after an AF3 update overwrites those files.
-# Logging is verbose by design to support later monitoring.
+# Copies the ThoughtStream colour set and background and deploys the home menu
+# files into Arctic Fuse 3 on every start so the theme and menu self-heal after
+# an AF3 update overwrites those files. Verifies required add-ons/repos on
+# startup and silently heals what it can. Logging is verbose by design.
 
 import os
 import json
@@ -30,6 +30,7 @@ COLOUR_FILE = 'ThoughtStream.xml'
 BACKGROUND_FILE = 'thoughtstream_bg.png'
 AF3_ID = 'skin.arctic.fuse.3'
 SKINVARS_NODES = 'special://profile/addon_data/script.skinvariables/nodes/skin.arctic.fuse.3/'
+SKINVARS_RELOAD_PROP = 'SkinVariables.ShortcutsNode.Reload'
 LOG_TAG = '[KODIPERSONAL]'
 LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
@@ -63,6 +64,16 @@ def load_config(name):
     except Exception as exc:
         log('Failed to load config {}: {}'.format(name, exc), xbmc.LOGERROR)
         return None
+
+
+def verify_dependencies():
+    # Auto-heal missing/disabled required add-ons and repos. Self-contained and
+    # guarded so a failure here never crashes the service.
+    try:
+        from resources.lib.dependencies import verify_dependencies as _verify
+        _verify(auto_install=True, notify_on_failure=True)
+    except Exception as exc:
+        log('Dependency check failed to run: {}'.format(exc), xbmc.LOGWARNING)
 
 
 def apply_tmdbhelper_settings():
@@ -182,11 +193,26 @@ def apply_background():
             xbmc.getSkinDir(), AF3_ID))
 
 
+def _read_slots_manifest():
+    # Supports the new manifest {active_slots:[...], known_slots:[...]} and the
+    # legacy flat list [...] for backward compatibility.
+    path = os.path.join(MENU_DIR, 'slots.json')
+    try:
+        with open(path, 'r', encoding='utf-8') as fh:
+            data = json.load(fh)
+    except Exception as exc:
+        log('Could not read slots.json: {}'.format(exc), xbmc.LOGWARNING)
+        return [], []
+    if isinstance(data, dict):
+        return data.get('active_slots', []), data.get('known_slots', [])
+    return data, []  # legacy flat list
+
+
 def deploy_menu():
-    # Runs on EVERY start, not version-gated. Deploys the home menu widget files
-    # into the script.skinvariables node folder for AF3 and sets the HomeSwitcher
-    # slot strings, self-healing like the colour set and background. All file ops
-    # are guarded so a failure here never crashes the service.
+    # Runs on EVERY start, not version-gated. Deploys all skinvariables menu
+    # files into the AF3 node folder, sets the HomeSwitcher slot strings, clears
+    # stale slots from previous versions, and asks SkinVariables to rebuild so
+    # rows render without a cold restart. All ops are guarded.
     if not os.path.isdir(MENU_DIR):
         log('Menu source folder missing at {}; skipping menu deploy.'.format(MENU_DIR),
             xbmc.LOGERROR)
@@ -208,6 +234,7 @@ def deploy_menu():
         log('Could not list menu source folder {}: {}'.format(MENU_DIR, exc), xbmc.LOGWARNING)
         return
 
+    deployed_names = set()
     changed = False
     for name in names:
         src = os.path.join(MENU_DIR, name)
@@ -216,6 +243,7 @@ def deploy_menu():
         if src_data is None:
             log('Could not read menu file {}; skipping.'.format(src), xbmc.LOGWARNING)
             continue
+        deployed_names.add(name)
         if _read_bytes(dest) == src_data:
             log('Menu file {} already current.'.format(name))
             continue
@@ -228,20 +256,38 @@ def deploy_menu():
             log('Could not deploy menu file {} to {}: {}'.format(name, dest, exc),
                 xbmc.LOGWARNING)
 
+    # Remove stale node files in the target that we no longer ship (e.g. an old
+    # provider sub-page renamed, or a removed slot's widget file).
+    try:
+        for existing in os.listdir(target_dir):
+            if (existing.startswith('skinvariables-shortcut-')
+                    and existing.endswith('.json')
+                    and existing not in deployed_names):
+                os.remove(os.path.join(target_dir, existing))
+                changed = True
+                log('Removed stale deployed node file {}'.format(existing))
+    except Exception as exc:
+        log('Could not prune stale node files: {}'.format(exc), xbmc.LOGWARNING)
+
     active = xbmc.getSkinDir()
     if active != AF3_ID:
         log('Active skin is {}, not {}; left HomeSwitcher slots unchanged and '
             'skipped skin reload.'.format(active, AF3_ID))
         return
 
-    slots = []
-    try:
-        with open(os.path.join(MENU_DIR, 'slots.json'), 'r', encoding='utf-8') as fh:
-            slots = json.load(fh)
-    except Exception as exc:
-        log('Could not read slots.json: {}'.format(exc), xbmc.LOGWARNING)
+    active_slots, known_slots = _read_slots_manifest()
+    active_ids = {entry.get('slot') for entry in active_slots if entry.get('slot')}
 
-    for entry in slots:
+    # Clear any known slot that is NOT in the active set (migrates away from old
+    # layouts, e.g. the previous Disney+/Prime Video on 1105/1106).
+    for slot in known_slots:
+        if slot not in active_ids:
+            xbmc.executebuiltin('Skin.Reset(HomeSwitcher.{}.Name)'.format(slot))
+            xbmc.executebuiltin('Skin.Reset(homeswitcher.{}.toggle)'.format(slot))
+            xbmc.executebuiltin('Skin.Reset(homeswitcher.{}.mode)'.format(slot))
+            log('Cleared stale HomeSwitcher slot {}.'.format(slot))
+
+    for entry in active_slots:
         slot = entry.get('slot')
         name = entry.get('name')
         if not slot:
@@ -250,6 +296,12 @@ def deploy_menu():
         xbmc.executebuiltin('Skin.SetString(homeswitcher.{}.toggle,true)'.format(slot))
         xbmc.executebuiltin('Skin.SetString(homeswitcher.{}.mode,Standard)'.format(slot))
         log('Set HomeSwitcher slot {} ({}): Name, toggle, mode.'.format(slot, name))
+
+    # Tell SkinVariables to regenerate its node-driven includes, then reload the
+    # skin. Setting the reload property is what makes new widget rows actually
+    # appear without a cold restart.
+    xbmc.executebuiltin('SetProperty({},{},Home)'.format(SKINVARS_RELOAD_PROP, time.time()))
+    log('Signalled SkinVariables node reload.')
 
     if changed:
         xbmc.executebuiltin('ReloadSkin()')
@@ -279,12 +331,15 @@ def run_setup():
 
 def main():
     monitor = xbmc.Monitor()
-    log('Service started on {} (Kodi build: {})'.format(
+    log('Service started on {} (addon v{})'.format(
         xbmc.getInfoLabel('System.BuildVersion'), ADDON_VERSION))
 
     # Give Kodi a moment to finish loading addons before we touch other addons.
     if monitor.waitForAbort(20):
         return
+
+    # Make sure the required stack is present/enabled before we depend on it.
+    verify_dependencies()
 
     # Theme assets and the home menu self-heal on every start, independent of the
     # version gate.
