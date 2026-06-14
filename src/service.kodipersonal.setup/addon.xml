@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Setup service. Applies the personal build defaults on first run and after each
-     update, and declares the whole build stack as dependencies so Kodi auto-installs
-     them from the enabled repos. Imports are marked optional so a temporarily missing
-     repo never blocks this addon from installing; the runtime dependency checker
-     (resources/lib/dependencies.py) heals anything the resolver could not. -->
+     update, and declares the build stack as dependencies so Kodi auto-installs them
+     from the aggregated repo. The build-stack imports are optional and use a 0.0.1
+     floor on purpose: we only need each addon PRESENT, not a specific version. The
+     skin and TMDb Helper enforce their own exact version needs through their hard
+     dependencies, so pinning real floors here only risks "could not be satisfied"
+     errors (script.module.jurialmunkey ships as 0.2.35, for example). The runtime
+     checker (resources/lib/dependencies.py) heals anything the resolver misses. -->
 <addon id="service.kodipersonal.setup"
        name="KODI Personal Setup"
-       version="0.5.0"
+       version="0.5.1"
        provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
-    <import addon="skin.arctic.fuse.3" version="3.0.0" optional="true" />
-    <import addon="plugin.video.themoviedb.helper" version="6.0.0" optional="true" />
-    <import addon="script.skinvariables" version="2.0.0" optional="true" />
-    <import addon="script.module.jurialmunkey" version="2.0.0" optional="true" />
-    <import addon="script.trakt" version="3.0.0" optional="true" />
-    <import addon="plugin.video.redlight" version="1.0.0" optional="true" />
-    <import addon="script.module.resolveurl" version="5.0.0" optional="true" />
+    <import addon="skin.arctic.fuse.3" version="0.0.1" optional="true" />
+    <import addon="plugin.video.themoviedb.helper" version="0.0.1" optional="true" />
+    <import addon="script.skinvariables" version="0.0.1" optional="true" />
+    <import addon="script.module.jurialmunkey" version="0.0.1" optional="true" />
+    <import addon="script.trakt" version="0.0.1" optional="true" />
+    <import addon="plugin.video.redlight" version="0.0.1" optional="true" />
+    <import addon="script.module.resolveurl" version="0.0.1" optional="true" />
   </requires>
   <extension point="xbmc.service" library="service.py" />
   <extension point="xbmc.addon.metadata">
