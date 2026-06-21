@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addons><addon id="repository.aanotherworld" name="KODI_PERSONAL Repository" version="1.1.0" provider-name="AANOTHERWORLD">
+<addons><addon id="repository.aanotherworld" name="KODI_PERSONAL Repository" version="1.2.0" provider-name="AANOTHERWORLD">
     <extension point="xbmc.addon.repository" name="KODI_PERSONAL">
         
         <dir>
@@ -48,6 +48,13 @@
             <checksum>https://raw.githubusercontent.com/Gujal00/smrzips/master/addons.xml.md5</checksum>
             <datadir zip="true">https://raw.githubusercontent.com/Gujal00/smrzips/master/zips/</datadir>
         </dir>
+
+        
+        <dir>
+            <info compressed="false">https://kodiyashimaru.github.io/repo/packages/addons.xml</info>
+            <checksum>https://kodiyashimaru.github.io/repo/packages/addons.xml.md5</checksum>
+            <datadir zip="true">https://kodiyashimaru.github.io/repo/</datadir>
+        </dir>
     </extension>
     <extension point="xbmc.addon.metadata">
         <summary lang="en">Personal Kodi repository</summary>
@@ -65,7 +72,7 @@
     <platform>all</platform>
     <license>SIL Open Font License 1.1</license>
   </extension>
-</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.6.4" provider-name="AANOTHERWORLD">
+</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.6.5" provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
     <import addon="skin.arctic.fuse.3" version="0.0.1" />
@@ -75,6 +82,7 @@
     <import addon="script.trakt" version="0.0.1" />
     <import addon="plugin.video.redlight" version="0.0.1" />
     <import addon="script.module.resolveurl" version="0.0.1" />
+    <import addon="script.module.magneto" version="0.0.1" />
   </requires>
   <extension point="xbmc.service" library="service.py" />
   <extension point="xbmc.addon.metadata">

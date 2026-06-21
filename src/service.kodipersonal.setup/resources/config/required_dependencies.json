@@ -13,6 +13,7 @@
     { "id": "script.trakt",                  "name": "Trakt",                "critical": false },
     { "id": "plugin.video.redlight",         "name": "Red Light (source)",   "critical": false },
     { "id": "script.module.resolveurl",      "name": "ResolveURL",           "critical": false },
+    { "id": "script.module.magneto",         "name": "Magneto Module (scrapers)", "critical": false },
     { "id": "service.kodipersonal.setup",    "name": "KodiPersonal Setup",   "critical": true }
   ]
 }

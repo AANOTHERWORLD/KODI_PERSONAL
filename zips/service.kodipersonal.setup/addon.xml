@@ -9,13 +9,14 @@
      errors (script.module.jurialmunkey ships as 0.2.35, for example); these imports
      are NOT optional, because optional imports are never auto-installed by Kodi, which
      left Red Light and ResolveURL missing. Every id below resolves through the
-     aggregated repo (jurialmunkey, The Red Repo, Gujal00 for ResolveURL) or Kodi's
-     official repo (script.trakt, and Red Light's own requests/pil sub-deps). The
+     aggregated repo (jurialmunkey, The Red Repo, Gujal00 for ResolveURL, kodiyashimaru
+     for the Magneto scraper) or Kodi's official repo (script.trakt, and the
+     requests/pil sub-deps of Red Light and Magneto). The
      runtime checker (resources/lib/dependencies.py) re-enables anything disabled and
      notifies if a source was unreachable at install time. -->
 <addon id="service.kodipersonal.setup"
        name="KODI Personal Setup"
-       version="0.6.4"
+       version="0.6.5"
        provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
@@ -26,6 +27,7 @@
     <import addon="script.trakt" version="0.0.1" />
     <import addon="plugin.video.redlight" version="0.0.1" />
     <import addon="script.module.resolveurl" version="0.0.1" />
+    <import addon="script.module.magneto" version="0.0.1" />
   </requires>
   <extension point="xbmc.service" library="service.py" />
   <extension point="xbmc.addon.metadata">
