@@ -65,16 +65,16 @@
     <platform>all</platform>
     <license>SIL Open Font License 1.1</license>
   </extension>
-</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.6.3" provider-name="AANOTHERWORLD">
+</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.6.4" provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
-    <import addon="skin.arctic.fuse.3" version="0.0.1" optional="true" />
-    <import addon="plugin.video.themoviedb.helper" version="0.0.1" optional="true" />
-    <import addon="script.skinvariables" version="0.0.1" optional="true" />
-    <import addon="script.module.jurialmunkey" version="0.0.1" optional="true" />
-    <import addon="script.trakt" version="0.0.1" optional="true" />
-    <import addon="plugin.video.redlight" version="0.0.1" optional="true" />
-    <import addon="script.module.resolveurl" version="0.0.1" optional="true" />
+    <import addon="skin.arctic.fuse.3" version="0.0.1" />
+    <import addon="plugin.video.themoviedb.helper" version="0.0.1" />
+    <import addon="script.skinvariables" version="0.0.1" />
+    <import addon="script.module.jurialmunkey" version="0.0.1" />
+    <import addon="script.trakt" version="0.0.1" />
+    <import addon="plugin.video.redlight" version="0.0.1" />
+    <import addon="script.module.resolveurl" version="0.0.1" />
   </requires>
   <extension point="xbmc.service" library="service.py" />
   <extension point="xbmc.addon.metadata">
