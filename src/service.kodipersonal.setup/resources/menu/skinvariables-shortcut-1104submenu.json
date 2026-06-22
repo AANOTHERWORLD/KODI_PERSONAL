@@ -9,14 +9,14 @@
             {
                 "label": "Latest Series",
                 "icon": "",
-                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=350&watch_region=US&with_watch_monetization_types=flatrate&sort_by=first_air_date.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=350&watch_region=US&with_watch_monetization_types=flatrate&sort_by=first_air_date.desc&limit=12&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
                 "target": "videos",
                 "guid": "guid-5a468d56"
             },
             {
                 "label": "Latest Movies",
                 "icon": "",
-                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=350&watch_region=US&with_watch_monetization_types=flatrate&sort_by=primary_release_date.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=350&watch_region=US&with_watch_monetization_types=flatrate&sort_by=primary_release_date.desc&limit=12&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
                 "target": "videos",
                 "guid": "guid-c5d011de"
             }
@@ -32,14 +32,14 @@
             {
                 "label": "Latest Series",
                 "icon": "",
-                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=337&watch_region=US&with_watch_monetization_types=flatrate&sort_by=first_air_date.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=337&watch_region=US&with_watch_monetization_types=flatrate&sort_by=first_air_date.desc&limit=12&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
                 "target": "videos",
                 "guid": "guid-88fcb605"
             },
             {
                 "label": "Latest Movies",
                 "icon": "",
-                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=337&watch_region=US&with_watch_monetization_types=flatrate&sort_by=primary_release_date.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=337&watch_region=US&with_watch_monetization_types=flatrate&sort_by=primary_release_date.desc&limit=12&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
                 "target": "videos",
                 "guid": "guid-a995f042"
             }
@@ -55,14 +55,14 @@
             {
                 "label": "Latest Series",
                 "icon": "",
-                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=9&watch_region=US&with_watch_monetization_types=flatrate&sort_by=first_air_date.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=9&watch_region=US&with_watch_monetization_types=flatrate&sort_by=first_air_date.desc&limit=12&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
                 "target": "videos",
                 "guid": "guid-7d45ec00"
             },
             {
                 "label": "Latest Movies",
                 "icon": "",
-                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=9&watch_region=US&with_watch_monetization_types=flatrate&sort_by=primary_release_date.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+                "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=9&watch_region=US&with_watch_monetization_types=flatrate&sort_by=primary_release_date.desc&limit=12&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
                 "target": "videos",
                 "guid": "guid-5fa4e5be"
             }

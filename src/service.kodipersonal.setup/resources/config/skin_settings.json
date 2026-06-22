@@ -9,9 +9,9 @@
     "TMDbHelper.UseLocalWidgetContainer": true,
     "TMDbHelper.DirectCallAuto": true,
     "TMDbHelper.EnableCurrentWindowImages": false,
-    "tmdbhelper.enablecrop": true,
+    "tmdbhelper.enablecrop": false,
     "tmdbhelper.enableblur": false,
-    "tmdbhelper.enabledata": true,
+    "tmdbhelper.enabledata": false,
     "tmdbhelper.service": true,
     "indicator.enableunwatchedcount": true,
     "indicator.disablelatest": true,
@@ -53,9 +53,13 @@
     "dialoginfo.others.item01": "Trailer",
     "dialoginfo.others.item02": "Trakt",
     "dialoginfo.others.item03": "Wikipedia",
-    "TMDbHelper.UseLocalWindowIDs": "10000|11101|11102|11103|11104|11105|11106|11107|11108|11109",
-    "HomeSwitcher.Home.Spotlight.Path": "plugin://plugin.video.themoviedb.helper/?info=trakt_trending&tmdb_type=tv&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
-    "HomeSwitcher.Home.Spotlight.Label": "Trending TV shows",
-    "HomeSwitcher.Home.Spotlight.Target": "videos"
-  }
+    "TMDbHelper.UseLocalWindowIDs": "10000|11101|11102|11103|11104|11105|11106|11107|11108|11109"
+  },
+  "_reset_comment": "Skin settings to actively clear on every start (Skin.Reset). The Discover spotlight is a large always-on hero image plus its own widget on the home screen, a big memory cost on a 2 GB stick, so we remove it for the lite profile.",
+  "reset": [
+    "HomeSwitcher.Home.Spotlight.Path",
+    "HomeSwitcher.Home.Spotlight.Label",
+    "HomeSwitcher.Home.Spotlight.Target",
+    "HomeSwitcher.home.Spotlight.icon"
+  ]
 }

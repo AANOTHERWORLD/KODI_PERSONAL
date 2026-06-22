@@ -58,17 +58,28 @@ def load_lists():
     return data
 
 
+def widget_tail(cfg, as_widget):
+    # Tail appended to widget rows: an optional per-row item limit (caps how many
+    # posters a row loads, to ease memory on low-RAM devices) plus the reload and
+    # widget token. Navigation (folder) paths get nothing.
+    if not as_widget:
+        return ""
+    limit = cfg.get("widget_limit")
+    prefix = "&limit={}".format(limit) if limit else ""
+    return prefix + cfg["widget_suffix"]
+
+
 def params_path(cfg, params, as_widget):
     # Build a TMDb Helper query from an ordered params map. Insertion order is
     # preserved so the generated path reads the same way every run.
     query = "&".join("{}={}".format(k, v) for k, v in params.items())
     url = "{tmdbh}?{query}".format(tmdbh=cfg["tmdbh"], query=query)
-    return url + cfg["widget_suffix"] if as_widget else url
+    return url + widget_tail(cfg, as_widget)
 
 
 def discover_path(cfg, tmdb_type, provider_id, sort_by, as_widget):
     # Standard TMDb Helper discover URL for a watch provider. as_widget adds the
-    # widget reload token + widget=true for home rows; navigation items omit it.
+    # item limit + widget reload token for home rows; navigation items omit it.
     url = (
         "{tmdbh}?info=discover&tmdb_type={t}&with_watch_providers={pid}"
         "&watch_region={region}&with_watch_monetization_types={monet}"
@@ -77,14 +88,14 @@ def discover_path(cfg, tmdb_type, provider_id, sort_by, as_widget):
         tmdbh=cfg["tmdbh"], t=tmdb_type, pid=provider_id,
         region=cfg["watch_region"], monet=cfg["monetization"], sort=sort_by,
     )
-    return url + cfg["widget_suffix"] if as_widget else url
+    return url + widget_tail(cfg, as_widget)
 
 
 def info_path(cfg, info, tmdb_type, as_widget):
     # TMDb Helper info list (the lean Trakt row form).
     url = "{tmdbh}?info={info}&tmdb_type={t}".format(
         tmdbh=cfg["tmdbh"], info=info, t=tmdb_type)
-    return url + cfg["widget_suffix"] if as_widget else url
+    return url + widget_tail(cfg, as_widget)
 
 
 def widget_path(cfg, w, section, as_widget=True):

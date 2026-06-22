@@ -33,6 +33,8 @@ SKINVARS_NODES = 'special://profile/addon_data/script.skinvariables/nodes/skin.a
 SKIN_SETTINGS_FILE = 'skin_settings.json'
 VIEWTYPES_FILE = 'viewtypes.json'
 VIEWTYPES_DEST = 'special://profile/addon_data/script.skinvariables/skin.arctic.fuse.3-viewtypes.json'
+ADVANCEDSETTINGS_FILE = 'advancedsettings.xml'
+ADVANCEDSETTINGS_DEST = 'special://profile/advancedsettings.xml'
 LOG_TAG = '[KODIPERSONAL]'
 LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
@@ -359,12 +361,19 @@ def apply_skin_settings():
             continue
         try:
             # Quote the value so paths with brackets, parentheses or commas pass
-            # through the builtin parser intact (e.g. the spotlight $INFO path).
+            # through the builtin parser intact.
             xbmc.executebuiltin('Skin.SetString({},"{}")'.format(sid, val))
             ns += 1
         except Exception as exc:
             log('Could not set string {}: {}'.format(sid, exc), xbmc.LOGWARNING)
-    log('Applied skin settings: {} bool(s), {} string(s).'.format(nb, ns))
+    nr = 0
+    for sid in cfg.get('reset', []):
+        try:
+            xbmc.executebuiltin('Skin.Reset({})'.format(sid))
+            nr += 1
+        except Exception as exc:
+            log('Could not reset {}: {}'.format(sid, exc), xbmc.LOGWARNING)
+    log('Applied skin settings: {} bool(s), {} string(s), {} reset.'.format(nb, ns, nr))
 
 
 def apply_viewtypes():
@@ -379,6 +388,22 @@ def apply_viewtypes():
     dest_dir = os.path.dirname(dest)
     log('View types destination: {}'.format(dest))
     _copy_if_different(src_data, dest_dir, dest, 'View types')
+
+
+def apply_advancedsettings():
+    # Deploy advancedsettings.xml into the user profile to cap caches and give a
+    # low-RAM device more headroom. Self-healing copy; only takes effect after a
+    # Kodi restart, since Kodi reads advancedsettings.xml at startup.
+    src = os.path.join(CONFIG_DIR, ADVANCEDSETTINGS_FILE)
+    src_data = _read_bytes(src)
+    if src_data is None:
+        log('advancedsettings.xml source missing at {}; skipping.'.format(src), xbmc.LOGERROR)
+        return
+    dest = xbmcvfs.translatePath(ADVANCEDSETTINGS_DEST)
+    dest_dir = os.path.dirname(dest)
+    log('advancedsettings destination: {}'.format(dest))
+    if _copy_if_different(src_data, dest_dir, dest, 'advancedsettings.xml'):
+        log('advancedsettings.xml in place; takes effect on next Kodi restart.')
 
 
 def needs_apply():
@@ -418,6 +443,7 @@ def main():
     apply_background()
     apply_skin_settings()
     apply_viewtypes()
+    apply_advancedsettings()
     deploy_menu()
 
     # TMDb Helper defaults stay version-gated so they only reapply after updates.

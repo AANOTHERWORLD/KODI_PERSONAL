@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Tuned for a low-RAM (about 2 GB) ONN streaming stick. The setup service
+     copies this to the user profile so it self-heals across devices. It only
+     takes effect after a Kodi restart, since Kodi reads advancedsettings.xml at
+     startup. Keeps the streaming buffer modest so playback does not compound the
+     memory pressure from the GUI, and limits redraws to dirty regions to ease
+     the weak GPU. No secrets here. -->
+<advancedsettings>
+    <cache>
+        <buffermode>1</buffermode>
+        <memorysize>20971520</memorysize>
+        <readfactor>4</readfactor>
+    </cache>
+    <gui>
+        <algorithmdirtyregions>3</algorithmdirtyregions>
+        <nofliptimeout>0</nofliptimeout>
+    </gui>
+</advancedsettings>
