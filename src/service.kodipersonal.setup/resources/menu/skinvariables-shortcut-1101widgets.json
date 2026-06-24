@@ -2,29 +2,43 @@
     {
         "label": "Up Next",
         "icon": "",
-        "path": "plugin://plugin.video.themoviedb.helper/?info=trakt_nextepisodes&tmdb_type=tv&limit=12&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=trakt_nextepisodes&tmdb_type=tv&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
         "target": "videos",
         "guid": "guid-bd8f8d6a"
     },
     {
         "label": "Continue Watching",
         "icon": "",
-        "path": "plugin://plugin.video.themoviedb.helper/?info=trakt_ondeck&tmdb_type=both&limit=12&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=trakt_ondeck&tmdb_type=both&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
         "target": "videos",
         "guid": "guid-28fdd22d"
     },
     {
         "label": "My Calendar",
         "icon": "",
-        "path": "plugin://plugin.video.themoviedb.helper/?startdate=-14&days=14&info=trakt_calendar&tmdb_type=tv&limit=12&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "path": "plugin://plugin.video.themoviedb.helper/?startdate=-15&days=14&info=trakt_calendar&tmdb_type=tv&sort_by=released&sort_how=desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
         "target": "videos",
         "guid": "guid-25cdbd54"
     },
     {
+        "label": "Watchlist",
+        "icon": "",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=trakt_watchlist&tmdb_type=both&list_name=Combined+Watchlist&tmdb_id=None&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "target": "videos",
+        "guid": "guid-a88478ea"
+    },
+    {
         "label": "Recommended Movies",
         "icon": "",
-        "path": "plugin://plugin.video.themoviedb.helper/?info=trakt_recommendations&tmdb_type=movie&limit=12&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=trakt_recommendations&tmdb_type=movie&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
         "target": "videos",
         "guid": "guid-e5d58e10"
+    },
+    {
+        "label": "Recommended Shows",
+        "icon": "",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=trakt_recommendations&tmdb_type=tv&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "target": "videos",
+        "guid": "guid-a405860a"
     }
 ]

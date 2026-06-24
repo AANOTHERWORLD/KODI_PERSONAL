@@ -1,22 +1,25 @@
 {
-  "_comment": "Menu blueprint for AF3. generate_menu.py turns this into AF3 skinvariables files: a home (Discover) widget file, per-slot widget files, a 1104 More Providers submenu with per-provider sub-pages, and a slot manifest. AF3 only renders rows on home + slots 1101-1104 (the 5-slot cap), so Apple TV+ / Disney+ / Prime Video are nested under the 1104 More Providers submenu rather than taking their own home slots. Each widget may carry an ordered params map that becomes its TMDb Helper query, or the leaner info/tmdb_type pair. Provider IDs are TMDb watch-provider IDs, region US. No secrets here; Trakt and debrid are authenticated on-device.",
+  "_comment": "Menu blueprint for AF3. generate_menu.py turns this into AF3 skinvariables files: a home (Discover) widget file, per-slot widget files, a 1104 More Providers submenu with per-provider sub-pages, and a slot manifest. AF3 only renders rows on home + slots 1101-1104 (the 5-slot cap), so Apple TV+ / Disney+ / Prime Video are nested under the 1104 More Providers submenu. Each widget may carry an ordered params map that becomes its TMDb Helper query, or the leaner info/tmdb_type pair. Provider IDs are TMDb watch-provider IDs, region US. No secrets here; Trakt and debrid are authenticated on-device.",
   "watch_region": "US",
   "monetization": "flatrate",
-  "widget_limit": "12",
   "widget_suffix": "&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
   "tmdbh": "plugin://plugin.video.themoviedb.helper/",
   "sections": [
     { "slot": "home", "name": "Discover", "type": "widgets", "widgets": [
       { "label": "Trending Series",  "params": { "info": "trending_week", "tmdb_type": "tv" } },
-      { "label": "Trending Movies",  "params": { "info": "trending_week", "tmdb_type": "movie" } },
       { "label": "New Series",       "params": { "startdate": "-14", "days": "14", "info": "trakt_calendar", "endpoint": "new", "user": "false", "tmdb_type": "tv" } },
-      { "label": "New Movies",       "params": { "startdate": "-14", "days": "14", "info": "trakt_moviecalendar", "user": "false", "tmdb_type": "movie" } }
+      { "label": "Recent Episodes",  "params": { "startdate": "-7", "days": "7", "info": "trakt_calendar", "endpoint": "premieres", "user": "false", "tmdb_type": "tv" } },
+      { "label": "Trending Movies",  "params": { "info": "trending_week", "tmdb_type": "movie" } },
+      { "label": "New Movies",       "params": { "startdate": "-14", "days": "14", "info": "trakt_moviecalendar", "user": "false", "tmdb_type": "movie" } },
+      { "label": "Documentaries",    "params": { "info": "discover", "tmdb_type": "movie", "with_genres": "99", "with_id": "True", "plugin_category": "Documentary" } }
     ]},
     { "slot": "1101", "name": "For You", "type": "widgets", "widgets": [
       { "label": "Up Next",            "params": { "info": "trakt_nextepisodes", "tmdb_type": "tv" } },
       { "label": "Continue Watching",  "params": { "info": "trakt_ondeck", "tmdb_type": "both" } },
-      { "label": "My Calendar",        "params": { "startdate": "-14", "days": "14", "info": "trakt_calendar", "tmdb_type": "tv" } },
-      { "label": "Recommended Movies", "params": { "info": "trakt_recommendations", "tmdb_type": "movie" } }
+      { "label": "My Calendar",        "_comment": "Past 2 weeks of my shows' episodes, newest first, ending ~24h ago so an episode only appears a day after it airs (giving sources time to land). The window end is shifted back one day (startdate -15, days 14 = roughly today-15 to today-1); sort_by=released + sort_how=desc orders by air date newest to oldest.", "params": { "startdate": "-15", "days": "14", "info": "trakt_calendar", "tmdb_type": "tv", "sort_by": "released", "sort_how": "desc" } },
+      { "label": "Watchlist",          "params": { "info": "trakt_watchlist", "tmdb_type": "both", "list_name": "Combined+Watchlist", "tmdb_id": "None" } },
+      { "label": "Recommended Movies", "params": { "info": "trakt_recommendations", "tmdb_type": "movie" } },
+      { "label": "Recommended Shows",  "params": { "info": "trakt_recommendations", "tmdb_type": "tv" } }
     ]},
     { "slot": "1102", "name": "Netflix", "type": "provider", "provider_id": 8 },
     { "slot": "1103", "name": "Max",     "type": "provider", "provider_id": 1899 },
@@ -26,15 +29,18 @@
       { "name": "Prime Video", "provider_id": 9 }
     ]}
   ],
-  "_provider_rows_comment": "Rows for every submenu provider sub-page. Latest Series = newest TV on that provider; Latest Movies = newest films on that provider. Kept lean so the nested pages stay light.",
+  "_provider_rows_comment": "Rows for every More Providers sub-page (Apple TV+, Disney+, Prime Video). Latest + Trending series and latest movies for that provider.",
   "provider_rows": [
-    { "label": "Latest Series", "tmdb_type": "tv",    "sort_by": "first_air_date.desc" },
-    { "label": "Latest Movies", "tmdb_type": "movie", "sort_by": "primary_release_date.desc" }
+    { "label": "Latest Series",   "tmdb_type": "tv",    "sort_by": "first_air_date.desc" },
+    { "label": "Trending Series", "tmdb_type": "tv",    "sort_by": "popularity.desc" },
+    { "label": "Latest Movies",   "tmdb_type": "movie", "sort_by": "primary_release_date.desc" }
   ],
-  "_full_provider_rows_comment": "Top-level provider slots (Netflix, Max). Trimmed to three rows for the lite profile to cut home-screen load on low-RAM devices.",
+  "_full_provider_rows_comment": "Top-level provider slots (Netflix, Max). Latest and trending for both series and movies, plus top rated.",
   "full_provider_rows": [
     { "label": "New Movies",      "tmdb_type": "movie", "sort_by": "primary_release_date.desc" },
+    { "label": "Latest Series",   "tmdb_type": "tv",    "sort_by": "first_air_date.desc" },
     { "label": "Trending Movies", "tmdb_type": "movie", "sort_by": "popularity.desc" },
+    { "label": "Trending Series", "tmdb_type": "tv",    "sort_by": "popularity.desc" },
     { "label": "Top Rated",       "tmdb_type": "movie", "sort_by": "vote_average.desc" }
   ]
 }
