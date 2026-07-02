@@ -10,6 +10,10 @@ For the design and reasoning see the project notes; for the theme see
 
 ## Deploy to a new device
 
+For the clean step-by-step, follow [docs/FIRST_RUN.md](docs/FIRST_RUN.md); it is
+the canonical first-run guide and is kept current. The summary below is the same
+flow in brief.
+
 You only do this once per device. The single source is the repository addon; it
 pulls in the whole stack, and the setup service applies the theme, menu, and
 settings on every start.
