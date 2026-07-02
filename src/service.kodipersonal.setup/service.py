@@ -10,6 +10,7 @@
 import os
 import json
 import time
+import shutil
 
 import xbmc
 import xbmcaddon
@@ -406,6 +407,81 @@ def apply_advancedsettings():
         log('advancedsettings.xml in place; takes effect on next Kodi restart.')
 
 
+def _delete_dir_contents(path):
+    # Remove everything inside a directory (files and subfolders), returning the
+    # count removed. Guarded per entry so one failure does not stop the rest.
+    if not os.path.isdir(path):
+        log('Nothing to clear, folder not present: {}'.format(path))
+        return 0
+    count = 0
+    for name in os.listdir(path):
+        full = os.path.join(path, name)
+        try:
+            if os.path.isdir(full):
+                shutil.rmtree(full, ignore_errors=True)
+            else:
+                os.remove(full)
+            count += 1
+            log('Deleted {}'.format(full))
+        except Exception as exc:
+            log('Could not delete {}: {}'.format(full, exc), xbmc.LOGWARNING)
+    return count
+
+
+def clear_texture_cache_once():
+    # One-time texture cache clear so the imageres/fanartres caps in
+    # advancedsettings.xml actually take effect on an existing device. Kodi only
+    # applies the caps to art cached AFTER the change, so already-cached art in
+    # Thumbnails and Textures*.db keeps its old size until the cache is cleared
+    # once. Version-gated the same way as the TMDb Helper setup (stored marker
+    # texturecache_cleared), so it runs exactly once per version, never every
+    # start. Fully guarded so nothing here can crash the service.
+    if ADDON.getSetting('texturecache_cleared') == ADDON_VERSION:
+        log('Texture cache already cleared for v{}; skipping.'.format(ADDON_VERSION))
+        return
+
+    log('===== Texture cache clear start (v{}) ====='.format(ADDON_VERSION))
+    deleted = 0
+    try:
+        # 1) Thumbnails folder: the hex subfolders 0-f and Video/ hold the cached
+        #    image files. Clearing the contents forces Kodi to re-cache under the
+        #    new caps.
+        thumbs = xbmcvfs.translatePath('special://profile/Thumbnails/')
+        log('Clearing Thumbnails at {}'.format(thumbs))
+        deleted += _delete_dir_contents(thumbs)
+
+        # 2) The texture database(s). Filename varies by Kodi version, so glob
+        #    Textures*.db and log what is found. On the target (Android) the file
+        #    is unlinked now and recreated empty on the next launch.
+        dbdir = xbmcvfs.translatePath('special://database/')
+        found_db = []
+        try:
+            for name in os.listdir(dbdir):
+                low = name.lower()
+                if low.startswith('textures') and low.endswith('.db'):
+                    found_db.append(name)
+        except Exception as exc:
+            log('Could not list database dir {}: {}'.format(dbdir, exc), xbmc.LOGWARNING)
+        log('Texture DB files found: {}'.format(', '.join(found_db) if found_db else 'none'))
+        for name in found_db:
+            full = os.path.join(dbdir, name)
+            try:
+                os.remove(full)
+                deleted += 1
+                log('Deleted texture DB {}'.format(full))
+            except Exception as exc:
+                log('Could not delete {}: {}'.format(full, exc), xbmc.LOGWARNING)
+
+        ADDON.setSetting('texturecache_cleared', ADDON_VERSION)
+        log('Texture cache clear done for v{}; {} item(s) removed. The first '
+            'browse after this will be slower while art re-caches under the new '
+            'caps.'.format(ADDON_VERSION, deleted))
+        notify('Art cache reset for the performance update.')
+    except Exception as exc:
+        log('Texture cache clear failed: {}'.format(exc), xbmc.LOGERROR)
+    log('===== Texture cache clear end =====')
+
+
 def needs_apply():
     if not ADDON.getSettingBool('apply_on_update'):
         last = ADDON.getSetting('last_applied_version')
@@ -444,6 +520,7 @@ def main():
     apply_skin_settings()
     apply_viewtypes()
     apply_advancedsettings()
+    clear_texture_cache_once()
     deploy_menu()
 
     # TMDb Helper defaults stay version-gated so they only reapply after updates.
