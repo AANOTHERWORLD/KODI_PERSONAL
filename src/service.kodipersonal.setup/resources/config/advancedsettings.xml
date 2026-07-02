@@ -2,10 +2,30 @@
 <!-- Tuned for a low-RAM (about 2 GB) ONN streaming stick. The setup service
      copies this to the user profile so it self-heals across devices. It only
      takes effect after a Kodi restart, since Kodi reads advancedsettings.xml at
-     startup. Keeps the streaming buffer modest so playback does not compound the
-     memory pressure from the GUI, and limits redraws to dirty regions to ease
-     the weak GPU. No secrets here. -->
+     startup. No secrets here.
+
+     Texture resolution caps (imageres, fanartres):
+     Kodi caps decoded texture size, expressed as pixel height at a 16:9 area.
+     Kodi 21 defaults are imageres 540 (a 960x540 budget for posters, thumbs and
+     landscape art) and fanartres 1080 (fanart and hero backgrounds). Memory per
+     decoded texture scales with pixel area, so lowering these is the single
+     biggest no-code memory lever left.
+       imageres 405: about 44 percent less memory per poster than 540, and at TV
+       viewing distance in a widget row it is visually near identical. This is
+       the primary saver.
+       fanartres 720: a safety cap only. Fanart and hero backgrounds are
+       currently disabled in the skin settings, so this rarely bites; it caps the
+       cost if a background is ever enabled.
+     Fallback if a 2 GB stick still struggles: drop imageres to 360 (about 56
+     percent less than 540). These caps apply only to art cached AFTER the change,
+     so an existing device also needs a one-time texture cache clear (handled by
+     the setup service) for them to take effect.
+
+     Cache buffer is kept modest so playback does not compound GUI memory
+     pressure; redraws are limited to dirty regions to ease the weak GPU. -->
 <advancedsettings>
+    <imageres>405</imageres>
+    <fanartres>720</fanartres>
     <cache>
         <buffermode>1</buffermode>
         <memorysize>20971520</memorysize>
