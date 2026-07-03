@@ -570,17 +570,23 @@ def prune_texture_cache():
 
     try:
         cutoff = now - PRUNE_STALE_SECONDS  # last used before this = stale
-        # Request only lastused to keep the response small on a low-RAM device;
-        # the textureid needed for removal is always returned.
-        resp = _jsonrpc('Textures.GetTextures', {'properties': ['lastused']})
+        # lastused is exposed inside each size entry, not at the texture level,
+        # so request the sizes property and read lastused from it. sizes is the
+        # smallest property set that carries lastused, keeping the response lean
+        # on a low-RAM device; the textureid needed for removal is always given.
+        resp = _jsonrpc('Textures.GetTextures', {'properties': ['sizes']})
         textures = resp.get('result', {}).get('textures', []) if resp else []
         examined = len(textures)
         removed = 0
         errors = 0
         for tex in textures:
-            epoch = _texture_lastused_epoch(tex.get('lastused'))
-            # Skip textures with no usable lastused (for example just-cached art
-            # with a null value) or that are still within the stale window.
+            # Use the most recent lastused across the texture's size entries as
+            # its freshness. Skip textures with no usable lastused (for example
+            # just-cached art) or that are still within the stale window.
+            epochs = [ep for ep in (
+                _texture_lastused_epoch(s.get('lastused'))
+                for s in (tex.get('sizes') or [])) if ep is not None]
+            epoch = max(epochs) if epochs else None
             if epoch is None or epoch >= cutoff:
                 continue
             tid = tex.get('textureid')
