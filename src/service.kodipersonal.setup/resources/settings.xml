@@ -27,6 +27,12 @@
           <control type="label" />
           <visible>false</visible>
         </setting>
+        <setting id="texturecache_pruned" type="string">
+          <level>0</level>
+          <default></default>
+          <control type="label" />
+          <visible>false</visible>
+        </setting>
       </group>
     </category>
   </section>

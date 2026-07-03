@@ -5,7 +5,9 @@
 # Copies the ThoughtStream colour set and background and deploys the home menu
 # files into Arctic Fuse 3 on every start so the theme and menu self-heal after
 # an AF3 update overwrites those files. Verifies required add-ons/repos on
-# startup and silently heals what it can. Logging is verbose by design.
+# startup and silently heals what it can. Also runs a scheduled texture-cache
+# prune (data efficiency) that drops textures unused for a while, on a timer so
+# it does not run every start. Logging is verbose by design.
 
 import os
 import json
@@ -38,6 +40,19 @@ ADVANCEDSETTINGS_FILE = 'advancedsettings.xml'
 ADVANCEDSETTINGS_DEST = 'special://profile/advancedsettings.xml'
 LOG_TAG = '[KODIPERSONAL]'
 LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
+
+# Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
+# it for logging and is bumped alongside it.
+SERVICE_VERSION = '0.7.1'
+
+# Scheduled texture-cache prune (data efficiency). A texture unused for longer
+# than the stale window is removed, and the prune itself runs at most once per
+# interval, gated by the stored timestamp texturecache_pruned (epoch seconds).
+# Arithmetic (seconds):
+#   interval 7 days  = 7 * 24 * 60 * 60  = 604800
+#   stale    30 days = 30 * 24 * 60 * 60 = 2592000
+PRUNE_INTERVAL_SECONDS = 604800
+PRUNE_STALE_SECONDS = 2592000
 
 
 def log(msg, level=xbmc.LOGINFO):
@@ -482,6 +497,109 @@ def clear_texture_cache_once():
     log('===== Texture cache clear end =====')
 
 
+def _jsonrpc(method, params):
+    # Minimal JSON-RPC helper. Returns the parsed response dict, or {} on error.
+    request = {'jsonrpc': '2.0', 'id': 1, 'method': method, 'params': params}
+    try:
+        return json.loads(xbmc.executeJSONRPC(json.dumps(request)))
+    except Exception as exc:
+        log('JSON-RPC {} failed: {}'.format(method, exc), xbmc.LOGWARNING)
+        return {}
+
+
+def _kodi_major():
+    # Best-effort Kodi major version from System.BuildVersion, e.g. "21.2 (...)".
+    build = xbmc.getInfoLabel('System.BuildVersion') or ''
+    try:
+        return int(build.split('.', 1)[0].strip())
+    except Exception:
+        return 0
+
+
+def _texture_db_names():
+    # Textures*.db filenames present, so we can confirm the expected name
+    # (Textures13.db on Kodi 19-21) and log anything different on a newer Kodi.
+    dbdir = xbmcvfs.translatePath('special://database/')
+    names = []
+    try:
+        for name in os.listdir(dbdir):
+            low = name.lower()
+            if low.startswith('textures') and low.endswith('.db'):
+                names.append(name)
+    except Exception as exc:
+        log('Could not list database dir {}: {}'.format(dbdir, exc), xbmc.LOGWARNING)
+    return names
+
+
+def _texture_lastused_epoch(value):
+    # Parse a Textures.GetTextures lastused value ("YYYY-MM-DD HH:MM:SS", local
+    # time) to epoch seconds. Returns None if empty or unparseable.
+    if not value:
+        return None
+    try:
+        return time.mktime(time.strptime(value, '%Y-%m-%d %H:%M:%S'))
+    except Exception:
+        return None
+
+
+def prune_texture_cache():
+    # Scheduled maintenance for data efficiency: remove cached textures not used
+    # recently so the texture cache does not grow without bound on a low-storage
+    # stick. Runs at most once per PRUNE_INTERVAL_SECONDS, tracked by the stored
+    # timestamp texturecache_pruned so it does not run every start. Uses JSON-RPC
+    # (Textures.GetTextures / Textures.RemoveTexture) so Kodi manages the locked
+    # database and the cached files itself; we never touch the DB file directly
+    # here. Fully guarded so nothing can crash the service.
+    now = time.time()
+    try:
+        last = float(ADDON.getSetting('texturecache_pruned') or 0)
+    except Exception:
+        last = 0
+
+    # Only run if at least the interval has elapsed. now - last must be
+    # >= 604800 (7 days). On a fresh device last is 0, so it runs once and stamps.
+    if last and (now - last) < PRUNE_INTERVAL_SECONDS:
+        hours_left = int((PRUNE_INTERVAL_SECONDS - (now - last)) // 3600)
+        log('Texture prune not due yet (about {} h remaining); skipping.'.format(hours_left))
+        return
+
+    log('===== Texture cache prune start ({}) ====='.format(
+        time.strftime('%Y-%m-%d %H:%M:%S')))
+    log('Kodi major version {}; texture DB present: {}'.format(
+        _kodi_major(), ', '.join(_texture_db_names()) or 'none'))
+
+    try:
+        cutoff = now - PRUNE_STALE_SECONDS  # last used before this = stale
+        # Request only lastused to keep the response small on a low-RAM device;
+        # the textureid needed for removal is always returned.
+        resp = _jsonrpc('Textures.GetTextures', {'properties': ['lastused']})
+        textures = resp.get('result', {}).get('textures', []) if resp else []
+        examined = len(textures)
+        removed = 0
+        errors = 0
+        for tex in textures:
+            epoch = _texture_lastused_epoch(tex.get('lastused'))
+            # Skip textures with no usable lastused (for example just-cached art
+            # with a null value) or that are still within the stale window.
+            if epoch is None or epoch >= cutoff:
+                continue
+            tid = tex.get('textureid')
+            if tid is None:
+                continue
+            result = _jsonrpc('Textures.RemoveTexture', {'textureid': tid})
+            if result and 'error' not in result:
+                removed += 1
+            else:
+                errors += 1
+        ADDON.setSetting('texturecache_pruned', str(int(now)))
+        # PRUNE_STALE_SECONDS // 86400 = 2592000 // 86400 = 30 (days), for the log.
+        log('Texture prune done: examined {}, removed {} stale (unused > {} days), '
+            '{} error(s).'.format(examined, removed, PRUNE_STALE_SECONDS // 86400, errors))
+    except Exception as exc:
+        log('Texture cache prune failed: {}'.format(exc), xbmc.LOGERROR)
+    log('===== Texture cache prune end =====')
+
+
 def needs_apply():
     if not ADDON.getSettingBool('apply_on_update'):
         last = ADDON.getSetting('last_applied_version')
@@ -503,8 +621,8 @@ def run_setup():
 
 def main():
     monitor = xbmc.Monitor()
-    log('Service started on {} (addon v{})'.format(
-        xbmc.getInfoLabel('System.BuildVersion'), ADDON_VERSION))
+    log('Service started on {} (addon v{}, service v{})'.format(
+        xbmc.getInfoLabel('System.BuildVersion'), ADDON_VERSION, SERVICE_VERSION))
 
     # Give Kodi a moment to finish loading addons before we touch other addons.
     if monitor.waitForAbort(20):
@@ -521,6 +639,7 @@ def main():
     apply_viewtypes()
     apply_advancedsettings()
     clear_texture_cache_once()
+    prune_texture_cache()
     deploy_menu()
 
     # TMDb Helper defaults stay version-gated so they only reapply after updates.

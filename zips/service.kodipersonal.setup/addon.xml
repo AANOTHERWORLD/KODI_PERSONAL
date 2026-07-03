@@ -16,7 +16,7 @@
      notifies if a source was unreachable at install time. -->
 <addon id="service.kodipersonal.setup"
        name="KODI Personal Setup"
-       version="0.7.0"
+       version="0.7.1"
        provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
@@ -35,7 +35,10 @@
     <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set and background, applies the curated AF3 skin settings and view types, and deploys the home menu (Discover, For You, Netflix, Max, and a More Providers submenu) into Arctic Fuse 3 on every start so the look and menu self-heal after a skin update. Declares the build stack as dependencies so Kodi installs them automatically, and verifies them on startup, healing anything missing or disabled. Stores no secrets. Logs to its own profile folder.</description>
     <platform>all</platform>
     <license>MIT</license>
-    <news>v0.7.0
+    <news>v0.7.1
+- Add a scheduled texture-cache prune for data efficiency: removes textures unused for over 30 days, at most once every 7 days, via JSON-RPC so Kodi manages the locked database. Keeps the art cache from growing without bound.
+- Log Kodi version and the texture database filename on each prune.
+v0.7.0
 - Add texture resolution caps (imageres 405, fanartres 720) to advancedsettings for lower memory use on low-RAM devices.
 - One-time texture cache clear on update so the new caps take effect; runs once per version. First browse after is slower while art re-caches.</news>
   </extension>
