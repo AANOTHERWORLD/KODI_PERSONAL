@@ -16,7 +16,7 @@
     { "slot": "1101", "name": "For You", "type": "widgets", "widgets": [
       { "label": "Up Next",            "params": { "info": "trakt_nextepisodes", "tmdb_type": "tv" } },
       { "label": "Continue Watching",  "params": { "info": "trakt_ondeck", "tmdb_type": "both" } },
-      { "label": "My Calendar",        "_comment": "Past 2 weeks of my shows' episodes, newest first, ending ~24h ago so an episode only appears a day after it airs (giving sources time to land). The window end is shifted back one day (startdate -15, days 14 = roughly today-15 to today-1); sort_by=released + sort_how=desc orders by air date newest to oldest.", "params": { "startdate": "-15", "days": "14", "info": "trakt_calendar", "tmdb_type": "tv", "sort_by": "released", "sort_how": "desc" } },
+      { "label": "My Calendar",        "_comment": "Past 2 weeks of my shows' episodes, newest first. Trakt returns days days starting at start_date, so the window is today-14 to today-1 (startdate=-14 with days=14: today-14 + (14-1) = today-1). It ends yesterday, so today's not-yet-available episodes are excluded, giving sources a day to land. sort_by=released + sort_how=desc orders by air date newest to oldest.", "params": { "startdate": "-14", "days": "14", "info": "trakt_calendar", "tmdb_type": "tv", "sort_by": "released", "sort_how": "desc" } },
       { "label": "Watchlist",          "params": { "info": "trakt_watchlist", "tmdb_type": "both" } },
       { "label": "Recommended Movies", "params": { "info": "trakt_recommendations", "tmdb_type": "movie" } },
       { "label": "Recommended Shows",  "params": { "info": "trakt_recommendations", "tmdb_type": "tv" } }
