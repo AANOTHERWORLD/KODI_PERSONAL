@@ -3,12 +3,13 @@
      remaining dirs aggregate the upstream repos the build depends on (jurialmunkey
      for the skin, TMDb Helper, SkinVariables and the jurialmunkey module; The Red
      Repo for Red Light and, via its Gujal00 dir, ResolveURL; kodiyashimaru for the
-     Magneto scraper module that Red Light uses) so a clean device can resolve the
-     whole stack from this one repo in a single pass. The dirs are copied verbatim
-     from each upstream repo addon, including their Kodi version gates. If an upstream
-     ever moves its hosting, update the matching dir below and rebuild. -->
+     Magneto scraper module that Red Light uses; a4k-openproject for OpenWizard, the
+     build backup and export tool) so a clean device can resolve the whole stack from
+     this one repo in a single pass. The dirs are copied verbatim from each upstream
+     repo addon, including their Kodi version gates. If an upstream ever moves its
+     hosting, update the matching dir below and rebuild. -->
 <addon id="repository.aanotherworld" name="KODI_PERSONAL Repository"
-       version="1.2.0" provider-name="AANOTHERWORLD">
+       version="1.3.0" provider-name="AANOTHERWORLD">
     <extension point="xbmc.addon.repository" name="KODI_PERSONAL">
         <!-- This build's own addons -->
         <dir>
@@ -64,6 +65,20 @@
             <info compressed="false">https://kodiyashimaru.github.io/repo/packages/addons.xml</info>
             <checksum>https://kodiyashimaru.github.io/repo/packages/addons.xml.md5</checksum>
             <datadir zip="true">https://kodiyashimaru.github.io/repo/</datadir>
+        </dir>
+
+        <!-- OpenWizard (a4k-openproject): plugin.program.openwizard, used as the
+             build backup and export tool. Kodi picks the dir matching its version,
+             so only the matrix dir applies on Kodi 19 and later. -->
+        <dir minversion="18.0" maxversion="18.9.0">
+            <info compressed="false">https://raw.githubusercontent.com/a4k-openproject/repository.openwizard/master/leia/zips/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/a4k-openproject/repository.openwizard/master/leia/zips/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/a4k-openproject/repository.openwizard/master/leia/zips/</datadir>
+        </dir>
+        <dir minversion="18.9.0">
+            <info compressed="false">https://raw.githubusercontent.com/a4k-openproject/repository.openwizard/master/matrix/zips/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/a4k-openproject/repository.openwizard/master/matrix/zips/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/a4k-openproject/repository.openwizard/master/matrix/zips/</datadir>
         </dir>
     </extension>
     <extension point="xbmc.addon.metadata">

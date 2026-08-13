@@ -3,7 +3,8 @@
   "repositories": [
     { "id": "repository.aanotherworld", "name": "AANOTHERWORLD Repo",   "critical": true },
     { "id": "repository.jurialmunkey",  "name": "Jurialmunkey Repo",     "critical": true },
-    { "id": "repository.redwizard",     "name": "Red Wizard (Red Repo)", "critical": false }
+    { "id": "repository.redwizard",     "name": "Red Wizard (Red Repo)", "critical": false },
+    { "id": "repository.openwizard",    "name": "OpenWizard Repo",       "critical": false }
   ],
   "addons": [
     { "id": "skin.arctic.fuse.3",            "name": "Arctic Fuse 3",        "critical": true },
@@ -14,6 +15,7 @@
     { "id": "plugin.video.redlight",         "name": "Red Light (source)",   "critical": false },
     { "id": "script.module.resolveurl",      "name": "ResolveURL",           "critical": false },
     { "id": "script.module.magneto",         "name": "Magneto Module (scrapers)", "critical": false },
+    { "id": "plugin.program.openwizard",     "name": "OpenWizard (backup tool)",  "critical": false },
     { "id": "service.kodipersonal.setup",    "name": "KodiPersonal Setup",   "critical": true }
   ]
 }
