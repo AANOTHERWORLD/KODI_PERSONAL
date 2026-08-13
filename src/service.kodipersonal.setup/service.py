@@ -43,7 +43,7 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.7.4'
+SERVICE_VERSION = '0.7.5'
 
 # Scheduled texture-cache prune (data efficiency). A texture unused for longer
 # than the stale window is removed, and the prune itself runs at most once per
@@ -53,6 +53,24 @@ SERVICE_VERSION = '0.7.4'
 #   stale    30 days = 30 * 24 * 60 * 60 = 2592000
 PRUNE_INTERVAL_SECONDS = 604800
 PRUNE_STALE_SECONDS = 2592000
+
+# Magneto scraper initialisation. Magneto installs as a module that registers
+# under Program add-ons, so on a fresh device it stays uninitialised until its
+# plugin endpoint is opened, which is what normally prompts the scraper setup.
+# We fire that same action ourselves so a new device has working scrapers with
+# no manual step. The builtin is Magneto's own "Enable Magneto Default
+# Providers" action, taken from its settings schema.
+MAGNETO_ID = 'script.module.magneto'
+MAGNETO_DEFAULTS_BUILTIN = (
+    'RunPlugin(plugin://script.module.magneto/?action=Defaults&setting=true)')
+# Providers to assert on top of Magneto's stock defaults. Its defaults already
+# cover piratebay, torrentio and aiostreams; zilean ships off (schema
+# default="false") but is enabled on the reference device, so we turn it on
+# after the defaults action runs.
+MAGNETO_EXTRA_PROVIDERS = ('provider.zilean',)
+# Seconds to let the asynchronous RunPlugin defaults action land before we
+# assert the extra providers, so it cannot overwrite them.
+MAGNETO_SETTLE_SECONDS = 5
 
 
 def log(msg, level=xbmc.LOGINFO):
@@ -606,6 +624,56 @@ def prune_texture_cache():
     log('===== Texture cache prune end =====')
 
 
+def initialise_magneto(monitor):
+    # Trigger Magneto's scraper setup so a fresh device does not need the manual
+    # step of opening Magneto under Program add-ons to prompt it. Version-gated
+    # by the stored marker magneto_initialised so it runs once per version, not
+    # every start. Fully guarded so nothing here can crash the service.
+    if ADDON.getSetting('magneto_initialised') == ADDON_VERSION:
+        log('Magneto already initialised for v{}; skipping.'.format(ADDON_VERSION))
+        return
+
+    try:
+        xbmcaddon.Addon(MAGNETO_ID)
+    except Exception:
+        log('{} is not installed yet; skipping scraper init this pass.'.format(MAGNETO_ID),
+            xbmc.LOGWARNING)
+        return
+
+    log('===== Magneto scraper init start (v{}) ====='.format(ADDON_VERSION))
+    try:
+        xbmc.executebuiltin(MAGNETO_DEFAULTS_BUILTIN)
+        log('Requested Magneto default providers via {}'.format(MAGNETO_DEFAULTS_BUILTIN))
+
+        # RunPlugin is asynchronous, so wait before asserting the extra providers
+        # or the defaults action could land afterwards and overwrite them.
+        # waitForAbort returns True only if Kodi is shutting down.
+        if monitor.waitForAbort(MAGNETO_SETTLE_SECONDS):
+            log('Abort during Magneto init; leaving marker unset so it retries.',
+                xbmc.LOGWARNING)
+            return
+
+        # Re-open the addon so we write against the settings the defaults action
+        # just produced rather than a stale handle.
+        magneto = xbmcaddon.Addon(MAGNETO_ID)
+        enabled, failed = 0, 0
+        for provider in MAGNETO_EXTRA_PROVIDERS:
+            try:
+                magneto.setSetting(provider, 'true')
+                enabled += 1
+                log('Enabled Magneto {}'.format(provider))
+            except Exception as exc:
+                failed += 1
+                log('Could not enable Magneto {}: {}'.format(provider, exc), xbmc.LOGWARNING)
+
+        ADDON.setSetting('magneto_initialised', ADDON_VERSION)
+        log('Magneto scraper init done for v{}: defaults requested, {} extra '
+            'provider(s) enabled, {} failed.'.format(ADDON_VERSION, enabled, failed))
+    except Exception as exc:
+        log('Magneto scraper init failed: {}'.format(exc), xbmc.LOGERROR)
+    log('===== Magneto scraper init end =====')
+
+
 def needs_apply():
     if not ADDON.getSettingBool('apply_on_update'):
         last = ADDON.getSetting('last_applied_version')
@@ -647,6 +715,10 @@ def main():
     clear_texture_cache_once()
     prune_texture_cache()
     deploy_menu()
+
+    # Scraper setup, version-gated, so a fresh device does not need the manual
+    # step of opening Magneto to prompt it.
+    initialise_magneto(monitor)
 
     # TMDb Helper defaults stay version-gated so they only reapply after updates.
     if needs_apply():

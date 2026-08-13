@@ -57,6 +57,12 @@ minutes, mostly waiting. You install one thing; it pulls in everything else.
 
 ## If something is off
 
+- **No sources found when you press play:** the scrapers may not have
+  initialised. The build does this for you on the first start after installing,
+  but if it did not take, open Settings > Add-ons > Program add-ons > **Magneto
+  Module** once. Opening it prompts its scraper setup. Check
+  `kodipersonal.log` for the line `Magneto scraper init done`.
+
 - **Menu or theme looks wrong / did not appear:** restart Kodi once more. The
   build reapplies itself on every start.
 - **An add-on seems missing:** Settings > Add-ons > Check for updates, then
