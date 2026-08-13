@@ -84,7 +84,7 @@
     <platform>all</platform>
     <license>SIL Open Font License 1.1</license>
   </extension>
-</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.7.6" provider-name="AANOTHERWORLD">
+</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.7.7" provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
     <import addon="skin.arctic.fuse.3" version="0.0.1" />
@@ -103,7 +103,9 @@
     <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set and background, applies the curated AF3 skin settings and view types, and deploys the home menu (Discover, For You, Netflix, Max, and a More Providers submenu) into Arctic Fuse 3 on every start so the look and menu self-heal after a skin update. Declares the build stack as dependencies so Kodi installs them automatically, and verifies them on startup, healing anything missing or disabled. Stores no secrets. Logs to its own profile folder.</description>
     <platform>all</platform>
     <license>MIT</license>
-    <news>v0.7.6
+    <news>v0.7.7
+- My Calendar now reliably leads with yesterday. The route slices the raw chronological response before it reverses, and the page size is capped at 160 items, so a 14 day window was being cut off mid-window and started around day 10. Window is now the past 7 days ending yesterday with the page size maxed, which fits with headroom.
+v0.7.6
 - OpenWizard now installs with the build, so every device has the same backup and export tool. The repository aggregates the OpenWizard repo (1.3.0) and the setup service requires plugin.program.openwizard. Use it to export device snapshots; do not restore a build with it, as that would overwrite what the repo and setup service maintain.
 v0.7.5
 - Magneto scrapers now initialise automatically on a new device. Magneto registers under Program add-ons and stayed uninitialised until opened by hand; the service now fires its default-providers action once per version and also enables Zilean. No manual scraper step on setup.
