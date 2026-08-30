@@ -10,7 +10,6 @@
 
     "trakt_scrobbling": "true",
     "trakt_watchedindicators": "true",
-    "trakt_watchedinprogress": "true",
     "trakt_nextepisodesort": "recentlywatched",
     "trakt_cacheownlists": "true",
 
@@ -21,8 +20,6 @@
     "seasons_anticipated": "true",
     "seasons_specials": "true",
 
-    "hide_unaired_movies": "true",
-    "hide_unaired_episodes": "false",
     "mpaa_prefix": "Rated",
     "ignore_regionreleasefilter": "true",
     "widgets_nextpage": "true",
@@ -30,7 +27,6 @@
     "pagemulti_tmdb": "1",
     "pagemulti_trakt": "1",
     "pagemulti_sync": "1",
-    "pagemulti_library": "1",
 
     "startup_notifications": "false",
     "sync_notifications": "false",

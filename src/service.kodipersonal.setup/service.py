@@ -43,7 +43,7 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.7.7'
+SERVICE_VERSION = '0.7.8'
 
 # Scheduled texture-cache prune (data efficiency). A texture unused for longer
 # than the stale window is removed, and the prune itself runs at most once per
@@ -674,6 +674,36 @@ def initialise_magneto(monitor):
     log('===== Magneto scraper init end =====')
 
 
+def check_trakt_auth():
+    # Diagnostic only, this changes nothing. TMDb Helper gates scrobbling on a
+    # Home window property called TraktIsAuth, which holds the token expiry stamp
+    # and is written by TMDb Helper's own service when the Trakt token refreshes
+    # successfully (its lib/api/trakt/token.py). If that refresh fails the property
+    # stays empty and scrobbling silently stops, while cached widget rows still
+    # render, so the build looks fine but nothing gets marked watched. We only read
+    # and log it so there is evidence in the log. Fully guarded.
+    try:
+        window = xbmcgui.Window(10000)
+        value = window.getProperty('TraktIsAuth')
+        attempts = window.getProperty('TraktRefreshAttempts') or '0'
+        if not value:
+            log('Trakt auth: TraktIsAuth is EMPTY, so TMDb Helper will not scrobble '
+                'and Trakt rows will go stale. Re-authorise Trakt in TMDb Helper '
+                'settings. Failed refresh attempts: {}'.format(attempts), xbmc.LOGWARNING)
+            return
+        remaining = float(value) - time.time()
+        if remaining <= 0:
+            log('Trakt auth: token stamp {} has already expired; re-authorise Trakt '
+                'in TMDb Helper settings. Failed refresh attempts: {}'.format(
+                    value, attempts), xbmc.LOGWARNING)
+            return
+        # remaining is seconds; 86400 seconds = 1 day.
+        log('Trakt auth OK: token valid for about {} day(s), {} failed refresh '
+            'attempt(s).'.format(int(remaining // 86400), attempts))
+    except Exception as exc:
+        log('Trakt auth check failed to run: {}'.format(exc), xbmc.LOGWARNING)
+
+
 def needs_apply():
     if not ADDON.getSettingBool('apply_on_update'):
         last = ADDON.getSetting('last_applied_version')
@@ -719,6 +749,9 @@ def main():
     # Scraper setup, version-gated, so a fresh device does not need the manual
     # step of opening Magneto to prompt it.
     initialise_magneto(monitor)
+
+    # Log Trakt auth health so scrobbling problems leave a trace.
+    check_trakt_auth()
 
     # TMDb Helper defaults stay version-gated so they only reapply after updates.
     if needs_apply():
