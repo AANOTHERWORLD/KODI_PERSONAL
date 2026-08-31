@@ -43,7 +43,7 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.7.8'
+SERVICE_VERSION = '0.7.9'
 
 # Scheduled texture-cache prune (data efficiency). A texture unused for longer
 # than the stale window is removed, and the prune itself runs at most once per
@@ -674,6 +674,33 @@ def initialise_magneto(monitor):
     log('===== Magneto scraper init end =====')
 
 
+def enforce_addon_updatemode():
+    # The whole point of this build is that devices update themselves from the one
+    # repo. Kodi gates that with addons.updatemode: 0 installs updates
+    # automatically, 1 only notifies, 2 never checks. On the reference device it
+    # was 1 with addon notifications also switched off, so updates were found but
+    # never installed and never announced, which looks exactly like the repo has
+    # stopped publishing. We read it first and only write when it is not 0, so a
+    # correct device is untouched. Guarded and logged.
+    try:
+        resp = _jsonrpc('Settings.GetSettingValue', {'setting': 'addons.updatemode'})
+        current = resp.get('result', {}).get('value') if resp else None
+        if current == 0:
+            log('Addon update mode already automatic; nothing to change.')
+            return
+        log('Addon update mode is {} (0=auto, 1=notify only, 2=never); setting it to '
+            'automatic so repo updates actually install.'.format(current))
+        result = _jsonrpc(
+            'Settings.SetSettingValue',
+            {'setting': 'addons.updatemode', 'value': 0})
+        if result and 'error' not in result:
+            log('Addon update mode set to automatic.')
+        else:
+            log('Could not set addon update mode: {}'.format(result), xbmc.LOGWARNING)
+    except Exception as exc:
+        log('Addon update mode check failed to run: {}'.format(exc), xbmc.LOGWARNING)
+
+
 def check_trakt_auth():
     # Diagnostic only, this changes nothing. TMDb Helper gates scrobbling on a
     # Home window property called TraktIsAuth, which holds the token expiry stamp
@@ -751,6 +778,7 @@ def main():
     initialise_magneto(monitor)
 
     # Log Trakt auth health so scrobbling problems leave a trace.
+    enforce_addon_updatemode()
     check_trakt_auth()
 
     # TMDb Helper defaults stay version-gated so they only reapply after updates.
