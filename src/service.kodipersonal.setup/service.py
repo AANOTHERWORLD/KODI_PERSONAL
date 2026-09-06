@@ -7,7 +7,8 @@
 # an AF3 update overwrites those files. Verifies required add-ons/repos on
 # startup and silently heals what it can. Also runs a scheduled texture-cache
 # prune (data efficiency) that drops textures unused for a while, on a timer so
-# it does not run every start. Logging is verbose by design.
+# it does not run every start. Sets Trakt scrobble ownership (Red Light owns
+# it, script.trakt scrobbling off). Logging is verbose by design.
 
 import os
 import json
@@ -43,7 +44,7 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.7.9'
+SERVICE_VERSION = '0.8.0'
 
 # Scheduled texture-cache prune (data efficiency). A texture unused for longer
 # than the stale window is removed, and the prune itself runs at most once per
@@ -114,13 +115,20 @@ def verify_dependencies():
         log('Dependency check failed to run: {}'.format(exc), xbmc.LOGWARNING)
 
 
-def apply_tmdbhelper_settings():
-    cfg = load_config('tmdbhelper_settings.json')
+def _apply_addon_settings_file(name, label):
+    # Apply a settings map from resources/config/<name> to the addon it names
+    # (target_addon). Shared by the TMDb Helper defaults and the scrobbler
+    # ownership settings so both log the same way. Returns True only when every
+    # key applied, so the version gate retries next start after any failure.
+    cfg = load_config(name)
     if not cfg:
         return False
-    target = cfg.get('target_addon', 'plugin.video.themoviedb.helper')
+    target = cfg.get('target_addon')
+    if not target:
+        log('{} has no target_addon; skipping.'.format(name), xbmc.LOGERROR)
+        return False
     try:
-        helper = xbmcaddon.Addon(target)
+        addon = xbmcaddon.Addon(target)
     except Exception:
         log('{} is not installed yet; skipping settings apply this pass.'.format(target),
             xbmc.LOGWARNING)
@@ -129,13 +137,28 @@ def apply_tmdbhelper_settings():
     applied, failed = 0, 0
     for key, value in cfg.get('settings', {}).items():
         try:
-            helper.setSetting(key, str(value))
+            addon.setSetting(key, str(value))
             applied += 1
         except Exception as exc:
             failed += 1
             log('Could not set {}={} : {}'.format(key, value, exc), xbmc.LOGWARNING)
-    log('TMDb Helper settings applied: {} ok, {} failed.'.format(applied, failed))
+    log('{} settings applied: {} ok, {} failed.'.format(label, applied, failed))
     return failed == 0
+
+
+def apply_tmdbhelper_settings():
+    return _apply_addon_settings_file('tmdbhelper_settings.json', 'TMDb Helper')
+
+
+def apply_scrobbler_settings():
+    # Trakt scrobble ownership. With the Red Light auto player TMDb Helper never
+    # learns what is playing (its resolver takes the executebuiltin branch that
+    # skips the playerstring), and Red Light steps aside whenever script.trakt is
+    # authorised with scrobbling on, expecting script.trakt to do it. That
+    # hand-off is what left nothing marking episodes watched. Switching
+    # script.trakt scrobbling off makes Red Light the single owner: it scrobbles
+    # start/stop with exact TMDb ids and writes watched history at 90 percent.
+    return _apply_addon_settings_file('scrobbler_settings.json', 'script.trakt scrobble')
 
 
 def _read_bytes(path):
@@ -741,6 +764,7 @@ def needs_apply():
 def run_setup():
     log('===== Setup pass start (addon v{}) ====='.format(ADDON_VERSION))
     ok = apply_tmdbhelper_settings()
+    ok = apply_scrobbler_settings() and ok
     if ok:
         ADDON.setSetting('last_applied_version', ADDON_VERSION)
         notify('Build defaults applied.')
@@ -777,7 +801,8 @@ def main():
     # step of opening Magneto to prompt it.
     initialise_magneto(monitor)
 
-    # Log Trakt auth health so scrobbling problems leave a trace.
+    # Make sure repo updates install automatically, then log TMDb Helper's Trakt
+    # auth health (it drives the For You rows) so problems leave a trace.
     enforce_addon_updatemode()
     check_trakt_auth()
 

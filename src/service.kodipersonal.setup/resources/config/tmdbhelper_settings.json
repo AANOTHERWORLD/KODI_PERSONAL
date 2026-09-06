@@ -1,5 +1,5 @@
 {
-  "_comment": "Behavior-defining TMDb Helper settings applied to every device by the setup service. NO secrets are stored here. Trakt and any API keys are authenticated on-device by the user. Values mirror the scrubbed backup so the For You / calendar / scrobble behavior matches the original build.",
+  "_comment": "Behavior-defining TMDb Helper settings applied to every device by the setup service. NO secrets are stored here. Trakt and any API keys are authenticated on-device by the user. Values mirror the scrubbed backup so the For You / calendar behavior matches the original build. trakt_scrobbling is OFF on purpose: Red Light owns scrobbling (see scrobbler_settings.json). With the Red Light auto player TMDb Helper never learns what is playing anyway, and leaving it on would double scrobble if the player ever became resolvable.",
   "target_addon": "plugin.video.themoviedb.helper",
   "settings": {
     "players_url": "https://oldmanjax.github.io/jsonplayers.zip",
@@ -8,7 +8,7 @@
     "default_player_movies": "redlight.auto.json play_movie",
     "default_player_episodes": "redlight.auto.json play_episode",
 
-    "trakt_scrobbling": "true",
+    "trakt_scrobbling": "false",
     "trakt_watchedindicators": "true",
     "trakt_nextepisodesort": "recentlywatched",
     "trakt_cacheownlists": "true",

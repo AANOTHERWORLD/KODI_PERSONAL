@@ -1,0 +1,8 @@
+{
+  "_comment": "Trakt scrobble ownership. Red Light is the single scrobbler in this build. Red Light checks script.trakt (trakt_official_status in its trakt_api) and steps aside whenever script.trakt is installed, enabled, authorised, has ExcludeHTTP false and scrobble_movie/scrobble_episode true; it then also skips its own watched-history write at 90 percent and just waits for script.trakt. On the reference device that hand-off left nothing marking anything watched. Turning these two toggles off makes trakt_official_status return True, so Red Light scrobbles start/stop with exact TMDb ids and writes sync/history itself. script.trakt stays installed for everything else it does. NO secrets here.",
+  "target_addon": "script.trakt",
+  "settings": {
+    "scrobble_movie": "false",
+    "scrobble_episode": "false"
+  }
+}

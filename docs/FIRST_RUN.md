@@ -42,8 +42,13 @@ minutes, mostly waiting. You install one thing; it pulls in everything else.
 
 ## Sign in (once per device)
 
-- **Trakt** (powers For You, Up Next, the calendar): open TMDb Helper's settings
-  and authorize your Trakt account. This is what makes the personal rows work.
+- **Trakt in Red Light** (marks what you watch as watched): open Red Light's
+  settings, Accounts section, and authorize Trakt. When it offers to set Trakt as
+  the Watched Status Provider, say Yes. Red Light is the only thing that scrobbles
+  in this build, so without this step nothing gets marked watched.
+- **Trakt in TMDb Helper** (powers For You, Up Next, the calendar): open TMDb
+  Helper's settings and authorize the same Trakt account. This is what makes the
+  personal rows work.
 - **Premiumize / debrid** (for playback): open ResolveURL settings > Universal
   Resolvers > Premiumize, and authorize it. Red Light plays through this.
 
@@ -63,6 +68,11 @@ minutes, mostly waiting. You install one thing; it pulls in everything else.
   Module** once. Opening it prompts its scraper setup. Check
   `kodipersonal.log` for the line `Magneto scraper init done`.
 
+- **Watched status is not reaching Trakt:** Red Light must be authorized with
+  Trakt and have Trakt as its Watched Status Provider (Red Light settings,
+  Accounts). The build turns scrobbling off in the Trakt add-on and in TMDb
+  Helper on purpose so Red Light is the only scrobbler; do not turn those back
+  on, or Red Light will step aside again and nothing will be marked.
 - **Menu or theme looks wrong / did not appear:** restart Kodi once more. The
   build reapplies itself on every start.
 - **An add-on seems missing:** Settings > Add-ons > Check for updates, then

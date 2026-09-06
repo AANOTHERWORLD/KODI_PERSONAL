@@ -16,7 +16,7 @@
      notifies if a source was unreachable at install time. -->
 <addon id="service.kodipersonal.setup"
        name="KODI Personal Setup"
-       version="0.7.9"
+       version="0.8.0"
        provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
@@ -36,7 +36,9 @@
     <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set and background, applies the curated AF3 skin settings and view types, and deploys the home menu (Discover, For You, Netflix, Max, and a More Providers submenu) into Arctic Fuse 3 on every start so the look and menu self-heal after a skin update. Declares the build stack as dependencies so Kodi installs them automatically, and verifies them on startup, healing anything missing or disabled. Stores no secrets. Logs to its own profile folder.</description>
     <platform>all</platform>
     <license>MIT</license>
-    <news>v0.7.9
+    <news>v0.8.0
+- Fix Trakt not marking movies and episodes watched automatically. Three scrobblers were in play and none was writing: TMDb Helper's cannot see what the Red Light auto player is playing (that launch path never sets its playerstring), and Red Light deliberately steps aside when script.trakt is authorised with scrobbling on, so everything rode on script.trakt, which was not delivering. The setup service now turns script.trakt scrobbling off so Red Light is the single owner: it scrobbles with exact TMDb ids and writes watched history at 90 percent. TMDb Helper scrobbling is also off to prevent double scrobbles. Needs Trakt authorised inside Red Light with Trakt as its watched provider.
+v0.7.9
 - Devices now actually install repo updates. Kodi's addons.updatemode was set to notify-only with addon notifications switched off, so updates were found but never installed and never announced, which looks like the repo stopped publishing. The service now asserts automatic updates, and only writes when the value is wrong.
 v0.7.8
 - Add a Trakt auth health line to the log. TMDb Helper gates scrobbling on a runtime TraktIsAuth property that its service writes when the token refreshes; if the refresh fails, scrobbling stops silently while cached rows still look fine. The log now says whether the token is valid, expired or missing.
