@@ -45,7 +45,7 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.8.2'
+SERVICE_VERSION = '0.8.3'
 
 # Scheduled texture-cache prune (data efficiency). A texture unused for longer
 # than the stale window is removed, and the prune itself runs at most once per
@@ -90,8 +90,16 @@ INFOTAGGER_ID = 'script.module.infotagger'
 # rate limit. The script router does not coerce booleans, so the dialog cannot
 # be switched off from a builtin; it is a background progress bar, not modal.
 TMDBHELPER_ID = 'plugin.video.themoviedb.helper'
+# Both keys are passed on purpose. TMDb Helper 6.17 renamed the script method's
+# required argument from invalidate_trakt_sync to invalidate_sync while keeping
+# the legacy route key, and its router forwards every parameter as kwargs. So the
+# legacy key alone raises TypeError on 6.17 (argument missing), and the new key
+# alone is not a route on 6.16. With both present each version finds its
+# argument and the extra key is harmlessly absorbed by **kwargs. 0.8.1 and 0.8.2
+# shipped the legacy key only, so their repair never ran on 6.17.
 TRAKTSYNC_REPAIR_BUILTIN = (
-    'RunScript(plugin.video.themoviedb.helper,invalidate_trakt_sync=watchedprogress)')
+    'RunScript(plugin.video.themoviedb.helper,'
+    'invalidate_sync=watchedprogress,invalidate_trakt_sync=watchedprogress)')
 # Seconds to let TMDb Helper's own service settle after boot before asking it to
 # rebuild sync data.
 TRAKTSYNC_REPAIR_SETTLE_SECONDS = 15

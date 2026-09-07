@@ -81,9 +81,10 @@ minutes, mostly waiting. You install one thing; it pulls in everything else.
   on every start from 0.8.2; set them by hand once if a device is behind, then
   Settings > Add-ons > Check for updates.
 - **Up Next shows nothing:** TMDb Helper stored an empty sync. Open TMDb
-  Helper settings > Trakt > **Clear sync data** > **Progress**, then reload the
-  home screen. The build does this once after updating and caps TMDb Helper's
-  sync threads so it should not recur.
+  Helper settings and use **Clear sync data** > **Progress** (under Trakt on
+  TMDb Helper 6.16, under Sync on 6.17), then reload the home screen. The build
+  does this once after updating and caps TMDb Helper's sync threads so it
+  should not recur.
 - **Menu or theme looks wrong / did not appear:** restart Kodi once more. The
   build reapplies itself on every start.
 - **An add-on seems missing:** Settings > Add-ons > Check for updates, then

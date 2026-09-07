@@ -16,7 +16,7 @@
      notifies if a source was unreachable at install time. -->
 <addon id="service.kodipersonal.setup"
        name="KODI Personal Setup"
-       version="0.8.2"
+       version="0.8.3"
        provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
@@ -36,7 +36,9 @@
     <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set and background, applies the curated AF3 skin settings and view types, and deploys the home menu (Discover, For You, Netflix, Max, and a More Providers submenu) into Arctic Fuse 3 on every start so the look and menu self-heal after a skin update. Declares the build stack as dependencies so Kodi installs them automatically, and verifies them on startup, healing anything missing or disabled. Stores no secrets. Logs to its own profile folder.</description>
     <platform>all</platform>
     <license>MIT</license>
-    <news>v0.8.2
+    <news>v0.8.3
+- Fix the Up Next repair never running on TMDb Helper 6.17. The Up Next path itself (info=trakt_nextepisodes) is valid on 6.16 and 6.17 and is unchanged. TMDb Helper 6.17 renamed the argument of its Clear sync data script method (invalidate_trakt_sync became invalidate_sync) while keeping the old route key, so the 0.8.1 repair call failed with a TypeError on 6.17 and the emptied next-episode table was never rebuilt. The service now passes both keys, which works on either version, and the version bump re-arms the one-time repair so it actually runs.
+v0.8.2
 - Fix the TMDb Helper update failing on script.module.infotagger 0.0.9, for real this time, and undo a 0.7.9 mistake that caused it. Kodi has two update policies: Updates (general.addonupdates) and Update official add-ons from (addons.updatemode). 0.7.9 confused them and forced addons.updatemode to 0, official repositories only. InfoTagger is installed from Kodi's official repository, which only carries 0.0.8, while TMDb Helper 6.17.1 needs 0.0.9 from jurialmunkey; with the policy at official only Kodi refuses the newer version and reports the dependency could not be satisfied. The service now asserts Updates = install automatically and Update official add-ons from = Any repositories. The 0.8.1 package cache purge was based on a wrong theory and stays only as hygiene.
 v0.8.1
 - Fix the TMDb Helper update failing on script.module.infotagger 0.0.9 'could not be loaded'. The package itself is fine upstream; Kodi was retrying a broken cached copy. The service now purges corrupt cached addon zips (and any cached InfoTagger zip) once per version and refreshes the repos, and InfoTagger is on the dependency healer list.
