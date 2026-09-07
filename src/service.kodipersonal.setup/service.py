@@ -45,7 +45,7 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.8.1'
+SERVICE_VERSION = '0.8.2'
 
 # Scheduled texture-cache prune (data efficiency). A texture unused for longer
 # than the stale window is removed, and the prune itself runs at most once per
@@ -74,12 +74,11 @@ MAGNETO_EXTRA_PROVIDERS = ('provider.zilean',)
 # assert the extra providers, so it cannot overwrite them.
 MAGNETO_SETTLE_SECONDS = 5
 
-# Addon package cache. Kodi keeps downloaded addon zips here and reuses a cached
-# copy instead of downloading again, without a checksum when the repo gives none.
-# A truncated or corrupt cached zip therefore fails every install attempt forever
-# (Kodi reports the addon 'could not be loaded'), which is what blocked the TMDb
-# Helper update on script.module.infotagger 0.0.9. We purge corrupt zips, and
-# InfoTagger zips outright, once per version so Kodi fetches fresh copies.
+# Addon package cache hygiene. Kodi keeps downloaded addon zips here and reuses a
+# cached copy without a checksum when the repo gives none, so a corrupt cached zip
+# would fail every install attempt. We purge corrupt zips once per version. Note
+# this was NOT the cause of the InfoTagger 0.0.9 failure (see
+# enforce_addon_update_policy for the real one); it stays as general hygiene.
 PACKAGES_DIR = 'special://home/addons/packages/'
 INFOTAGGER_ID = 'script.module.infotagger'
 
@@ -721,31 +720,44 @@ def initialise_magneto(monitor):
     log('===== Magneto scraper init end =====')
 
 
-def enforce_addon_updatemode():
-    # The whole point of this build is that devices update themselves from the one
-    # repo. Kodi gates that with addons.updatemode: 0 installs updates
-    # automatically, 1 only notifies, 2 never checks. On the reference device it
-    # was 1 with addon notifications also switched off, so updates were found but
-    # never installed and never announced, which looks exactly like the repo has
-    # stopped publishing. We read it first and only write when it is not 0, so a
-    # correct device is untouched. Guarded and logged.
-    try:
-        resp = _jsonrpc('Settings.GetSettingValue', {'setting': 'addons.updatemode'})
-        current = resp.get('result', {}).get('value') if resp else None
-        if current == 0:
-            log('Addon update mode already automatic; nothing to change.')
-            return
-        log('Addon update mode is {} (0=auto, 1=notify only, 2=never); setting it to '
-            'automatic so repo updates actually install.'.format(current))
-        result = _jsonrpc(
-            'Settings.SetSettingValue',
-            {'setting': 'addons.updatemode', 'value': 0})
-        if result and 'error' not in result:
-            log('Addon update mode set to automatic.')
-        else:
-            log('Could not set addon update mode: {}'.format(result), xbmc.LOGWARNING)
-    except Exception as exc:
-        log('Addon update mode check failed to run: {}'.format(exc), xbmc.LOGWARNING)
+def enforce_addon_update_policy():
+    # Two Kodi policies decide whether this build can update itself. They are
+    # easy to confuse and 0.7.9 confused them, which caused a regression:
+    #   general.addonupdates  Updates: 0 install automatically, 1 notify only,
+    #                         2 never check. The build needs 0.
+    #   addons.updatemode     Update official add-ons from: 0 official
+    #                         repositories only, 1 any repositories. The build
+    #                         needs 1.
+    # Why 1 matters: script.module.infotagger is installed from Kodi's official
+    # repository (origin repository.xbmc.org), and jurialmunkey ships newer
+    # InfoTagger builds than the official repo carries. With the policy at 0,
+    # Kodi's resolver (CAddonRepos::GetLatestAddonVersionFromAllRepos) only
+    # considers the official version for an official-origin addon, so when TMDb
+    # Helper requires a newer InfoTagger the update fails with 'The dependency on
+    # script.module.infotagger version X could not be satisfied'. 0.7.9 forced
+    # addons.updatemode to 0 by mistake; this asserts the correct values, reading
+    # first and writing only what differs. Guarded and logged.
+    wanted = (
+        ('general.addonupdates', 0, 'Updates', 'install automatically'),
+        ('addons.updatemode', 1, 'Update official add-ons from', 'any repositories'),
+    )
+    for setting, value, label, meaning in wanted:
+        try:
+            resp = _jsonrpc('Settings.GetSettingValue', {'setting': setting})
+            current = resp.get('result', {}).get('value') if resp else None
+            if current == value:
+                log('{} already {} ({}); nothing to change.'.format(label, value, meaning))
+                continue
+            log('{} is {}; setting {} to {} ({}).'.format(
+                label, current, setting, value, meaning))
+            result = _jsonrpc('Settings.SetSettingValue', {'setting': setting, 'value': value})
+            if result and 'error' not in result:
+                log('{} set to {} ({}).'.format(label, value, meaning))
+            else:
+                log('Could not set {}: {}'.format(setting, result), xbmc.LOGWARNING)
+        except Exception as exc:
+            log('Update policy check for {} failed to run: {}'.format(setting, exc),
+                xbmc.LOGWARNING)
 
 
 def check_trakt_auth():
@@ -913,9 +925,10 @@ def main():
     # step of opening Magneto to prompt it.
     initialise_magneto(monitor)
 
-    # Make sure repo updates install automatically, then log TMDb Helper's Trakt
-    # auth health (it drives the For You rows) so problems leave a trace.
-    enforce_addon_updatemode()
+    # Assert Kodi's two update policies (install automatically, and accept
+    # updates from any repository), then log TMDb Helper's Trakt auth health
+    # (it drives the For You rows) so problems leave a trace.
+    enforce_addon_update_policy()
     check_trakt_auth()
 
     # TMDb Helper defaults stay version-gated so they only reapply after updates.

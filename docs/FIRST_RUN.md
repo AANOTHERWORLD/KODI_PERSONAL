@@ -73,12 +73,13 @@ minutes, mostly waiting. You install one thing; it pulls in everything else.
   Accounts). The build turns scrobbling off in the Trakt add-on and in TMDb
   Helper on purpose so Red Light is the only scrobbler; do not turn those back
   on, or Red Light will step aside again and nothing will be marked.
-- **TMDb Helper will not update (InfoTagger 'could not be loaded'):** Kodi is
-  retrying a broken cached download. The build clears the package cache once
-  after updating; if it still fails, delete the file
-  `Android/data/org.xbmc.kodi/files/.kodi/addons/packages/script.module.infotagger-0.0.9.zip`
-  (any file manager add-on can do it), then Settings > Add-ons > Check for
-  updates.
+- **TMDb Helper will not update (InfoTagger version could not be satisfied):**
+  InfoTagger comes from Kodi's official repository, and Kodi will not take a
+  newer copy from another repository unless allowed. Settings > System >
+  Add-ons > **Update official add-ons from** must be **Any repositories** (and
+  **Updates** must be **Install updates automatically**). The build asserts both
+  on every start from 0.8.2; set them by hand once if a device is behind, then
+  Settings > Add-ons > Check for updates.
 - **Up Next shows nothing:** TMDb Helper stored an empty sync. Open TMDb
   Helper settings > Trakt > **Clear sync data** > **Progress**, then reload the
   home screen. The build does this once after updating and caps TMDb Helper's

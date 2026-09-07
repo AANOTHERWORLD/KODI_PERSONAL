@@ -317,6 +317,12 @@ menu source of truth, everything else generated.
 - Max concurrent threads 10 (TMDb Helper default 0 is unlimited): the next-episodes sync fires one
   Trakt call per in-progress show in parallel; unlimited trips Trakt rate limiting, whose silent 15
   second cooldown blanks the rest of the batch and gets persisted as an empty Up Next for half a day.
+- Kodi policies asserted by the service on every start: Updates = install automatically
+  (general.addonupdates 0) and Update official add-ons from = Any repositories (addons.updatemode 1).
+  The second is required because script.module.infotagger is installed from Kodi's official
+  repository (origin repository.xbmc.org) and jurialmunkey ships newer InfoTagger than the official
+  repo carries; with official-only, Kodi refuses the newer version and TMDb Helper updates fail with
+  'The dependency on script.module.infotagger version X could not be satisfied'.
 - Trakt: scrobbling off in TMDb Helper (Red Light owns scrobbling), watched indicators on, in-progress indicators on, next
   episode sort by recently watched, cache own lists.
 - Calendar: flattened; next-episodes not driven by the calendar; seasons show
