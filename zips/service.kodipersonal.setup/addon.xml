@@ -16,7 +16,7 @@
      notifies if a source was unreachable at install time. -->
 <addon id="service.kodipersonal.setup"
        name="KODI Personal Setup"
-       version="0.8.0"
+       version="0.8.1"
        provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
@@ -36,7 +36,10 @@
     <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set and background, applies the curated AF3 skin settings and view types, and deploys the home menu (Discover, For You, Netflix, Max, and a More Providers submenu) into Arctic Fuse 3 on every start so the look and menu self-heal after a skin update. Declares the build stack as dependencies so Kodi installs them automatically, and verifies them on startup, healing anything missing or disabled. Stores no secrets. Logs to its own profile folder.</description>
     <platform>all</platform>
     <license>MIT</license>
-    <news>v0.8.0
+    <news>v0.8.1
+- Fix the TMDb Helper update failing on script.module.infotagger 0.0.9 'could not be loaded'. The package itself is fine upstream; Kodi was retrying a broken cached copy. The service now purges corrupt cached addon zips (and any cached InfoTagger zip) once per version and refreshes the repos, and InfoTagger is on the dependency healer list.
+- Fix Up Next loading no results. TMDb Helper's next-episodes sync runs one Trakt call per in-progress show in parallel with no thread cap, which trips Trakt rate limiting; the silent 15 second cooldown blanks the rest of the batch and TMDb Helper stores that as a successful empty sync for half a day. The service now caps TMDb Helper max_threads at 10 and runs its Clear sync data > Progress rebuild once so Up Next fills back in.
+v0.8.0
 - Fix Trakt not marking movies and episodes watched automatically. Three scrobblers were in play and none was writing: TMDb Helper's cannot see what the Red Light auto player is playing (that launch path never sets its playerstring), and Red Light deliberately steps aside when script.trakt is authorised with scrobbling on, so everything rode on script.trakt, which was not delivering. The setup service now turns script.trakt scrobbling off so Red Light is the single owner: it scrobbles with exact TMDb ids and writes watched history at 90 percent. TMDb Helper scrobbling is also off to prevent double scrobbles. Needs Trakt authorised inside Red Light with Trakt as its watched provider.
 v0.7.9
 - Devices now actually install repo updates. Kodi's addons.updatemode was set to notify-only with addon notifications switched off, so updates were found but never installed and never announced, which looks like the repo stopped publishing. The service now asserts automatic updates, and only writes when the value is wrong.

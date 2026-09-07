@@ -1,5 +1,5 @@
 {
-  "_comment": "Behavior-defining TMDb Helper settings applied to every device by the setup service. NO secrets are stored here. Trakt and any API keys are authenticated on-device by the user. Values mirror the scrubbed backup so the For You / calendar behavior matches the original build. trakt_scrobbling is OFF on purpose: Red Light owns scrobbling (see scrobbler_settings.json). With the Red Light auto player TMDb Helper never learns what is playing anyway, and leaving it on would double scrobble if the player ever became resolvable.",
+  "_comment": "Behavior-defining TMDb Helper settings applied to every device by the setup service. NO secrets are stored here. Trakt and any API keys are authenticated on-device by the user. Values mirror the scrubbed backup so the For You / calendar behavior matches the original build. trakt_scrobbling is OFF on purpose: Red Light owns scrobbling (see scrobbler_settings.json). With the Red Light auto player TMDb Helper never learns what is playing anyway, and leaving it on would double scrobble if the player ever became resolvable. max_threads caps TMDb Helper parallel requests (default 0 is unlimited): its next-episodes sync fires one Trakt call per in-progress show at once, which trips Trakt rate limiting; the resulting silent 15 second cooldown blanks the rest of the batch and TMDb Helper persists that as an empty Up Next for half a day.",
   "target_addon": "plugin.video.themoviedb.helper",
   "settings": {
     "players_url": "https://oldmanjax.github.io/jsonplayers.zip",
@@ -27,6 +27,7 @@
     "pagemulti_tmdb": "1",
     "pagemulti_trakt": "1",
     "pagemulti_sync": "1",
+    "max_threads": "10",
 
     "startup_notifications": "false",
     "sync_notifications": "false",

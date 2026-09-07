@@ -73,6 +73,16 @@ minutes, mostly waiting. You install one thing; it pulls in everything else.
   Accounts). The build turns scrobbling off in the Trakt add-on and in TMDb
   Helper on purpose so Red Light is the only scrobbler; do not turn those back
   on, or Red Light will step aside again and nothing will be marked.
+- **TMDb Helper will not update (InfoTagger 'could not be loaded'):** Kodi is
+  retrying a broken cached download. The build clears the package cache once
+  after updating; if it still fails, delete the file
+  `Android/data/org.xbmc.kodi/files/.kodi/addons/packages/script.module.infotagger-0.0.9.zip`
+  (any file manager add-on can do it), then Settings > Add-ons > Check for
+  updates.
+- **Up Next shows nothing:** TMDb Helper stored an empty sync. Open TMDb
+  Helper settings > Trakt > **Clear sync data** > **Progress**, then reload the
+  home screen. The build does this once after updating and caps TMDb Helper's
+  sync threads so it should not recur.
 - **Menu or theme looks wrong / did not appear:** restart Kodi once more. The
   build reapplies itself on every start.
 - **An add-on seems missing:** Settings > Add-ons > Check for updates, then

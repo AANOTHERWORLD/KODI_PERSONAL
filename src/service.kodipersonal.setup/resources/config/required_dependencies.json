@@ -15,6 +15,7 @@
     { "id": "plugin.video.redlight",         "name": "Red Light (source)",   "critical": false },
     { "id": "script.module.resolveurl",      "name": "ResolveURL",           "critical": false },
     { "id": "script.module.magneto",         "name": "Magneto Module (scrapers)", "critical": false },
+    { "id": "script.module.infotagger",      "name": "InfoTagger (TMDb Helper dep)", "critical": false },
     { "id": "plugin.program.openwizard",     "name": "OpenWizard (backup tool)",  "critical": false },
     { "id": "service.kodipersonal.setup",    "name": "KodiPersonal Setup",   "critical": true }
   ]

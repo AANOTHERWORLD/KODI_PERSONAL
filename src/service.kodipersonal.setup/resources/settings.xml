@@ -39,6 +39,18 @@
           <control type="label" />
           <visible>false</visible>
         </setting>
+        <setting id="packagecache_purged" type="string">
+          <level>0</level>
+          <default></default>
+          <control type="label" />
+          <visible>false</visible>
+        </setting>
+        <setting id="traktsync_repaired" type="string">
+          <level>0</level>
+          <default></default>
+          <control type="label" />
+          <visible>false</visible>
+        </setting>
       </group>
     </category>
   </section>

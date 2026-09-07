@@ -314,6 +314,9 @@ menu source of truth, everything else generated.
 - Player slot: Red Light auto player (`redlight.auto.json`), movies and episodes.
 - Players list: bundled and combined players enabled, players list from the
   oldmanjax jsonplayers source.
+- Max concurrent threads 10 (TMDb Helper default 0 is unlimited): the next-episodes sync fires one
+  Trakt call per in-progress show in parallel; unlimited trips Trakt rate limiting, whose silent 15
+  second cooldown blanks the rest of the batch and gets persisted as an empty Up Next for half a day.
 - Trakt: scrobbling off in TMDb Helper (Red Light owns scrobbling), watched indicators on, in-progress indicators on, next
   episode sort by recently watched, cache own lists.
 - Calendar: flattened; next-episodes not driven by the calendar; seasons show

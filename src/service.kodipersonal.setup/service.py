@@ -14,6 +14,7 @@ import os
 import json
 import time
 import shutil
+import zipfile
 
 import xbmc
 import xbmcaddon
@@ -44,7 +45,7 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.8.0'
+SERVICE_VERSION = '0.8.1'
 
 # Scheduled texture-cache prune (data efficiency). A texture unused for longer
 # than the stale window is removed, and the prune itself runs at most once per
@@ -72,6 +73,29 @@ MAGNETO_EXTRA_PROVIDERS = ('provider.zilean',)
 # Seconds to let the asynchronous RunPlugin defaults action land before we
 # assert the extra providers, so it cannot overwrite them.
 MAGNETO_SETTLE_SECONDS = 5
+
+# Addon package cache. Kodi keeps downloaded addon zips here and reuses a cached
+# copy instead of downloading again, without a checksum when the repo gives none.
+# A truncated or corrupt cached zip therefore fails every install attempt forever
+# (Kodi reports the addon 'could not be loaded'), which is what blocked the TMDb
+# Helper update on script.module.infotagger 0.0.9. We purge corrupt zips, and
+# InfoTagger zips outright, once per version so Kodi fetches fresh copies.
+PACKAGES_DIR = 'special://home/addons/packages/'
+INFOTAGGER_ID = 'script.module.infotagger'
+
+# Trakt sync repair. TMDb Helper's next-episodes sync persists an empty or
+# truncated result as a successful sync (half day stamp), which is how Up Next
+# ends up blank. Its own 'Clear sync data > Progress' action rebuilds watched,
+# playback and next-episode data; we fire it once per version, after the
+# max_threads cap has been applied so the rebuild itself does not trip the
+# rate limit. The script router does not coerce booleans, so the dialog cannot
+# be switched off from a builtin; it is a background progress bar, not modal.
+TMDBHELPER_ID = 'plugin.video.themoviedb.helper'
+TRAKTSYNC_REPAIR_BUILTIN = (
+    'RunScript(plugin.video.themoviedb.helper,invalidate_trakt_sync=watchedprogress)')
+# Seconds to let TMDb Helper's own service settle after boot before asking it to
+# rebuild sync data.
+TRAKTSYNC_REPAIR_SETTLE_SECONDS = 15
 
 
 def log(msg, level=xbmc.LOGINFO):
@@ -754,6 +778,90 @@ def check_trakt_auth():
         log('Trakt auth check failed to run: {}'.format(exc), xbmc.LOGWARNING)
 
 
+def purge_addon_package_cache():
+    # Remove corrupt cached addon zips, and any cached InfoTagger zip, so Kodi's
+    # next dependency install downloads a fresh package instead of retrying a
+    # broken cached one. Version-gated by packagecache_purged so it runs once per
+    # version. Fully guarded so nothing here can crash the service.
+    if ADDON.getSetting('packagecache_purged') == ADDON_VERSION:
+        log('Package cache already purged for v{}; skipping.'.format(ADDON_VERSION))
+        return
+    log('===== Package cache purge start (v{}) ====='.format(ADDON_VERSION))
+    removed = 0
+    try:
+        pkgdir = xbmcvfs.translatePath(PACKAGES_DIR)
+        if not os.path.isdir(pkgdir):
+            log('Package cache folder not present: {}'.format(pkgdir))
+        else:
+            for name in sorted(os.listdir(pkgdir)):
+                if not name.lower().endswith('.zip'):
+                    continue
+                full = os.path.join(pkgdir, name)
+                reason = None
+                if name.startswith(INFOTAGGER_ID + '-'):
+                    reason = 'cached InfoTagger package, forcing a fresh download'
+                elif not zipfile.is_zipfile(full):
+                    reason = 'not a valid zip'
+                else:
+                    try:
+                        with zipfile.ZipFile(full) as zf:
+                            bad = zf.testzip()
+                        if bad:
+                            reason = 'corrupt member {}'.format(bad)
+                    except Exception as exc:
+                        reason = 'unreadable ({})'.format(exc)
+                if not reason:
+                    continue
+                try:
+                    os.remove(full)
+                    removed += 1
+                    log('Removed cached package {}: {}'.format(name, reason))
+                except Exception as exc:
+                    log('Could not remove {}: {}'.format(full, exc), xbmc.LOGWARNING)
+        xbmc.executebuiltin('UpdateAddonRepos')
+        ADDON.setSetting('packagecache_purged', ADDON_VERSION)
+        log('Package cache purge done for v{}: {} package(s) removed; repo refresh '
+            'requested.'.format(ADDON_VERSION, removed))
+    except Exception as exc:
+        log('Package cache purge failed: {}'.format(exc), xbmc.LOGERROR)
+    log('===== Package cache purge end =====')
+
+
+def repair_trakt_sync(monitor):
+    # One-time rebuild of TMDb Helper's watched, playback and next-episode sync
+    # data through its own Clear sync data > Progress action, so a blank Up Next
+    # recovers without waiting for the half day stamp. Version-gated by
+    # traktsync_repaired. Skipped (and retried next start) when TMDb Helper is
+    # missing or its Trakt is not authorised, because the rebuild would only fail.
+    if ADDON.getSetting('traktsync_repaired') == ADDON_VERSION:
+        log('Trakt sync already repaired for v{}; skipping.'.format(ADDON_VERSION))
+        return
+    try:
+        xbmcaddon.Addon(TMDBHELPER_ID)
+    except Exception:
+        log('{} is not installed yet; skipping Trakt sync repair this pass.'.format(
+            TMDBHELPER_ID), xbmc.LOGWARNING)
+        return
+    try:
+        if not xbmcgui.Window(10000).getProperty('TraktIsAuth'):
+            log('Trakt sync repair deferred: TMDb Helper Trakt is not authorised yet '
+                '(TraktIsAuth empty); will retry next start.', xbmc.LOGWARNING)
+            return
+        log('===== Trakt sync repair start (v{}) ====='.format(ADDON_VERSION))
+        if monitor.waitForAbort(TRAKTSYNC_REPAIR_SETTLE_SECONDS):
+            log('Abort during Trakt sync repair; leaving marker unset so it retries.',
+                xbmc.LOGWARNING)
+            return
+        xbmc.executebuiltin(TRAKTSYNC_REPAIR_BUILTIN)
+        ADDON.setSetting('traktsync_repaired', ADDON_VERSION)
+        log('Trakt sync repair requested via {}. A background progress bar shows '
+            'while TMDb Helper rebuilds; Up Next fills in once it finishes.'.format(
+                TRAKTSYNC_REPAIR_BUILTIN))
+    except Exception as exc:
+        log('Trakt sync repair failed: {}'.format(exc), xbmc.LOGERROR)
+    log('===== Trakt sync repair end =====')
+
+
 def needs_apply():
     if not ADDON.getSettingBool('apply_on_update'):
         last = ADDON.getSetting('last_applied_version')
@@ -783,6 +891,10 @@ def main():
     if monitor.waitForAbort(20):
         return
 
+    # Clear corrupt cached addon packages first so any install the dependency
+    # healer or Kodi's auto update does next fetches a fresh zip.
+    purge_addon_package_cache()
+
     # Make sure the required stack is present/enabled before we depend on it.
     verify_dependencies()
 
@@ -811,6 +923,10 @@ def main():
         run_setup()
     else:
         log('Defaults already current for v{}; nothing to do.'.format(ADDON_VERSION))
+
+    # After the settings pass (so the max_threads cap is live), rebuild TMDb
+    # Helper's Trakt sync data once so a blank Up Next recovers.
+    repair_trakt_sync(monitor)
 
     # Idle. The service exists mainly to run the setup pass after updates.
     while not monitor.abortRequested():
