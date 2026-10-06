@@ -62,11 +62,12 @@ minutes, mostly waiting. You install one thing; it pulls in everything else.
 
 ## If something is off
 
-- **No sources found when you press play:** the scrapers may not have
-  initialised. The build does this for you on the first start after installing,
-  but if it did not take, open Settings > Add-ons > Program add-ons > **Magneto
-  Module** once. Opening it prompts its scraper setup. Check
-  `kodipersonal.log` for the line `Magneto scraper init done`.
+- **No sources found when you press play:** Red Light's built-in scrapers need
+  Premiumize authorised in ResolveURL (see Sign in). Magneto, the extra scraper
+  module, is optional: its upstream source was taken down in October 2026, so
+  new devices will not get it and that is expected. Devices that already have it
+  keep it and the build still initialises it (`Magneto scraper init done` in
+  `kodipersonal.log`).
 
 - **Watched status is not reaching Trakt:** Red Light must be authorized with
   Trakt and have Trakt as its Watched Status Provider (Red Light settings,

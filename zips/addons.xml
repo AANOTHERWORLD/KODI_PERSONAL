@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addons><addon id="repository.aanotherworld" name="KODI_PERSONAL Repository" version="1.3.0" provider-name="AANOTHERWORLD">
+<addons><addon id="repository.aanotherworld" name="KODI_PERSONAL Repository" version="1.4.0" provider-name="AANOTHERWORLD">
     <extension point="xbmc.addon.repository" name="KODI_PERSONAL">
         
         <dir>
@@ -50,11 +50,6 @@
         </dir>
 
         
-        <dir>
-            <info compressed="false">https://kodiyashimaru.github.io/repo/packages/addons.xml</info>
-            <checksum>https://kodiyashimaru.github.io/repo/packages/addons.xml.md5</checksum>
-            <datadir zip="true">https://kodiyashimaru.github.io/repo/</datadir>
-        </dir>
 
         
         <dir minversion="18.0" maxversion="18.9.0">
@@ -84,7 +79,7 @@
     <platform>all</platform>
     <license>SIL Open Font License 1.1</license>
   </extension>
-</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.8.3" provider-name="AANOTHERWORLD">
+</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.8.4" provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
     <import addon="skin.arctic.fuse.3" version="0.0.1" />
@@ -94,7 +89,8 @@
     <import addon="script.trakt" version="0.0.1" />
     <import addon="plugin.video.redlight" version="0.0.1" />
     <import addon="script.module.resolveurl" version="0.0.1" />
-    <import addon="script.module.magneto" version="0.0.1" />
+    
+    <import addon="script.module.magneto" version="0.0.1" optional="true" />
     <import addon="plugin.program.openwizard" version="0.0.1" />
   </requires>
   <extension point="xbmc.service" library="service.py" />
@@ -103,7 +99,9 @@
     <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set and background, applies the curated AF3 skin settings and view types, and deploys the home menu (Discover, For You, Netflix, Max, and a More Providers submenu) into Arctic Fuse 3 on every start so the look and menu self-heal after a skin update. Declares the build stack as dependencies so Kodi installs them automatically, and verifies them on startup, healing anything missing or disabled. Stores no secrets. Logs to its own profile folder.</description>
     <platform>all</platform>
     <license>MIT</license>
-    <news>v0.8.3
+    <news>v0.8.4
+- Fix the setup service update failing with script.module.magneto 'Not available'. Magneto's only source (the kodiyashimaru repo) was emptied upstream on 2026-10-01, so Kodi could no longer satisfy the required import and refused every update, which also kept the 0.8.1 to 0.8.3 For You fixes from reaching devices. Magneto is now an optional import: devices that have it keep it and it still initialises; new devices get Red Light's built-in scrapers until a maintained Magneto source exists.
+v0.8.3
 - Fix the Up Next repair never running on TMDb Helper 6.17. The Up Next path itself (info=trakt_nextepisodes) is valid on 6.16 and 6.17 and is unchanged. TMDb Helper 6.17 renamed the argument of its Clear sync data script method (invalidate_trakt_sync became invalidate_sync) while keeping the old route key, so the 0.8.1 repair call failed with a TypeError on 6.17 and the emptied next-episode table was never rebuilt. The service now passes both keys, which works on either version, and the version bump re-arms the one-time repair so it actually runs.
 v0.8.2
 - Fix the TMDb Helper update failing on script.module.infotagger 0.0.9, for real this time, and undo a 0.7.9 mistake that caused it. Kodi has two update policies: Updates (general.addonupdates) and Update official add-ons from (addons.updatemode). 0.7.9 confused them and forced addons.updatemode to 0, official repositories only. InfoTagger is installed from Kodi's official repository, which only carries 0.0.8, while TMDb Helper 6.17.1 needs 0.0.9 from jurialmunkey; with the policy at official only Kodi refuses the newer version and reports the dependency could not be satisfied. The service now asserts Updates = install automatically and Update official add-ons from = Any repositories. The 0.8.1 package cache purge was based on a wrong theory and stays only as hygiene.
