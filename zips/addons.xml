@@ -79,7 +79,7 @@
     <platform>all</platform>
     <license>SIL Open Font License 1.1</license>
   </extension>
-</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.8.4" provider-name="AANOTHERWORLD">
+</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.8.5" provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
     <import addon="skin.arctic.fuse.3" version="0.0.1" />
@@ -99,7 +99,9 @@
     <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set and background, applies the curated AF3 skin settings and view types, and deploys the home menu (Discover, For You, Netflix, Max, and a More Providers submenu) into Arctic Fuse 3 on every start so the look and menu self-heal after a skin update. Declares the build stack as dependencies so Kodi installs them automatically, and verifies them on startup, healing anything missing or disabled. Stores no secrets. Logs to its own profile folder.</description>
     <platform>all</platform>
     <license>MIT</license>
-    <news>v0.8.4
+    <news>v0.8.5
+- Stop the Trakt login dialog appearing on every launch, and explain the empty Up Next. Both have one cause: TMDb Helper's stored Trakt token is gone (it deletes the token after repeated refresh failures), and every Trakt sync then forces its login prompt, once per process, so once per launch. The sync repair added in 0.8.1 was gated on a stale window property and so kept triggering that prompt; it is now gated on the real stored token and defers, with a clear log line, until Trakt is authorised in TMDb Helper. Authorise Trakt once in TMDb Helper settings; Up Next rebuilds on the next start.
+v0.8.4
 - Fix the setup service update failing with script.module.magneto 'Not available'. Magneto's only source (the kodiyashimaru repo) was emptied upstream on 2026-10-01, so Kodi could no longer satisfy the required import and refused every update, which also kept the 0.8.1 to 0.8.3 For You fixes from reaching devices. Magneto is now an optional import: devices that have it keep it and it still initialises; new devices get Red Light's built-in scrapers until a maintained Magneto source exists.
 v0.8.3
 - Fix the Up Next repair never running on TMDb Helper 6.17. The Up Next path itself (info=trakt_nextepisodes) is valid on 6.16 and 6.17 and is unchanged. TMDb Helper 6.17 renamed the argument of its Clear sync data script method (invalidate_trakt_sync became invalidate_sync) while keeping the old route key, so the 0.8.1 repair call failed with a TypeError on 6.17 and the emptied next-episode table was never rebuilt. The service now passes both keys, which works on either version, and the version bump re-arms the one-time repair so it actually runs.

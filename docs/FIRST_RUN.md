@@ -81,7 +81,12 @@ minutes, mostly waiting. You install one thing; it pulls in everything else.
   **Updates** must be **Install updates automatically**). The build asserts both
   on every start from 0.8.2; set them by hand once if a device is behind, then
   Settings > Add-ons > Check for updates.
-- **Up Next shows nothing:** TMDb Helper stored an empty sync. Open TMDb
+- **A Trakt login dialog appears on every launch (and Up Next is empty):** TMDb
+  Helper has lost its stored Trakt token (it drops it after repeated refresh
+  failures). Open TMDb Helper settings > Trakt > authorise, once, following the
+  code on screen. Up Next rebuilds on the next start. `kodipersonal.log` says
+  `TMDb Helper has NO stored Trakt token` while this is the case.
+- **Up Next shows nothing (and Trakt is authorised):** TMDb Helper stored an empty sync. Open TMDb
   Helper settings and use **Clear sync data** > **Progress** (under Trakt on
   TMDb Helper 6.16, under Sync on 6.17), then reload the home screen. The build
   does this once after updating and caps TMDb Helper's sync threads so it

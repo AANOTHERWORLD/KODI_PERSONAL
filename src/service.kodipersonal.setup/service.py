@@ -45,7 +45,7 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.8.4'
+SERVICE_VERSION = '0.8.5'
 
 # Scheduled texture-cache prune (data efficiency). A texture unused for longer
 # than the stale window is removed, and the prune itself runs at most once per
@@ -780,6 +780,12 @@ def check_trakt_auth():
         window = xbmcgui.Window(10000)
         value = window.getProperty('TraktIsAuth')
         attempts = window.getProperty('TraktRefreshAttempts') or '0'
+        if not _tmdbhelper_has_trakt_token():
+            log('Trakt auth: TMDb Helper has NO stored Trakt token. This is why Up '
+                'Next is empty and why a Trakt login dialog appears on every launch '
+                '(TMDb Helper drops the token after repeated refresh failures). '
+                'Fix: TMDb Helper settings > Trakt > authorise, once.', xbmc.LOGWARNING)
+            return
         if not value:
             log('Trakt auth: TraktIsAuth is EMPTY, so TMDb Helper will not scrobble '
                 'and Trakt rows will go stale. Re-authorise Trakt in TMDb Helper '
@@ -847,12 +853,35 @@ def purge_addon_package_cache():
     log('===== Package cache purge end =====')
 
 
+def _tmdbhelper_has_trakt_token():
+    # TMDb Helper's real auth state is its stored user token, not the
+    # TraktIsAuth window property. That property is only a cached expiry stamp
+    # and can survive while the token itself is gone: TMDb Helper deletes the
+    # stored token after more than 3 failed refreshes (its token.py), and from
+    # then on any Trakt sync calls is_authorized, which is authorize(forced=True),
+    # which opens the device-code login dialog. Its only guard is per process, so
+    # it prompts again on every launch. Reading the token here lets us avoid
+    # triggering that prompt ourselves. Presence only; the value is never logged.
+    try:
+        helper = xbmcaddon.Addon(TMDBHELPER_ID)
+    except Exception:
+        return False
+    for key in ('trakt_token', 'user_token'):
+        try:
+            if helper.getSetting(key).strip():
+                return True
+        except Exception:
+            continue
+    return False
+
+
 def repair_trakt_sync(monitor):
     # One-time rebuild of TMDb Helper's watched, playback and next-episode sync
     # data through its own Clear sync data > Progress action, so a blank Up Next
     # recovers without waiting for the half day stamp. Version-gated by
-    # traktsync_repaired. Skipped (and retried next start) when TMDb Helper is
-    # missing or its Trakt is not authorised, because the rebuild would only fail.
+    # traktsync_repaired. Skipped, with the marker left unset so it retries, when
+    # TMDb Helper is missing or has no stored Trakt token, because without a token
+    # the rebuild only produces an empty table and forces a login prompt.
     if ADDON.getSetting('traktsync_repaired') == ADDON_VERSION:
         log('Trakt sync already repaired for v{}; skipping.'.format(ADDON_VERSION))
         return
@@ -863,9 +892,11 @@ def repair_trakt_sync(monitor):
             TMDBHELPER_ID), xbmc.LOGWARNING)
         return
     try:
-        if not xbmcgui.Window(10000).getProperty('TraktIsAuth'):
-            log('Trakt sync repair deferred: TMDb Helper Trakt is not authorised yet '
-                '(TraktIsAuth empty); will retry next start.', xbmc.LOGWARNING)
+        if not _tmdbhelper_has_trakt_token():
+            log('Trakt sync repair deferred: TMDb Helper has NO stored Trakt token, so '
+                'Up Next cannot fill and any sync would open the Trakt login dialog. '
+                'Authorise Trakt in TMDb Helper settings once; the repair runs on the '
+                'next start after that.', xbmc.LOGWARNING)
             return
         log('===== Trakt sync repair start (v{}) ====='.format(ADDON_VERSION))
         if monitor.waitForAbort(TRAKTSYNC_REPAIR_SETTLE_SECONDS):
