@@ -33,8 +33,7 @@ export const profile: Profile = {
   cvReference: "/cv.pdf",
 };
 
-// The full-bleed portrait on Home. Drop the file into public/projects/profile/ and confirm the
-// photographer credit. Permission is confirmed per the brief; the file itself is still to be supplied.
+// The full-bleed portrait on Home. Self-portrait by Jamel, permission confirmed.
 export const profileAssets: Asset[] = [
   {
     id: "profile-portrait",
@@ -42,9 +41,9 @@ export const profileAssets: Asset[] = [
     file: "profile/portrait.jpg",
     type: "photo",
     caption: "Jamel Williams.",
-    alt: "Portrait of Jamel Williams.",
-    creator: "Photographer to be confirmed",
-    credit: "Portrait photography credit to be confirmed",
+    alt: "Jamel Williams seated on a wooden chair with legs crossed, in a black sweater and olive trousers, against a draped rust backdrop.",
+    creator: "Jamel Williams",
+    credit: "Photography: Jamel Williams",
     permission: "confirmed",
   },
 ];

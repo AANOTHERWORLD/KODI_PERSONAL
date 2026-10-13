@@ -2,8 +2,11 @@ import Link from "next/link";
 import type { ProjectBundle } from "@/content/types";
 import { getIndexAsset } from "@/lib/content";
 import Picture from "./Picture";
-import LensTags from "./LensTags";
 import { LensAwareEntry } from "./LensContext";
+import { lensById } from "@/content/lenses";
+import type { LensId } from "@/content/types";
+
+const LENS_SHORT = Object.fromEntries(Object.values(lensById).map((l) => [l.id, l.name])) as Record<LensId, string>;
 
 export const MIN_TILE_PX = 220;
 export const MAX_TILE_PX = 620;
@@ -30,6 +33,7 @@ export default function WorkCard({ bundle, index, variant = "card" }: Props) {
             {asset ? <Picture asset={asset} showCaption={false} fit="cover" sizes="(min-width: 900px) 60vw, 100vw" priority={index === 0} /> : <div className="picture__placeholder">Image pending</div>}
           </div>
         </div>
+        <p className="work-card__tagline tag">{project.lenses.map((l) => LENS_SHORT[l]).join(", ")}</p>
         <div className="work-card__text">
           <p className="work-card__kicker">
             <span className="tag">{String(project.sequence).padStart(2, "0")} {project.portfolioRole}</span>
@@ -41,7 +45,6 @@ export default function WorkCard({ bundle, index, variant = "card" }: Props) {
           <p className="work-card__role tag">{project.role}</p>
         </div>
       </Link>
-      <LensTags lenses={project.lenses} className="work-card__lenses" />
     </LensAwareEntry>
   );
 }

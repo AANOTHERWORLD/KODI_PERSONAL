@@ -24,7 +24,7 @@ export const wattPlaza: ProjectBundle = {
     caseStudy: "full",
     inPdf: true,
     landingTile: true,
-    tiles: [{ x: 74, y: 5, depth: 3, order: 2 }],
+    tiles: [{ x: 84, y: 5, depth: 3, order: 2 }],
     portfolioRole: "Process and possibility",
     sequence: 8,
     tileSize: 2,

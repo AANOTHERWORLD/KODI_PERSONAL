@@ -31,8 +31,14 @@ export default function SiteHeader() {
 
   useEffect(() => {
     document.documentElement.classList.toggle("menu-open", open);
-    if (!open) return;
     const overlay = overlayRef.current;
+    const toggle = toggleRef.current;
+    if (overlay && toggle) {
+      const r = toggle.getBoundingClientRect();
+      overlay.style.setProperty("--menu-x", `${r.left + r.width / 2}px`);
+      overlay.style.setProperty("--menu-y", `${r.top + r.height / 2}px`);
+    }
+    if (!open) return;
     const focusables = () =>
       Array.from(overlay?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])") ?? []);
     focusables()[0]?.focus();
@@ -100,7 +106,7 @@ export default function SiteHeader() {
           </button>
         </div>
       </header>
-      <div id="site-menu" ref={overlayRef} className="menu-overlay" role="dialog" aria-modal="true" aria-label="Site menu" hidden={!open}>
+      <div id="site-menu" ref={overlayRef} className={`menu-overlay ${open ? "is-open" : ""}`} role="dialog" aria-modal="true" aria-label="Site menu" inert={!open}>
         <nav className="menu-overlay__nav" aria-label="Primary">
           <ol>
             {NAV.map((item, i) => (

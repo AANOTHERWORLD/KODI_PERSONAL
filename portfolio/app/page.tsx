@@ -73,26 +73,27 @@ export default function HomePage() {
         {/* 4. About band on the accent */}
         <section className="about-band" data-header-invert aria-labelledby="about-heading">
           <div className="wrap">
+            <h2 id="about-heading" className="visually-hidden">About</h2>
             <div className="about-band__top">
-              <div>
-                <h2 id="about-heading" className="tag tag--on-accent">About</h2>
-                <p className="about-band__bio">{profile.bio}</p>
-              </div>
+              <p className="about-band__bio">{profile.bio}</p>
               <p className="about-band__statement">{profile.aboutStatement}</p>
             </div>
-            <div className="about-band__experience">
-              <p className="tag tag--on-accent">Experience</p>
-              <ol className="timeline">
-                {profile.experience.map((item) => (
-                  <li key={`${item.title}-${item.years}`} className="timeline__row">
-                    <span>{item.title}</span><span>{item.practice}</span><span>{item.years}</span>
-                  </li>
-                ))}
-              </ol>
+            <div className="band-row">
+              <p className="band-row__label">Experience</p>
+              <div>
+                <ol className="timeline">
+                  {profile.experience.map((item) => (
+                    <li key={`${item.title}-${item.years}`} className="timeline__row">
+                      <span>{item.title}</span><span>{item.practice}</span><span className="timeline__years">{item.years}</span>
+                    </li>
+                  ))}
+                </ol>
+                <p className="band-row__link"><Link href="/about/" className="text-link text-link--on-accent" data-cursor="ring">More about me</Link></p>
+              </div>
             </div>
             {recognition.length > 0 && (
-              <div className="about-band__recognition">
-                <p className="tag tag--on-accent">Recognition Highlights</p>
+              <div className="band-row">
+                <p className="band-row__label">Recognition Highlights</p>
                 <ul className="ruled-list">
                   {recognition.map((claim) => (
                     <li key={claim.id} className={claim.status === "awaiting" ? "claim--awaiting" : undefined}>
@@ -103,7 +104,6 @@ export default function HomePage() {
                 </ul>
               </div>
             )}
-            <p><Link href="/about/" className="text-link text-link--on-accent" data-cursor="ring">More about me</Link></p>
           </div>
         </section>
 
@@ -111,7 +111,7 @@ export default function HomePage() {
         <section className="work-section wrap" aria-labelledby="work-heading">
           <div className="work-section__sticky">
             <h2 id="work-heading" className="work-section__heading">Work</h2>
-            <p className="tag">&copy;{portfolio.workRangeLabel}</p>
+            <p className="work-section__range">&copy;{portfolio.workRangeLabel}</p>
           </div>
           <div className="work-section__cards">
             {core.length ? core.map((bundle, i) => <WorkCard key={bundle.project.id} bundle={bundle} index={i} />) : (
