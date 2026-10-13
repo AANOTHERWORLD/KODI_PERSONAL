@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 import { debug } from "@/lib/debug";
 
-// Light parallax for work index images. Reads [data-parallax] elements and nudges their
-// inner image a few pixels against scroll. Disabled under reduced motion and on touch.
+// Light parallax for work cards. Reads [data-parallax] elements and nudges their image a few
+// pixels against scroll. Disabled under reduced motion and on touch.
 export default function Parallax() {
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -16,15 +16,14 @@ export default function Parallax() {
     const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-parallax]"));
     if (!nodes.length) return;
     let raf = 0;
-    const MAX = 18; // px of travel at the extremes
-
+    const MAX = 18;
     function update() {
       raf = 0;
       const vh = window.innerHeight;
       for (const node of nodes) {
         const rect = node.getBoundingClientRect();
         if (rect.bottom < 0 || rect.top > vh) continue;
-        const progress = (rect.top + rect.height / 2 - vh / 2) / vh; // -0.5 .. 0.5 across the viewport
+        const progress = (rect.top + rect.height / 2 - vh / 2) / vh;
         const offset = Math.max(-MAX, Math.min(MAX, -progress * MAX * 2));
         node.style.setProperty("--parallax", `${offset.toFixed(1)}px`);
       }

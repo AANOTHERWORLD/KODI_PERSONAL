@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-labelledby="t">
+  <title id="t">OpenAI: one company, two offices</title>
+    <g font-family="Inter, Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="500" fill="#404040">
+    <text x="80" y="90" font-size="22" letter-spacing="4" opacity="0.6">TWO OFFICES</text>
+    <text x="80" y="140" font-size="40">Translate the culture, never import it.</text>
+    <g font-size="30"><text x="120" y="300">Bellevue</text><text x="860" y="300">Tokyo</text></g>
+    <g font-size="20" opacity="0.8">
+      <text x="120" y="350">A phased tower home, about 250,000 square feet</text>
+      <text x="120" y="384">The Applied team in the Pacific Northwest</text>
+      <text x="120" y="418">Engineering focus with hospitality</text>
+      <text x="120" y="452">Mood before program</text>
+      <text x="860" y="350">An interim floor plate, about 36,500 square feet</text>
+      <text x="860" y="384">Go-to-market teams who host clients</text>
+      <text x="860" y="418">Hospitality as body language</text>
+      <text x="860" y="452">Reuse instead of rebuild</text>
+    </g>
+    <g font-size="26" text-anchor="middle" fill="#dddddd">
+      <text x="800" y="700">One shared sensibility</text>
+      <text x="320" y="770" font-size="22">Open-ended</text><text x="640" y="770" font-size="22">Monastic</text><text x="960" y="770" font-size="22">Humanistic</text><text x="1280" y="770" font-size="22">Hospitality</text>
+    </g>
+  </g>
+  <g stroke="#404040" stroke-width="2" fill="none"><rect x="100" y="250" width="660" height="260"/><rect x="840" y="250" width="660" height="260"/></g>
+  <rect x="100" y="620" width="1400" height="220" fill="#8c4339"/>
+</svg>

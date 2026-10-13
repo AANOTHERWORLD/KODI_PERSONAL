@@ -1,8 +1,8 @@
 # One Vision. Multiple Scales.
 
-Portfolio site for Jamel Williams, Design Director. A fully static Next.js (App Router) build with a typed content layer, verification and permission gates, a build-time image pipeline, and a custom cursor and canvas trail.
+Portfolio site for Jamel Williams, Design Director. A fully static Next.js (App Router) build with a typed content layer, verification and permission gates, a build-time image pipeline, a landing scroll stage with a drifting tile field, and a custom cursor and canvas trail.
 
-Everything under this `portfolio/` folder is self-contained. Nothing in the rest of the repository is required to build or deploy it.
+Live at https://aanotherworld.github.io/portfolio/ through the GitHub Pages workflow in `.github/workflows/pages.yml`. Every push to `main` redeploys.
 
 ## Contents
 
@@ -22,7 +22,6 @@ Everything under this `portfolio/` folder is self-contained. Nothing in the rest
 Requirements: Node 20 or newer (built and tested on Node 22) and npm.
 
 ```bash
-cd portfolio
 npm install
 npm run dev
 ```
@@ -46,9 +45,8 @@ npm run build
 ## How the site is organized
 
 ```
-portfolio/
   app/                 Routes (App Router). Layout, Home, Work index, project pages, Approach, About, Contact.
-  components/          Shared UI. Picture (responsive img), cursor and trail, lens key, work entry, header, footer.
+  components/          Shared UI. Scroll stage, lens marquee and key, work cards, Picture, cursor and trail, header with menu overlay, footer.
   content/             The content layer. Typed records: projects, profile, portfolio, lenses, approach.
     projects/          One file per project, plus index.ts which lists them.
     generated/         Image manifest written by the pipeline (gitignored).
@@ -64,14 +62,16 @@ portfolio/
   next.config.ts       Static export, trailing slashes, optional base path, unoptimized images.
 ```
 
-Pages: Home (six sections), `/work/` (editorial sequence), `/work/<slug>/` (shared project template), `/approach/`, `/about/`, `/contact/`. Navigation: Work, Approach, About, Contact. The name returns to Home.
+Pages: Home (one long scroll: fixed statement with the drifting tile field, lens marquee and key, portrait, accent About band, sticky Work section, Approach preview and invitation), `/work/` (core projects in sequence, then More work), `/work/<slug>/` (full template for core projects, light template for extended ones), `/approach/`, `/about/`, `/contact/`. Navigation: the "Jamel's Work" wordmark returns to Home, and the Menu overlay lists 01 Work, 02 Approach, 03 About, 04 Contact.
+
+Dependencies beyond Next, React, and sharp: `gsap` (core plus ScrollTrigger), used only for the landing stage drift and the marquee, loaded client-side and reverted on unmount. The sticky Work heading is plain CSS.
 
 The content layer is deliberately plain TypeScript. To move it to a headless CMS later (for example Sanity), replace the imports at the top of `lib/content.ts` with a fetch from the CMS that returns the same `ProjectBundle` shapes defined in `content/types.ts`. Components never read content files directly.
 
 ## Content: adding or editing a project
 
 1. Create `content/projects/<slug>.ts` exporting a `ProjectBundle` (copy an existing file as a template). The bundle holds five records:
-   - `project`: title, slug, thesis, client display name, location, years, status, role, scope, team, collaborators, lenses, `sequence`, `tileSize`, `homeFeature`, `relatedProject`, `permission`, and the hero asset id.
+   - `project`: title, slug, `tier` (`core` or `extended`), `caseStudy` (`full` or `light`), `inPdf`, `landingTile` and optional `tiles` (x and y as percentages of the stage, depth 1 to 3, order, optional assetId), thesis, client display name, location, years, status, role, scope, team, collaborators, lenses, `sequence`, `tileSize`, `relatedProject`, `permission`, and the hero asset id.
    - `narrative`: challenge, insight, vision, `scaleTranslation` (an ordered image sequence with lens tags and captions), leadership, outcome, reflection, and the precise personal involvement.
    - `decisions`: two or three decisive choices, each with question, choice, rationale, tradeoff, and supporting asset ids.
    - `assets`: every image with a stable id, file path (relative to `public/projects/`), type (`photo`, `render`, `concept`, `plan`, `diagram`, `process`), caption, alt text, creator, credit, and permission.
@@ -83,9 +83,10 @@ The content layer is deliberately plain TypeScript. To move it to a headless CMS
 
 Nothing in `app/` or `components/` needs to change.
 
-Project slots:
-- `slot: "core"` and `"optional"` render whenever their permission is confirmed.
-- `slot: "candidate"` renders only in draft mode. Use it to keep a researched project ready without publishing it.
+Tiers:
+- `tier: "core"` projects lead the Work index in `sequence` order, use the full case study template, and carry `inPdf: true` for the PDF edition.
+- `tier: "extended"` projects follow under "More work" with the light template (a `summary` of 150 to 300 words, an optional decision, a gallery). Set `caseStudy: "full"` on an extended project to give it the full template.
+- Tiles without coordinates are auto-placed below the hand-tuned ones and the stage grows to fit.
 
 Profile and contact copy live in `content/profile.ts` and `content/portfolio.ts`. Items marked `PLACEHOLDER` are stand-ins and should be replaced before launch.
 

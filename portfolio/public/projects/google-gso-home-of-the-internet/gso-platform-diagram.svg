@@ -1,28 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-labelledby="t">
   <title id="t">Home of the Internet platform</title>
-  <rect width="1600" height="1000" fill="#f4f1ec"/>
-  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" fill="#1a1a1a">
-    <text x="80" y="90" font-size="22" letter-spacing="4" fill="#6b6660">PLATFORM</text>
+    <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" fill="#404040">
+    <text x="80" y="90" font-size="22" letter-spacing="4" fill="#6f6f6f">PLATFORM</text>
     <text x="80" y="140" font-size="40">Home of the Internet: globally connected, locally activated.</text>
     <g text-anchor="middle">
       <text x="800" y="470" font-size="46">Home of the Internet</text>
-      <text x="800" y="510" font-size="20" fill="#6b6660">Hometown pride is what a community puts into the world</text>
+      <text x="800" y="510" font-size="20" fill="#6f6f6f">Hometown pride is what a community puts into the world</text>
     </g>
     <g font-size="24" text-anchor="middle">
-      <text x="200" y="860">Messaging</text><text x="200" y="890" font-size="17" fill="#6b6660">Hyper-local language</text>
-      <text x="500" y="860">Owned channels</text><text x="500" y="890" font-size="17" fill="#6b6660">Life at pages, resource hub</text>
-      <text x="800" y="860">Events and objects</text><text x="800" y="890" font-size="17" fill="#6b6660">Data Center on Wheels, lanyards</text>
-      <text x="1100" y="860">Community</text><text x="1100" y="890" font-size="17" fill="#6b6660">Learning labs, clubs, murals</text>
-      <text x="1400" y="860">Space</text><text x="1400" y="890" font-size="17" fill="#6b6660">GSO University, pop-ups</text>
+      <text x="200" y="860">Messaging</text><text x="200" y="890" font-size="17" fill="#6f6f6f">Hyper-local language</text>
+      <text x="500" y="860">Owned channels</text><text x="500" y="890" font-size="17" fill="#6f6f6f">Life at pages, resource hub</text>
+      <text x="800" y="860">Events and objects</text><text x="800" y="890" font-size="17" fill="#6f6f6f">Data Center on Wheels, lanyards</text>
+      <text x="1100" y="860">Community</text><text x="1100" y="890" font-size="17" fill="#6f6f6f">Learning labs, clubs, murals</text>
+      <text x="1400" y="860">Space</text><text x="1400" y="890" font-size="17" fill="#6f6f6f">GSO University, pop-ups</text>
     </g>
-    <g font-size="20" fill="#6b6660" text-anchor="middle">
+    <g font-size="20" fill="#6f6f6f" text-anchor="middle">
       <text x="800" y="250">Career awareness</text><text x="800" y="282">Faster onboarding</text><text x="800" y="314">Community goodwill</text><text x="800" y="346">Shared internal tools</text>
     </g>
   </g>
-  <g stroke="#1a1a1a" stroke-width="2" fill="none">
+  <g stroke="#404040" stroke-width="2" fill="none">
     <ellipse cx="800" cy="480" rx="300" ry="90"/>
     <line x1="800" y1="370" x2="800" y2="390"/>
     <path d="M800 570 L800 700 M800 700 L200 700 L200 810 M800 700 L500 700 L500 810 M800 700 L800 810 M800 700 L1100 700 L1100 810 M800 700 L1400 700 L1400 810"/>
   </g>
-  <g fill="#b5532a"><circle cx="200" cy="810" r="7"/><circle cx="500" cy="810" r="7"/><circle cx="800" cy="810" r="7"/><circle cx="1100" cy="810" r="7"/><circle cx="1400" cy="810" r="7"/></g>
+  <g fill="#8c4339"><circle cx="200" cy="810" r="7"/><circle cx="500" cy="810" r="7"/><circle cx="800" cy="810" r="7"/><circle cx="1100" cy="810" r="7"/><circle cx="1400" cy="810" r="7"/></g>
 </svg>

@@ -11,12 +11,10 @@ export const metadata: Metadata = {
 export default function ApproachPage() {
   return (
     <div className="wrap">
-      <section className="hero" aria-labelledby="approach-title">
-        <p className="kicker">Approach</p>
-        <h1 id="approach-title" className="hero__headline">A method that repeats, with results that never do</h1>
-        <p className="hero__positioning">
-          Five steps run through every project. They adapt to the client, the scale, and the team, and they keep the larger idea connected to the experience of the individual.
-        </p>
+      <section className="page-head" aria-labelledby="approach-title">
+        <p className="tag">Approach</p>
+        <h1 id="approach-title" className="page-head__title">A method that repeats, with results that never do</h1>
+        <p className="lede">Five steps run through every project. They adapt to the client, the scale, and the team, and they keep the larger idea connected to the experience of the individual.</p>
       </section>
 
       <section className="section" aria-label="The five steps">
@@ -36,7 +34,7 @@ export default function ApproachPage() {
                       {examples.map(({ example, project }) => (
                         <li key={`${step.id}-${project.project.id}`}>
                           {example.example}
-                          <Link href={`/work/${project.project.slug}/`}>{project.project.title}</Link>
+                          <Link href={`/work/${project.project.slug}/`} data-cursor="ring">{project.project.title}</Link>
                         </li>
                       ))}
                     </ul>
@@ -49,13 +47,13 @@ export default function ApproachPage() {
       </section>
 
       <section className="section" aria-labelledby="lenses-title">
-        <p className="kicker">The four lenses</p>
-        <h2 id="lenses-title">How the work is interpreted</h2>
+        <p className="tag">The four lenses</p>
+        <h2 id="lenses-title" className="section__title">How the work is interpreted</h2>
         <p className="lede">{lensIntro}</p>
         <div className="lens-framework">
           {lenses.map((lens) => (
             <div className="lens-framework__item" key={lens.id}>
-              <h3><span className="lens-tag__numeral" aria-hidden="true">{lens.numeral}</span>{lens.name}</h3>
+              <h3><span className="lens-key__dot" aria-hidden="true" />{lens.name}</h3>
               <p>{lens.question}</p>
             </div>
           ))}

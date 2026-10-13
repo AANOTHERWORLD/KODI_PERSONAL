@@ -1,9 +1,9 @@
 import { projectBundles } from "@/content/projects";
 import { portfolio } from "@/content/portfolio";
-import { profile, profileClaims } from "@/content/profile";
+import { profile, profileAssets, profileClaims } from "@/content/profile";
 import { approachExamples, approachSteps } from "@/content/approach";
 import { lenses, lensById } from "@/content/lenses";
-import type { Asset, Claim, ClaimPlacement, LensId, ProjectBundle } from "@/content/types";
+import type { Asset, Claim, ClaimPlacement, LensId, ProjectBundle, TileSpec } from "@/content/types";
 import { buildLog } from "./debug";
 
 // Content loader and governance gates.
@@ -27,18 +27,24 @@ function projectVisible(bundle: ProjectBundle): boolean {
     buildLog(`excluded project "${project.title}" (${project.slug}): permission pending`);
     return false;
   }
-  if (project.slot === "candidate" && !SHOW_DRAFTS) {
-    buildLog(`excluded project "${project.title}" (${project.slug}): candidate slot, draft only`);
-    return false;
-  }
   return true;
 }
 
+function bySequence(a: ProjectBundle, b: ProjectBundle) {
+  return a.project.sequence - b.project.sequence;
+}
+
+// Core projects in sequence, then extended projects in their own sequence.
 export function getProjects(): ProjectBundle[] {
-  return projectBundles
-    .filter(projectVisible)
-    .slice()
-    .sort((a, b) => a.project.sequence - b.project.sequence);
+  return [...getCoreProjects(), ...getExtendedProjects()];
+}
+
+export function getCoreProjects(): ProjectBundle[] {
+  return projectBundles.filter((b) => b.project.tier === "core").filter(projectVisible).sort(bySequence);
+}
+
+export function getExtendedProjects(): ProjectBundle[] {
+  return projectBundles.filter((b) => b.project.tier === "extended").filter(projectVisible).sort(bySequence);
 }
 
 // Static export requires at least one generated route for /work/[slug]. When no project has
@@ -62,15 +68,6 @@ export function getProjectById(id: string): ProjectBundle | null {
   return getProjects().find((b) => b.project.id === id) ?? null;
 }
 
-export function getLeadProject(): ProjectBundle | null {
-  const projects = getProjects();
-  return projects.find((b) => b.project.leadWork) ?? projects[0] ?? null;
-}
-
-export function getHomeFeatures(limit = 3): ProjectBundle[] {
-  return getProjects().filter((b) => b.project.homeFeature && !b.project.leadWork).slice(0, limit);
-}
-
 export function visibleAssets(bundle: ProjectBundle): Asset[] {
   return bundle.assets.filter((asset) => {
     if (asset.permission === "pending" && !SHOW_DRAFTS) {
@@ -83,8 +80,7 @@ export function visibleAssets(bundle: ProjectBundle): Asset[] {
 
 export function getAsset(bundle: ProjectBundle, assetId: string | undefined): Asset | null {
   if (!assetId) return null;
-  const asset = visibleAssets(bundle).find((a) => a.id === assetId);
-  return asset ?? null;
+  return visibleAssets(bundle).find((a) => a.id === assetId) ?? null;
 }
 
 export function getHeroAsset(bundle: ProjectBundle): Asset | null {
@@ -93,6 +89,16 @@ export function getHeroAsset(bundle: ProjectBundle): Asset | null {
 
 export function getIndexAsset(bundle: ProjectBundle): Asset | null {
   return getAsset(bundle, bundle.project.indexAssetId) ?? getHeroAsset(bundle);
+}
+
+export function getProfileAsset(id: string): Asset | null {
+  const asset = profileAssets.find((a) => a.id === id);
+  if (!asset) return null;
+  if (asset.permission === "pending" && !SHOW_DRAFTS) {
+    buildLog(`excluded profile asset "${asset.id}": permission pending`);
+    return null;
+  }
+  return asset;
 }
 
 function claimVisible(claim: Claim, scope: string): boolean {
@@ -115,8 +121,15 @@ export function getProfileClaims(placement: ClaimPlacement): Claim[] {
   return profileClaims.filter((c) => c.placement === placement && claimVisible(c, "profile"));
 }
 
-export function getProjectsForLens(lens: LensId): ProjectBundle[] {
-  return getProjects().filter((b) => b.project.lenses.includes(lens));
+export function getProfileClaimsById(ids: string[]): Claim[] {
+  return ids
+    .map((id) => profileClaims.find((c) => c.id === id))
+    .filter((c): c is Claim => !!c && claimVisible(c, "profile"));
+}
+
+export function getLensCounts(): Record<LensId, number> {
+  const all = getProjects();
+  return Object.fromEntries(lenses.map((l) => [l.id, all.filter((b) => b.project.lenses.includes(l.id)).length])) as Record<LensId, number>;
 }
 
 export function getApproachExamples(stepId: string) {
@@ -124,6 +137,62 @@ export function getApproachExamples(stepId: string) {
     .filter((e) => e.step === stepId)
     .map((e) => ({ example: e, project: getProjectById(e.projectId) }))
     .filter((e) => e.project !== null) as { example: (typeof approachExamples)[number]; project: ProjectBundle }[];
+}
+
+// Landing tile field. Every visible project with landingTile renders at least one tile. Tiles
+// without coordinates are auto-placed in alternating columns below the hand-tuned ones.
+export interface LandingTile {
+  key: string;
+  bundle: ProjectBundle;
+  asset: Asset | null;
+  spec: TileSpec;
+  label: string;
+}
+
+// Hand-tuned y values are percentages of a 380vh stage. Auto-placed tiles extend the stage by
+// 45vh each, and every y is rescaled to the final height so nothing lands outside the stage.
+export const STAGE_BASE_VH = 380;
+export const STAGE_EXTRA_VH = 45;
+
+export function getStageHeightVh(): number {
+  const auto = getProjects().filter((b) => b.project.landingTile && !(b.project.tiles && b.project.tiles.length)).length;
+  return STAGE_BASE_VH + auto * STAGE_EXTRA_VH;
+}
+
+export function getLandingTiles(): LandingTile[] {
+  const out: LandingTile[] = [];
+  const auto: { bundle: ProjectBundle }[] = [];
+  for (const bundle of getProjects()) {
+    if (!bundle.project.landingTile) continue;
+    if (bundle.project.tiles && bundle.project.tiles.length) {
+      bundle.project.tiles.forEach((spec, i) => {
+        out.push({
+          key: `${bundle.project.id}-${i}`,
+          bundle,
+          asset: getAsset(bundle, spec.assetId) ?? getIndexAsset(bundle),
+          spec,
+          label: spec.label ?? bundle.project.title,
+        });
+      });
+    } else {
+      auto.push({ bundle });
+    }
+  }
+  const maxOrder = out.reduce((m, t) => Math.max(m, t.spec.order), 0);
+  const total = STAGE_BASE_VH + auto.length * STAGE_EXTRA_VH;
+  const scale = STAGE_BASE_VH / total;
+  for (const t of out) t.spec = { ...t.spec, y: Math.round(t.spec.y * scale * 10) / 10 };
+  auto.forEach(({ bundle }, i) => {
+    const yVh = STAGE_BASE_VH + 6 + i * STAGE_EXTRA_VH;
+    const spec: TileSpec = {
+      x: i % 2 === 0 ? 6 : 70,
+      y: Math.round((yVh / total) * 1000) / 10,
+      depth: ((i % 3) + 1) as 1 | 2 | 3,
+      order: maxOrder + 1 + i,
+    };
+    out.push({ key: `${bundle.project.id}-auto`, bundle, asset: getIndexAsset(bundle), spec, label: bundle.project.title });
+  });
+  return out.sort((a, b) => a.spec.order - b.spec.order);
 }
 
 export { portfolio, profile, approachSteps, lenses, lensById };

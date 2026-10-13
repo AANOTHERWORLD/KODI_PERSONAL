@@ -5,30 +5,29 @@ import type { LensId } from "@/content/types";
 import { lenses } from "@/content/lenses";
 import { debug } from "@/lib/debug";
 
-// Compact lens key for Home. Activating a lens (hover, focus, or tap) highlights the
-// selected-work entries that demonstrate it and dims the others. Works by keyboard and touch,
-// announces state to screen readers, and degrades to a static list without JavaScript
-// (the buttons render as plain text and entries stay fully visible).
+// Shared lens highlighting. The LensKey (Home) or LensFilter (Work) sets an active lens;
+// every LensAwareEntry inside the provider dims when it lacks that lens. Entries are never
+// reordered or hidden. Without JavaScript the key renders as a static list and nothing dims.
 
 type LensState = { active: LensId | null; setActive: (l: LensId | null) => void };
 const LensContext = createContext<LensState>({ active: null, setActive: () => {} });
 
-export function HomeLensProvider({ children }: { children: ReactNode }) {
+export function LensProvider({ children }: { children: ReactNode }) {
   const [active, setActive] = useState<LensId | null>(null);
   return <LensContext.Provider value={{ active, setActive }}>{children}</LensContext.Provider>;
 }
 
-export function LensAwareEntry({ lensIds, children, className }: { lensIds: LensId[]; children: ReactNode; className?: string }) {
+export function LensAwareEntry({ lensIds, children, className, as: Tag = "div" }: { lensIds: LensId[]; children: ReactNode; className?: string; as?: "div" | "li" | "article" }) {
   const { active } = useContext(LensContext);
   const dimmed = active !== null && !lensIds.includes(active);
   return (
-    <div className={`${className ?? ""} ${dimmed ? "is-dimmed" : ""}`} data-lens-entry data-dimmed={dimmed || undefined}>
+    <Tag className={`${className ?? ""} ${dimmed ? "is-dimmed" : ""}`} data-lens-entry data-dimmed={dimmed || undefined}>
       {children}
-    </div>
+    </Tag>
   );
 }
 
-export function LensKey({ counts }: { counts: Record<LensId, number> }) {
+export function LensKey({ counts, compact = false }: { counts: Record<LensId, number>; compact?: boolean }) {
   const { active, setActive } = useContext(LensContext);
   const liveId = useId();
   const activeLens = lenses.find((l) => l.id === active);
@@ -39,7 +38,7 @@ export function LensKey({ counts }: { counts: Record<LensId, number> }) {
   }
 
   return (
-    <div className="lens-key" onMouseLeave={() => activate(null)}>
+    <div className={`lens-key ${compact ? "lens-key--compact" : ""}`} onMouseLeave={() => activate(null)}>
       <ul className="lens-key__list">
         {lenses.map((lens) => {
           const pressed = active === lens.id;
@@ -55,10 +54,10 @@ export function LensKey({ counts }: { counts: Record<LensId, number> }) {
                 onBlur={() => activate(null)}
                 onClick={() => activate(pressed ? null : lens.id)}
               >
-                <span className="lens-key__numeral" aria-hidden="true">{lens.numeral}</span>
+                <span className="lens-key__dot" aria-hidden="true" />
                 <span className="lens-key__name">{lens.name}</span>
-                <span className="lens-key__question">{lens.question}</span>
-                <span className="lens-key__count">{counts[lens.id]} {counts[lens.id] === 1 ? "project" : "projects"}</span>
+                {!compact && <span className="lens-key__question">{lens.question}</span>}
+                <span className="lens-key__count tag">{counts[lens.id]} {counts[lens.id] === 1 ? "project" : "projects"}</span>
               </button>
             </li>
           );

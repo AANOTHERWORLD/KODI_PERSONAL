@@ -1,5 +1,5 @@
 // Content model for the portfolio. These records are the single source of truth for the site
-// and for a future PDF edition. Adding a project means adding records here, never editing layout.
+// and for the PDF edition. Adding a project means adding records here, never editing layout.
 // The shape is deliberately plain so it can be swapped for a headless CMS (Sanity) later by
 // replacing the loader in lib/content.ts without touching components.
 
@@ -17,25 +17,48 @@ export type ProjectStatus = "completed" | "in-progress" | "concept";
 export type Permission = "confirmed" | "pending";
 export type ClaimStatus = "verified" | "awaiting" | "omit";
 export type AssetType = "photo" | "render" | "concept" | "plan" | "diagram" | "process";
-export type RosterSlot = "core" | "optional" | "candidate";
+export type Tier = "core" | "extended";
+export type CaseStudyKind = "full" | "light";
 
 export interface Portfolio {
   name: string;
+  wordmark: string;
   descriptor: string;
   headline: string;
+  statement: string;
   positioning: string;
   email: string;
+  emailSubject: string;
   linkedin: string;
+  instagram: string;
   location: string;
   availability: string;
   versionDate: string;
   copyrightHolder: string;
+  workRangeLabel: string;
+}
+
+// A tile in the landing field. x and y are percentages of the stage (x of width, y of the
+// stage height). depth 1 to 3 sets scroll speed (3 is fastest, nearest). order sets the
+// interleave so core projects land in the first two screens. assetId overrides the hero.
+export interface TileSpec {
+  x: number;
+  y: number;
+  depth: 1 | 2 | 3;
+  order: number;
+  assetId?: string;
+  label?: string;
 }
 
 export interface Project {
   id: string;
   title: string;
   slug: string;
+  tier: Tier;
+  caseStudy: CaseStudyKind;
+  inPdf: boolean;
+  landingTile: boolean;
+  tiles?: TileSpec[];
   thesis: string;
   clientDisplayName: string;
   practice: string;
@@ -51,9 +74,6 @@ export interface Project {
   portfolioRole: string;
   sequence: number;
   tileSize: 1 | 2 | 3 | 4;
-  homeFeature: boolean;
-  leadWork?: boolean;
-  slot: RosterSlot;
   relatedProject: string;
   permission: Permission;
   permissionNote?: string;
@@ -69,6 +89,8 @@ export interface ScaleStep {
 
 export interface Narrative {
   projectId: string;
+  // Light pages use summary (about 150 to 300 words). Full pages use the sections below.
+  summary?: string[];
   challenge: string[];
   insight: string[];
   vision: string[];
@@ -102,6 +124,7 @@ export type ClaimPlacement =
   | "context"
   | "profile-bio"
   | "profile-leadership"
+  | "profile-recognition"
   | "profile-experience";
 
 export interface Claim {
@@ -128,21 +151,23 @@ export interface Asset {
 }
 
 export interface ExperienceItem {
-  period: string;
   title: string;
-  organisation: string;
-  note?: string;
+  practice: string;
+  years: string;
 }
 
 export interface Profile {
-  bio: string[];
+  name: string;
   currentTitle: string;
+  bio: string;
+  aboutStatement: string;
   careerNarrative: string[];
   workingStyle: string[];
-  leadershipClaimIds: string[];
   experience: ExperienceItem[];
+  recognitionClaimIds: string[];
+  leadershipClaimIds: string[];
   credentials: string[];
-  portrait?: string;
+  portraitAssetId: string;
   cvReference: string;
 }
 

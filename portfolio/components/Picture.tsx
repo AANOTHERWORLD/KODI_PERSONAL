@@ -27,15 +27,15 @@ export default function Picture({ asset, sizes = "(min-width: 1100px) 1100px, 10
   const image = resolveImage(asset.file);
   if (!image) {
     return (
-      <figure className={`picture picture--missing ${className ?? ""}`}>
+      <figure className={`picture picture--missing ${fit === "cover" ? "picture--cover" : ""} ${className ?? ""}`}>
         <div className="picture__placeholder" role="img" aria-label={asset.alt}>
           <span>Image to be supplied: {asset.file}</span>
         </div>
-        {showCaption && <figcaption className="picture__caption">{asset.caption}</figcaption>}
+        {showCaption && <figcaption className="picture__caption"><span className="picture__text">{asset.caption}</span></figcaption>}
       </figure>
     );
   }
-  const typeLabel = TYPE_LABEL[asset.type];
+  const typeLabel = asset.projectId === "watt-plaza" && asset.type === "render" ? "AI-assisted concept render" : TYPE_LABEL[asset.type];
   return (
     <figure className={`picture ${fit === "cover" ? "picture--cover" : ""} ${image.vector ? "picture--vector" : ""} ${className ?? ""}`}>
       <div className="picture__media" style={fit === "cover" ? { aspectRatio: `${image.width} / ${image.height}` } : undefined}>
@@ -53,8 +53,8 @@ export default function Picture({ asset, sizes = "(min-width: 1100px) 1100px, 10
       </div>
       {showCaption && (
         <figcaption className="picture__caption">
-          {showLens && asset.lens && <span className="lens-tag lens-tag--small">{lensById[asset.lens].name}</span>}
-          <span className="picture__type">{typeLabel}</span>
+          {showLens && asset.lens && <span className="tag tag--lens">{lensById[asset.lens].name}</span>}
+          <span className="tag">{typeLabel}</span>
           <span className="picture__text">{asset.caption}</span>
           {asset.credit && <span className="picture__credit">{asset.credit}</span>}
           {asset.permission === "pending" && <span className="draft-marker">Draft: permission pending</span>}

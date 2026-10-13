@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-labelledby="t">
+  <title id="t">OpenAI Bellevue: mood and phasing</title>
+    <g font-family="Inter, Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="500" fill="#404040">
+    <text x="80" y="90" font-size="22" letter-spacing="4" opacity="0.6">BELLEVUE</text>
+    <text x="80" y="140" font-size="40">Mood before program, phased across a tower.</text>
+    <g font-size="28"><text x="760" y="330">Open-ended</text><text x="760" y="520">Monastic</text><text x="760" y="710">Humanistic</text></g>
+    <g font-size="19" opacity="0.8">
+      <text x="760" y="366">A double take, then a deeper read.</text>
+      <text x="760" y="556">Clean and simple, balanced by something unexpected.</text>
+      <text x="760" y="746">A room that fits a body, from seat height to the weight of a door.</text>
+    </g>
+    <g font-size="18" opacity="0.7" text-anchor="end">
+      <text x="300" y="312">Phase 3</text><text x="300" y="452">Phase 2</text><text x="300" y="592">Phase 1</text><text x="300" y="732">Phase 0</text>
+    </g>
+    <text x="80" y="940" font-size="18" opacity="0.6">Phases shown in order of opening, from the first floors up. Floor counts omitted until cleared.</text>
+  </g>
+  <g stroke="#404040" stroke-width="2" fill="none">
+    <rect x="340" y="220" width="300" height="640"/>
+    <line x1="340" y1="380" x2="640" y2="380"/><line x1="340" y1="520" x2="640" y2="520"/><line x1="340" y1="660" x2="640" y2="660"/>
+  </g>
+  <rect x="340" y="660" width="300" height="200" fill="#8c4339" opacity="0.85"/>
+  <g fill="#8c4339"><circle cx="730" cy="322" r="8"/><circle cx="730" cy="512" r="8"/><circle cx="730" cy="702" r="8"/></g>
+</svg>

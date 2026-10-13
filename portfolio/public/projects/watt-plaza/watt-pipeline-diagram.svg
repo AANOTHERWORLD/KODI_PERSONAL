@@ -1,21 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-labelledby="t">
   <title id="t">The sketch-to-render pipeline</title>
-  <rect width="1600" height="1000" fill="#f4f1ec"/>
-  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#1a1a1a"/></marker></defs>
-  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" fill="#1a1a1a">
-    <text x="80" y="90" font-size="22" letter-spacing="4" fill="#6b6660">PIPELINE</text>
+    <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#404040"/></marker></defs>
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" fill="#404040">
+    <text x="80" y="90" font-size="22" letter-spacing="4" fill="#6f6f6f">PIPELINE</text>
     <text x="80" y="140" font-size="40">Three kinds of authority, one prompt agent, scoped edits.</text>
     <g font-size="24">
-      <text x="120" y="330">Geometry</text><text x="120" y="360" font-size="17" fill="#6b6660">Whitecard massing, site plan</text>
-      <text x="120" y="510">Material</text><text x="120" y="540" font-size="17" fill="#6b6660">Curated references</text>
-      <text x="120" y="690">Intent</text><text x="120" y="720" font-size="17" fill="#6b6660">Redlines, written direction</text>
-      <text x="620" y="510" text-anchor="middle">Prompt agent</text><text x="620" y="540" font-size="17" fill="#6b6660" text-anchor="middle">"a professional architectural visualizer"</text>
-      <text x="960" y="510" text-anchor="middle">Image model</text><text x="960" y="540" font-size="17" fill="#6b6660" text-anchor="middle">Edits from one base plate</text>
-      <text x="1320" y="400" text-anchor="middle">Scoped edits</text><text x="1320" y="430" font-size="17" fill="#6b6660" text-anchor="middle">"only the ground floor"</text>
-      <text x="1320" y="640" text-anchor="middle">Composite</text><text x="1320" y="670" font-size="17" fill="#6b6660" text-anchor="middle">Upscale, twilight, new views</text>
+      <text x="120" y="330">Geometry</text><text x="120" y="360" font-size="17" fill="#6f6f6f">Whitecard massing, site plan</text>
+      <text x="120" y="510">Material</text><text x="120" y="540" font-size="17" fill="#6f6f6f">Curated references</text>
+      <text x="120" y="690">Intent</text><text x="120" y="720" font-size="17" fill="#6f6f6f">Redlines, written direction</text>
+      <text x="620" y="510" text-anchor="middle">Prompt agent</text><text x="620" y="540" font-size="17" fill="#6f6f6f" text-anchor="middle">"a professional architectural visualizer"</text>
+      <text x="960" y="510" text-anchor="middle">Image model</text><text x="960" y="540" font-size="17" fill="#6f6f6f" text-anchor="middle">Edits from one base plate</text>
+      <text x="1320" y="400" text-anchor="middle">Scoped edits</text><text x="1320" y="430" font-size="17" fill="#6f6f6f" text-anchor="middle">"only the ground floor"</text>
+      <text x="1320" y="640" text-anchor="middle">Composite</text><text x="1320" y="670" font-size="17" fill="#6f6f6f" text-anchor="middle">Upscale, twilight, new views</text>
     </g>
   </g>
-  <g stroke="#1a1a1a" stroke-width="2" fill="none">
+  <g stroke="#404040" stroke-width="2" fill="none">
     <rect x="100" y="280" width="320" height="110"/><rect x="100" y="460" width="320" height="110"/><rect x="100" y="640" width="320" height="110"/>
     <rect x="490" y="440" width="260" height="140"/><rect x="830" y="440" width="260" height="140"/>
     <rect x="1190" y="350" width="260" height="110"/><rect x="1190" y="590" width="260" height="110"/>
@@ -27,6 +26,6 @@
     <path d="M1090 530 L1140 530 L1140 645 L1190 645" marker-end="url(#a)"/>
     <path d="M1320 460 L1320 520 L960 520 L960 580" stroke-dasharray="4 6"/>
   </g>
-  <g fill="#b5532a"><circle cx="455" cy="515" r="8"/><circle cx="1140" cy="510" r="8"/></g>
-  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="17" fill="#6b6660"><text x="990" y="900">Dashed: curated results return to the model for the next scoped edit. Twenty to forty-five runs at key steps.</text></g>
+  <g fill="#8c4339"><circle cx="455" cy="515" r="8"/><circle cx="1140" cy="510" r="8"/></g>
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="17" fill="#6f6f6f"><text x="990" y="900">Dashed: curated results return to the model for the next scoped edit. Twenty to forty-five runs at key steps.</text></g>
 </svg>

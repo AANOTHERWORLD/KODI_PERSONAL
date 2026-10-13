@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-labelledby="t">
+  <title id="t">Room 98: theater as plan</title>
+    <g font-family="Inter, Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="500" fill="#404040">
+    <text x="80" y="90" font-size="22" letter-spacing="4" opacity="0.6">ROOM 98</text>
+    <text x="80" y="140" font-size="40">Theater as plan: presented to, then walk through the stage to work.</text>
+    <g font-size="26" text-anchor="middle">
+      <text x="330" y="420">Presentation Room</text><text x="330" y="452" font-size="18" opacity="0.6">Audience</text>
+      <text x="640" y="420">Stage</text><text x="640" y="452" font-size="18" opacity="0.6">The threshold</text>
+      <text x="960" y="420">Deliberation Room</text><text x="960" y="452" font-size="18" opacity="0.6">Participant</text>
+      <text x="1300" y="380">Collaboration</text><text x="1300" y="412" font-size="18" opacity="0.6">Room one</text>
+      <text x="1300" y="600">Collaboration</text><text x="1300" y="632" font-size="18" opacity="0.6">Room two</text>
+    </g>
+    <g font-size="22" text-anchor="middle">
+      <text x="330" y="880">Disorientation</text><text x="800" y="880">Exploration</text><text x="1300" y="880">Adaptation</text>
+    </g>
+    <text x="80" y="950" font-size="18" opacity="0.6">Program arc beneath the plan. Sessions framed as: feel courageous, be audacious.</text>
+  </g>
+  <g stroke="#404040" stroke-width="2" fill="none">
+    <rect x="120" y="300" width="420" height="300"/>
+    <rect x="800" y="300" width="320" height="300"/>
+    <rect x="1180" y="300" width="300" height="130"/><rect x="1180" y="470" width="300" height="130"/>
+    <path d="M120 840 L1480 840"/>
+  </g>
+  <rect x="560" y="300" width="220" height="300" fill="#8c4339" opacity="0.85"/>
+  <g font-family="Inter, Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="500" fill="#dddddd" font-size="26" text-anchor="middle"><text x="670" y="458">Stage</text></g>
+  <g fill="#8c4339"><circle cx="330" cy="840" r="10"/><circle cx="800" cy="840" r="10"/><circle cx="1300" cy="840" r="10"/></g>
+</svg>

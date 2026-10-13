@@ -2,9 +2,7 @@ import type { ProjectBundle } from "../types";
 
 const id = "google-tokyo-partner-plex";
 
-// Candidate project. Renders only in draft mode until it is assigned a roster slot and
-// permission is confirmed. Kept here because the photography is complete and the project
-// adds an APAC hospitality argument.
+// Extended project (website only), light page with a captioned gallery.
 export const googleTokyoPartnerPlex: ProjectBundle = {
   project: {
     id,
@@ -21,11 +19,14 @@ export const googleTokyoPartnerPlex: ProjectBundle = {
     team: ["Rapt Studio team"],
     collaborators: ["Google APAC stakeholders"],
     lenses: ["culture-strategy", "interiors-behavior", "brand-detail"],
+    tier: "extended",
+    caseStudy: "light",
+    inPdf: false,
+    landingTile: true,
+    tiles: [{ x: 72, y: 69, depth: 1, order: 9, assetId: "ppx-04" }],
     portfolioRole: "Candidate: APAC contrast",
-    sequence: 8,
+    sequence: 1,
     tileSize: 2,
-    homeFeature: false,
-    slot: "candidate",
     relatedProject: "openai-tokyo",
     permission: "pending",
     permissionNote: "Awaiting Google and Rapt Studio permission. Photography copyright Kohei Take per asset metadata; credit wording to be confirmed.",
@@ -34,6 +35,11 @@ export const googleTokyoPartnerPlex: ProjectBundle = {
   },
   narrative: {
     projectId: id,
+    summary: [
+      "Google needed a place in Tokyo where APAC teams could host business partners: the 34th floor of the Shibuya Stream building, doubling the company's Tokyo presence, above one of the busiest intersections in the world. The mission was to inspire leaders who would then transform society, with three given ingredients: immersive environments, exceptional hospitality in the omotenashi tradition, and curated content.",
+      "The concept is Water, the power of transformation, with four experience principles: Hospitality, Magic, Fresh, Awakened. Arrival stages a change of state from the crossing into calm, through heavy timber doors with leather-wrapped handles, a sculptural entry corridor, and a host lobby reveal above a still pool. Boardrooms are Clouds, the auditorium is a Ripple, lounges are Deltas, and restrooms are quiet sanctuaries, with room names carried in relief wayfinding.",
+      "I led creative and strategy for the center, and the Rapt team developed the interiors and graphics with Google's APAC stakeholders. Completed and photographed. The success goals stated at the time, full daily activation of half the space and higher partner engagement, were goals, and no measured results are reported here.",
+    ],
     challenge: [
       "Google needed a place in Tokyo where APAC teams could host business partners, on the 34th floor of the Shibuya Stream building, above one of the busiest intersections in the world. The mission was to inspire leaders who would then transform society. Three ingredients were given: immersive environments, exceptional hospitality, omotenashi, and curated content.",
     ],

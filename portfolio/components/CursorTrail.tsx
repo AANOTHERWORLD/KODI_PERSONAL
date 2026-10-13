@@ -7,7 +7,8 @@ import { debug } from "@/lib/debug";
 //
 // Z-index map (also documented in globals.css):
 //   content            auto
-//   site header        20
+//   site header        50
+//   menu overlay       60
 //   trail canvas       9000  (pointer-events: none, above content, below cursor)
 //   cursor element     9001  (pointer-events: none)
 //
@@ -47,7 +48,7 @@ export default function CursorTrail() {
     let visible = false;
     let raf = 0;
     let dpr = 1;
-    const accent = getComputedStyle(document.documentElement).getPropertyValue("--trail-color").trim() || "rgba(26,26,26,0.55)";
+    const accent = getComputedStyle(document.documentElement).getPropertyValue("--trail-color").trim() || "rgba(64,64,64,0.55)";
 
     function resize() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);

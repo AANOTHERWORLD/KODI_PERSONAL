@@ -1,0 +1,147 @@
+import type { ProjectBundle } from "../types";
+
+const id = "google-room-98";
+
+export const googleRoom98: ProjectBundle = {
+  project: {
+    id,
+    title: "Google Room 98",
+    slug: id,
+    tier: "core",
+    caseStudy: "full",
+    inPdf: true,
+    landingTile: true,
+    tiles: [{ x: 76, y: 53, depth: 3, order: 7 }],
+    thesis: "An executive experience center in Playa Vista built as theater, where guests are presented to from the stage and then walk through it to work.",
+    clientDisplayName: "Google, Customer Experience Center (Los Angeles)",
+    practice: "Rapt Studio",
+    location: "Playa Vista, Los Angeles, California",
+    // PLACEHOLDER: confirm project years.
+    years: "2019 to 2020",
+    status: "completed",
+    role: "Creative and Strategy Lead, Rapt Studio",
+    scope: "A 4,000 square foot executive experience center: brand strategy, naming, and identity; architecture and interiors; and program guidelines.",
+    team: ["Rapt Studio team"],
+    collaborators: ["Google stakeholders"],
+    lenses: ["culture-strategy", "interiors-behavior", "brand-detail"],
+    portfolioRole: "Brand as place",
+    sequence: 5,
+    tileSize: 2,
+    relatedProject: "openai",
+    permission: "pending",
+    permissionNote: "Awaiting Google and Rapt Studio permission. Confirm that the Google CEC in the project list refers to Room 98, and the photographer credit.",
+    heroAssetId: "room98-theater-diagram",
+  },
+  narrative: {
+    projectId: id,
+    challenge: [
+      "Google wanted a place in Los Angeles to host executive customers, somewhere that would move a visit from presentation to working session, and that would carry a name and identity of its own rather than reading as a meeting suite. The space was small, 4,000 square feet, and the program was ambitious: a presentation room, a deliberation room, two collaboration rooms, and a sequence of sessions that had to feel designed rather than scheduled.",
+      "The creative judgment was in the order of operations. Brand, architecture, and program were three deliverables for the same room, and each could have been resolved on its own. The project only worked if all three enacted the same idea.",
+    ],
+    insight: [
+      "Playa Vista sits inside the entertainment industry. Theater is the local form for moving an audience, and a briefing is an audience that needs to become a cast. The center could stage that shift literally.",
+    ],
+    vision: [
+      "Theater became the organizing idea. Guests are presented to from the stage in the Presentation Room, then walk through the stage into the Deliberation Room and the two Collaboration Rooms to work through solutions. The program arc runs from disorientation to exploration to adaptation, and sessions are framed with two instructions: feel courageous, be audacious.",
+      "The name, Room 98, and the identity make the center a destination with its own address inside Google. The program guidelines were written alongside the architecture so that the sequence of sessions and the sequence of rooms are the same sequence.",
+    ],
+    scaleTranslation: [
+      {
+        lens: "culture-strategy",
+        assetId: "room98-theater-diagram",
+        caption: "Strategy: theater as the organizing idea, with the program arc, disorientation to exploration to adaptation, mapped onto the plan.",
+      },
+      {
+        lens: "interiors-behavior",
+        caption: "Behavior: guests cross the stage from audience to participant. The plan enacts the shift that the session asks of them.",
+      },
+      {
+        lens: "brand-detail",
+        caption: "Detail: naming, identity, and stage elements carry the same idea down to the room signage and the session cards.",
+      },
+    ],
+    leadership: [
+      "I led creative and strategy across the three deliverables, so that naming, architecture, and program were decided together. The Rapt team developed the interiors, the identity system, and the program guidelines with Google's stakeholders.",
+    ],
+    outcome: [
+      "Completed. The measures stated for the center at the time, full occupancy, customer conversion, and follow-on meetings, were goals. No measured results are reported here.",
+    ],
+    imageCredit: "Diagram redrawn for this portfolio. Photography from the studio's imagery library to be added once cleared.",
+    involvement: "Creative and strategy lead for brand strategy, naming and identity, architecture and interiors, and program guidelines.",
+  },
+  decisions: [
+    {
+      id: "room98-d1",
+      projectId: id,
+      title: "Make the stage the threshold",
+      question: "How does a briefing become a working session?",
+      choice: "Guests physically cross the stage from the Presentation Room into the Deliberation and Collaboration rooms.",
+      rationale: "The plan enacts the shift from audience to participant. Nobody has to announce it.",
+      tradeoff: "A stage that doubles as a corridor needs careful acoustic and lighting control between a live presentation and the rooms beyond.",
+      assetIds: ["room98-theater-diagram"],
+    },
+    {
+      id: "room98-d2",
+      projectId: id,
+      title: "Name it as a place",
+      question: "What makes a meeting suite a destination?",
+      choice: "Brand the center as Room 98 with its own identity.",
+      rationale: "A name gives a visit an address and a memory. A suite number does neither.",
+      tradeoff: "An identity inside a larger brand has to stay in its lane, which limits how far the expression can go.",
+      assetIds: [],
+    },
+    {
+      id: "room98-d3",
+      projectId: id,
+      title: "Write the program with the space",
+      question: "Who decides what happens in each room?",
+      choice: "Deliver program guidelines alongside the architecture, so the sequence of sessions and the sequence of rooms align.",
+      rationale: "A room designed for deliberation only works if the session scheduled in it is one.",
+      tradeoff: "Guidelines ask the hosts to follow a script, which takes training and buy-in beyond the design team.",
+      assetIds: [],
+    },
+  ],
+  assets: [
+    {
+      id: "room98-theater-diagram",
+      projectId: id,
+      file: "google-room-98/room98-theater-diagram.svg",
+      type: "diagram",
+      caption: "Theater as plan: Presentation Room, the stage as threshold, then Deliberation and two Collaboration Rooms, with the program arc beneath.",
+      alt: "Diagram of four rooms in sequence with a stage between the first and the rest, labeled with the arc disorientation, exploration, adaptation.",
+      creator: "Portfolio diagram, redrawn from the Room 98 case material",
+      credit: "Diagram redrawn for this portfolio",
+      permission: "pending",
+      lens: "culture-strategy",
+    },
+  ],
+  claims: [
+    {
+      id: "room98-c1",
+      projectId: id,
+      placement: "role",
+      wording: "The Google CEC in the project list refers to Room 98 in Playa Vista.",
+      evidenceSource: "portfolio_research.md, 4.8, open question.",
+      verifier: "Jamel Williams",
+      status: "awaiting",
+    },
+    {
+      id: "room98-c2",
+      projectId: id,
+      placement: "leadership",
+      wording: "PLACEHOLDER: one specific moment of alignment, critique, or resolution on Room 98.",
+      evidenceSource: "To be supplied by Jamel.",
+      verifier: "Jamel Williams",
+      status: "awaiting",
+    },
+    {
+      id: "room98-c3",
+      projectId: id,
+      placement: "credits",
+      wording: "Photography credit: PLACEHOLDER.",
+      evidenceSource: "Studio master imagery deck, slides about 437 to 464.",
+      verifier: "Jamel Williams",
+      status: "awaiting",
+    },
+  ],
+};
