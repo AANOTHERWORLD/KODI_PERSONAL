@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-labelledby="t">
+  <title id="t">Three postures toward the neighborhood</title>
+  <rect width="1600" height="1000" fill="#f4f1ec"/>
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" fill="#1a1a1a">
+    <text x="80" y="90" font-size="22" letter-spacing="4" fill="#6b6660">THREE POSTURES</text>
+    <text x="80" y="140" font-size="40">Twelve buildings surveyed, three gaps found, three directions at their boundary.</text>
+    <g font-size="28" text-anchor="middle">
+      <text x="330" y="760">Departure</text><text x="330" y="792" font-size="18" fill="#6b6660">Faces out: public market, shared roof garden</text>
+      <text x="800" y="760">Extension</text><text x="800" y="792" font-size="18" fill="#6b6660">Faces in: members' club on an amenity bridge</text>
+      <text x="1270" y="760">Expansion</text><text x="1270" y="792" font-size="18" fill="#6b6660">Meets the city halfway: raised open-air promenade</text>
+    </g>
+    <text x="80" y="930" font-size="18" fill="#6b6660">Refinish-only pole: existing columns repainted, white or dark grey. Every later decision tunes between the poles.</text>
+  </g>
+  <g stroke="#1a1a1a" stroke-width="2" fill="none">
+    <!-- Departure: towers with market base reaching outward -->
+    <rect x="250" y="300" width="60" height="380"/><rect x="350" y="300" width="60" height="380"/>
+    <path d="M180 680 L480 680 L480 620 L180 620 Z"/><path d="M250 300 L410 300" stroke-dasharray="4 6"/>
+    <!-- Extension: towers with bridge and crown -->
+    <rect x="720" y="300" width="60" height="380"/><rect x="820" y="300" width="60" height="380"/>
+    <rect x="780" y="420" width="40" height="40"/><path d="M720 300 L880 300 L880 270 L720 270 Z"/>
+    <!-- Expansion: towers over a raised promenade -->
+    <rect x="1190" y="300" width="60" height="380"/><rect x="1290" y="300" width="60" height="380"/>
+    <path d="M1130 600 L1410 600 M1130 600 L1130 680 M1410 600 L1410 680"/><path d="M1110 680 L1430 680"/>
+  </g>
+  <g fill="#b5532a"><rect x="180" y="620" width="300" height="60" opacity="0.18"/><rect x="780" y="420" width="40" height="40" opacity="0.6"/><rect x="1130" y="600" width="280" height="80" opacity="0.18"/></g>
+</svg>

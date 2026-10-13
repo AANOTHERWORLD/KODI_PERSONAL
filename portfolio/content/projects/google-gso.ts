@@ -1,0 +1,168 @@
+import type { ProjectBundle } from "../types";
+
+const id = "google-gso-home-of-the-internet";
+
+export const googleGso: ProjectBundle = {
+  project: {
+    id,
+    title: "Google GSO, Home of the Internet",
+    slug: id,
+    thesis: "A recruiting brief reframed as a community platform built on hometown pride, then carried into collateral, events, a learning center, and pop-ups.",
+    clientDisplayName: "Google, Global Server Operations (data centers)",
+    practice: "Rapt Studio",
+    location: "United States, data center communities (pilot example: The Dalles, Oregon)",
+    years: "2024 to present",
+    status: "in-progress",
+    statusNote: "Brand platform delivered. Learning center, pop-ups, and playbooks ongoing.",
+    role: "Creative and Strategy Lead, Rapt Studio",
+    scope:
+      "Brand platform and messaging, owned channels, event and object design, community programs, and the design of GSO University, a learning center inside an active data center, followed by a pop-up learning playbook and the IDI Field of Dreams playbook.",
+    team: ["Rapt Studio team"],
+    collaborators: ["Google GSO and Cloud stakeholders", "Local site leads and community partners"],
+    lenses: ["culture-strategy", "brand-detail", "interiors-behavior"],
+    portfolioRole: "Strategic reframing",
+    sequence: 2,
+    tileSize: 3,
+    homeFeature: true,
+    slot: "core",
+    relatedProject: "tinder-hq",
+    permission: "pending",
+    permissionNote: "Awaiting Google and Rapt Studio permission to publish.",
+    heroAssetId: "gso-platform-diagram",
+  },
+  narrative: {
+    projectId: id,
+    challenge: [
+      "Google's data centers were growing faster than the towns around them could understand. There was no shared marketing strategy for recruiting and retention. Efforts were local and inconsistent in a competitive hiring market, and data center work was poorly understood even inside Google. The brief, in July 2024, asked for a global and local strategy and roadmap aimed at local recruits and at existing Googlers, covering short-term needs and a scalable long-term platform.",
+      "The creative judgment sat in the gap between what was asked and what would work. A recruiting campaign could fill a few roles. It could not change how a community felt about a building it was never allowed to enter.",
+    ],
+    insight: [
+      "Hometown pride is about what a community puts into the world, and only partly about where you were born. A town with a data center sends the internet to everyone else. That is a story the town can tell about itself, and recruiting becomes an outcome of the story rather than its headline.",
+    ],
+    vision: [
+      "The platform is called Home of the Internet. It celebrates every town with a data center: globally connected, locally activated, and built on place, people, and impact. The core message, this is where the magic happens, moves the data center from a mystery to a source of pride.",
+      "The framework had four aims: career awareness, faster onboarding, community goodwill, and shared internal tools. Each one became a set of things to make, from language to lanyards to a building.",
+    ],
+    scaleTranslation: [
+      {
+        lens: "culture-strategy",
+        assetId: "gso-platform-diagram",
+        caption: "Strategy: hometown pride, expressed as a platform that is globally connected and locally activated.",
+      },
+      {
+        lens: "brand-detail",
+        assetId: "gso-process-gemini",
+        caption: "Messaging: hyper-local language that knows each town's teams, festivals, and landmarks. Early process study for The Dalles, Oregon, generated with Gemini as an impressionistic reference.",
+      },
+      {
+        lens: "interiors-behavior",
+        assetId: "gso-university-diagram",
+        caption: "Place: GSO University, a learning center inside an active data center, organized around proximity, agility, continuity, and security, with an arrival sequence designed around the checkpoints.",
+      },
+      {
+        lens: "brand-detail",
+        caption: "Objects: a transparent-walled Data Center on Wheels with gamified trials, lanyards that collect stickers as learners progress, badged shirts, and a neon Home of the Internet stamp.",
+      },
+    ],
+    leadership: [
+      "I led the creative and strategy work, from the discovery that reframed the brief to the platform and the decision to carry it into space. The Rapt team developed the collateral system, the event kits, and the learning center design with Google's GSO and Cloud stakeholders.",
+    ],
+    outcome: [
+      "The platform was delivered and rolled into collateral, external Life at Google data center pages, an internal resource hub of playbooks and templates, learning spaces, and a pop-up learning playbook for 2025 to 2026. Brick and Mortar design reviews, a naming workshop, and the IDI Field of Dreams playbook followed in 2026. No measured results to report.",
+    ],
+    imageCredit: "Diagrams redrawn for this portfolio from the Creative Platform and GSO University decks. Process image generated with Gemini during the project.",
+    involvement: "Creative and strategy lead. Led discovery, the reframing of the brief, the Home of the Internet platform, and the direction for the learning center and pop-up kits.",
+  },
+  decisions: [
+    {
+      id: "gso-d1",
+      projectId: id,
+      title: "Reframe recruiting as community",
+      question: "Sell jobs, or tell the story of a place?",
+      choice: "Lead with the town and its pride, with jobs as the outcome.",
+      rationale: "Data center work is invisible. The community is visible, and it is the thing recruits already belong to.",
+      tradeoff: "Slower to read as a recruiting campaign, stronger as a platform that lasts beyond a hiring cycle.",
+      assetIds: ["gso-platform-diagram"],
+    },
+    {
+      id: "gso-d2",
+      projectId: id,
+      title: "Hyper-local over national",
+      question: "One campaign for every site, or one voice per town?",
+      choice:
+        "Messages written with local voices, naming teams, festivals, and landmarks, and executed with local muralists, Main Street banners, a local radio segment, and community partners.",
+      rationale: "Credibility in a small town comes from specificity. A national campaign reads as an outsider talking.",
+      tradeoff: "More coordination per market, and a playbook that has to teach local teams how to write.",
+      assetIds: ["gso-process-gemini"],
+    },
+    {
+      id: "gso-d3",
+      projectId: id,
+      title: "Build the platform to hold space",
+      question: "Does a brand platform stop at collateral?",
+      choice:
+        "Carry the identity into GSO University and the pop-up kits, so the brand becomes something people walk through, wear, and collect.",
+      rationale: "A platform that lives only on screens stays abstract. Lanyards, shirts, and a learning center make it a habit.",
+      tradeoff: "Space adds security sequencing, logistics, and construction to a brand engagement, which widens the team and the timeline.",
+      assetIds: ["gso-university-diagram"],
+    },
+  ],
+  assets: [
+    {
+      id: "gso-platform-diagram",
+      projectId: id,
+      file: "google-gso-home-of-the-internet/gso-platform-diagram.svg",
+      type: "diagram",
+      caption: "The platform at a glance: one idea, Home of the Internet, carried through four aims and five kinds of expression.",
+      alt: "Diagram with Home of the Internet at the center and branches for messaging, owned channels, events and objects, community, and space.",
+      creator: "Portfolio diagram, redrawn from the Creative Platform deck",
+      credit: "Diagram redrawn for this portfolio",
+      permission: "pending",
+      lens: "culture-strategy",
+    },
+    {
+      id: "gso-process-gemini",
+      projectId: id,
+      file: "google-gso-home-of-the-internet/gso-process-gemini-reference.png",
+      type: "process",
+      caption: "Process: an impressionistic study of The Dalles, Oregon, generated with Gemini while testing how a hometown image could carry the platform.",
+      alt: "Screenshot of a Gemini chat producing a painterly image of a river gorge and small town, used as a process reference.",
+      creator: "Generated with Gemini during the project",
+      credit: "Process image, generated with Gemini",
+      permission: "pending",
+      lens: "brand-detail",
+    },
+    {
+      id: "gso-university-diagram",
+      projectId: id,
+      file: "google-gso-home-of-the-internet/gso-university-diagram.svg",
+      type: "diagram",
+      caption: "GSO University: the arrival sequence through security, then program-free in-between space, a kit of parts, and multimodal learning postures.",
+      alt: "Diagram of a sequence from checkpoint to in-between space to learning rooms, labeled proximity, agility, continuity, and security.",
+      creator: "Portfolio diagram, redrawn from the GSO University design development deck",
+      credit: "Diagram redrawn for this portfolio",
+      permission: "pending",
+      lens: "interiors-behavior",
+    },
+  ],
+  claims: [
+    {
+      id: "gso-c1",
+      projectId: id,
+      placement: "leadership",
+      wording: "PLACEHOLDER: one specific moment of alignment, for example bringing GSO, Cloud, and local site leads onto a single platform.",
+      evidenceSource: "To be supplied by Jamel.",
+      verifier: "Jamel Williams",
+      status: "awaiting",
+    },
+    {
+      id: "gso-c2",
+      projectId: id,
+      placement: "outcome",
+      wording: "PLACEHOLDER: any verified adoption facts, pilots that ran, or photographs of built GSO University or pop-up spaces.",
+      evidenceSource: "To be supplied by Jamel.",
+      verifier: "Jamel Williams, Google",
+      status: "awaiting",
+    },
+  ],
+};

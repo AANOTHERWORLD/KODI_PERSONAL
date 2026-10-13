@@ -1,0 +1,104 @@
+import type { ProjectBundle } from "../types";
+
+const id = "google-tokyo-partner-plex";
+
+// Candidate project. Renders only in draft mode until it is assigned a roster slot and
+// permission is confirmed. Kept here because the photography is complete and the project
+// adds an APAC hospitality argument.
+export const googleTokyoPartnerPlex: ProjectBundle = {
+  project: {
+    id,
+    title: "Google Tokyo Partner Plex",
+    slug: id,
+    thesis: "A partner experience center on the 34th floor of Shibuya Stream, where water, the power of transformation, shapes arrival, workshops, and rest.",
+    clientDisplayName: "Google",
+    practice: "Rapt Studio",
+    location: "Shibuya, Tokyo, Japan",
+    years: "2019 to 2020",
+    status: "completed",
+    role: "Creative and Strategy Lead, Rapt Studio",
+    scope: "Experience concept, interiors, and environmental graphics for a platform where APAC teams host business partners, doubling Google's Tokyo presence.",
+    team: ["Rapt Studio team"],
+    collaborators: ["Google APAC stakeholders"],
+    lenses: ["culture-strategy", "interiors-behavior", "brand-detail"],
+    portfolioRole: "Candidate: APAC contrast",
+    sequence: 8,
+    tileSize: 2,
+    homeFeature: false,
+    slot: "candidate",
+    relatedProject: "openai-tokyo",
+    permission: "pending",
+    permissionNote: "Awaiting Google and Rapt Studio permission. Photography copyright Kohei Take per asset metadata; credit wording to be confirmed.",
+    heroAssetId: "ppx-03",
+    indexAssetId: "ppx-04",
+  },
+  narrative: {
+    projectId: id,
+    challenge: [
+      "Google needed a place in Tokyo where APAC teams could host business partners, on the 34th floor of the Shibuya Stream building, above one of the busiest intersections in the world. The mission was to inspire leaders who would then transform society. Three ingredients were given: immersive environments, exceptional hospitality, omotenashi, and curated content.",
+    ],
+    insight: [
+      "Arrival from Shibuya crossing is a change of state. The center could stage that change deliberately, from noise to calm, and make transformation the subject of the whole floor.",
+    ],
+    vision: [
+      "The concept is Water, the power of transformation, with four experience principles: Hospitality, Magic, Fresh, Awakened. Pre-arrival leads to a sculptural entry corridor and a host lobby reveal. Workshops are active places for growth, compression moments create surprise, boardrooms are Clouds, the auditorium is a Ripple, lounges are Deltas, and restrooms are quiet sanctuaries. Heavy timber doors with leather-wrapped handles carry guests from the crossing into calm.",
+    ],
+    scaleTranslation: [
+      { lens: "culture-strategy", assetId: "ppx-01", caption: "Context: Shibuya crossing, the state guests arrive from." },
+      { lens: "interiors-behavior", assetId: "ppx-02", caption: "Arrival: heavy timber doors with leather-wrapped handles, the first touch of the sequence." },
+      { lens: "interiors-behavior", assetId: "ppx-04", caption: "Reveal: the host lobby, where suspended forms meet a still pool and ripples read as the concept." },
+      { lens: "brand-detail", assetId: "ppx-09", caption: "Detail: room names in relief, Aurora, Midnight, High Noon, Lakeshore, carry the water story into wayfinding." },
+      { lens: "interiors-behavior", assetId: "ppx-10", caption: "Compression: the corridor narrows and curves before a room opens." },
+      { lens: "brand-detail", assetId: "ppx-23", caption: "Magic: an immersive room where color becomes the medium." },
+    ],
+    leadership: ["I led creative and strategy for the center, with the Rapt team developing the interiors and graphics with Google's APAC stakeholders."],
+    outcome: [
+      "Completed and photographed. The stated success goals at the time were full daily activation of half the space and higher client engagement and satisfaction. Those are goals, and no measured results are reported here.",
+    ],
+    photographyCredit: "Photography copyright Kohei Take, per asset metadata. Credit wording to be confirmed.",
+    involvement: "Creative and strategy lead for the experience concept and its expression in interiors and graphics.",
+  },
+  decisions: [
+    {
+      id: "ppx-d1",
+      projectId: id,
+      title: "Stage the change of state",
+      question: "What does a partner center above Shibuya crossing need to do first?",
+      choice: "Design the arrival as a sequence from noise to calm: pre-arrival, timber doors, sculptural corridor, host reveal.",
+      rationale: "Transformation is the mission. The building should perform it on the guest before the content does.",
+      tradeoff: "Arrival takes floor area that could have been another meeting room.",
+      assetIds: ["ppx-02", "ppx-03"],
+    },
+    {
+      id: "ppx-d2",
+      projectId: id,
+      title: "Name rooms as water",
+      question: "How does one concept hold a whole floor of different rooms?",
+      choice: "Boardrooms as Clouds, the auditorium as a Ripple, lounges as Deltas, restrooms as sanctuaries, with room names carried in relief wayfinding.",
+      rationale: "A single metaphor lets every room be different and still belong.",
+      tradeoff: "A metaphor can tip into theme. Restraint in materials keeps it on the right side.",
+      assetIds: ["ppx-09", "ppx-16"],
+    },
+  ],
+  assets: [
+    { id: "ppx-01", projectId: id, file: "google-tokyo-partner-plex/01.jpg", type: "photo", caption: "Shibuya crossing, the arrival context.", alt: "People crossing a busy Tokyo street with bright signage.", creator: "Kohei Take", credit: "Photography: Kohei Take (to be confirmed)", permission: "pending", lens: "culture-strategy" },
+    { id: "ppx-02", projectId: id, file: "google-tokyo-partner-plex/02.jpg", type: "photo", caption: "Timber doors with leather-wrapped handles at the entry.", alt: "A hand in a yellow sleeve pulling a tall wooden door with a leather-wrapped handle.", creator: "Kohei Take", credit: "Photography: Kohei Take (to be confirmed)", permission: "pending", lens: "interiors-behavior" },
+    { id: "ppx-03", projectId: id, file: "google-tokyo-partner-plex/03.jpg", type: "photo", caption: "The host lobby reveal: suspended forms over a white pool.", alt: "Lobby with dozens of suspended white tubes above a round white basin, with a person entering.", creator: "Kohei Take", credit: "Photography: Kohei Take (to be confirmed)", permission: "pending", lens: "interiors-behavior" },
+    { id: "ppx-04", projectId: id, file: "google-tokyo-partner-plex/04.jpg", type: "photo", caption: "Ripples in the lobby pool beneath the suspended installation.", alt: "Close view of a shallow round basin with concentric ripples under hanging white tubes.", creator: "Kohei Take", credit: "Photography: Kohei Take (to be confirmed)", permission: "pending", lens: "brand-detail" },
+    { id: "ppx-09", projectId: id, file: "google-tokyo-partner-plex/09.jpg", type: "photo", caption: "Room names in relief: Aurora, Midnight, High Noon, Lakeshore.", alt: "White wall with raised lettering and icons listing room names in English and Japanese.", creator: "Kohei Take", credit: "Photography: Kohei Take (to be confirmed)", permission: "pending", lens: "brand-detail" },
+    { id: "ppx-10", projectId: id, file: "google-tokyo-partner-plex/10.jpg", type: "photo", caption: "A compression corridor with curved white walls and a blue floor.", alt: "Curving corridor with rippled white walls, a blue carpet, and a timber wall at the end.", creator: "Kohei Take", credit: "Photography: Kohei Take (to be confirmed)", permission: "pending", lens: "interiors-behavior" },
+    { id: "ppx-16", projectId: id, file: "google-tokyo-partner-plex/16.jpg", type: "photo", caption: "A boardroom seen through a round opening, with a cloud-like sculpture above the table.", alt: "View through a circular window into a meeting room with a long table and a textured white sculpture above.", creator: "Kohei Take", credit: "Photography: Kohei Take (to be confirmed)", permission: "pending", lens: "brand-detail" },
+    { id: "ppx-23", projectId: id, file: "google-tokyo-partner-plex/23.jpg", type: "photo", caption: "An immersive room where light and color are the medium.", alt: "A person standing in a room lit in pink and blue gradients.", creator: "Kohei Take", credit: "Photography: Kohei Take (to be confirmed)", permission: "pending", lens: "brand-detail" },
+  ],
+  claims: [
+    {
+      id: "ppx-c1",
+      projectId: id,
+      placement: "credits",
+      wording: "Photography by Kohei Take.",
+      evidenceSource: "Canto copyright field for 23 of 24 images.",
+      verifier: "Jamel Williams, Rapt Studio",
+      status: "awaiting",
+    },
+  ],
+};

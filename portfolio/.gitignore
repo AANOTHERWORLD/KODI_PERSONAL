@@ -1,0 +1,18 @@
+# Dependencies and build output
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# Generated at build time by scripts/optimize-images.mjs (prebuild). Never edit by hand.
+public/generated/
+content/generated/
+
+# Local environment
+.env*.local
+
+# Editor and OS
+.DS_Store
+.vscode/
+.idea/

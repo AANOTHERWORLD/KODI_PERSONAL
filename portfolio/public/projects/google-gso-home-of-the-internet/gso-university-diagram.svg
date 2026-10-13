@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-labelledby="t">
+  <title id="t">GSO University: arrival sequence and learning territories</title>
+  <rect width="1600" height="1000" fill="#f4f1ec"/>
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" fill="#1a1a1a">
+    <text x="80" y="90" font-size="22" letter-spacing="4" fill="#6b6660">GSO UNIVERSITY</text>
+    <text x="80" y="140" font-size="40">A learning center inside an active data center.</text>
+    <g font-size="24">
+      <text x="120" y="440">Security</text><text x="120" y="472" font-size="17" fill="#6b6660">Arrival sequenced around checkpoints</text>
+      <text x="480" y="440">Proximity</text><text x="480" y="472" font-size="17" fill="#6b6660">Program-free in-between space</text>
+      <text x="840" y="440">Agility</text><text x="840" y="472" font-size="17" fill="#6b6660">A flexible kit of parts</text>
+      <text x="1200" y="440">Continuity</text><text x="1200" y="472" font-size="17" fill="#6b6660">Rituals of collecting mementos</text>
+    </g>
+    <g font-size="18" fill="#6b6660">
+      <text x="120" y="860">Checkpoint</text><text x="480" y="860">In-between space</text><text x="840" y="860">Learning rooms, multimodal postures</text><text x="1200" y="860">Memento wall and exit</text>
+    </g>
+  </g>
+  <g stroke="#1a1a1a" stroke-width="2" fill="none">
+    <rect x="120" y="540" width="220" height="260"/>
+    <rect x="480" y="540" width="260" height="260" stroke-dasharray="6 8"/>
+    <rect x="840" y="540" width="100" height="120"/><rect x="960" y="540" width="100" height="120"/><rect x="840" y="680" width="220" height="120"/>
+    <rect x="1200" y="540" width="260" height="260"/>
+    <path d="M340 670 L480 670 M740 670 L840 670 M1060 670 L1200 670" marker-end="url(#a)"/>
+  </g>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#1a1a1a"/></marker></defs>
+  <g fill="#b5532a"><rect x="150" y="760" width="30" height="8"/><rect x="190" y="760" width="30" height="8"/><circle cx="1330" cy="610" r="10"/><circle cx="1370" cy="640" r="10"/><circle cx="1300" cy="660" r="10"/></g>
+</svg>
