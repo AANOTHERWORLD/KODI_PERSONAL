@@ -30,7 +30,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
     caseStudy: "full",
     inPdf: true,
     landingTile: true,
-    tiles: [{ x: -5, y: 2, depth: 2, order: 1 }],
+    tiles: [{ x: -6, y: 12, depth: 2, order: 1 }],
     portfolioRole: "Flagship integration",
     sequence: 1,
     tileSize: 4,

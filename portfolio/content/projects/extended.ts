@@ -16,7 +16,7 @@ type Seed = {
 };
 
 const seeds: Seed[] = [
-  { id: "club-gemini", title: "Club Gemini", lenses: ["brand-detail", "interiors-behavior"], sequence: 2, tileSize: 2, kind: "Experiential", tiles: [{ x: 78, y: 37, depth: 2, order: 5 }], note: "PLACEHOLDER: client descriptor, year, idea, what was made." },
+  { id: "club-gemini", title: "Club Gemini", lenses: ["brand-detail", "interiors-behavior"], sequence: 2, tileSize: 2, kind: "Experiential", note: "PLACEHOLDER: client descriptor, year, idea, what was made." },
   { id: "napa-retreat", title: "Napa Leadership Retreat", lenses: ["culture-strategy", "brand-detail"], sequence: 3, tileSize: 2, kind: "Experiential event", note: "PLACEHOLDER: client descriptor, year, idea, what was made." },
   { id: "april-jean", title: "Bar April Jean", lenses: ["brand-detail", "interiors-behavior"], sequence: 4, tileSize: 2, kind: "Hospitality", note: "PLACEHOLDER: facts; confirm this is Jamel's work." },
   { id: "place-at-table", title: "A Place At The Table", lenses: ["culture-strategy"], sequence: 5, tileSize: 1, kind: "Strategy and concept", note: "PLACEHOLDER: facts." },

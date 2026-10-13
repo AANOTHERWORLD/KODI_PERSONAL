@@ -24,7 +24,7 @@ export const googleGso: ProjectBundle = {
     caseStudy: "full",
     inPdf: true,
     landingTile: true,
-    tiles: [{ x: 3, y: 34, depth: 1, order: 6 }],
+    tiles: [{ x: 26, y: 78, depth: 1, order: 5 }],
     portfolioRole: "Strategic reframing",
     sequence: 2,
     tileSize: 3,

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getCoreProjects, getExtendedProjects, getLandingTiles, getStageHeightVh, getLensCounts, getProfileAsset, getProfileClaimsById, portfolio, profile, approachSteps } from "@/lib/content";
+import { getCoreProjects, getExtendedProjects, getLandingTiles, getLensCounts, getProfileAsset, getProfileClaimsById, portfolio, profile, approachSteps } from "@/lib/content";
 import { getDownloads } from "@/lib/files";
 import { withBasePath } from "@/lib/basePath";
 import Picture from "@/components/Picture";
@@ -25,7 +25,7 @@ export default function HomePage() {
     <>
       {/* 1. Scroll stage: fixed statement and drifting tile field */}
       <section aria-labelledby="statement" className="stage-section">
-        <ScrollStage heightVh={getStageHeightVh()}>
+        <ScrollStage>
           <div className="stage__statement" data-statement>
             <p className="tag">{portfolio.name}, {portfolio.descriptor}</p>
             <h1 id="statement" className="stage__headline">{portfolio.statement}</h1>

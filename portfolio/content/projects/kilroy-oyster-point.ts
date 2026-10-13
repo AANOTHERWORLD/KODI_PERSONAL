@@ -23,7 +23,6 @@ export const kilroyOysterPoint: ProjectBundle = {
     caseStudy: "full",
     inPdf: true,
     landingTile: true,
-    tiles: [{ x: -4, y: 66, depth: 3, order: 10 }],
     portfolioRole: "Leadership under complexity",
     sequence: 7,
     tileSize: 3,

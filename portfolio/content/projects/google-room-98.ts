@@ -11,7 +11,7 @@ export const googleRoom98: ProjectBundle = {
     caseStudy: "full",
     inPdf: true,
     landingTile: true,
-    tiles: [{ x: 76, y: 53, depth: 3, order: 7 }],
+    tiles: [{ x: 64, y: 72, depth: 2, order: 6 }],
     thesis: "An executive experience center in Playa Vista built as theater, where guests are presented to from the stage and then walk through it to work.",
     clientDisplayName: "Google, Customer Experience Center (Los Angeles)",
     practice: "Rapt Studio",

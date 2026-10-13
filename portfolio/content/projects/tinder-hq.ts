@@ -40,7 +40,7 @@ export const tinderHq: ProjectBundle = {
     caseStudy: "full",
     inPdf: true,
     landingTile: true,
-    tiles: [{ x: 70, y: 21, depth: 1, order: 3, assetId: "tinder-30" }],
+    tiles: [{ x: 86, y: 30, depth: 1, order: 3, assetId: "tinder-30" }],
     portfolioRole: "Human experience",
     sequence: 3,
     tileSize: 3,

@@ -23,7 +23,6 @@ export const googleTokyoPartnerPlex: ProjectBundle = {
     caseStudy: "light",
     inPdf: false,
     landingTile: true,
-    tiles: [{ x: 72, y: 69, depth: 1, order: 9, assetId: "ppx-04" }],
     portfolioRole: "Candidate: APAC contrast",
     sequence: 1,
     tileSize: 2,

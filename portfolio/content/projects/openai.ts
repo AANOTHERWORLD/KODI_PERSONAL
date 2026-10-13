@@ -12,10 +12,7 @@ export const openai: ProjectBundle = {
     caseStudy: "full",
     inPdf: true,
     landingTile: true,
-    tiles: [
-      { x: 6, y: 18, depth: 3, order: 4, assetId: "openai-bellevue-mood", label: "OpenAI Bellevue" },
-      { x: 84, y: 85, depth: 2, order: 11, assetId: "openai-tokyo-principles", label: "OpenAI Tokyo" },
-    ],
+    tiles: [{ x: 2, y: 54, depth: 3, order: 4, assetId: "openai-bellevue-mood", label: "OpenAI Bellevue" }],
     thesis: "Two offices for one fast-growing company, each reading its own city, with hospitality as the shared principle and the culture translated rather than imported.",
     clientDisplayName: "OpenAI",
     practice: "Rapt Studio",

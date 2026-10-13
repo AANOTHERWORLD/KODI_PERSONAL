@@ -676,7 +676,8 @@ ol {
 /* Enhanced field (JavaScript, wide viewport, motion allowed): absolute tiles around the fixed statement. */
 @media (min-width: 720px) {
   .stage.is-enhanced {
-    height: calc(var(--stage-height, 380) * 1vh);
+    height: 100vh;
+    min-height: 640px;
     padding-top: 0;
   }
   .stage.is-enhanced .stage__statement {
@@ -698,7 +699,7 @@ ol {
     position: absolute;
     left: var(--tile-x);
     top: var(--tile-y);
-    width: min(var(--tile-w), 21vw);
+    width: min(var(--tile-w), 22vw);
     transform: none;
     will-change: transform;
   }

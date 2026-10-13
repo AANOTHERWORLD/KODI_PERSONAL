@@ -139,8 +139,12 @@ export function getApproachExamples(stepId: string) {
     .filter((e) => e.project !== null) as { example: (typeof approachExamples)[number]; project: ProjectBundle }[];
 }
 
-// Landing tile field. Every visible project with landingTile renders at least one tile. Tiles
-// without coordinates are auto-placed in alternating columns below the hand-tuned ones.
+// Landing tile field. The stage is one viewport tall, so only a handful of tiles fit around the
+// statement. A project appears when it has landingTile and explicit tile coordinates (x and y as
+// percentages of the viewport, depth 1 to 3 for drift speed, order for stacking). The field is
+// capped at LANDING_TILE_LIMIT tiles, taken in order. Everything else is reachable from Work.
+export const LANDING_TILE_LIMIT = 6;
+
 export interface LandingTile {
   key: string;
   bundle: ProjectBundle;
@@ -149,50 +153,21 @@ export interface LandingTile {
   label: string;
 }
 
-// Hand-tuned y values are percentages of a 380vh stage. Auto-placed tiles extend the stage by
-// 45vh each, and every y is rescaled to the final height so nothing lands outside the stage.
-export const STAGE_BASE_VH = 380;
-export const STAGE_EXTRA_VH = 45;
-
-export function getStageHeightVh(): number {
-  const auto = getProjects().filter((b) => b.project.landingTile && !(b.project.tiles && b.project.tiles.length)).length;
-  return STAGE_BASE_VH + auto * STAGE_EXTRA_VH;
-}
-
 export function getLandingTiles(): LandingTile[] {
   const out: LandingTile[] = [];
-  const auto: { bundle: ProjectBundle }[] = [];
   for (const bundle of getProjects()) {
-    if (!bundle.project.landingTile) continue;
-    if (bundle.project.tiles && bundle.project.tiles.length) {
-      bundle.project.tiles.forEach((spec, i) => {
-        out.push({
-          key: `${bundle.project.id}-${i}`,
-          bundle,
-          asset: getAsset(bundle, spec.assetId) ?? getIndexAsset(bundle),
-          spec,
-          label: spec.label ?? bundle.project.title,
-        });
+    if (!bundle.project.landingTile || !bundle.project.tiles?.length) continue;
+    bundle.project.tiles.forEach((spec, i) => {
+      out.push({
+        key: `${bundle.project.id}-${i}`,
+        bundle,
+        asset: getAsset(bundle, spec.assetId) ?? getIndexAsset(bundle),
+        spec,
+        label: spec.label ?? bundle.project.title,
       });
-    } else {
-      auto.push({ bundle });
-    }
+    });
   }
-  const maxOrder = out.reduce((m, t) => Math.max(m, t.spec.order), 0);
-  const total = STAGE_BASE_VH + auto.length * STAGE_EXTRA_VH;
-  const scale = STAGE_BASE_VH / total;
-  for (const t of out) t.spec = { ...t.spec, y: Math.round(t.spec.y * scale * 10) / 10 };
-  auto.forEach(({ bundle }, i) => {
-    const yVh = STAGE_BASE_VH + 6 + i * STAGE_EXTRA_VH;
-    const spec: TileSpec = {
-      x: i % 2 === 0 ? 6 : 70,
-      y: Math.round((yVh / total) * 1000) / 10,
-      depth: ((i % 3) + 1) as 1 | 2 | 3,
-      order: maxOrder + 1 + i,
-    };
-    out.push({ key: `${bundle.project.id}-auto`, bundle, asset: getIndexAsset(bundle), spec, label: bundle.project.title });
-  });
-  return out.sort((a, b) => a.spec.order - b.spec.order);
+  return out.sort((a, b) => a.spec.order - b.spec.order).slice(0, LANDING_TILE_LIMIT);
 }
 
 export { portfolio, profile, approachSteps, lenses, lensById };

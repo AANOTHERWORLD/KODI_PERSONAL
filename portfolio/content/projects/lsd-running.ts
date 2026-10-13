@@ -24,7 +24,6 @@ export const lsdRunning: ProjectBundle = {
     caseStudy: "full",
     inPdf: true,
     landingTile: true,
-    tiles: [{ x: 8, y: 50, depth: 2, order: 8 }],
     portfolioRole: "Identity in detail",
     sequence: 4,
     tileSize: 2,
