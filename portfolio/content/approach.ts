@@ -65,7 +65,7 @@ export const approachExamples: ApproachExample[] = [
   {
     step: "define-the-direction",
     projectId: "intuit-turbotax-retail",
-    example: "Relief became the ownable emotional territory for TurboTax retail, with four imperatives, Privacy, Proximity, Peak, and Permanence, as the criteria for every store decision.",
+    example: "Relief became the ownable emotional territory for TurboTax retail, with six imperatives, from designing the system rather than the store to signaling permanence, as the criteria for every store decision.",
   },
   {
     step: "define-the-direction",

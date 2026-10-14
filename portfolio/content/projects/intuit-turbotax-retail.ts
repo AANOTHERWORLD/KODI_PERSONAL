@@ -64,7 +64,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
       "Tax filing is a yearly weight. Relief is the ownable emotional territory for TurboTax retail: the store is the place you go to put the year down. Once that was named, every other decision had a test. Does this move make the visit lighter, or does it add to the load?",
     ],
     vision: [
-      "We built the experience on a three-act ritual spine, The Threshold, The Handoff, and The Exhale, with a verbal spine to match: bring it in, hand it over, breathe. Four imperatives guide every decision, Privacy, Proximity, Peak, and Permanence, and they are written into the Store Bible so an architect in another city can apply them without a call.",
+      "We built the experience on a three-act ritual spine, The Threshold, The Handoff, and The Exhale, with a verbal spine to match: bring it in, hand it over, breathe. Six imperatives guide the Wave 2 retail stores: design the system, not the store; make privacy the product; plan for the peak; hero to the off-peak season; design the delivery; and signal permanence. They are written into the Store Bible so an architect in another city can apply them without a call.",
       "The engagement grew from one playbook into four books because the idea needed four audiences. Retail Strategy explains the why. Locations sets the tiers and the two format directions, Workshop and Storefront, as market-response choices. Experience + Service + Technology describes the visit. Programming + Merchandising describes what fills the space. One idea, four ways to hold it.",
     ],
     scaleTranslation: [
@@ -90,7 +90,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
       },
     ],
     leadership: [
-      "I led the design with the internal Rapt team. I led the evolution from a single playbook into the four-book Store Bible: naming the emotional territory, setting the ritual spine and the four imperatives, and deciding how the books divide the argument. I directed the environments, the hero system and the flagship designs, which the Rapt team developed, and the client teams shaped the service model.",
+      "I led the design with the internal Rapt team. I led the evolution from a single playbook into the four-book Store Bible: naming the emotional territory, setting the ritual spine and the imperatives, and deciding how the books divide the argument. I directed the environments, the hero system and the flagship designs, which the Rapt team developed, and the client teams shaped the service model.",
     ],
     leadershipMoment:
       "Alignment came from vocabulary. Early in the work we built a naming crosswalk that retired legacy terminology before the first client presentation, so every Intuit team was discussing the same stores, the same tiers, and the same environments. Several later disagreements turned out to be arguments about words, and the crosswalk settled them.",
@@ -99,7 +99,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
     ],
     imageCredit: "Concept renders and plans by Rapt Studio, from the Intuit Flagship Reference deck.",
     involvement:
-      "Design Director. Led the Store Bible structure, the emotional territory, the ritual spine, and the four imperatives, and directed the environment designs, the hero system, and the flagship concepts.",
+      "Design Director. Led the Store Bible structure, the emotional territory, the ritual spine, and the imperatives, and directed the environment designs, the hero system, and the flagship concepts.",
   },
   decisions: [
     {
@@ -134,6 +134,26 @@ export const intuitTurbotaxRetail: ProjectBundle = {
       rationale: "At the smallest scale, service flow is the experience. Anything that slows it works against relief.",
       tradeoff: "A narrower small-business offer in the smallest stores, in exchange for a visit that keeps moving.",
       assetIds: ["intuit-sm-smb-lounge"],
+    },
+    {
+      id: "intuit-d4",
+      projectId: id,
+      title: "Make privacy the product",
+      question: "What does a store protect before anything else?",
+      choice: "Treat acoustic separation as core infrastructure, and protect a real seated-intake and waiting zone at every tier, even the smallest.",
+      rationale: "The calm, non-commercial atmosphere was the most praised quality in Wave 1 customer reviews, and the most fragile to deliver. Partial-height partitions let each appointment carry over into the next, and the smallest stores had no private intake zone at all.",
+      tradeoff: "Intake and separation take area that a smaller store could spend on selling space.",
+      assetIds: ["intuit-consultation-room"],
+    },
+    {
+      id: "intuit-d5",
+      projectId: id,
+      title: "Plan for the peak",
+      question: "What size is a store designed for?",
+      choice: "Size back of house, lounge and fixtures to peak occupancy, and build a flex or overflow position into every tier.",
+      rationale: "Wave 1 showed that capacity and throughput are where stores fail: Williamsburg strained at its designed density, and the flagship broke at a 24-person staff peak that its back of house was never sized for.",
+      tradeoff: "More back of house and flex than an average-day plan would justify.",
+      assetIds: ["intuit-retail-plan"],
     },
   ],
   assets: [
