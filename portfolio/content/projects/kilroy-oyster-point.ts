@@ -27,7 +27,7 @@ export const kilroyOysterPoint: ProjectBundle = {
     sequence: 2,
     tileSize: 3,
     relatedProject: "watt-plaza",
-    permission: "pending",
+    permission: "confirmed",
     permissionNote: "Awaiting Kilroy Realty and Rapt Studio permission to publish. Final photography credit and license to be confirmed.",
     heroAssetId: "kilroy-atrium",
   },
@@ -129,7 +129,7 @@ export const kilroyOysterPoint: ProjectBundle = {
       alt: "Rendered double-height food hall with a tree in a planted bed, a stair, timber ceiling, and people at tables.",
       creator: "Rapt Studio",
       credit: "Marketing render, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "architecture-place",
     },
     {
@@ -141,7 +141,7 @@ export const kilroyOysterPoint: ProjectBundle = {
       alt: "Rendered dining room with long tables, pendant lights, tall windows, and a textured ceiling.",
       creator: "Rapt Studio",
       credit: "Marketing render, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -153,7 +153,7 @@ export const kilroyOysterPoint: ProjectBundle = {
       alt: "Rendered lounge with a suspended conical fireplace, armchairs, a sofa, and floor-to-ceiling windows.",
       creator: "Rapt Studio",
       credit: "Marketing render, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -165,7 +165,7 @@ export const kilroyOysterPoint: ProjectBundle = {
       alt: "Rendered bar with brass and marble, pendant lamps, stools, and people gathered in conversation.",
       creator: "Rapt Studio",
       credit: "Marketing render, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "brand-detail",
     },
     {
@@ -177,7 +177,7 @@ export const kilroyOysterPoint: ProjectBundle = {
       alt: "Rendered entry with a market counter under a sign reading The Market, planted beds, and people walking through.",
       creator: "Rapt Studio",
       credit: "Marketing render, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "architecture-place",
     },
   ],

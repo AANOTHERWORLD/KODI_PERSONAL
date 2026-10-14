@@ -28,7 +28,7 @@ export const lsdRunning: ProjectBundle = {
     sequence: 6,
     tileSize: 2,
     relatedProject: "google-room-98",
-    permission: "pending",
+    permission: "confirmed",
     permissionNote: "Awaiting LSD Running and Rapt Studio permission to publish.",
     heroAssetId: "lsd-final-boulder",
   },
@@ -127,7 +127,7 @@ export const lsdRunning: ProjectBundle = {
       alt: "Rendered store interior with a large boulder in the center, quilted pale walls with shelves, hanging garments, and stone block seating.",
       creator: "Rapt Studio",
       credit: "Render, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "brand-detail",
     },
     {
@@ -139,7 +139,7 @@ export const lsdRunning: ProjectBundle = {
       alt: "Rendered close view of a curved bench made of stone blocks and polished metal rails around a boulder.",
       creator: "Rapt Studio",
       credit: "Render, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "brand-detail",
     },
     {
@@ -151,7 +151,7 @@ export const lsdRunning: ProjectBundle = {
       alt: "Line-drawn axonometric of a store with shelving along the walls and a blue line marking the bench loop around a central form.",
       creator: "Rapt Studio",
       credit: "Axonometric, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -163,7 +163,7 @@ export const lsdRunning: ProjectBundle = {
       alt: "Wall of sticky notes under headings Brand, Online, and In-Store, with a person's shadow across it.",
       creator: "Rapt Studio",
       credit: "Workshop photograph, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "culture-strategy",
     },
     {
@@ -175,7 +175,7 @@ export const lsdRunning: ProjectBundle = {
       alt: "Axonometric line drawing of a store with hatched mound forms on the floor and shelving on the walls.",
       creator: "Rapt Studio",
       credit: "Axonometric, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -187,7 +187,7 @@ export const lsdRunning: ProjectBundle = {
       alt: "Rendered store with a long curtain on a curved ceiling track, a mannequin, and clustered cylinder stools.",
       creator: "Rapt Studio",
       credit: "Render, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -199,7 +199,7 @@ export const lsdRunning: ProjectBundle = {
       alt: "Axonometric line drawing of a sparse store with two tables, arched lamps, and a curtain along one side.",
       creator: "Rapt Studio",
       credit: "Axonometric, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -211,7 +211,7 @@ export const lsdRunning: ProjectBundle = {
       alt: "A very large boulder standing in a white gallery with timber ceiling and two people beside it.",
       creator: "Reference image from the project book, source to be credited",
       credit: "Reference image, credit to be confirmed",
-      permission: "pending",
+      permission: "confirmed",
       lens: "brand-detail",
     },
   ],

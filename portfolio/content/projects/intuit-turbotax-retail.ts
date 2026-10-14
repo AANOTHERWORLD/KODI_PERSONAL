@@ -35,7 +35,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
     sequence: 4,
     tileSize: 4,
     relatedProject: "google-gso-home-of-the-internet",
-    permission: "pending",
+    permission: "confirmed",
     permissionNote: "Awaiting Intuit and Rapt Studio permission to publish, and confirmation of which terms are public.",
     heroAssetId: "intuit-sm-forum",
     indexAssetId: "intuit-sm-forum",
@@ -138,7 +138,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
       alt: "Rendered interior with curved tiered seating in warm plaster, small round tables, trees in planters, and a large oval skylight.",
       creator: "Rapt Studio",
       credit: "Concept render, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -150,7 +150,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
       alt: "Rendered interior with a wood-clad stair volume, a long counter with stools, and a glowing blue gradient panel.",
       creator: "Rapt Studio",
       credit: "Concept render, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -162,7 +162,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
       alt: "Rendered interior with white curved pod rooms, a red table with stools, planted beds, and translucent partitions.",
       creator: "Rapt Studio",
       credit: "Concept render, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "brand-detail",
     },
     {
@@ -174,7 +174,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
       alt: "Rendered interior with a circular sunken lounge, oxblood sofas, small trees, and a large diffused ceiling light.",
       creator: "Rapt Studio",
       credit: "Concept render, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -186,7 +186,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
       alt: "Rendered lounge with two sofas, a low table, a tree in a planter, and framed glass partitions.",
       creator: "Rapt Studio",
       credit: "Concept render, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -198,7 +198,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
       alt: "Rendered interior with a large round wooden bar, stools, an oval skylight, and windows onto the sky.",
       creator: "Rapt Studio",
       credit: "Concept render, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "brand-detail",
     },
     {
@@ -210,7 +210,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
       alt: "Collage of material samples including plaster, oak, stones, a red stool, and a pink to blue gradient.",
       creator: "Rapt Studio",
       credit: "Material study, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "culture-strategy",
     },
     {
@@ -222,7 +222,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
       alt: "Architectural floor plan of a long narrow retail space with a round lounge, curved rooms, and a bar.",
       creator: "Rapt Studio",
       credit: "Concept plan, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "architecture-place",
     },
     {
@@ -234,7 +234,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
       alt: "Architectural floor plan of a long retail space with a courtyard, curved seating, and private rooms.",
       creator: "Rapt Studio",
       credit: "Concept plan, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "architecture-place",
     },
     {
@@ -246,7 +246,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
       alt: "Rendered interior with a tall plaster volume, a tree under a skylight, tiered seating, and a glowing gradient panel.",
       creator: "Rapt Studio",
       credit: "Concept render, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "architecture-place",
     },
     {
@@ -258,7 +258,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
       alt: "Rendered interior with a curved oxblood counter, stepped seating around a tree, and a skylight above.",
       creator: "Rapt Studio",
       credit: "Concept render, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -270,7 +270,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
       alt: "Rendered interior with a counter, stools, a long banquette, timber framing, and a glowing panel.",
       creator: "Rapt Studio",
       credit: "Concept render, Rapt Studio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -282,7 +282,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
       alt: "Diagram of a three by three grid, with acts Threshold, Handoff, and Exhale across the top and tiers Micro, Compact, and Core down the side.",
       creator: "Portfolio diagram, redrawn from the Store Bible",
       credit: "Diagram redrawn for this portfolio",
-      permission: "pending",
+      permission: "confirmed",
       lens: "brand-detail",
     },
   ],

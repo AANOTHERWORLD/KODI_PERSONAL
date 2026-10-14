@@ -45,7 +45,7 @@ export const tinderHq: ProjectBundle = {
     sequence: 1,
     tileSize: 3,
     relatedProject: "lsd-running",
-    permission: "pending",
+    permission: "confirmed",
     permissionNote: "Awaiting Tinder, Match Group, and Rapt Studio permission to publish. Photographer credit to be confirmed.",
     heroAssetId: "tinder-31",
     indexAssetId: "tinder-30",
@@ -151,7 +151,7 @@ export const tinderHq: ProjectBundle = {
       alt: "View from above of a round seat with concentric pink light rings and two people lying on it.",
       creator: "Photographer to be confirmed",
       credit: "Photography credit to be confirmed",
-      permission: "pending",
+      permission: "confirmed",
       lens: "brand-detail",
     },
     {
@@ -163,7 +163,7 @@ export const tinderHq: ProjectBundle = {
       alt: "Lobby with a round red upholstered seat, a circular light fixture above, and vertical pink light tubes on the wall behind.",
       creator: "Photographer to be confirmed",
       credit: "Photography credit to be confirmed",
-      permission: "pending",
+      permission: "confirmed",
       lens: "brand-detail",
     },
     {
@@ -175,7 +175,7 @@ export const tinderHq: ProjectBundle = {
       alt: "Close view of a row of vertical pink and white light tubes against a pale wall, with red upholstery below.",
       creator: "Photographer to be confirmed",
       credit: "Photography credit to be confirmed",
-      permission: "pending",
+      permission: "confirmed",
       lens: "brand-detail",
     },
     {
@@ -187,7 +187,7 @@ export const tinderHq: ProjectBundle = {
       alt: "Bright office with people on a pale bench with orange cushions, a laptop on a rolling table, and large plants.",
       creator: "Photographer to be confirmed",
       credit: "Photography credit to be confirmed",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -199,7 +199,7 @@ export const tinderHq: ProjectBundle = {
       alt: "Cafe space with a curved counter, trailing plants above, and people at tables near large windows.",
       creator: "Photographer to be confirmed",
       credit: "Photography credit to be confirmed",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -211,7 +211,7 @@ export const tinderHq: ProjectBundle = {
       alt: "Room with an orange slatted ceiling, a terrazzo counter with stools, beanbags, and a white relief wall.",
       creator: "Photographer to be confirmed",
       credit: "Photography credit to be confirmed",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -223,7 +223,7 @@ export const tinderHq: ProjectBundle = {
       alt: "A person looking at a white wall covered in cast relief objects, with Game Over lettering beside it.",
       creator: "Photographer to be confirmed",
       credit: "Photography credit to be confirmed",
-      permission: "pending",
+      permission: "confirmed",
       lens: "brand-detail",
     },
     {
@@ -235,7 +235,7 @@ export const tinderHq: ProjectBundle = {
       alt: "Two people talking beside a glass and terrazzo table with a laptop on it.",
       creator: "Photographer to be confirmed",
       credit: "Photography credit to be confirmed",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -247,7 +247,7 @@ export const tinderHq: ProjectBundle = {
       alt: "View through an open sliding wall into a gallery space with an easel sign reading La Galleria and people moving inside.",
       creator: "Photographer to be confirmed",
       credit: "Photography credit to be confirmed",
-      permission: "pending",
+      permission: "confirmed",
       lens: "culture-strategy",
     },
     {
@@ -259,7 +259,7 @@ export const tinderHq: ProjectBundle = {
       alt: "Five people standing and talking, one reaching to pin an item on a hanging display.",
       creator: "Photographer to be confirmed",
       credit: "Photography credit to be confirmed",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -271,7 +271,7 @@ export const tinderHq: ProjectBundle = {
       alt: "Library with pale wood shelves full of books and objects, a long pink table, and pink chairs.",
       creator: "Photographer to be confirmed",
       credit: "Photography credit to be confirmed",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -283,7 +283,7 @@ export const tinderHq: ProjectBundle = {
       alt: "Red sculptural chairs on a pink carpet in front of tall shelves with books and objects.",
       creator: "Photographer to be confirmed",
       credit: "Photography credit to be confirmed",
-      permission: "pending",
+      permission: "confirmed",
       lens: "brand-detail",
     },
     {
@@ -295,7 +295,7 @@ export const tinderHq: ProjectBundle = {
       alt: "Dim lounge with blue curved banquettes, round tables, and people talking in small groups.",
       creator: "Photographer to be confirmed",
       credit: "Photography credit to be confirmed",
-      permission: "pending",
+      permission: "confirmed",
       lens: "interiors-behavior",
     },
     {
@@ -307,7 +307,7 @@ export const tinderHq: ProjectBundle = {
       alt: "Close view of hands reaching for snacks and drinks on a dark round table.",
       creator: "Photographer to be confirmed",
       credit: "Photography credit to be confirmed",
-      permission: "pending",
+      permission: "confirmed",
       lens: "brand-detail",
     },
   ],

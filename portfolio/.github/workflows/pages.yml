@@ -34,9 +34,9 @@ jobs:
         env:
           # Served from https://<owner>.github.io/<repo>/ unless a custom domain is attached.
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
-          # Repository variable SHOW_DRAFTS controls the gates. Anything other than "false"
+          # Repository variable SHOW_DRAFTS controls the gates. Only "true" turns the draft preview on;
           # builds the draft preview, which shows projects awaiting permission with markers.
-          NEXT_PUBLIC_SHOW_DRAFTS: ${{ vars.SHOW_DRAFTS != 'false' }}
+          NEXT_PUBLIC_SHOW_DRAFTS: ${{ vars.SHOW_DRAFTS == 'true' }}
       - run: touch out/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:
