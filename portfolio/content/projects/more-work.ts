@@ -18,6 +18,7 @@ interface Spec {
   thesis: string;
   summary: string[];
   years: string;
+  practice?: string;
   location: string;
   relatedProject: string;
   heroIndex: number;
@@ -27,7 +28,7 @@ interface Spec {
 
 const SENIOR_ROLE = "Senior Designer, Rapt Studio, working directly with the creative director and account lead";
 const DIRECTOR_ROLE = "Design Director, Rapt Studio";
-const DESIGNER_ROLE = "Designer, Rapt Studio, working directly with the creative director and account lead";
+const DESIGNER_ROLE = "Designer, Collective Architecture";
 const NEUTRAL_ROLE = "Rapt Studio, working directly with the creative director";
 // Titles follow the project dates: Senior Designer before 2024, Design Director from 2024,
 // with Lightspark, Club Gemini and A Place at the Table confirmed as Design Director,
@@ -65,7 +66,7 @@ function build(spec: Spec): ProjectBundle {
       landingTile: true,
       thesis: spec.thesis,
       clientDisplayName: "",
-      practice: "Rapt Studio",
+      practice: spec.practice ?? "Rapt Studio",
       location: spec.location,
       years: spec.years,
       status: "completed",
@@ -117,7 +118,7 @@ const specs: Spec[] = [
       "Within that structure, a library alcove of collected objects, a lounge beneath the company mark, and a shared kitchen under a typographic light fixture give the brand a physical presence in everyday spaces.",
       "I led the design with the Rapt Studio team. The photographs show the completed interior.",
     ],
-    years: "",
+    years: "2025",
     location: "",
     relatedProject: "tinder-hq",
     heroIndex: 1,
@@ -147,9 +148,10 @@ const specs: Spec[] = [
     summary: [
       "Mama Rouge is a restaurant interior in which saturated red lacquer, patterned banquettes, and warm timber tables meet a tin ceiling and an oval soffit holding a golden fiber chandelier.",
       "Cast ornamental screens, a mirrored back bar, and a corridor of streaking yellow and red light lead guests between rooms, so detail and atmosphere carry the identity as much as the plan does.",
-      "As designer, I worked directly with the creative director and account lead to develop concepts and design strategy, from early development through delivery and execution. The photographs show the completed restaurant.",
+      "I worked on this project as a designer at Collective Architecture. The photographs show the completed restaurant.",
     ],
     years: "2016",
+    practice: "Collective Architecture",
     location: "",
     relatedProject: "kilroy-oyster-point",
     heroIndex: 1,
@@ -183,7 +185,7 @@ const specs: Spec[] = [
       "At the bar itself, the identity meets the everyday: hands, glasses, and printed menus on stands, with warm timber and a full back bar.",
       "As senior designer, I worked directly with the creative director and account lead to develop concepts and design strategy, from early development through delivery and execution. The images combine photographs of the bar with identity and signage design.",
     ],
-    years: "",
+    years: "2024",
     location: "",
     relatedProject: "mama-rouge",
     heroIndex: 4,
@@ -215,7 +217,7 @@ const specs: Spec[] = [
       "Outside, a terrace of small black tables, pale paving, and planting continues the quiet palette.",
       "As senior designer, I worked directly with the creative director and account lead to develop concepts and design strategy, from early development through delivery and execution. The photographs show the completed lobby and terrace; two further images are reference studies.",
     ],
-    years: "",
+    years: "2021",
     location: "Los Angeles",
     relatedProject: "kilroy-oyster-point",
     heroIndex: 6,
@@ -244,7 +246,7 @@ const specs: Spec[] = [
       "The details, a hand-held glass, a menu card beside a candle, a coffee table of flowers, keep the atmosphere intimate and specific.",
       "I led the design with the Rapt Studio team. The images are event documentation.",
     ],
-    years: "",
+    years: "2024",
     location: "",
     relatedProject: "napa-retreat",
     heroIndex: 1,
@@ -299,7 +301,7 @@ const specs: Spec[] = [
       "Guests carry their own chairs to the table, share dishes, and gather at the end around a cake, so the evening is made by the people at it as much as by the setting.",
       "I led the design with the Rapt Studio team. The images are event documentation.",
     ],
-    years: "",
+    years: "2024",
     location: "",
     relatedProject: "napa-retreat",
     heroIndex: 3,
