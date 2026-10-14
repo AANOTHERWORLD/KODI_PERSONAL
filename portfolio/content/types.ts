@@ -129,6 +129,8 @@ export interface Narrative {
   // Explicit image for each narrative section of the full template. An asset id pins the image;
   // null makes the section text-only. A section left out falls back to the next unused image.
   // Reordering the gallery never changes an assigned pairing.
+  // Optional project-specific headings for the full template's narrative sections.
+  sectionTitles?: Partial<Record<"story" | "challenge" | "vision" | "leadership" | "outcome", string>>;
   sectionImages?: Partial<Record<"story" | "challenge" | "vision" | "leadership" | "outcome", string | null>>;
 }
 

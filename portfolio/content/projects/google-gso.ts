@@ -86,8 +86,15 @@ export const googleGso: ProjectBundle = {
       "The platform was delivered and rolled into collateral, external Life at Google data center pages, an internal resource hub of playbooks and templates, learning spaces, and a pop-up learning playbook for 2025 to 2026. Brick and Mortar design reviews, a naming workshop, and the IDI Field of Dreams playbook followed in 2026. No measured results to report.",
     ],
     imageCredit: "Photographs: Jamel Williams. Diagrams and process images: Rapt Studio. The Dalles study was generated with Gemini during the project.",
+    sectionTitles: {
+      story: "Learning and recruitment as one platform",
+      challenge: "Making data center work understood",
+      vision: "Home of the Internet",
+      leadership: "Leading from discovery to platform",
+      outcome: "What the platform delivered",
+    },
     sectionImages: {
-      story: null,
+      story: "gso-recruitment-brochure",
       challenge: "gso-strategic-framework",
       vision: "gso-brand-system",
       leadership: null,
@@ -130,6 +137,18 @@ export const googleGso: ProjectBundle = {
     },
   ],
   assets: [
+    {
+      id: "gso-recruitment-brochure",
+      projectId: id,
+      file: "google-gso-home-of-the-internet/gso-recruitment-brochure.jpg",
+      type: "concept",
+      caption: "Recruitment brochure, mockup: Our people power the internet, with the Home of the Internet welcome and key data center roles.",
+      alt: "A folded recruitment brochure standing on a wooden table, open to a welcome spread, with a cover reading Our people power the internet.",
+      creator: "Rapt Studio",
+      credit: "Mockup, Rapt Studio",
+      permission: "confirmed",
+      lens: "brand-detail",
+    },
     {
       id: "gso-steam-lab",
       projectId: id,
@@ -248,7 +267,7 @@ export const googleGso: ProjectBundle = {
       creator: "Generated with Gemini during the project",
       credit: "Process image, generated with Gemini",
       permission: "confirmed",
-      lens: "brand-detail",
+      lens: "culture-strategy",
     },
     {
       id: "gso-university-diagram",

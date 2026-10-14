@@ -85,6 +85,12 @@ export const kilroyOysterPoint: ProjectBundle = {
       "Completed and photographed in August 2025 across the south amenity building, a lobby, the fitness center, and the north amenity. The photography brief placed materials at the center as the placemaking tool: uniting employees through a dining and campus amenity experience. The campus opened its new phase in 2024.",
     ],
     imageCredit: "Completed photography, August 2025, supplied by Rapt Studio; photographer credit to be confirmed. Marketing renderings by Rapt Studio.",
+    sectionTitles: {
+      challenge: "A campus that needed a reason to cross it",
+      vision: "Restaurant and retreat",
+      leadership: "Holding the concept through delivery",
+      outcome: "Completed in August 2025",
+    },
     sectionImages: {
       story: null,
       challenge: "kilroy-photo-campus-terrace",

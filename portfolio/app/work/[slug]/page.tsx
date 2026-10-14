@@ -246,6 +246,7 @@ function Gallery({ assets, title }: { assets: ProjectBundle["assets"]; title: st
 function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
   const { project, narrative, decisions } = bundle;
   const assets = visibleAssets(bundle);
+  const titles = narrative.sectionTitles ?? {};
   const assigned = narrative.sectionImages ?? {};
   const assignedIds = Object.values(assigned).filter((v): v is string => !!v);
   for (const id of assignedIds) if (!assets.some((a) => a.id === id)) throw new Error(`${project.id}: sectionImages references missing asset ${id}`);
@@ -265,17 +266,17 @@ function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
       <FeaturedPublication bundle={bundle} />
 
       {narrative.story && narrative.story.length > 0 && (
-        <Section id="story" tag="The story" title="How the work developed" asset={storyImg} side="right">
+        <Section id="story" tag="The story" title={titles.story ?? "How the work developed"} asset={storyImg} side="right">
           {narrative.story.map((p, i) => <p key={i}>{p}</p>)}
         </Section>
       )}
 
-      <Section id="challenge" tag="Context" title="The challenge" asset={narrative.summary?.length ? challengeImg : null} side="right">
+      <Section id="challenge" tag="Context" title={titles.challenge ?? "The challenge"} asset={narrative.summary?.length ? challengeImg : null} side="right">
         {narrative.challenge.map((p, i) => <p key={i}>{p}</p>)}
         <ClaimList claims={getClaims(bundle, "context")} />
       </Section>
 
-      <Section id="vision" tag="Insight and vision" title="The idea that guided the team" asset={visionImg} side="left">
+      <Section id="vision" tag="Insight and vision" title={titles.vision ?? "The idea that guided the team"} asset={visionImg} side="left">
         {narrative.insight.map((p, i) => <p key={`i-${i}`} className="statement">{p}</p>)}
         {narrative.vision.map((p, i) => <p key={`v-${i}`}>{p}</p>)}
       </Section>
@@ -300,13 +301,13 @@ function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
         </div>
       </section>
 
-      <Section id="leadership" tag="Leadership and collaboration" title="What was led, and by whom" asset={leadershipImg} side="right">
+      <Section id="leadership" tag="Leadership and collaboration" title={titles.leadership ?? "What was led, and by whom"} asset={leadershipImg} side="right">
         {narrative.leadership.map((p, i) => <p key={i}>{p}</p>)}
         {narrative.leadershipMoment && (<><p className="tag">A moment of alignment</p><p>{narrative.leadershipMoment}</p></>)}
         <ClaimList claims={getClaims(bundle, "leadership")} />
       </Section>
 
-      <Section id="outcome" tag="Outcome and reflection" title={project.status === "concept" ? "How far the design went" : "What was delivered"} asset={outcomeImg} side="left">
+      <Section id="outcome" tag="Outcome and reflection" title={titles.outcome ?? (project.status === "concept" ? "How far the design went" : "What was delivered")} asset={outcomeImg} side="left">
         {narrative.outcome.map((p, i) => <p key={i}>{p}</p>)}
         <ClaimList claims={getClaims(bundle, "outcome")} />
         {narrative.reflection && (<><p className="tag">Reflection</p><p className="statement statement--small">{narrative.reflection}</p></>)}

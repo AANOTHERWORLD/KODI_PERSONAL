@@ -79,6 +79,13 @@ export const googleRoom98: ProjectBundle = {
       "Completed. The measures stated for the center at the time, full occupancy, customer conversion, and follow-on meetings, were goals. No measured results are reported here.",
     ],
     imageCredit: "Photography: MO Studio. Renderings and plans: Rapt Studio. The theater diagram is redrawn for this portfolio.",
+    sectionTitles: {
+      story: "Presented to, then invited in",
+      challenge: "From presentation to working session",
+      vision: "Theater as the organizing idea",
+      leadership: "Developing the concept with the team",
+      outcome: "What was built",
+    },
     sectionImages: {
       story: "room98-photo-screen-seating",
       challenge: "room98-photo-entry-arch",

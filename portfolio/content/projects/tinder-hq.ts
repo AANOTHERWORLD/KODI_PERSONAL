@@ -113,6 +113,12 @@ export const tinderHq: ProjectBundle = {
     outcome: [
       "Completed and professionally photographed in 2022. The redesign for a distributed workforce tested six new space typologies, force-ranked them against team working styles, and added four new collaboration spaces. The framing we used for the shift: from centralized to distributed, from a site of work to a site of collaboration, and from collaboration by proximity to collaboration by intention.",
     ],
+    sectionTitles: {
+      challenge: "A headquarters that tells the truth about its culture",
+      vision: "Connection as a gradient",
+      leadership: "Developing the concept with the Rapt team",
+      outcome: "Completed in 2022",
+    },
     sectionImages: {
       story: null,
       challenge: "tinder-20",

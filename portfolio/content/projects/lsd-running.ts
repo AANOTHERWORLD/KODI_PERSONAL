@@ -87,6 +87,13 @@ export const lsdRunning: ProjectBundle = {
       "The design was completed and handed to the fabricator, with expansion into the adjacent space included in the scope. Supplied photographs and film document the built space. Not every concept detail is proven built, and the renders shown alongside are design visualizations.",
     ],
     imageCredit: "Renders, axonometric drawings, and workshop photography by Rapt Studio, from the LSD Running project book.",
+    sectionTitles: {
+      story: "From the mark to the room to the image",
+      challenge: "A small first store with four jobs",
+      vision: "Three prompts for a small room",
+      leadership: "Leading the workshop and the design",
+      outcome: "Handed to the fabricator",
+    },
     sectionImages: {
       story: "lsd-product-run-1",
       challenge: "lsd-workshop",
@@ -457,7 +464,7 @@ export const lsdRunning: ProjectBundle = {
       creator: "Reference image from the project book, source to be credited",
       credit: "Reference image",
       permission: "confirmed",
-      lens: "brand-detail",
+      lens: "architecture-place",
     },
   ],
   claims: [

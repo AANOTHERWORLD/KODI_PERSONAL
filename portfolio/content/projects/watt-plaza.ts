@@ -88,6 +88,13 @@ export const wattPlaza: ProjectBundle = {
     reflection:
       "Drawing stayed part of the process. Marking up generated views let us specify changes and return to specific decisions about access, planting and material.",
     imageCredit: "Concept studies and process imagery, Rapt Studio. AI-assisted concept images developed in Weave. Unbuilt.",
+    sectionTitles: {
+      story: "Three futures for one building",
+      challenge: "From a plaza to a whole building",
+      vision: "Drawing stayed in the process",
+      leadership: "Leading the work and the studio's AI practice",
+      outcome: "Concept studies to compare",
+    },
     sectionImages: {
       story: "watt-expansion-aerial",
       challenge: "watt-earlier-plan",
@@ -213,7 +220,7 @@ export const wattPlaza: ProjectBundle = {
       creator: "Rapt Studio",
       credit: "Concept study, Rapt Studio. Unbuilt, AI-assisted concept imagery.",
       permission: "confirmed",
-      lens: "brand-detail",
+      lens: "architecture-place",
     },
     {
       id: "watt-extension-markup",
@@ -225,7 +232,7 @@ export const wattPlaza: ProjectBundle = {
       creator: "Rapt Studio",
       credit: "Concept study, Rapt Studio. Unbuilt, AI-assisted concept imagery.",
       permission: "confirmed",
-      lens: "brand-detail",
+      lens: "architecture-place",
     },
     {
       id: "watt-weave-workflow",
