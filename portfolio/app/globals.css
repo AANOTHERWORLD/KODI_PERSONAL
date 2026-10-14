@@ -46,7 +46,7 @@
   --text-section: clamp(1.4rem, 1.1rem + 1.4vw, 2.2rem);
   --text-page: clamp(2rem, 1.4rem + 2.6vw, 3.6rem);
   --text-work: clamp(4rem, 1rem + 9.4vw, 7.5rem);           /* about 120px */
-  --text-marquee: clamp(4rem, 1rem + 7vw, 8.125rem);        /* display size, 130px from about 1300px up */
+  --text-marquee: clamp(2.8rem, 0.7rem + 4.9vw, 5.7rem);     /* display size, about 91px from 1300px up */
 
   --space-1: 0.5rem;
   --space-2: 1rem;
@@ -920,6 +920,45 @@ ol {
   }
 }
 
+/* Scroll cue: an invitation at the foot of the stage, bobbing gently. Static under reduced motion. */
+.scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: 1.6rem;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--ink);
+  font-size: var(--text-tag);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  transition: opacity 300ms var(--ease);
+}
+.scroll-cue:hover {
+  opacity: 1;
+}
+.scroll-cue__arrow {
+  width: 18px;
+  height: 30px;
+  animation: scroll-cue-bob 1800ms cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+@keyframes scroll-cue-bob {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(8px); opacity: 0.55; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue__arrow {
+    animation: none;
+  }
+}
+.stage-section {
+  position: relative;
+}
+
 /* Marquee: two display-size rows, scrubbed by scroll (components/LensMarquee.tsx) */
 .section--marquee {
   padding-top: 150px;
@@ -963,9 +1002,9 @@ ol {
 }
 .marquee__dot {
   display: block;
-  width: 130px;
-  height: 130px;
-  margin-inline: 50px;
+  width: 90px;
+  height: 90px;
+  margin-inline: 36px;
   border-radius: 50%;
   background: var(--ink);
   opacity: 0.3;
@@ -1147,50 +1186,68 @@ ol {
   display: grid;
   gap: var(--space-2);
 }
-@media (min-width: 900px) {
-  .work-index .work-card--left {
-    width: 84%;
-    margin-right: auto;
-  }
-  .work-index .work-card--right {
-    width: 84%;
-    margin-left: auto;
-  }
-  .work-index .work-card--size-4 {
-    width: 100%;
-  }
-  .work-index .work-card--size-1 {
-    width: 56%;
-  }
-  .work-index .work-card--size-2 {
-    width: 68%;
-  }
-  .work-section__cards .work-card {
-    width: 72%;
-  }
-  .work-section__cards .work-card--right {
-    margin-left: 28%;
-  }
-}
+/* Image beside text. Even cards: image left, text right, text sitting low. Odd cards: text left,
+   image right, text sitting high. Widths vary with the tile size so the column reads as a field. */
 .work-card__link {
   display: grid;
   gap: var(--space-3);
+  align-items: end;
+}
+@media (min-width: 900px) {
+  .work-card__link {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+  .work-card--right .work-card__link {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+    align-items: start;
+  }
+  .work-card--right .work-card__frame {
+    order: 2;
+  }
+  /* Side by side, the image keeps its own proportions instead of a fixed height. */
+  .work-card__media {
+    height: auto !important;
+  }
+  .work-card__media img {
+    height: auto;
+    transform: none;
+  }
+  .work-card__link:hover img {
+    transform: scale(1.05);
+  }
+  .work-card--right .work-card__text {
+    order: 1;
+    padding-top: var(--space-3);
+  }
+  .work-card--left .work-card__text {
+    padding-bottom: var(--space-3);
+  }
+  .work-index .work-card--left,
+  .work-section__cards .work-card--left {
+    width: 92%;
+    margin-right: auto;
+  }
+  .work-index .work-card--right,
+  .work-section__cards .work-card--right {
+    width: 92%;
+    margin-left: auto;
+  }
+  .work-index .work-card--size-4,
+  .work-section__cards .work-card--size-4 {
+    width: 100%;
+  }
+  .work-index .work-card--size-1,
+  .work-section__cards .work-card--size-1 {
+    width: 80%;
+  }
 }
 .work-card__frame {
   position: relative;
-  padding: 24px;
-  background: #fff;
-}
-.work-card__frame::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgba(64, 64, 64, 0.35);
-  pointer-events: none;
 }
 .work-card__tagline {
-  text-align: center;
-  margin: 0.4rem 0 var(--space-2);
+  text-align: left;
+  margin: 0 0 var(--space-2);
   display: block;
 }
 .work-card__media {
@@ -1198,6 +1255,11 @@ ol {
   height: var(--tile-height);
   overflow: hidden;
   background: var(--surface);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16), 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.work-card__link:hover .work-card__media {
+  box-shadow: 0 28px 56px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 .work-card--small .work-card__media {
   height: 220px;

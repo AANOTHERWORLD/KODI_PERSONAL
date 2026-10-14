@@ -9,8 +9,9 @@ import { debug } from "@/lib/debug";
 // > statement (centered in the canvas) + tiles (absolute). The canvas pans against the mouse
 // (strength 0.55 of the viewport, eased 0.10 per frame), so the statement and the tiles move
 // together. Tiles are sized from data-size (1 to 5, lerp 240 to 520px with small jitter) and
-// placed on a golden-ish spiral around a safe zone padded 120px around the statement, never
-// overlapping each other (120px gap) and never leaving the canvas (140px edge padding). The
+// placed on a golden-ish spiral around a safe zone padded 48px around the statement, never
+// overlapping each other (40px gap) and never leaving the canvas (80px edge padding). The
+// reference used 120/120/140; the tighter values cluster the field around the statement. The
 // random source is seeded, so the field is the same on every visit at a given viewport.
 //
 // Enhanced only on wide viewports; everywhere else the CSS grid fallback renders. Under
@@ -23,14 +24,14 @@ const SIZE_MAX = 5;
 const MIN_TILE_W = 240;
 const MAX_TILE_W = 520;
 const SIZE_JITTER = 0.08;
-const SAFE_ZONE_PADDING = 120;
-const MIN_GAP = 120;
+const SAFE_ZONE_PADDING = 48;
+const MIN_GAP = 40;
 const SPIRAL_TURN = 0.62;
-const RADIAL_STEP = 150;
-const JITTER = 70;
+const RADIAL_STEP = 110;
+const JITTER = 40;
 const MAX_TRIES_PER_TILE = 900;
 const SEED = 1337;
-const EDGE_PADDING_BASE = 140;
+const EDGE_PADDING_BASE = 80;
 const RADIUS_PADDING = 80;
 const MOUSE_STRENGTH = 0.55;
 const EASE = 0.1;
@@ -50,7 +51,7 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const overlaps = (a: Rect, b: Rect) => !(a.x + a.w <= b.x || a.x >= b.x + b.w || a.y + a.h <= b.y || a.y >= b.y + b.h);
 const inflate = (r: Rect, pad: number): Rect => ({ x: r.x - pad, y: r.y - pad, w: r.w + pad * 2, h: r.h + pad * 2 });
 
-function layout(canvas: HTMLElement, headline: HTMLElement | null, tiles: HTMLElement[]) {
+function layout(canvas: HTMLElement, headline: HTMLElement | null, tiles: HTMLElement[], avoid: HTMLElement[] = []) {
   const rand = mulberry32(SEED);
   // Reset sizes so the base CSS size (and its aspect ratio) can be read again.
   tiles.forEach((el) => {
@@ -83,6 +84,11 @@ function layout(canvas: HTMLElement, headline: HTMLElement | null, tiles: HTMLEl
     safe = { x: stageW / 2 - 250, y: stageH / 2 - 250, w: 500, h: 500 };
   }
   safe = inflate(safe, SAFE_ZONE_PADDING);
+  // Other things tiles must leave clear (the scroll cue), in canvas coordinates.
+  const keepClear: Rect[] = [safe, ...avoid.map((el) => {
+    const r = el.getBoundingClientRect();
+    return inflate({ x: r.left - stageRect.left, y: r.top - stageRect.top, w: r.width, h: r.height }, 24);
+  })];
 
   const placed: Rect[] = [];
   const meta = tiles
@@ -111,7 +117,7 @@ function layout(canvas: HTMLElement, headline: HTMLElement | null, tiles: HTMLEl
     let chosen: Rect | null = null;
     for (let t = 0; t < MAX_TRIES_PER_TILE; t++) {
       const candidate = toRect(spiral(idx + t * 0.06));
-      if (overlaps(candidate, safe)) continue;
+      if (keepClear.some((r) => overlaps(candidate, r))) continue;
       const padded = inflate(candidate, MIN_GAP);
       if (placed.some((r) => overlaps(padded, r))) continue;
       chosen = candidate;
@@ -148,7 +154,8 @@ export default function ScrollStage({ children }: { children: ReactNode }) {
     let raf = 0;
     let resizeTimer = 0;
 
-    const run = () => layout(canvas, headline, tiles);
+    const avoid = Array.from(el.parentElement?.querySelectorAll<HTMLElement>("[data-stage-avoid]") ?? []);
+    const run = () => layout(canvas, headline, tiles, avoid);
 
     // Mouse pan: the whole canvas drifts against the pointer.
     let targetX = 0;

@@ -19,8 +19,9 @@ export const STATUS_LABEL = { completed: "Completed", "in-progress": "In progres
 
 type Props = { bundle: ProjectBundle; index: number; variant?: "card" | "small" };
 
-// A framed project card: link block > media wrapper > img, so hover zoom targets the image.
-// The frame is a thin rule inset from the image. Everything shown is always visible.
+// A project card: link block > media (floating image with a soft shadow) beside its text.
+// Even cards put the image left and the text right, odd cards the reverse, so the section
+// reads as a field rather than a column. Everything shown is always visible.
 export default function WorkCard({ bundle, index, variant = "card" }: Props) {
   const { project } = bundle;
   const asset = getIndexAsset(bundle);
@@ -33,8 +34,8 @@ export default function WorkCard({ bundle, index, variant = "card" }: Props) {
             {asset ? <Picture asset={asset} showCaption={false} fit="cover" sizes="(min-width: 900px) 60vw, 100vw" priority={index === 0} /> : <div className="picture__placeholder">Image pending</div>}
           </div>
         </div>
-        <p className="work-card__tagline tag">{project.lenses.map((l) => LENS_SHORT[l]).join(", ")}</p>
         <div className="work-card__text">
+          <p className="work-card__tagline tag">{project.lenses.map((l) => LENS_SHORT[l]).join(", ")}</p>
           <p className="work-card__kicker">
             <span className="tag">{String(project.sequence).padStart(2, "0")} {project.portfolioRole}</span>
             {project.status !== "completed" && <span className="tag tag--status">{STATUS_LABEL[project.status]}</span>}

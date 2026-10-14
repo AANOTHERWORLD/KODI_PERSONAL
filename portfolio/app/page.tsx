@@ -44,11 +44,17 @@ export default function HomePage() {
             ))}
           </ol>
         </ScrollStage>
+        <a href="#lenses" className="scroll-cue" aria-label="Scroll to the work" data-stage-avoid>
+          <span className="scroll-cue__text" aria-hidden="true">Scroll</span>
+          <svg className="scroll-cue__arrow" viewBox="0 0 24 40" aria-hidden="true" focusable="false">
+            <path d="M12 2v34M3 27l9 9 9-9" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </a>
       </section>
 
       <LensProvider>
         {/* 2. Lens marquee and lens key */}
-        <section className="section section--marquee" aria-labelledby="lenses-heading">
+        <section id="lenses" className="section section--marquee" aria-labelledby="lenses-heading">
           <LensMarquee />
           <div className="wrap">
             <h2 id="lenses-heading" className="visually-hidden">Four lenses</h2>
