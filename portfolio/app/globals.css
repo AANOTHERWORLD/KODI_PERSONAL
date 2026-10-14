@@ -752,9 +752,55 @@ ol {
   box-sizing: border-box;
   transition: background 200ms var(--ease);
 }
-.lens-key__button:hover,
+.lens-key__button {
+  cursor: pointer;
+}
+.lens-key__button:hover {
+  background: rgba(64, 64, 64, 0.05);
+}
 .lens-key__button.is-active {
-  background: rgba(64, 64, 64, 0.08);
+  background: var(--ink);
+  color: var(--bg);
+}
+.lens-key__button.is-active .lens-key__question,
+.lens-key__button.is-active .lens-key__count {
+  color: rgba(221, 221, 221, 0.78);
+}
+.lens-key__button.is-active .lens-key__dot {
+  background: var(--on-accent-strong);
+}
+.lens-key__status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-height: 2.4rem;
+  margin-top: var(--space-2);
+}
+.lens-key__result {
+  margin: 0;
+  font-size: calc(var(--text-body) * 0.9);
+}
+.lens-key__result--hint {
+  color: var(--ink-muted);
+}
+.lens-key__clear {
+  all: unset;
+  cursor: pointer;
+  font-size: var(--text-tag);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--ink);
+  transition: background 200ms var(--ease), color 200ms var(--ease);
+}
+.lens-key__clear:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+.lens-key__clear:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 .lens-key__button:focus-visible {
   outline: 2px solid var(--accent);
@@ -1504,6 +1550,25 @@ ol {
 .work-tile {
   position: relative;
   z-index: 1;
+  animation: work-tile-in 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes work-tile-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.work-tile[hidden] {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-tile {
+    animation: none;
+  }
 }
 .work-tile:hover,
 .work-tile:focus-within {

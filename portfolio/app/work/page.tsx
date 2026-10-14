@@ -33,8 +33,8 @@ export default function WorkPage() {
       <div className="wrap">
       <LensProvider>
         <div className="lens-filter" aria-label="Highlight by lens">
-          <p className="tag">Highlight by lens. The order never changes.</p>
-          <LensKey counts={counts} compact />
+          <p className="tag">Filter by lens</p>
+          <LensKey counts={counts} compact total={projects.length} />
         </div>
         {projects.length ? (
           <ol className="work-grid" aria-label="Projects">

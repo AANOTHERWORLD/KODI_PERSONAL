@@ -5,7 +5,7 @@ import { lensById } from "@/content/lenses";
 import Picture from "./Picture";
 import { LensAwareEntry } from "./LensContext";
 
-// A cell in the Work grid: the project's hero image. On hover or focus the cell grows 20%
+// A cell in the Work grid: the project's hero image. On hover or focus the cell grows 5%
 // above its neighbours, the image darkens and zooms slightly inside it, and the title, category
 // and headline appear. The text is always in the markup for screen readers and search.
 export default function WorkTile({ bundle, index }: { bundle: ProjectBundle; index: number }) {
@@ -13,7 +13,7 @@ export default function WorkTile({ bundle, index }: { bundle: ProjectBundle; ind
   const asset = getHeroAsset(bundle) ?? getIndexAsset(bundle);
   const category = project.lenses.slice(0, 2).map((l) => lensById[l].name).join(", ");
   return (
-    <LensAwareEntry lensIds={project.lenses} as="li" className="work-tile" reveal>
+    <LensAwareEntry lensIds={project.lenses} as="li" className="work-tile" mode="filter">
       <Link href={`/work/${project.slug}/`} className="work-tile__link cursor-tile">
         <div className="work-tile__media">
           {asset ? <Picture asset={asset} showCaption={false} fit="cover" sizes="(min-width: 1100px) 25vw, (min-width: 720px) 50vw, 100vw" priority={index < 4} /> : <div className="picture__placeholder">Image pending</div>}

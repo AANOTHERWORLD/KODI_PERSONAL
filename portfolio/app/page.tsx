@@ -82,7 +82,7 @@ export default function HomePage() {
           <div className="wrap">
             <h2 id="lenses-heading" className="section__title lens-heading" data-reveal>{lensHeading}</h2>
             <p className="lede lens-lede" data-reveal>{lensIntro}</p>
-            <LensKey counts={counts} compact />
+            <LensKey counts={counts} compact mode="dim" />
           </div>
         </section>
 
