@@ -52,6 +52,12 @@ export const tinderHq: ProjectBundle = {
   },
   narrative: {
     projectId: id,
+    featuredPublication: {
+      assetId: "tinder-interior-design-cover",
+      title: "Interior Design, April 2023 cover",
+      description: "Tinder HQ featured on the cover of Interior Design's April 2023 issue.",
+      url: "https://issuu.com/interiordesignmagazine/docs/id_2023_april",
+    },
     summary: [
       "Tinder's headquarters brings different ways of connecting into one workplace, from informal encounters to focused work and smaller conversations. The design translates that range into distinct settings, giving people choices in how they gather and participate.",
       "As creative and strategy lead within Rapt Studio, I directed discovery and concept development, then carried the idea through interiors, environmental graphics, and construction. When the brief changed for a distributed workforce, I led the redesign around how teams would use the office together.",
@@ -142,6 +148,17 @@ export const tinderHq: ProjectBundle = {
     },
   ],
   assets: [
+    {
+      id: "tinder-interior-design-cover",
+      projectId: id,
+      file: "tinder-hq/interior-design-april-2023-cover.jpg",
+      type: "graphic",
+      caption: "Interior Design magazine, April 2023 cover featuring Tinder HQ by Rapt Studio.",
+      alt: "April 2023 Interior Design magazine cover showing an overhead view of Tinder HQ's circular pink illuminated seating installation.",
+      creator: "Interior Design magazine; photography by Zach Sorensen",
+      credit: "Cover: Interior Design, April 2023. Photography by Zach Sorensen. Design by Rapt Studio.",
+      permission: "confirmed",
+    },
     {
       id: "tinder-31",
       projectId: id,

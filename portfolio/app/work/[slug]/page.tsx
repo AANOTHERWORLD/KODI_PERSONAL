@@ -98,6 +98,33 @@ function ProjectInfo({ bundle }: { bundle: ProjectBundle }) {
   );
 }
 
+// Selected press: a magazine cover shown uncropped beside the note, linked to the issue.
+function FeaturedPublication({ bundle }: { bundle: ProjectBundle }) {
+  const publication = bundle.narrative.featuredPublication;
+  if (!publication) return null;
+  const asset = getAsset(bundle, publication.assetId);
+  if (!asset) return null;
+  return (
+    <section className="project-section" aria-labelledby="featured-publication">
+      <div className="spread spread--media-left">
+        <div className="spread__text">
+          <div className="project-section__head"><p className="tag">Selected press</p><h2 id="featured-publication" className="section__title">{publication.title}</h2></div>
+          <div className="prose">
+            <p>{publication.description}</p>
+            <p><a href={publication.url} className="text-link" data-sweep>View the magazine issue</a></p>
+            <p className="picture__credit">{asset.credit}</p>
+          </div>
+        </div>
+        <div className="spread__media">
+          <a href={publication.url} aria-label={`${publication.title}: view the magazine issue`}>
+            <Picture asset={asset} showCaption={false} sizes="(min-width: 900px) 40vw, 100vw" />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Credits({ bundle }: { bundle: ProjectBundle }) {
   const { project, narrative } = bundle;
   const credits = getClaims(bundle, "credits");
@@ -205,7 +232,7 @@ function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
   const { project, narrative, decisions } = bundle;
   const assets = visibleAssets(bundle);
   const usedIds = new Set<string>([project.heroAssetId, ...decisions.flatMap((d) => d.assetIds), ...(narrative.scaleTranslation.map((s) => s.assetId).filter(Boolean) as string[])]);
-  const pool = assets.filter((a) => !usedIds.has(a.id));
+  const pool = assets.filter((a) => !usedIds.has(a.id) && a.id !== narrative.featuredPublication?.assetId);
   // Each narrative section takes the next unused image and sits beside it, alternating sides.
   const next = () => pool.shift() ?? null;
   const challengeImg = next();
@@ -215,6 +242,7 @@ function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
   return (
     <article className="wrap">
       <Opening bundle={bundle} />
+      <FeaturedPublication bundle={bundle} />
 
       <Section id="challenge" tag="Context" title="The challenge" asset={narrative.summary?.length ? challengeImg : null} side="right">
         {narrative.challenge.map((p, i) => <p key={i}>{p}</p>)}
@@ -266,11 +294,12 @@ function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
 }
 
 function LightTemplate({ bundle }: { bundle: ProjectBundle }) {
-  const { project } = bundle;
-  const assets = visibleAssets(bundle).filter((a) => a.id !== project.heroAssetId && !bundle.decisions.some((d) => d.assetIds.includes(a.id)));
+  const { project, narrative } = bundle;
+  const assets = visibleAssets(bundle).filter((a) => a.id !== project.heroAssetId && a.id !== narrative.featuredPublication?.assetId && !bundle.decisions.some((d) => d.assetIds.includes(a.id)));
   return (
     <article className="wrap">
       <Opening bundle={bundle} />
+      <FeaturedPublication bundle={bundle} />
       {bundle.decisions.length > 0 && <DecisionBlocks bundle={{ ...bundle, decisions: bundle.decisions.slice(0, 1) }} />}
       <Gallery assets={assets} title="Views" />
       <ProjectInfo bundle={bundle} />

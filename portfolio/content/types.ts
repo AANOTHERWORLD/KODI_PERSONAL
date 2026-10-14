@@ -97,6 +97,12 @@ export interface ScaleStep {
 
 export interface Narrative {
   projectId: string;
+  featuredPublication?: {
+    assetId: string;
+    title: string;
+    description: string;
+    url: string;
+  };
   // Light pages use summary (about 150 to 300 words). Full pages use the sections below.
   summary?: string[];
   challenge: string[];
