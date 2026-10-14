@@ -70,7 +70,7 @@ export const approachExamples: ApproachExample[] = [
   {
     step: "define-the-direction",
     projectId: "watt-plaza",
-    example: "Three building postures were pushed to their boundary condition first, so the owners could choose an ambition level before anyone paid for precision.",
+    example: "When the Watt Plaza brief grew from a plaza to a whole building, three futures with different positions let the client compare how much change each one required.",
   },
   {
     step: "connect-the-scales",
@@ -80,7 +80,7 @@ export const approachExamples: ApproachExample[] = [
   {
     step: "connect-the-scales",
     projectId: "lsd-running",
-    example: "Three brand pillars, craft, curation, and innovation, became a plan with concealed storage, a bench that doubles as seating, and a wall made from the brand's own ripstop nylon.",
+    example: "Three brand pillars, curation, craft and expertise, and transparency, were carried from the mark into the store and the way it was photographed.",
   },
   {
     step: "guide-the-team",
