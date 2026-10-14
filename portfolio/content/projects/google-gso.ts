@@ -14,7 +14,7 @@ export const googleGso: ProjectBundle = {
     years: "2024 to present",
     status: "in-progress",
     statusNote: "Platform delivered. Further applications in progress, subject to update.",
-    role: "Design Director, Rapt Studio, partnering with the creative director",
+    role: "Design Director, Rapt Studio",
     scope:
       "Brand platform and messaging, owned channels, event and object design, community programs, and the design of GSO University, a learning center inside an active data center, followed by a pop-up learning playbook and the IDI Field of Dreams playbook.",
     team: ["Rapt Studio team"],
@@ -80,13 +80,13 @@ export const googleGso: ProjectBundle = {
       },
     ],
     leadership: [
-      "I led the design with the internal Rapt team, partnering with the creative director to develop, translate and execute it, from the discovery that reframed the brief to the platform and the decision to carry it into space. The team developed the collateral system, the event kits and the learning center design with Google's GSO and Cloud stakeholders.",
+      "I led the design with the internal Rapt team, from the discovery that reframed the brief to the platform and the decision to carry it into space. The team developed the collateral system, the event kits and the learning center design with Google's GSO and Cloud stakeholders.",
     ],
     outcome: [
       "The platform was delivered and rolled into collateral, external Life at Google data center pages, an internal resource hub of playbooks and templates, learning spaces, and a pop-up learning playbook for 2025 to 2026. Brick and Mortar design reviews, a naming workshop, and the IDI Field of Dreams playbook followed in 2026. No measured results to report.",
     ],
     imageCredit: "Diagrams redrawn for this portfolio from the Creative Platform and GSO University decks. Process image generated with Gemini during the project.",
-    involvement: "Design Director. Led the design with the Rapt team, partnering with the creative director on discovery, the reframing of the brief, the Home of the Internet platform, and the direction for the learning center and pop-up kits.",
+    involvement: "Design Director. Led the design with the Rapt team on discovery, the reframing of the brief, the Home of the Internet platform, and the direction for the learning center and pop-up kits.",
   },
   decisions: [
     {

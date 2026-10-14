@@ -26,7 +26,7 @@ interface Spec {
 }
 
 const SENIOR_ROLE = "Senior Designer, Rapt Studio, working directly with the creative director and account lead";
-const DIRECTOR_ROLE = "Design Director, Rapt Studio, partnering with the creative director";
+const DIRECTOR_ROLE = "Design Director, Rapt Studio";
 const DESIGNER_ROLE = "Designer, Rapt Studio, working directly with the creative director and account lead";
 const NEUTRAL_ROLE = "Rapt Studio, working directly with the creative director";
 // Titles follow the project dates: Senior Designer before 2024, Design Director from 2024,
@@ -115,7 +115,7 @@ const specs: Spec[] = [
     summary: [
       "Lightspark's workplace sits beneath exposed timber trusses, where a dark stair and black millwork volumes organize the floor into places to work, meet, and pause.",
       "Within that structure, a library alcove of collected objects, a lounge beneath the company mark, and a shared kitchen under a typographic light fixture give the brand a physical presence in everyday spaces.",
-      "I led the design with the Rapt Studio team, partnering with the creative director. The photographs show the completed interior.",
+      "I led the design with the Rapt Studio team. The photographs show the completed interior.",
     ],
     years: "",
     location: "",
@@ -242,7 +242,7 @@ const specs: Spec[] = [
     summary: [
       "Club Gemini turns a room into an evening lounge: deep violet velvet curtains, low blue sofas, candlelight, and dark florals, all under saturated purple and magenta light.",
       "The details, a hand-held glass, a menu card beside a candle, a coffee table of flowers, keep the atmosphere intimate and specific.",
-      "I led the design with the Rapt Studio team, partnering with the creative director. The images are event documentation.",
+      "I led the design with the Rapt Studio team. The images are event documentation.",
     ],
     years: "",
     location: "",
@@ -268,7 +268,7 @@ const specs: Spec[] = [
     summary: [
       "The Napa Leadership Retreat gathered leaders for a multi-day program, with the setting drawn from textile, table, and harvest: draped cream fabric, warm pools of light, plants on plinths, and seasonal centerpieces.",
       "Printed materials, a green menu card, and arrangements of anthurium, citron, and cabbage made the details of the table part of the program.",
-      "I led the design with the Rapt Studio team, partnering with the creative director. The images are event documentation.",
+      "I led the design with the Rapt Studio team. The images are event documentation.",
     ],
     years: "2024",
     location: "Napa Valley, California",
@@ -297,7 +297,7 @@ const specs: Spec[] = [
     summary: [
       "A Place at the Table is a dinner built around one long shared table: candles, green stemware, blue-patterned plates, folded napkins, and small arrangements of flowers.",
       "Guests carry their own chairs to the table, share dishes, and gather at the end around a cake, so the evening is made by the people at it as much as by the setting.",
-      "I led the design with the Rapt Studio team, partnering with the creative director. The images are event documentation.",
+      "I led the design with the Rapt Studio team. The images are event documentation.",
     ],
     years: "",
     location: "",
