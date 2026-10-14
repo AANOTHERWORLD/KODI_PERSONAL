@@ -64,7 +64,7 @@ export const googleWsp: ProjectBundle = {
     outcome: [
       "The campus was not built. Google changed direction during the pandemic and the project wrapped in 2021. The images show design development studies and concept views, and document the planning approach.",
     ],
-    involvement: "Senior Designer. Worked on concepts and design strategy, from early development to delivery.",
+    involvement: "Concepts and design strategy, from early development through the design stage reached.",
   },
   decisions: [
     {
