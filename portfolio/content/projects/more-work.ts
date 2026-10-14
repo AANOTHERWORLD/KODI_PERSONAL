@@ -31,13 +31,13 @@ const DIRECTOR_ROLE = "Design Director, Rapt Studio";
 const DESIGNER_ROLE = "Designer, Collective Architecture";
 const NEUTRAL_ROLE = "Rapt Studio, working directly with the creative director";
 // Titles follow the project dates: Senior Designer before 2024, Design Director from 2024,
-// with Lightspark, Club Gemini and A Place at the Table confirmed as Design Director,
-// April Jean as Senior Designer, and Mama Rouge (2016) as Designer.
+// with Lightspark, April Jean, Club Gemini and A Place at the Table confirmed as Design Director,
+// The Mark as Senior Designer, and Mama Rouge (2016) as Designer.
 // Projects without a confirmed title carry none.
 function roleFor(id: string) {
-  if (id === "the-mark" || id === "april-jean") return SENIOR_ROLE;
+  if (id === "the-mark") return SENIOR_ROLE;
   if (id === "mama-rouge") return DESIGNER_ROLE;
-  if (["napa-retreat", "club-gemini", "place-at-table", "lightspark"].includes(id)) return DIRECTOR_ROLE;
+  if (["napa-retreat", "club-gemini", "place-at-table", "lightspark", "april-jean"].includes(id)) return DIRECTOR_ROLE;
   return NEUTRAL_ROLE;
 }
 
@@ -183,7 +183,7 @@ const specs: Spec[] = [
     summary: [
       "Bar April Jean pairs a flowing script wordmark with a palette of rust red and deep green, and carries it through a collage illustration style, menus, social posts, and a projecting sign on a green corner building.",
       "At the bar itself, the identity meets the everyday: hands, glasses, and printed menus on stands, with warm timber and a full back bar.",
-      "As senior designer, I worked directly with the creative director and account lead to develop concepts and design strategy, from early development through delivery and execution. The images combine photographs of the bar with identity and signage design.",
+      "I led the design with the Rapt Studio team. The images combine photographs of the bar with identity and signage design.",
     ],
     years: "2024",
     location: "",
