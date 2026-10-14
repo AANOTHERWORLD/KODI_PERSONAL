@@ -29,12 +29,13 @@ export default function HomePage() {
       <section aria-labelledby="statement" className="stage-section">
         <ScrollStage>
           <div className="stage__statement" data-statement>
-            <p className="stage__identity"><strong>{portfolio.name}</strong> <span>{portfolio.tagline}</span></p>
+            <p className="stage__identity"><strong>{portfolio.name}</strong> <span>{profile.currentTitle}</span></p>
             <h1 id="statement" className="stage__headline">{portfolio.statement}</h1>
+            <p className="stage__subhead">{portfolio.tagline}</p>
             <p className="stage__body">{portfolio.statementBody}</p>
             <p className="stage__actions">
-              <Link href="/work/" className="button" data-sweep>View Selected Work</Link>
-              <Link href="/about/" className="button" data-sweep>About My Practice</Link>
+              <Link href="/work/" className="button" data-sweep>Explore selected work</Link>
+              <Link href="/approach/" className="button" data-sweep>How I approach creative direction</Link>
             </p>
           </div>
           <ol className="stage__field" aria-label="Project tiles">
@@ -57,6 +58,19 @@ export default function HomePage() {
             <path d="M12 2v34M3 27l9 9 9-9" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </a>
+      </section>
+
+      {/* 2. Leadership proof, straight after the first visual introduction */}
+      <section className="leadership-proof wrap" aria-labelledby="leadership-proof-heading" data-reveal>
+        <h2 id="leadership-proof-heading" className="section__title">{portfolio.leadershipHeading}</h2>
+        <div className="leadership-proof__body">
+          {portfolio.leadershipProof.map((p, i) => <p key={i}>{p}</p>)}
+        </div>
+        <ul className="leadership-proof__figures" aria-label="Leadership scope">
+          <li><strong>~11</strong><span>Designers across disciplines</span></li>
+          <li><strong>7</strong><span>Concurrent projects</span></li>
+          <li><strong>15+</strong><span>Years in architecture, interiors, and experience</span></li>
+        </ul>
       </section>
 
       <LensProvider>
@@ -100,10 +114,6 @@ export default function HomePage() {
             <div className="about-band__top" data-reveal>
               <p className="about-band__bio">{profile.bio}</p>
               <p className="about-band__statement">{profile.leadershipStatement}</p>
-            </div>
-            <div className="band-row">
-              <p className="band-row__label" data-reveal>Leadership</p>
-              <p className="about-band__lead" data-reveal>{profile.leadershipSummary}</p>
             </div>
             <div className="band-row">
               <p className="band-row__label" data-reveal>Experience</p>
@@ -153,6 +163,7 @@ export default function HomePage() {
         <p className="tag">Next</p>
         <h2 id="invite-heading" className="section__title">Let&apos;s shape what comes next</h2>
         <p className="lede">{portfolio.availability}</p>
+        <p className="tag">{portfolio.internationalAvailability}</p>
         <div className="actions">
           <a href={mailto} className="button button--accent" data-sweep>Get in touch</a>
           {downloads.portfolioPdf && <a href={withBasePath(downloads.portfolioPdf)} className="button" data-sweep>Portfolio PDF</a>}

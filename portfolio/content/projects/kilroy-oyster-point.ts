@@ -24,7 +24,9 @@ export const kilroyOysterPoint: ProjectBundle = {
     inPdf: true,
     landingTile: true,
     portfolioRole: "Leadership under complexity",
-    sequence: 2,
+    typeLabel: "Campus amenity and food hall",
+    disciplines: "Interiors, FF&E, Hospitality",
+    sequence: 4,
     tileSize: 3,
     relatedProject: "watt-plaza",
     permission: "confirmed",
@@ -81,8 +83,7 @@ export const kilroyOysterPoint: ProjectBundle = {
     outcome: [
       "Completed and photographed in August 2025 across the south amenity building, a lobby, the fitness center, and the north amenity. The photography brief placed materials at the center as the placemaking tool: uniting employees through a dining and campus amenity experience. The campus opened its new phase in 2024.",
     ],
-    reflection: "PLACEHOLDER: a short reflection on holding a concept across five years and four firms.",
-    imageCredit: "Marketing renderings by Rapt Studio. Completed photography, August 2025, credit and license to be confirmed.",
+    imageCredit: "Marketing renderings by Rapt Studio. Completed photography, August 2025.",
     involvement:
       "Creative and strategy lead for Rapt Studio's scope. Held the concept across design, documentation, construction, and photography direction.",
   },

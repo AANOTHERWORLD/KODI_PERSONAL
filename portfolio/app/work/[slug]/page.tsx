@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { PLACEHOLDER_SLUG, getAllProjectSlugs, getProject, getProjectById, getAsset, getHeroAsset, getIndexAsset, getClaims, visibleAssets, lensById } from "@/lib/content";
+import { PLACEHOLDER_SLUG, getAllProjectSlugs, getProject, getCoreProjects, getAsset, getHeroAsset, getIndexAsset, getClaims, visibleAssets, lensById } from "@/lib/content";
 import Picture from "@/components/Picture";
 import LensTags from "@/components/LensTags";
 import DraftBadge from "@/components/DraftBadge";
@@ -51,18 +51,25 @@ function Opening({ bundle }: { bundle: ProjectBundle }) {
       </div>
       <div className="project-opening__text">
         <p className="tag">
-          {project.tier === "core" ? `${String(project.sequence).padStart(2, "0")} ${project.portfolioRole}` : project.portfolioRole}
+          {project.typeLabel}
           {project.status !== "completed" && <> <span className="tag tag--status">{STATUS_LABEL[project.status]}</span></>}
         </p>
         {project.permission === "pending" && <DraftBadge note={project.permissionNote} />}
         <h1 className="project-hero__title">{project.title}</h1>
         <p className="project-hero__thesis">{project.thesis}</p>
         {brief.length > 0 && (
-          <div className="project-opening__brief">
+          <div className={`project-opening__brief ${narrative.summaryLabels ? "project-opening__brief--labelled" : ""}`}>
             <p className="tag">In brief</p>
-            {brief.map((p, i) => <p key={i}>{p}</p>)}
+            {narrative.summaryLabels
+              ? brief.map((p, i) => <div className="brief-item" key={i}><p className="tag">{narrative.summaryLabels![i]}</p><p>{p}</p></div>)
+              : brief.map((p, i) => <p key={i}>{p}</p>)}
           </div>
         )}
+        <dl className="project-opening__facts">
+          <div><dt>Role</dt><dd>{project.role}</dd></div>
+          <div><dt>Disciplines</dt><dd>{project.disciplines}</dd></div>
+          <div><dt>Status</dt><dd>{STATUS_LABEL[project.status]}</dd></div>
+        </dl>
         <ClaimList claims={getClaims(bundle, "context")} />
         <LensTags lenses={project.lenses} />
       </div>
@@ -136,29 +143,37 @@ function Credits({ bundle }: { bundle: ProjectBundle }) {
         <div><dt>Personal involvement</dt><dd>{narrative.involvement}</dd></div>
         {project.team.length > 0 && <div><dt>Team</dt><dd><ul>{project.team.map((t) => <li key={t}>{t}</li>)}</ul></dd></div>}
         {project.collaborators.length > 0 && <div><dt>Collaborators</dt><dd><ul>{project.collaborators.map((c) => <li key={c}>{c}</li>)}</ul></dd></div>}
-        <div><dt>Photography and imagery</dt><dd>{[narrative.photographyCredit, narrative.imageCredit].filter(Boolean).join(" ") || "See captions"}</dd></div>
+        {[narrative.photographyCredit, narrative.imageCredit].some(Boolean) && <div><dt>Photography and imagery</dt><dd>{[narrative.photographyCredit, narrative.imageCredit].filter(Boolean).join(" ")}</dd></div>}
         {credits.length > 0 && <div><dt>Further credits</dt><dd><ClaimList claims={credits} /></dd></div>}
       </dl>
     </div>
   );
 }
 
-function Related({ bundle }: { bundle: ProjectBundle }) {
-  const related = getProjectById(bundle.project.relatedProject);
-  if (!related) return null;
-  const asset = getIndexAsset(related);
-  return (
-    <section className="related" aria-labelledby="related">
-      <p className="tag">Related project</p>
-      <Link href={`/work/${related.project.slug}/`} className="related__link">
-        {asset && <Picture asset={asset} showCaption={false} fit="cover" sizes="(min-width: 800px) 45vw, 100vw" />}
-        <div>
-          <h2 id="related" className="section__title">{related.project.title}</h2>
-          <p className="lede">{related.project.thesis}</p>
-          <LensTags lenses={related.project.lenses} />
-        </div>
+// Previous and next project, in Work order, each with its image: a clear way on from any case study.
+function ProjectNav({ bundle }: { bundle: ProjectBundle }) {
+  const list = getCoreProjects();
+  const i = list.findIndex((b) => b.project.id === bundle.project.id);
+  if (i < 0 || list.length < 2) return null;
+  const prev = list[(i - 1 + list.length) % list.length];
+  const next = list[(i + 1) % list.length];
+  const card = (target: ProjectBundle, label: string) => {
+    const asset = getIndexAsset(target);
+    return (
+      <Link href={`/work/${target.project.slug}/`} className="project-nav__item">
+        {asset && <Picture asset={asset} showCaption={false} fit="cover" sizes="(min-width: 800px) 40vw, 100vw" />}
+        <p className="tag">{label}</p>
+        <h2 className="project-nav__title">{target.project.title}</h2>
+        <p className="project-nav__thesis">{target.project.thesis}</p>
       </Link>
-    </section>
+    );
+  };
+  return (
+    <nav className="project-nav" aria-label="More projects">
+      {card(prev, "Previous project")}
+      {card(next, "Next project")}
+      <p className="project-nav__all"><Link href="/work/" className="text-link" data-sweep>All work</Link></p>
+    </nav>
   );
 }
 
@@ -288,7 +303,7 @@ function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
 
       <Gallery assets={pool} title="More views" />
       <ProjectInfo bundle={bundle} />
-      <Related bundle={bundle} />
+      <ProjectNav bundle={bundle} />
     </article>
   );
 }
@@ -303,7 +318,7 @@ function LightTemplate({ bundle }: { bundle: ProjectBundle }) {
       {bundle.decisions.length > 0 && <DecisionBlocks bundle={{ ...bundle, decisions: bundle.decisions.slice(0, 1) }} />}
       <Gallery assets={assets} title="Views" />
       <ProjectInfo bundle={bundle} />
-      <Related bundle={bundle} />
+      <ProjectNav bundle={bundle} />
     </article>
   );
 }

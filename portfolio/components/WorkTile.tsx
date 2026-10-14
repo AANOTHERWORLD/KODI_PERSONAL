@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { ProjectBundle } from "@/content/types";
 import { getHeroAsset, getIndexAsset } from "@/lib/content";
-import { lensById } from "@/content/lenses";
 import Picture from "./Picture";
 import { LensAwareEntry } from "./LensContext";
 
@@ -11,7 +10,7 @@ import { LensAwareEntry } from "./LensContext";
 export default function WorkTile({ bundle, index }: { bundle: ProjectBundle; index: number }) {
   const { project } = bundle;
   const asset = getHeroAsset(bundle) ?? getIndexAsset(bundle);
-  const category = project.lenses.slice(0, 2).map((l) => lensById[l].name).join(", ");
+  const category = project.typeLabel;
   return (
     <LensAwareEntry lensIds={project.lenses} as="li" className="work-tile" mode="filter">
       <Link href={`/work/${project.slug}/`} className="work-tile__link cursor-tile">

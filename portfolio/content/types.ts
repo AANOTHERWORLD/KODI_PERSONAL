@@ -31,6 +31,8 @@ export interface Portfolio {
   // H1 on Home. The explanation beneath it is statementBody.
   statement: string;
   statementBody: string;
+  leadershipHeading: string;
+  leadershipProof: string[];
   // One line under the name: discipline positioning, distinct from the employment title.
   tagline: string;
   positioning: string;
@@ -41,6 +43,7 @@ export interface Portfolio {
   instagram?: string;
   location: string;
   availability: string;
+  internationalAvailability: string;
   versionDate: string;
   copyrightHolder: string;
   workRangeLabel: string;
@@ -80,6 +83,9 @@ export interface Project {
   collaborators: string[];
   lenses: LensId[];
   portfolioRole: string;
+  // What the project is, in plain words, and the disciplines involved. Shown on cards and in the opening.
+  typeLabel: string;
+  disciplines: string;
   sequence: number;
   tileSize: 1 | 2 | 3 | 4;
   relatedProject: string;
@@ -103,6 +109,8 @@ export interface Narrative {
     description: string;
     url: string;
   };
+  // Optional short labels for the summary paragraphs ("The ambition", "My leadership", ...).
+  summaryLabels?: string[];
   // Light pages use summary (about 150 to 300 words). Full pages use the sections below.
   summary?: string[];
   challenge: string[];
@@ -178,6 +186,8 @@ export interface Profile {
   leadershipStatement: string;
   leadershipSummary: string;
   careerNarrative: string[];
+  aboutIntro: string[];
+  leadershipSnapshot: string[];
   leadershipNarrative: string[];
   workingStyle: string[];
   experience: ExperienceItem[];

@@ -4,38 +4,46 @@ export const approachSteps: ApproachStep[] = [
   {
     id: "read-the-context",
     number: 1,
-    title: "Understand the context",
-    summary: "Start with the people, place, and ambition. Listen for the needs behind the brief and identify the tension the design must resolve.",
+    title: "Read the Context",
+    summary: "Understand people, culture, client ambition, and constraints before defining form.",
   },
   {
     id: "define-the-direction",
     number: 2,
-    title: "Establish the direction",
-    summary: "Define an idea the client and team can use. Translate it into clear criteria for evaluating concepts, communicating choices, and deciding what matters most.",
+    title: "Define the Direction",
+    summary: "Establish a clear idea and decision criteria strong enough to guide or reject options.",
   },
   {
     id: "connect-the-scales",
     number: 3,
-    title: "Connect the scales",
-    summary: "Test the direction in the plan, the experience, the material, and the detail. Let discoveries at each scale improve the others.",
+    title: "Connect the Scales",
+    summary: "Translate the idea across architecture, interior environments, brand, behavior, and detail.",
   },
   {
     id: "guide-the-team",
     number: 4,
-    title: "Guide the collaboration",
-    summary: "Create room for different disciplines to contribute. Use reviews to clarify choices, develop the work, and resolve competing priorities around a shared intent.",
+    title: "Guide the Team",
+    summary: "Build shared understanding and empower multidisciplinary specialists to contribute coherently.",
   },
   {
     id: "protect-the-intent",
     number: 5,
-    title: "Carry the idea through",
-    summary: "Adapt to changing needs, budgets, and delivery constraints. Identify the decisions that carry the idea and maintain their continuity as the project develops.",
+    title: "Protect the Intent",
+    summary: "Navigate delivery pressures without losing the defining creative idea.",
   },
 ];
 
-export const approachHeading = "A shared direction. A deliberate process.";
-export const approachIntro =
-  "Every project asks for a different response. My process creates continuity between understanding the brief, defining an idea, and making the decisions that bring it to life.";
+export const approachHeading = "Creative Direction as a Practice";
+export const approachIntro = [
+  "Strong creative leadership requires more than a compelling initial idea. It requires the ability to establish a shared direction, build alignment across disciplines, and guide teams through the competing demands of design, delivery, and business.",
+  "My approach is built around five interconnected practices. Together, they help transform complex ambitions into clear creative ideas, empower teams to make meaningful decisions, and protect design excellence from concept through completion.",
+  "The goal is not to create the same outcome repeatedly, but to establish a consistent standard of creative thinking across different people, projects, and scales.",
+];
+// Short statements shown under a step, keyed by step id.
+export const approachStatements: Record<string, string> = {
+  "guide-the-team": "Creative leadership is not about making every decision. It is about giving people the shared understanding, confidence, and responsibility to make good decisions together.",
+  "protect-the-intent": "The measure of a strong design direction is not how closely the final result resembles its first sketch, but how successfully its defining idea survives budget, schedule, technical coordination, and change.",
+};
 
 export const approachAi = {
   heading: "AI and design judgment",

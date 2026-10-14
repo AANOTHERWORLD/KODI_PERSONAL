@@ -25,7 +25,9 @@ export const lsdRunning: ProjectBundle = {
     inPdf: true,
     landingTile: true,
     portfolioRole: "Identity in detail",
-    sequence: 6,
+    typeLabel: "Retail store concept",
+    disciplines: "Retail design, Brand, Fabrication handoff",
+    sequence: 8,
     tileSize: 2,
     relatedProject: "google-room-98",
     permission: "confirmed",
@@ -77,7 +79,7 @@ export const lsdRunning: ProjectBundle = {
     leadershipMoment:
       "The five schemes were strong in different ways, and the easy move was to pick one. Instead we treated them as a set of answers to the three prompts and combined them: the perimeter storage from the Functional scheme, the convertible modules from Communal, the landscape idea from Experiential, and the restraint of Minimal. The final design is a synthesis rather than a winner.",
     outcome: [
-      "The design was completed and handed to the fabricator, with expansion into the adjacent space included in the scope. Whether the store was built as designed, and any photography of it, is still to be confirmed.",
+      "The design was completed and handed to the fabricator, with expansion into the adjacent space included in the scope. The images shown are design visualizations of the final scheme.",
     ],
     imageCredit: "Renders, axonometric drawings, and workshop photography by Rapt Studio, from the LSD Running project book.",
     involvement:
@@ -210,7 +212,7 @@ export const lsdRunning: ProjectBundle = {
       caption: "Reference: a boulder as landscape in a gallery, the starting point for the store's center.",
       alt: "A very large boulder standing in a white gallery with timber ceiling and two people beside it.",
       creator: "Reference image from the project book, source to be credited",
-      credit: "Reference image, credit to be confirmed",
+      credit: "Reference image",
       permission: "confirmed",
       lens: "brand-detail",
     },

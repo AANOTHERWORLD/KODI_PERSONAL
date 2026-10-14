@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { approachSteps, getApproachExamples, getProjectById, lenses } from "@/lib/content";
-import { approachAi, approachHeading, approachIntro } from "@/content/approach";
+import { approachAi, approachHeading, approachIntro, approachStatements } from "@/content/approach";
+import { getHeroAsset } from "@/lib/content";
+import Picture from "@/components/Picture";
 import { lensHeading, lensIntro } from "@/content/lenses";
 
 export const metadata: Metadata = {
@@ -15,13 +17,15 @@ export default function ApproachPage() {
       <section className="page-head" aria-labelledby="approach-title">
         <p className="tag">Approach</p>
         <h1 id="approach-title" className="page-head__title">{approachHeading}</h1>
-        <p className="lede">{approachIntro}</p>
+        <div className="prose">{approachIntro.map((p, i) => <p key={i} className={i === 0 ? "lede" : undefined}>{p}</p>)}</div>
       </section>
 
       <section className="section" aria-label="The five steps">
         <div className="steps">
           {approachSteps.map((step) => {
             const examples = getApproachExamples(step.id);
+            const lead = examples[0]?.project;
+            const leadImage = lead ? getHeroAsset(lead) : null;
             return (
               <div className="step" key={step.id} id={step.id}>
                 <div>
@@ -29,7 +33,14 @@ export default function ApproachPage() {
                   <h2 className="step__title">{step.title}</h2>
                 </div>
                 <div>
-                  <p>{step.summary}</p>
+                  <p className="step__summary">{step.summary}</p>
+                  {approachStatements[step.id] && <blockquote className="step__statement">{approachStatements[step.id]}</blockquote>}
+                  {leadImage && lead && (
+                    <Link href={`/work/${lead.project.slug}/`} className="step__image">
+                      <Picture asset={leadImage} showCaption={false} fit="cover" sizes="(min-width: 900px) 40vw, 100vw" />
+                      <span className="tag">See it in {lead.project.title}</span>
+                    </Link>
+                  )}
                   {examples.length > 0 && (
                     <ul className="step__examples">
                       {examples.map(({ example, project }) => (

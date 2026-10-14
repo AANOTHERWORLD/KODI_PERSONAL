@@ -26,6 +26,8 @@ export const googleGso: ProjectBundle = {
     landingTile: true,
     tiles: [{ x: 26, y: 78, depth: 1, order: 5 }],
     portfolioRole: "Strategic reframing",
+    typeLabel: "Brand platform and experience",
+    disciplines: "Strategy, Brand, Events and spaces",
     sequence: 5,
     tileSize: 3,
     relatedProject: "tinder-hq",

@@ -17,6 +17,7 @@ export default function ContactPage() {
         <p className="tag">Contact</p>
         <h1 id="contact-title" className="page-head__title">Let&apos;s shape what comes next</h1>
         <p className="lede">{portfolio.availability} Email is the fastest way to reach me.</p>
+        <p className="tag">{portfolio.internationalAvailability}</p>
         <ul className="contact-links">
           <li><a href={mailto}>{portfolio.email}</a></li>
           {portfolio.linkedin && <li><a href={portfolio.linkedin} rel="me noopener">LinkedIn</a></li>}

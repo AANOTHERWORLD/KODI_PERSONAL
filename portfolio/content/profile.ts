@@ -10,6 +10,20 @@ export const profile: Profile = {
   leadershipStatement: "Direction that a team can build on.",
   leadershipSummary:
     "My role is to make the ambition clear, give the team useful criteria, and help resolve the decisions that shape the work. I lead through shared language, constructive critique, and close attention to how the idea becomes a real experience.",
+  aboutIntro: [
+    "I am a multidisciplinary design leader working at the intersection of architecture, interiors, brand, and experience.",
+    "Over more than 15 years, my practice has evolved from architectural design into creative leadership, shaped by the belief that the most meaningful environments emerge when strategic intent and physical experience are considered together.",
+    "As Design Director at Rapt Studio, I lead a multidisciplinary team of approximately 11 designers across seven concurrent projects. My responsibilities span creative direction, client relationships, project profitability, and contributions to business development and staffing.",
+    "I believe the role of creative leadership is to establish a clear vision, create the conditions for talented people to do their best work, and ensure that the original idea remains meaningful as it moves through different disciplines, scales, and complexities.",
+    "My work spans workplace environments, retail concepts, branded experiences, and cultural and community-focused initiatives. Across each, my focus is consistent: connecting people, place, and purpose through thoughtful, ambitious design.",
+  ],
+  leadershipSnapshot: [
+    "15+ years in architecture, interiors, and experience-led design",
+    "11 multidisciplinary team members under current leadership",
+    "7 concurrent projects under current oversight",
+    "Project-level profitability accountability",
+    "Business development and staffing participation",
+  ],
   careerNarrative: [
     "I am Jamel Williams, a Design Director at Rapt Studio. My background in architecture informs a practice that spans interiors, brand, and creative strategy. I work across these disciplines because a place is experienced as a whole: its story, spatial organization, material character, and smallest interactions shape one another.",
     "Architecture taught me to move between the whole and the detail. Brand and strategy expanded that view to include the people a project needs to reach and the meaning it should carry. Together, they shape how I establish direction and judge whether a design decision serves the larger idea.",
@@ -112,17 +126,17 @@ export const profileClaims: Claim[] = [
     projectId: "profile",
     placement: "profile-leadership",
     wording: "Leads a team of about eleven across disciplines on roughly seven concurrent projects.",
-    evidenceSource: "portfolio_brief.md, Section 9: candidate fact to reconfirm before publication.",
+    evidenceSource: "Positioning and UX brief supplied by Jamel, 14 October 2026.",
     verifier: "Jamel Williams",
-    status: "awaiting",
+    status: "verified",
   },
   {
     id: "profile-lead-03",
     projectId: "profile",
     placement: "profile-leadership",
     wording: "Responsible for business development and staffing on the studio's Los Angeles projects. This describes scope, never performance.",
-    evidenceSource: "portfolio_brief.md, Section 9: candidate fact to reconfirm before publication.",
+    evidenceSource: "Positioning and UX brief supplied by Jamel, 14 October 2026.",
     verifier: "Jamel Williams",
-    status: "awaiting",
+    status: "verified",
   },
 ];

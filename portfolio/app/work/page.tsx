@@ -26,14 +26,15 @@ export default function WorkPage() {
         <div className="work-banner__scrim" aria-hidden="true" />
         <div className="work-banner__text wrap">
           <p className="tag">Work</p>
-          <h1 id="work-title" className="work-banner__title">One direction, expressed at different scales</h1>
-          <p className="work-banner__lede">Selected projects spanning places, experiences, and brand expression. Each begins with a clear idea and shows the decisions, collaboration, and details that carry it forward.</p>
+          <h1 id="work-title" className="work-banner__title">One Direction, Read at Every Scale.</h1>
+          <p className="work-banner__lede">Each project begins with a distinct challenge and a clear creative idea. Through architecture, interiors, brand, and experience, that idea takes different forms while retaining its purpose.</p>
+          <p className="work-banner__lede work-banner__lede--second">The work represents different sectors, scales, and teams, connected by a consistent approach to creative direction.</p>
         </div>
       </section>
       <div className="wrap">
       <LensProvider>
         <div className="lens-filter" aria-label="Highlight by lens">
-          <p className="tag">Filter by lens</p>
+          <p className="tag">Explore by lens</p>
           <LensKey counts={counts} compact total={projects.length} />
         </div>
         {projects.length ? (

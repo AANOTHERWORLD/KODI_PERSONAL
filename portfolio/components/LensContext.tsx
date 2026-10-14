@@ -60,10 +60,12 @@ export function LensKey({ counts, compact = false, total, noun = "projects", mod
                 <span className="lens-key__dot" aria-hidden="true" />
                 <span className="lens-key__name">{lens.name}</span>
                 {!compact && <span className="lens-key__question">{lens.question}</span>}
-                <span className="lens-key__count tag">
-                  {counts[lens.id]} {counts[lens.id] === 1 ? "project" : "projects"}
-                  {pressed && <span className="lens-key__selected"> · Selected</span>}
-                </span>
+                {!compact && (
+                  <span className="lens-key__count tag">
+                    {counts[lens.id]} {counts[lens.id] === 1 ? "project" : "projects"}
+                    {pressed && <span className="lens-key__selected"> · Selected</span>}
+                  </span>
+                )}
               </button>
             </li>
           );

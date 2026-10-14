@@ -24,7 +24,9 @@ export const googleTokyoPartnerPlex: ProjectBundle = {
     inPdf: false,
     landingTile: true,
     portfolioRole: "Candidate: APAC contrast",
-    sequence: 3,
+    typeLabel: "Partner experience center",
+    disciplines: "Interiors, Environmental graphics, Hospitality",
+    sequence: 7,
     tileSize: 2,
     relatedProject: "openai-tokyo",
     permission: "confirmed",
@@ -60,7 +62,7 @@ export const googleTokyoPartnerPlex: ProjectBundle = {
     outcome: [
       "Completed and photographed. The stated success goals at the time were full daily activation of half the space and higher client engagement and satisfaction. Those are goals, and no measured results are reported here.",
     ],
-    photographyCredit: "Photography copyright Kohei Take, per asset metadata. Credit wording to be confirmed.",
+    photographyCredit: "Photography: Kohei Take.",
     involvement: "Creative and strategy lead for the experience concept and its expression in interiors and graphics.",
   },
   decisions: [
@@ -86,14 +88,14 @@ export const googleTokyoPartnerPlex: ProjectBundle = {
     },
   ],
   assets: [
-    { id: "ppx-01", projectId: id, file: "google-tokyo-partner-plex/01.jpg", type: "photo", caption: "Shibuya crossing, the arrival context.", alt: "People crossing a busy Tokyo street with bright signage.", creator: "Kohei Take", credit: "Photography: Kohei Take (to be confirmed)", permission: "confirmed", lens: "culture-strategy" },
-    { id: "ppx-02", projectId: id, file: "google-tokyo-partner-plex/02.jpg", type: "photo", caption: "Timber doors with leather-wrapped handles at the entry.", alt: "A hand in a yellow sleeve pulling a tall wooden door with a leather-wrapped handle.", creator: "Kohei Take", credit: "Photography: Kohei Take (to be confirmed)", permission: "confirmed", lens: "interiors-behavior" },
-    { id: "ppx-03", projectId: id, file: "google-tokyo-partner-plex/03.jpg", type: "photo", caption: "The host lobby reveal: suspended forms over a white pool.", alt: "Lobby with dozens of suspended white tubes above a round white basin, with a person entering.", creator: "Kohei Take", credit: "Photography: Kohei Take (to be confirmed)", permission: "confirmed", lens: "interiors-behavior" },
-    { id: "ppx-04", projectId: id, file: "google-tokyo-partner-plex/04.jpg", type: "photo", caption: "Ripples in the lobby pool beneath the suspended installation.", alt: "Close view of a shallow round basin with concentric ripples under hanging white tubes.", creator: "Kohei Take", credit: "Photography: Kohei Take (to be confirmed)", permission: "confirmed", lens: "brand-detail" },
-    { id: "ppx-09", projectId: id, file: "google-tokyo-partner-plex/09.jpg", type: "photo", caption: "Room names in relief: Aurora, Midnight, High Noon, Lakeshore.", alt: "White wall with raised lettering and icons listing room names in English and Japanese.", creator: "Kohei Take", credit: "Photography: Kohei Take (to be confirmed)", permission: "confirmed", lens: "brand-detail" },
-    { id: "ppx-10", projectId: id, file: "google-tokyo-partner-plex/10.jpg", type: "photo", caption: "A compression corridor with curved white walls and a blue floor.", alt: "Curving corridor with rippled white walls, a blue carpet, and a timber wall at the end.", creator: "Kohei Take", credit: "Photography: Kohei Take (to be confirmed)", permission: "confirmed", lens: "interiors-behavior" },
-    { id: "ppx-16", projectId: id, file: "google-tokyo-partner-plex/16.jpg", type: "photo", caption: "A boardroom seen through a round opening, with a cloud-like sculpture above the table.", alt: "View through a circular window into a meeting room with a long table and a textured white sculpture above.", creator: "Kohei Take", credit: "Photography: Kohei Take (to be confirmed)", permission: "confirmed", lens: "brand-detail" },
-    { id: "ppx-23", projectId: id, file: "google-tokyo-partner-plex/23.jpg", type: "photo", caption: "An immersive room where light and color are the medium.", alt: "A person standing in a room lit in pink and blue gradients.", creator: "Kohei Take", credit: "Photography: Kohei Take (to be confirmed)", permission: "confirmed", lens: "brand-detail" },
+    { id: "ppx-01", projectId: id, file: "google-tokyo-partner-plex/01.jpg", type: "photo", caption: "Shibuya crossing, the arrival context.", alt: "People crossing a busy Tokyo street with bright signage.", creator: "Kohei Take", credit: "Photography: Kohei Take", permission: "confirmed", lens: "culture-strategy" },
+    { id: "ppx-02", projectId: id, file: "google-tokyo-partner-plex/02.jpg", type: "photo", caption: "Timber doors with leather-wrapped handles at the entry.", alt: "A hand in a yellow sleeve pulling a tall wooden door with a leather-wrapped handle.", creator: "Kohei Take", credit: "Photography: Kohei Take", permission: "confirmed", lens: "interiors-behavior" },
+    { id: "ppx-03", projectId: id, file: "google-tokyo-partner-plex/03.jpg", type: "photo", caption: "The host lobby reveal: suspended forms over a white pool.", alt: "Lobby with dozens of suspended white tubes above a round white basin, with a person entering.", creator: "Kohei Take", credit: "Photography: Kohei Take", permission: "confirmed", lens: "interiors-behavior" },
+    { id: "ppx-04", projectId: id, file: "google-tokyo-partner-plex/04.jpg", type: "photo", caption: "Ripples in the lobby pool beneath the suspended installation.", alt: "Close view of a shallow round basin with concentric ripples under hanging white tubes.", creator: "Kohei Take", credit: "Photography: Kohei Take", permission: "confirmed", lens: "brand-detail" },
+    { id: "ppx-09", projectId: id, file: "google-tokyo-partner-plex/09.jpg", type: "photo", caption: "Room names in relief: Aurora, Midnight, High Noon, Lakeshore.", alt: "White wall with raised lettering and icons listing room names in English and Japanese.", creator: "Kohei Take", credit: "Photography: Kohei Take", permission: "confirmed", lens: "brand-detail" },
+    { id: "ppx-10", projectId: id, file: "google-tokyo-partner-plex/10.jpg", type: "photo", caption: "A compression corridor with curved white walls and a blue floor.", alt: "Curving corridor with rippled white walls, a blue carpet, and a timber wall at the end.", creator: "Kohei Take", credit: "Photography: Kohei Take", permission: "confirmed", lens: "interiors-behavior" },
+    { id: "ppx-16", projectId: id, file: "google-tokyo-partner-plex/16.jpg", type: "photo", caption: "A boardroom seen through a round opening, with a cloud-like sculpture above the table.", alt: "View through a circular window into a meeting room with a long table and a textured white sculpture above.", creator: "Kohei Take", credit: "Photography: Kohei Take", permission: "confirmed", lens: "brand-detail" },
+    { id: "ppx-23", projectId: id, file: "google-tokyo-partner-plex/23.jpg", type: "photo", caption: "An immersive room where light and color are the medium.", alt: "A person standing in a room lit in pink and blue gradients.", creator: "Kohei Take", credit: "Photography: Kohei Take", permission: "confirmed", lens: "brand-detail" },
   ],
   claims: [
     {

@@ -17,7 +17,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
     role: "Creative and Strategy Lead (Design Director, Rapt Studio), co-directed with a second design director",
     scope:
       "Retail experience design for TurboTax stores built around walk-in discovery and appointment-based service. The engagement grew from a single retail playbook for architects into the Store Bible, a four-book cross-functional system: Retail Strategy, Locations, Experience + Service + Technology, and Programming + Merchandising. In parallel, Rapt is designing four flagship stores.",
-    team: ["Rapt Studio design team", "Co-design director (credit to be confirmed)"],
+    team: ["Rapt Studio design team", "Co-directed with a second Rapt Studio design director"],
     collaborators: [
       "Intuit stakeholders across Experience Design, Real Estate and Development, Service Design, Marketing and Partnerships, and Leadership",
       "Gensler, architect",
@@ -32,7 +32,9 @@ export const intuitTurbotaxRetail: ProjectBundle = {
     landingTile: true,
     tiles: [{ x: -6, y: 12, depth: 2, order: 1 }],
     portfolioRole: "Flagship integration",
-    sequence: 4,
+    typeLabel: "Retail environments and playbook",
+    disciplines: "Retail design, Brand experience, Strategy",
+    sequence: 2,
     tileSize: 4,
     relatedProject: "google-gso-home-of-the-internet",
     permission: "confirmed",
@@ -88,7 +90,6 @@ export const intuitTurbotaxRetail: ProjectBundle = {
     outcome: [
       "In progress. The Store Bible and the hero system are in development, and the flagship stores at Third Street Promenade in Santa Monica, Tribune Tower and 39 South State Street in Chicago, and The Orchard in Long Island City are in documentation and construction with local architect Partners by Design and prototyping by Kihl Studios. No measured results to report.",
     ],
-    reflection: "PLACEHOLDER: a short reflection on what the flagship work has taught about holding one idea across scales.",
     imageCredit: "Concept renders and plans by Rapt Studio, from the Intuit Flagship Reference deck.",
     involvement:
       "Creative and strategy lead, co-directing with a second design director. Led the Store Bible structure, the emotional territory, the ritual spine, and the four imperatives. Reviewed and directed the environment designs, the hero system, and the flagship concepts.",

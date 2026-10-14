@@ -35,14 +35,13 @@ export default function WorkCard({ bundle, index, variant = "card" }: Props) {
           </div>
         </div>
         <div className="work-card__text">
-          <p className="work-card__tagline tag">{project.lenses.slice(0, 2).map((l) => LENS_SHORT[l]).join(", ")}</p>
-          <p className="work-card__kicker">
-            <span className="tag">{String(project.sequence).padStart(2, "0")} {project.portfolioRole}</span>
-            {project.status !== "completed" && <span className="tag tag--status">{STATUS_LABEL[project.status]}</span>}
-            {project.permission === "pending" && <span className="draft-marker">Draft: permission pending</span>}
-          </p>
           <h3 className="work-card__title">{project.title}</h3>
           <p className="work-card__thesis">{project.thesis}</p>
+          <p className="work-card__meta tag">
+            {project.typeLabel}
+            {project.status !== "completed" && <span className="tag tag--status">{STATUS_LABEL[project.status]}</span>}
+          </p>
+          <p className="work-card__disciplines">{project.disciplines}</p>
           <p className="work-card__role tag">{project.role}</p>
         </div>
       </Link>
