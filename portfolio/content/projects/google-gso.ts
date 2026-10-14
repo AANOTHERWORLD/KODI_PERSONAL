@@ -32,7 +32,8 @@ export const googleGso: ProjectBundle = {
     tileSize: 3,
     relatedProject: "tinder-hq",
     permission: "confirmed",
-    heroAssetId: "gso-university-space",
+    heroAssetId: "gso-steam-lab",
+    indexAssetId: "gso-university-prompt-cards",
   },
   narrative: {
     projectId: id,
@@ -122,6 +123,18 @@ export const googleGso: ProjectBundle = {
     },
   ],
   assets: [
+    {
+      id: "gso-steam-lab",
+      projectId: id,
+      file: "google-gso-home-of-the-internet/gso-steam-lab-visualization.jpg",
+      type: "render",
+      caption: "STEAM Lab kit, concept visualization: a tool wall, a crate on a hand truck and a work table, set in a library.",
+      alt: "Visualization of a STEAM Lab kit in a library: a pegboard wall of hand tools with red bins, a crate on a yellow hand truck and a small timber work table.",
+      creator: "Rapt Studio",
+      credit: "Concept visualization, Rapt Studio",
+      permission: "confirmed",
+      lens: "brand-detail",
+    },
     {
       id: "gso-university-space",
       projectId: id,
