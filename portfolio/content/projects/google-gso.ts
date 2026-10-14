@@ -38,8 +38,8 @@ export const googleGso: ProjectBundle = {
   narrative: {
     projectId: id,
     summary: [
-      "Our work with Google GSO began with its emerging learning programs: establishing the conceptual foundation for the experience and defining the physical environment that would support it. I led the design with the internal Rapt team, shaping a creative direction that connected organizational objectives, audience needs and physical experience.",
-      "Research revealed that the opportunity extended beyond the classroom. Employees needed clearer paths to development, stronger connections across teams and room to learn alongside the pressures of daily work. Local communities also needed greater visibility into data center careers and how their existing skills might translate into those roles.",
+      "Our work with Google GSO connected two efforts under one idea: a recruiting and retention platform for the towns that host Google data centers, and the learning programs and GSO University environment for the people who work in them. I led the design with the internal Rapt team, shaping a creative direction that connected organizational objectives, audience needs and physical experience.",
+      "Research showed that the opportunity extended beyond a single campaign or classroom. Employees needed clearer paths to development, stronger connections across teams and room to learn alongside the pressures of daily work. Local communities also needed greater visibility into data center careers and how their existing skills might translate into those roles.",
     ],
     story: [
       "Together with GSO, we developed a continual learning strategy that begins before recruitment and extends through onboarding, professional development and advancement. \"Home of the Internet\" connected an otherwise invisible global infrastructure to familiar places and the people who power it. Local storytelling, educational activities, recruiting materials and shared resources gave teams a foundation they could adapt to their communities.",

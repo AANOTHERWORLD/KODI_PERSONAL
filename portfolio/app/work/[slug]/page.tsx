@@ -326,7 +326,11 @@ function LightTemplate({ bundle }: { bundle: ProjectBundle }) {
     <article className="wrap">
       <Opening bundle={bundle} />
       <FeaturedPublication bundle={bundle} />
-      {bundle.decisions.length > 0 && <DecisionBlocks bundle={{ ...bundle, decisions: bundle.decisions.slice(0, 1) }} />}
+      {bundle.decisions.length > 0 && <DecisionBlocks bundle={bundle} />}
+      <Section id="status" tag="Result and involvement" title={project.status === "concept" ? "Where the project stands" : "What was made"} asset={null} side="left">
+        {narrative.outcome.length > 0 ? narrative.outcome.map((p, i) => <p key={i}>{p}</p>) : <p>{STATUS_LABEL[project.status]}, {project.years}.{project.statusNote ? ` ${project.statusNote}` : ""}</p>}
+        <p>{narrative.involvement === project.role ? `My role: ${project.role}.` : `${project.role}. ${narrative.involvement}`}</p>
+      </Section>
       <Gallery assets={assets} title="Views" />
       <ProjectInfo bundle={bundle} />
       <ProjectNav bundle={bundle} />

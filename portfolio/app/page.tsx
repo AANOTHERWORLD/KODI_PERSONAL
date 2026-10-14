@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getAsset, getProjectById, getHomepageProjects, getLandingTiles, getLensCounts, getProfileAsset, getProfileClaimsById, portfolio, profile, approachSteps } from "@/lib/content";
+import { getAsset, getProjectById, getApproachExamples, getHomepageProjects, getLandingTiles, getLensCounts, getProfileAsset, getProfileClaimsById, portfolio, profile } from "@/lib/content";
 import { getDownloads } from "@/lib/files";
 import { withBasePath } from "@/lib/basePath";
 import Picture from "@/components/Picture";
@@ -16,6 +16,7 @@ export default function HomePage() {
   const tiles = getLandingTiles();
   const featured = getHomepageProjects();
   const counts = getLensCounts();
+  const approachExample = getApproachExamples("define-the-direction").find((e) => e.project.project.id === "watt-plaza");
   const lsd = getProjectById("lsd-running");
   const mobileHero = lsd ? getAsset(lsd, "lsd-photo-bench-arc") : null;
   const portrait = getProfileAsset(profile.portraitAssetId);
@@ -156,12 +157,8 @@ export default function HomePage() {
       <section className="section wrap" aria-labelledby="approach-heading" data-reveal>
         <p className="tag">Approach</p>
         <h2 id="approach-heading" className="section__title">Direction is established early and carried through teams</h2>
-        <ol className="step-row">
-          {approachSteps.map((step) => (
-            <li key={step.id}><span className="step-row__num">{String(step.number).padStart(2, "0")}</span>{step.title}</li>
-          ))}
-        </ol>
-        <p><Link href="/approach/" className="text-link" data-sweep>Read the approach</Link></p>
+        {approachExample && <p className="lede">{approachExample.example.example} <Link href={`/work/${approachExample.project.project.slug}/`} className="text-link" data-sweep>See {approachExample.project.project.title}</Link></p>}
+        <p><Link href="/approach/" className="text-link" data-sweep>Read the full approach</Link></p>
       </section>
 
       <section className="section wrap section--invite" aria-labelledby="invite-heading" data-reveal>

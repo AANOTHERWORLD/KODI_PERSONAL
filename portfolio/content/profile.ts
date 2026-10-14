@@ -5,7 +5,7 @@ import type { Asset, Claim, Profile } from "./types";
 export const profile: Profile = {
   name: "Jamel Williams",
   currentTitle: "Design Director, Rapt Studio",
-  bio: "I am Jamel Williams, a Design Director at Rapt Studio with a background in architecture and a practice spanning interiors, brand, and creative strategy. I bring these disciplines together to set direction, guide collaboration, and keep the central idea present through design and delivery.",
+  bio: "My background is in architecture, and my practice has widened from buildings into interiors, brand and creative strategy. As a Design Director at Rapt Studio, I lead multidisciplinary teams that set direction early and keep the central idea present through design and delivery.",
   aboutStatement: "Creative direction, from the larger idea to the individual experience.",
   leadershipStatement: "Direction that a team can build on.",
   leadershipSummary:
