@@ -146,7 +146,7 @@ export function getApproachExamples(stepId: string) {
 // Each core project contributes its hero (or first image) first, then projects with more imagery
 // contribute a second and a third, smaller tile, until the limit. Projects whose only assets are diagrams
 // (platform maps, concept diagrams) stay out of the field and are reached from Work.
-export const LANDING_TILE_LIMIT = 14;
+export const LANDING_TILE_LIMIT = 20;
 const IMAGE_TYPES: Asset["type"][] = ["photo", "render"];
 
 export interface LandingTile {

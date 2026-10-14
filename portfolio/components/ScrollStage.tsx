@@ -10,7 +10,7 @@ import { debug } from "@/lib/debug";
 // (strength 0.55 of the viewport, eased 0.10 per frame), so the statement and the tiles move
 // together. Tiles are sized from data-size (1 to 5, lerp 240 to 520px with small jitter) and
 // placed on a golden-ish spiral around a safe zone padded 64px around the statement, never
-// overlapping each other (130px gap) and never leaving the canvas (60px edge padding), so the
+// overlapping each other (80px gap, scaled with the window) and never leaving the canvas (60px edge padding), so the
 // field spreads to the edges of the view with generous space between tiles. The
 // random source is seeded, so the field is the same on every visit at a given viewport.
 //
@@ -25,7 +25,7 @@ const MIN_TILE_W = 180;
 const MAX_TILE_W = 440;
 const SIZE_JITTER = 0.14;
 const SAFE_ZONE_PADDING = 64;
-const MIN_GAP = 130;
+const MIN_GAP = 80;
 const SPIRAL_TURN = 0.62;
 const RADIAL_STEP = 170;
 const JITTER = 110;
@@ -53,6 +53,10 @@ const inflate = (r: Rect, pad: number): Rect => ({ x: r.x - pad, y: r.y - pad, w
 
 function layout(canvas: HTMLElement, headline: HTMLElement | null, tiles: HTMLElement[], avoid: HTMLElement[] = []) {
   const rand = mulberry32(SEED);
+  // The canvas is 300vw by 300vh, so on a smaller window it holds fewer pixels. Tile sizes and
+  // gaps scale with the window (full size from 1800px wide) so the field never crowds.
+  const k = clamp(window.innerWidth / 1800, 0.6, 1);
+  const minGap = MIN_GAP * k;
   // Reset sizes so the base CSS size (and its aspect ratio) can be read again.
   tiles.forEach((el) => {
     el.style.width = "";
@@ -65,7 +69,7 @@ function layout(canvas: HTMLElement, headline: HTMLElement | null, tiles: HTMLEl
     const raw = parseFloat(el.dataset.size || "");
     let t = Number.isFinite(raw) ? (clamp(raw, SIZE_MIN, SIZE_MAX) - SIZE_MIN) / (SIZE_MAX - SIZE_MIN) : rand();
     t = clamp(t + (rand() - 0.5) * 2 * SIZE_JITTER, 0, 1);
-    const w = lerp(MIN_TILE_W, MAX_TILE_W, t);
+    const w = lerp(MIN_TILE_W, MAX_TILE_W, t) * k;
     el.style.width = `${Math.round(w)}px`;
     el.style.height = `${Math.round(w / aspect)}px`;
   });
@@ -118,7 +122,7 @@ function layout(canvas: HTMLElement, headline: HTMLElement | null, tiles: HTMLEl
     for (let t = 0; t < MAX_TRIES_PER_TILE; t++) {
       const candidate = toRect(spiral(idx + t * 0.06));
       if (keepClear.some((r) => overlaps(candidate, r))) continue;
-      const padded = inflate(candidate, MIN_GAP);
+      const padded = inflate(candidate, minGap);
       if (placed.some((r) => overlaps(padded, r))) continue;
       chosen = candidate;
       break;
@@ -127,7 +131,7 @@ function layout(canvas: HTMLElement, headline: HTMLElement | null, tiles: HTMLEl
     el.style.position = "absolute";
     el.style.left = `${chosen.x}px`;
     el.style.top = `${chosen.y}px`;
-    placed.push(inflate(chosen, MIN_GAP));
+    placed.push(inflate(chosen, minGap));
   });
   return true;
 }

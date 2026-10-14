@@ -8,7 +8,7 @@ import { openai } from "./openai";
 import { kilroyOysterPoint } from "./kilroy-oyster-point";
 import { wattPlaza } from "./watt-plaza";
 import { googleTokyoPartnerPlex } from "./google-tokyo-partner-plex";
-import { extendedProjects } from "./extended";
+import { moreWork } from "./more-work";
 
 // To add a project: create a file in this folder that exports a ProjectBundle, add the source
 // images to public/projects/<slug>/, and append the bundle here. Layout code never changes.
@@ -24,5 +24,5 @@ export const projectBundles: ProjectBundle[] = [
   kilroyOysterPoint,
   wattPlaza,
   googleTokyoPartnerPlex,
-  ...extendedProjects,
+  ...moreWork,
 ];

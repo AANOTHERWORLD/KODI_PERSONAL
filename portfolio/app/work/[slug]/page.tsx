@@ -60,15 +60,15 @@ function Glance({ bundle }: { bundle: ProjectBundle }) {
   const { project } = bundle;
   return (
     <dl className="glance" aria-label="At a glance">
-      <div className="glance__item"><dt>Client</dt><dd>{project.clientDisplayName}</dd></div>
-      <div className="glance__item"><dt>Location</dt><dd>{project.location}</dd></div>
-      <div className="glance__item"><dt>Years</dt><dd>{project.years}</dd></div>
+      {project.clientDisplayName && <div className="glance__item"><dt>Client</dt><dd>{project.clientDisplayName}</dd></div>}
+      {project.location && <div className="glance__item"><dt>Location</dt><dd>{project.location}</dd></div>}
+      {project.years && <div className="glance__item"><dt>Years</dt><dd>{project.years}</dd></div>}
       <div className="glance__item"><dt>Status</dt><dd>{STATUS_LABEL[project.status]}{project.statusNote ? `. ${project.statusNote}` : ""}</dd></div>
       <div className="glance__item glance__item--wide"><dt>Role</dt><dd>{project.role}<ClaimList claims={getClaims(bundle, "role")} /></dd></div>
-      <div className="glance__item glance__item--wide"><dt>Scope</dt><dd>{project.scope}</dd></div>
+      {project.scope && <div className="glance__item glance__item--wide"><dt>Scope</dt><dd>{project.scope}</dd></div>}
       <div className="glance__item"><dt>Practice</dt><dd>{project.practice}</dd></div>
-      <div className="glance__item"><dt>Team</dt><dd>{project.team.join(", ")}</dd></div>
-      <div className="glance__item"><dt>Collaborators</dt><dd>{project.collaborators.length ? project.collaborators.join("; ") : "See credits"}</dd></div>
+      {project.team.length > 0 && <div className="glance__item"><dt>Team</dt><dd>{project.team.join(", ")}</dd></div>}
+      {project.collaborators.length > 0 && <div className="glance__item"><dt>Collaborators</dt><dd>{project.collaborators.join("; ")}</dd></div>}
       <div className="glance__item"><dt>Lenses</dt><dd><LensTags lenses={project.lenses} /></dd></div>
     </dl>
   );
@@ -83,10 +83,10 @@ function Credits({ bundle }: { bundle: ProjectBundle }) {
       <dl className="credits">
         <div><dt>Originating practice</dt><dd>{project.practice}</dd></div>
         <div><dt>Personal involvement</dt><dd>{narrative.involvement}</dd></div>
-        <div><dt>Team</dt><dd><ul>{project.team.map((t) => <li key={t}>{t}</li>)}</ul></dd></div>
-        <div><dt>Collaborators</dt><dd>{project.collaborators.length ? <ul>{project.collaborators.map((c) => <li key={c}>{c}</li>)}</ul> : "To be confirmed"}</dd></div>
+        {project.team.length > 0 && <div><dt>Team</dt><dd><ul>{project.team.map((t) => <li key={t}>{t}</li>)}</ul></dd></div>}
+        {project.collaborators.length > 0 && <div><dt>Collaborators</dt><dd><ul>{project.collaborators.map((c) => <li key={c}>{c}</li>)}</ul></dd></div>}
         <div><dt>Photography and imagery</dt><dd>{[narrative.photographyCredit, narrative.imageCredit].filter(Boolean).join(" ") || "See captions"}</dd></div>
-        <div><dt>Further credits</dt><dd>{credits.length ? <ClaimList claims={credits} /> : "None pending"}</dd></div>
+        {credits.length > 0 && <div><dt>Further credits</dt><dd><ClaimList claims={credits} /></dd></div>}
       </dl>
     </section>
   );

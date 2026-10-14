@@ -19,6 +19,7 @@ const TYPE_LABEL: Record<Asset["type"], string> = {
   plan: "Plan",
   diagram: "Diagram",
   process: "Process",
+  graphic: "Identity and graphics",
 };
 
 // Server component. Emits a responsive <img> with srcset, sizes, explicit width and height

@@ -19,7 +19,7 @@ export interface Lens {
 export type ProjectStatus = "completed" | "in-progress" | "concept";
 export type Permission = "confirmed" | "pending";
 export type ClaimStatus = "verified" | "awaiting" | "omit";
-export type AssetType = "photo" | "render" | "concept" | "plan" | "diagram" | "process";
+export type AssetType = "photo" | "render" | "concept" | "plan" | "diagram" | "process" | "graphic";
 export type Tier = "core" | "extended";
 export type CaseStudyKind = "full" | "light";
 
