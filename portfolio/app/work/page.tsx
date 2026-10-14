@@ -16,17 +16,21 @@ export default function WorkPage() {
   const counts = getLensCounts();
   const hero = core.length ? getHeroAsset(core[0]) : null;
   return (
-    <div className="wrap">
-      <section className="page-head" aria-labelledby="work-title">
-        <p className="tag">Work</p>
-        <h1 id="work-title" className="page-head__title">One direction, expressed at different scales</h1>
-        <p className="lede">Selected projects spanning places, experiences, and brand expression. Each begins with a clear idea and shows the decisions, collaboration, and details that carry it forward.</p>
-      </section>
-      {hero && (
-        <div className="work-hero" data-reveal>
-          <Picture asset={hero} showCaption={false} fit="cover" sizes="100vw" priority />
+    <>
+      <section className="work-banner" aria-labelledby="work-title" data-header-invert>
+        {hero && (
+          <div className="work-banner__media">
+            <Picture asset={hero} showCaption={false} fit="cover" sizes="100vw" priority />
+          </div>
+        )}
+        <div className="work-banner__scrim" aria-hidden="true" />
+        <div className="work-banner__text wrap">
+          <p className="tag">Work</p>
+          <h1 id="work-title" className="work-banner__title">One direction, expressed at different scales</h1>
+          <p className="work-banner__lede">Selected projects spanning places, experiences, and brand expression. Each begins with a clear idea and shows the decisions, collaboration, and details that carry it forward.</p>
         </div>
-      )}
+      </section>
+      <div className="wrap">
       <LensProvider>
         <div className="lens-filter" aria-label="Highlight by lens">
           <p className="tag">Highlight by lens. The order never changes.</p>
@@ -42,6 +46,7 @@ export default function WorkPage() {
           </p>
         )}
       </LensProvider>
-    </div>
+      </div>
+    </>
   );
 }
