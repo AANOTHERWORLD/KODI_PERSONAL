@@ -1688,21 +1688,111 @@ ol {
   }
 }
 
-/* Project page: a single scroll column, no sticky elements, generous spacing. */
-.project-hero {
-  padding-block: clamp(6rem, 14vh, 9rem) var(--space-4);
+/* Project page: editorial spreads. The hero sits beside the title and In Brief text, narrative
+   sections sit beside their images, and the project information closes the page. */
+.project-opening {
+  padding-block: clamp(6.5rem, 14vh, 9rem) var(--space-5);
+  display: grid;
+  gap: var(--space-4);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .project-opening {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: var(--space-5);
+    min-height: min(100vh, 52rem);
+  }
+}
+/* Contain-fit images shrink-wrap, so the shadow follows the picture and not an empty box. */
+.project-opening__media .picture__media,
+.spread__media .picture__media {
+  width: fit-content;
+  max-width: 100%;
+}
+.project-opening__media .picture__media img,
+.spread__media .picture__media img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 80vh;
+}
+.project-opening__media .picture__media {
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+.spread .statement {
+  font-size: calc(var(--text-body) * 1.4);
+  line-height: 1.3;
+  max-width: 34ch;
+}
+.project-opening__text {
+  max-width: 34rem;
 }
 .project-hero__title {
   font-size: var(--text-page);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
   max-width: 16ch;
+  margin: 0.5rem 0 var(--space-2);
 }
 .project-hero__thesis {
-  font-size: calc(var(--text-body) * 1.2);
+  font-size: calc(var(--text-body) * 1.1);
   line-height: 1.4;
-  max-width: 48ch;
+  color: var(--ink-muted);
+  margin: 0 0 var(--space-3);
 }
-.project-hero__media {
+.project-opening__brief {
+  border-top: 1px solid var(--ink-faint);
+  padding-top: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+.project-opening__brief .tag {
+  margin-bottom: 0.7rem;
+}
+.project-opening__brief p:not(.tag) {
+  font-size: calc(var(--text-body) * 0.98);
+  line-height: 1.55;
+  margin: 0 0 0.9rem;
+}
+.project-opening__brief p:nth-child(2) {
+  font-size: calc(var(--text-body) * 1.2);
+  line-height: 1.42;
+  color: var(--ink);
+}
+.spread {
+  display: grid;
+  gap: var(--space-4);
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .spread {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: var(--space-5);
+  }
+  .spread--media-left .spread__media {
+    order: -1;
+  }
+  .spread--media-left {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  }
+  .spread__media {
+    position: sticky;
+    top: 6.5rem;
+  }
+}
+.spread__media .picture__media {
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12), 0 2px 5px rgba(0, 0, 0, 0.07);
+}
+.project-info__credits {
   margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--ink-faint);
+}
+.project-info__credits > .tag {
+  margin-bottom: var(--space-2);
+}
+.project-info .glance {
+  border-bottom: 0;
+  padding-bottom: 0;
 }
 .glance {
   border-top: 1px solid var(--ink-faint);
@@ -1814,14 +1904,17 @@ ol {
   max-width: 40ch;
 }
 .gallery {
-  display: grid;
-  gap: var(--space-4);
+  display: block;
 }
 @media (min-width: 800px) {
   .gallery {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: start;
+    columns: 2;
+    column-gap: var(--space-4);
   }
+}
+.gallery > * {
+  break-inside: avoid;
+  margin: 0 0 var(--space-4);
 }
 .credits {
   display: grid;

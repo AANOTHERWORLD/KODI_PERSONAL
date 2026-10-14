@@ -6,7 +6,7 @@ import Picture from "@/components/Picture";
 import LensTags from "@/components/LensTags";
 import DraftBadge from "@/components/DraftBadge";
 import { STATUS_LABEL } from "@/components/WorkCard";
-import type { Claim, ProjectBundle } from "@/content/types";
+import type { Asset, Claim, ProjectBundle } from "@/content/types";
 
 export const dynamicParams = false;
 
@@ -37,20 +37,34 @@ function ClaimList({ claims }: { claims: Claim[] }) {
   );
 }
 
+// Editorial opening: the hero image sits beside the title, proposition, and the In Brief text,
+// so the first screen reads as one spread. Projects without a short summary lead with the first
+// paragraph of their challenge.
 function Opening({ bundle }: { bundle: ProjectBundle }) {
-  const { project } = bundle;
+  const { project, narrative } = bundle;
   const hero = getHeroAsset(bundle);
+  const brief = narrative.summary?.length ? narrative.summary : narrative.challenge.slice(0, 1);
   return (
-    <header className="project-hero">
-      <p className="tag">
-        {project.tier === "core" ? `${String(project.sequence).padStart(2, "0")} ${project.portfolioRole}` : project.portfolioRole}
-        {project.status !== "completed" && <> <span className="tag tag--status">{STATUS_LABEL[project.status]}</span></>}
-      </p>
-      {project.permission === "pending" && <DraftBadge note={project.permissionNote} />}
-      <h1 className="project-hero__title">{project.title}</h1>
-      <p className="project-hero__thesis">{project.thesis}</p>
-      <div className="project-hero__media">
-        {hero ? <Picture asset={hero} priority sizes="(min-width: 1280px) 1280px, 100vw" showLens /> : <div className="picture__placeholder">Hero image pending</div>}
+    <header className="project-opening">
+      <div className="project-opening__media">
+        {hero ? <Picture asset={hero} priority sizes="(min-width: 900px) 52vw, 100vw" showLens /> : <div className="picture__placeholder">Hero image pending</div>}
+      </div>
+      <div className="project-opening__text">
+        <p className="tag">
+          {project.tier === "core" ? `${String(project.sequence).padStart(2, "0")} ${project.portfolioRole}` : project.portfolioRole}
+          {project.status !== "completed" && <> <span className="tag tag--status">{STATUS_LABEL[project.status]}</span></>}
+        </p>
+        {project.permission === "pending" && <DraftBadge note={project.permissionNote} />}
+        <h1 className="project-hero__title">{project.title}</h1>
+        <p className="project-hero__thesis">{project.thesis}</p>
+        {brief.length > 0 && (
+          <div className="project-opening__brief">
+            <p className="tag">In brief</p>
+            {brief.map((p, i) => <p key={i}>{p}</p>)}
+          </div>
+        )}
+        <ClaimList claims={getClaims(bundle, "context")} />
+        <LensTags lenses={project.lenses} />
       </div>
     </header>
   );
@@ -74,12 +88,22 @@ function Glance({ bundle }: { bundle: ProjectBundle }) {
   );
 }
 
+function ProjectInfo({ bundle }: { bundle: ProjectBundle }) {
+  return (
+    <section className="project-section project-info" aria-labelledby="project-info">
+      <div className="project-section__head"><p className="tag">Project information</p><h2 id="project-info" className="section__title">At a glance</h2></div>
+      <Glance bundle={bundle} />
+      <Credits bundle={bundle} />
+    </section>
+  );
+}
+
 function Credits({ bundle }: { bundle: ProjectBundle }) {
   const { project, narrative } = bundle;
   const credits = getClaims(bundle, "credits");
   return (
-    <section className="project-section" aria-labelledby="credits">
-      <div className="project-section__head"><p className="tag">Credits</p><h2 id="credits" className="section__title">Who did what</h2></div>
+    <div className="project-info__credits">
+      <p className="tag">Credits</p>
       <dl className="credits">
         <div><dt>Originating practice</dt><dd>{project.practice}</dd></div>
         <div><dt>Personal involvement</dt><dd>{narrative.involvement}</dd></div>
@@ -88,7 +112,7 @@ function Credits({ bundle }: { bundle: ProjectBundle }) {
         <div><dt>Photography and imagery</dt><dd>{[narrative.photographyCredit, narrative.imageCredit].filter(Boolean).join(" ") || "See captions"}</dd></div>
         {credits.length > 0 && <div><dt>Further credits</dt><dd><ClaimList claims={credits} /></dd></div>}
       </dl>
-    </section>
+    </div>
   );
 }
 
@@ -140,6 +164,31 @@ function DecisionBlocks({ bundle }: { bundle: ProjectBundle }) {
   );
 }
 
+function Section({ id, tag, title, asset, side, children }: { id: string; tag: string; title: string; asset?: Asset | null; side: "left" | "right"; children: React.ReactNode }) {
+  if (!asset) {
+    return (
+      <section className="project-section" aria-labelledby={id}>
+        <div className="grid-2">
+          <div className="project-section__head"><p className="tag">{tag}</p><h2 id={id} className="section__title">{title}</h2></div>
+          <div className="prose">{children}</div>
+        </div>
+      </section>
+    );
+  }
+  return (
+    <section className="project-section" aria-labelledby={id}>
+      <div className={`spread ${side === "left" ? "spread--media-left" : ""}`}>
+        <div className="spread__text">
+          <div className="project-section__head"><p className="tag">{tag}</p><h2 id={id} className="section__title">{title}</h2></div>
+          <div className="prose">{children}</div>
+        </div>
+        <div className="spread__media"><Picture asset={asset} sizes="(min-width: 900px) 50vw, 100vw" showLens /></div>
+      </div>
+    </section>
+  );
+}
+
+// Remaining images flow as a two-column mosaic that keeps each image's own proportions.
 function Gallery({ assets, title }: { assets: ProjectBundle["assets"]; title: string }) {
   if (!assets.length) return null;
   return (
@@ -156,39 +205,26 @@ function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
   const { project, narrative, decisions } = bundle;
   const assets = visibleAssets(bundle);
   const usedIds = new Set<string>([project.heroAssetId, ...decisions.flatMap((d) => d.assetIds), ...(narrative.scaleTranslation.map((s) => s.assetId).filter(Boolean) as string[])]);
-  const gallery = assets.filter((a) => !usedIds.has(a.id));
+  const pool = assets.filter((a) => !usedIds.has(a.id));
+  // Each narrative section takes the next unused image and sits beside it, alternating sides.
+  const next = () => pool.shift() ?? null;
+  const challengeImg = next();
+  const visionImg = next();
+  const leadershipImg = next();
+  const outcomeImg = next();
   return (
     <article className="wrap">
       <Opening bundle={bundle} />
-      <Glance bundle={bundle} />
 
-      {narrative.summary && narrative.summary.length > 0 && (
-        <section className="project-section project-section--lead" aria-label="In brief">
-          <div className="grid-2">
-            <div className="project-section__head"><p className="tag">In brief</p></div>
-            <div className="prose">{narrative.summary.map((p, i) => <p key={i} className={i === 0 ? "statement statement--small" : undefined}>{p}</p>)}</div>
-          </div>
-        </section>
-      )}
-      <section className="project-section" aria-labelledby="challenge">
-        <div className="grid-2">
-          <div className="project-section__head"><p className="tag">Context</p><h2 id="challenge" className="section__title">The challenge</h2></div>
-          <div className="prose">
-            {narrative.challenge.map((p, i) => <p key={i}>{p}</p>)}
-            <ClaimList claims={getClaims(bundle, "context")} />
-          </div>
-        </div>
-      </section>
+      <Section id="challenge" tag="Context" title="The challenge" asset={narrative.summary?.length ? challengeImg : null} side="right">
+        {narrative.challenge.map((p, i) => <p key={i}>{p}</p>)}
+        <ClaimList claims={getClaims(bundle, "context")} />
+      </Section>
 
-      <section className="project-section" aria-labelledby="vision">
-        <div className="grid-2">
-          <div className="project-section__head"><p className="tag">Insight and vision</p><h2 id="vision" className="section__title">The idea that guided the team</h2></div>
-          <div className="prose">
-            {narrative.insight.map((p, i) => <p key={`i-${i}`} className="statement">{p}</p>)}
-            {narrative.vision.map((p, i) => <p key={`v-${i}`}>{p}</p>)}
-          </div>
-        </div>
-      </section>
+      <Section id="vision" tag="Insight and vision" title="The idea that guided the team" asset={visionImg} side="left">
+        {narrative.insight.map((p, i) => <p key={`i-${i}`} className="statement">{p}</p>)}
+        {narrative.vision.map((p, i) => <p key={`v-${i}`}>{p}</p>)}
+      </Section>
 
       <DecisionBlocks bundle={bundle} />
 
@@ -210,56 +246,34 @@ function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
         </div>
       </section>
 
-      <section className="project-section" aria-labelledby="leadership">
-        <div className="grid-2">
-          <div className="project-section__head"><p className="tag">Leadership and collaboration</p><h2 id="leadership" className="section__title">What was led, and by whom</h2></div>
-          <div className="prose">
-            {narrative.leadership.map((p, i) => <p key={i}>{p}</p>)}
-            {narrative.leadershipMoment && (<><p className="tag">A moment of alignment</p><p>{narrative.leadershipMoment}</p></>)}
-            <ClaimList claims={getClaims(bundle, "leadership")} />
-          </div>
-        </div>
-      </section>
+      <Section id="leadership" tag="Leadership and collaboration" title="What was led, and by whom" asset={leadershipImg} side="right">
+        {narrative.leadership.map((p, i) => <p key={i}>{p}</p>)}
+        {narrative.leadershipMoment && (<><p className="tag">A moment of alignment</p><p>{narrative.leadershipMoment}</p></>)}
+        <ClaimList claims={getClaims(bundle, "leadership")} />
+      </Section>
 
-      <section className="project-section" aria-labelledby="outcome">
-        <div className="grid-2">
-          <div className="project-section__head"><p className="tag">Outcome and reflection</p><h2 id="outcome" className="section__title">What was delivered</h2></div>
-          <div className="prose">
-            {narrative.outcome.map((p, i) => <p key={i}>{p}</p>)}
-            <ClaimList claims={getClaims(bundle, "outcome")} />
-            {narrative.reflection && (<><p className="tag">Reflection</p><p className="statement statement--small">{narrative.reflection}</p></>)}
-          </div>
-        </div>
-      </section>
+      <Section id="outcome" tag="Outcome and reflection" title="What was delivered" asset={outcomeImg} side="left">
+        {narrative.outcome.map((p, i) => <p key={i}>{p}</p>)}
+        <ClaimList claims={getClaims(bundle, "outcome")} />
+        {narrative.reflection && (<><p className="tag">Reflection</p><p className="statement statement--small">{narrative.reflection}</p></>)}
+      </Section>
 
-      <Gallery assets={gallery} title="Additional material" />
-      <Credits bundle={bundle} />
+      <Gallery assets={pool} title="More views" />
+      <ProjectInfo bundle={bundle} />
       <Related bundle={bundle} />
     </article>
   );
 }
 
 function LightTemplate({ bundle }: { bundle: ProjectBundle }) {
-  const { project, narrative } = bundle;
+  const { project } = bundle;
   const assets = visibleAssets(bundle).filter((a) => a.id !== project.heroAssetId && !bundle.decisions.some((d) => d.assetIds.includes(a.id)));
   return (
     <article className="wrap">
       <Opening bundle={bundle} />
-      <Glance bundle={bundle} />
-      <section className="project-section" aria-labelledby="story">
-        <div className="grid-2">
-          <div className="project-section__head"><p className="tag">The work</p><h2 id="story" className="section__title">Context, idea, and what was made</h2></div>
-          <div className="prose">
-            {(narrative.summary ?? []).map((p, i) => <p key={i}>{p}</p>)}
-            <ClaimList claims={getClaims(bundle, "context")} />
-            <ClaimList claims={getClaims(bundle, "leadership")} />
-            <ClaimList claims={getClaims(bundle, "outcome")} />
-          </div>
-        </div>
-      </section>
       {bundle.decisions.length > 0 && <DecisionBlocks bundle={{ ...bundle, decisions: bundle.decisions.slice(0, 1) }} />}
       <Gallery assets={assets} title="Views" />
-      <Credits bundle={bundle} />
+      <ProjectInfo bundle={bundle} />
       <Related bundle={bundle} />
     </article>
   );
