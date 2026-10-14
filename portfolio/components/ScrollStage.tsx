@@ -9,7 +9,7 @@ import { debug } from "@/lib/debug";
 // > statement (centered in the canvas) + tiles (absolute). The canvas pans against the mouse
 // (strength 0.55 of the viewport, eased 0.10 per frame), so the statement and the tiles move
 // together. Tiles are sized from data-size (1 to 5, lerp 240 to 520px with small jitter) and
-// placed on a golden-ish spiral around a safe zone padded 140px around the statement, never
+// placed on a golden-ish spiral around a safe zone padded 64px around the statement, never
 // overlapping each other (130px gap) and never leaving the canvas (60px edge padding), so the
 // field spreads to the edges of the view with generous space between tiles. The
 // random source is seeded, so the field is the same on every visit at a given viewport.
@@ -24,10 +24,10 @@ const SIZE_MAX = 5;
 const MIN_TILE_W = 180;
 const MAX_TILE_W = 440;
 const SIZE_JITTER = 0.14;
-const SAFE_ZONE_PADDING = 140;
+const SAFE_ZONE_PADDING = 64;
 const MIN_GAP = 130;
 const SPIRAL_TURN = 0.62;
-const RADIAL_STEP = 210;
+const RADIAL_STEP = 170;
 const JITTER = 110;
 const MAX_TRIES_PER_TILE = 900;
 const SEED = 1337;
