@@ -27,13 +27,16 @@ interface Spec {
 
 const SENIOR_ROLE = "Senior Designer, Rapt Studio, working directly with the creative director and account lead";
 const DIRECTOR_ROLE = "Design Director, Rapt Studio, partnering with the creative director";
+const DESIGNER_ROLE = "Designer, Rapt Studio, working directly with the creative director and account lead";
 const NEUTRAL_ROLE = "Rapt Studio, working directly with the creative director";
 // Titles follow the project dates: Senior Designer before 2024, Design Director from 2024,
-// with Club Gemini and A Place at the Table confirmed as Design Director.
+// with Lightspark, Club Gemini and A Place at the Table confirmed as Design Director,
+// April Jean as Senior Designer, and Mama Rouge (2016) as Designer.
 // Projects without a confirmed title carry none.
 function roleFor(id: string) {
-  if (id === "the-mark") return SENIOR_ROLE;
-  if (["napa-retreat", "club-gemini", "place-at-table"].includes(id)) return DIRECTOR_ROLE;
+  if (id === "the-mark" || id === "april-jean") return SENIOR_ROLE;
+  if (id === "mama-rouge") return DESIGNER_ROLE;
+  if (["napa-retreat", "club-gemini", "place-at-table", "lightspark"].includes(id)) return DIRECTOR_ROLE;
   return NEUTRAL_ROLE;
 }
 
@@ -112,7 +115,7 @@ const specs: Spec[] = [
     summary: [
       "Lightspark's workplace sits beneath exposed timber trusses, where a dark stair and black millwork volumes organize the floor into places to work, meet, and pause.",
       "Within that structure, a library alcove of collected objects, a lounge beneath the company mark, and a shared kitchen under a typographic light fixture give the brand a physical presence in everyday spaces.",
-      "I worked directly with the creative director and the Rapt Studio team on the design. The photographs show the completed interior.",
+      "I led the design with the Rapt Studio team, partnering with the creative director. The photographs show the completed interior.",
     ],
     years: "",
     location: "",
@@ -144,9 +147,9 @@ const specs: Spec[] = [
     summary: [
       "Mama Rouge is a restaurant interior in which saturated red lacquer, patterned banquettes, and warm timber tables meet a tin ceiling and an oval soffit holding a golden fiber chandelier.",
       "Cast ornamental screens, a mirrored back bar, and a corridor of streaking yellow and red light lead guests between rooms, so detail and atmosphere carry the identity as much as the plan does.",
-      "I worked directly with the creative director and the Rapt Studio team on the design. The photographs show the completed restaurant.",
+      "As designer, I worked directly with the creative director and account lead to develop concepts and design strategy, from early development through delivery and execution. The photographs show the completed restaurant.",
     ],
-    years: "",
+    years: "2016",
     location: "",
     relatedProject: "kilroy-oyster-point",
     heroIndex: 1,
@@ -178,7 +181,7 @@ const specs: Spec[] = [
     summary: [
       "Bar April Jean pairs a flowing script wordmark with a palette of rust red and deep green, and carries it through a collage illustration style, menus, social posts, and a projecting sign on a green corner building.",
       "At the bar itself, the identity meets the everyday: hands, glasses, and printed menus on stands, with warm timber and a full back bar.",
-      "I worked directly with the creative director and the Rapt Studio team on the design. The images combine photographs of the bar with identity and signage design.",
+      "As senior designer, I worked directly with the creative director and account lead to develop concepts and design strategy, from early development through delivery and execution. The images combine photographs of the bar with identity and signage design.",
     ],
     years: "",
     location: "",
