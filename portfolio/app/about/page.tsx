@@ -70,7 +70,7 @@ export default function AboutPage() {
           <div className="grid-2">
             <div><p className="tag">Recognition</p><h2 id="recognition" className="section__title">Selected project recognition</h2></div>
             <ul className="ruled-list">
-              {recognition.map((claim) => <li key={claim.id}>{claim.wording}</li>)}
+              {recognition.map((claim) => <li key={claim.id}>{claim.url ? <a href={claim.url} rel="noopener" data-sweep className="sweep-link">{claim.wording}</a> : claim.wording}</li>)}
             </ul>
           </div>
         </section>

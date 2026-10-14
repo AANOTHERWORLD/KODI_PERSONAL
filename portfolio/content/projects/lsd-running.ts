@@ -7,13 +7,13 @@ export const lsdRunning: ProjectBundle = {
     id,
     title: "LSD Running",
     slug: id,
-    thesis: "A small store shaped by craft, curation, and community.",
+    thesis: "A brand language carried from mark to room to image.",
     clientDisplayName: "LSD Running",
     practice: "Rapt Studio, Los Angeles",
     location: "Echo Park, Los Angeles, California",
     years: "2023 to 2024",
-    status: "concept",
-    statusNote: "Design handoff. Built status unconfirmed; the images shown are design visualizations.",
+    status: "completed",
+    statusNote: "The supplied photographs and film document the built space.",
     role: "Creative and Strategy Lead, Rapt Studio",
     scope:
       "An on-site workshop covering the store, brand identity, and online presence, then concept design through five schemes to a synthesized final design, and handoff to the fabricator, including expansion into the adjacent space.",
@@ -25,8 +25,8 @@ export const lsdRunning: ProjectBundle = {
     inPdf: true,
     landingTile: true,
     portfolioRole: "Identity in detail",
-    typeLabel: "Retail store concept",
-    disciplines: "Retail design, Brand, Fabrication handoff",
+    typeLabel: "Retail store and brand language",
+    disciplines: "Brand language, Retail design, Art direction",
     sequence: 8,
     tileSize: 2,
     relatedProject: "google-room-98",
@@ -37,16 +37,20 @@ export const lsdRunning: ProjectBundle = {
   narrative: {
     projectId: id,
     summary: [
-      "LSD Running brings product, material, and gathering into a compact retail concept. Concealed storage keeps the experience focused, adaptable furniture supports different uses, and the brand's ripstop material becomes part of the interior itself.",
-      "I led the client workshop and directed the team's exploration through five schemes, bringing their strongest ideas into one design. The final direction connected the brand's values to practical decisions about display, storage, and community use.",
-      "The design was handed to the fabricator. Built status remains unconfirmed; the images shown are design visualizations.",
+      "I worked with the client to develop a brand language and art direction for LSD Running, connecting the identity, the store and the way the brand would be photographed. The aim was to give a new running retailer a distinct point of view that could hold together its own ambitions and the products it curated from other brands.",
+      "We began by looking at what luxury could mean within running culture. The workshops brought the conversation back to curation, craft and expertise, and transparency: fewer, more considered elements, a place to discover and understand products, and an honest way of telling their stories.",
+    ],
+    story: [
+      "That thinking carried from the logo mark into the fixtures and materials of the space, and into the direction for product photography and lifestyle shoots. We treated these as connected decisions. The store could give photography its setting, while the images extended the character of the physical space beyond its walls.",
+      "Curved metal tubes, stone supports, a continuous clothing rail and a central rock display gave the brand a physical vocabulary. The same elements could frame a shoe, support a display or become a place to sit. They brought together the precision of technical equipment and the roughness of outdoor terrain.",
+      "The work established a direction the client could keep building on, from the scale of a mark to the atmosphere of a room and the composition of an image.",
     ],
     challenge: [
       "LSD Running, named for long slow distance running, was opening its first store at 1533 Echo Park Avenue. The plan was to sell international brands new to the United States, then move toward its own products. Community sat at the center of the business: run clubs, events, and races.",
       "The store had to do four things in a small footprint. Express luxury without the usual signals of it. Host a running community in the evening and sell shoes during the day. Support product testing on the floor. And manage a heavy shoe inventory without letting boxes define the room.",
     ],
     insight: [
-      "The workshop distilled luxury into three pillars for this brand: craft, curation, and innovation. Luxury here is attention rather than expense. If the store could show those three things in its objects, the brand would be recognizable before a customer read a label.",
+      "The workshop distilled luxury into three pillars for this brand: curation, craft and expertise, and transparency. Luxury here is attention rather than expense. If the store could show those three things in its objects, the brand would be recognizable before a customer read a label.",
     ],
     vision: [
       "We framed the design around three prompts. How might the store support product testing? What would a community-first store look like? How might the space manage storage efficiently? The answers would have to live in a handful of objects, because the room was too small for a concept to hide in.",
@@ -79,7 +83,7 @@ export const lsdRunning: ProjectBundle = {
     leadershipMoment:
       "The five schemes were strong in different ways, and the easy move was to pick one. Instead we treated them as a set of answers to the three prompts and combined them: the perimeter storage from the Functional scheme, the convertible modules from Communal, the landscape idea from Experiential, and the restraint of Minimal. The final design is a synthesis rather than a winner.",
     outcome: [
-      "The design was completed and handed to the fabricator, with expansion into the adjacent space included in the scope. The images shown are design visualizations of the final scheme.",
+      "The design was completed and handed to the fabricator, with expansion into the adjacent space included in the scope. Supplied photographs and film document the built space. Not every concept detail is proven built, and the renders shown alongside are design visualizations.",
     ],
     imageCredit: "Renders, axonometric drawings, and workshop photography by Rapt Studio, from the LSD Running project book.",
     involvement:

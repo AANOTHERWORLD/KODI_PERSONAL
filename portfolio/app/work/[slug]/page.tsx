@@ -250,6 +250,7 @@ function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
   const pool = assets.filter((a) => !usedIds.has(a.id) && a.id !== narrative.featuredPublication?.assetId);
   // Each narrative section takes the next unused image and sits beside it, alternating sides.
   const next = () => pool.shift() ?? null;
+  const storyImg = narrative.story?.length ? next() : null;
   const challengeImg = next();
   const visionImg = next();
   const leadershipImg = next();
@@ -258,6 +259,12 @@ function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
     <article className="wrap">
       <Opening bundle={bundle} />
       <FeaturedPublication bundle={bundle} />
+
+      {narrative.story && narrative.story.length > 0 && (
+        <Section id="story" tag="The story" title="How the work developed" asset={storyImg} side="right">
+          {narrative.story.map((p, i) => <p key={i}>{p}</p>)}
+        </Section>
+      )}
 
       <Section id="challenge" tag="Context" title="The challenge" asset={narrative.summary?.length ? challengeImg : null} side="right">
         {narrative.challenge.map((p, i) => <p key={i}>{p}</p>)}

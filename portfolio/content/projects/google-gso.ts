@@ -38,9 +38,14 @@ export const googleGso: ProjectBundle = {
   narrative: {
     projectId: id,
     summary: [
-      "Home of the Internet reframes data-center recruitment around the communities that make the network possible. The idea connects a global organization to local identity and creates a shared basis for communications, events, and learning experiences.",
-      "I led creative direction and strategy, from reframing the brief to shaping the platform and its expression in space. The Rapt Studio team developed the applications with Google stakeholders and local partners.",
-      "The platform has been developed into a wider set of tools and experiences. This case distinguishes delivered work from elements still in development; no recruitment or engagement uplift is claimed.",
+      "Our work with Google GSO began with its emerging learning programs: establishing the conceptual foundation for the experience and defining the physical environment that would support it.",
+      "Together with GSO, we developed a continual learning strategy that begins before recruitment and extends through onboarding, professional development and advancement.",
+    ],
+    story: [
+      "Research revealed that the opportunity extended beyond the classroom. Employees needed clearer paths to development, stronger connections across teams and room to learn alongside the pressures of daily work. Local communities also needed greater visibility into data center careers and how their existing skills might translate into those roles.",
+      "The brand work made the people, work and opportunities inside data centers more understandable to the communities around them. \"Home of the Internet\" connected an otherwise invisible global infrastructure to familiar places and the people who power it. Local storytelling, educational activities, recruiting materials and shared resources gave teams a foundation they could adapt to their communities.",
+      "The space work supported learning throughout an employee's career. Research into mentorship, practical learning and collaboration shaped settings for instruction, experimentation, reflection and informal exchange. Flexible classrooms and breakout areas supported different ways of learning, while shared spaces allowed relationships to develop beyond the curriculum. Arrival is a sequence of Transition, Compose and Mix, followed by instruction, simulation and sharing.",
+      "Brand and space supported the same commitment: making opportunity visible, making learning accessible and helping people develop over time. The engagement moved from the learning-program brief to research, then to the recruitment opportunity, the continual learning strategy, and finally external brand tools and an employee learning space. The spatial work explores two directions, shown as development studies.",
     ],
     challenge: [
       "Google's data centers were growing faster than the towns around them could understand. There was no shared marketing strategy for recruiting and retention. Efforts were local and inconsistent in a competitive hiring market, and data center work was poorly understood even inside Google. The brief, in July 2024, asked for a global and local strategy and roadmap aimed at local recruits and at existing Googlers, covering short-term needs and a scalable long-term platform.",

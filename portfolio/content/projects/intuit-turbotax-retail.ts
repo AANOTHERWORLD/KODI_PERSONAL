@@ -5,9 +5,9 @@ const id = "intuit-turbotax-retail";
 export const intuitTurbotaxRetail: ProjectBundle = {
   project: {
     id,
-    title: "Intuit TurboTax Retail, Wave 2",
+    title: "Intuit TurboTax Retail and Flagship",
     slug: id,
-    thesis: "One retail idea, expressed across formats.",
+    thesis: "Replacing financial stress with the experience of being helped.",
     clientDisplayName: "Intuit (TurboTax)",
     practice: "Rapt Studio",
     location: "United States, multiple markets",
@@ -32,7 +32,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
     landingTile: true,
     tiles: [{ x: -6, y: 12, depth: 2, order: 1 }],
     portfolioRole: "Flagship integration",
-    typeLabel: "Retail environments and playbook",
+    typeLabel: "Retail and flagship environments",
     disciplines: "Retail design, Brand experience, Strategy",
     sequence: 2,
     tileSize: 4,
@@ -45,9 +45,16 @@ export const intuitTurbotaxRetail: ProjectBundle = {
   narrative: {
     projectId: id,
     summary: [
-      "The TurboTax retail engagement connects a shared experience strategy with stores of different sizes and settings. The central idea of relief guides how the customer arrives, interacts with the service, and moves through the space.",
-      "I co-directed the engagement with another Rapt Studio design director and led the strategic structure connecting the playbook to the physical experience. The work brought different stakeholder needs into one framework while allowing individual locations to respond to their context.",
-      "The project is in progress. This case presents the design direction and system developed to date; the images are concept visualizations, not photographs of completed stores.",
+      "Intuit's Retail and Flagship explorations began with an emotional challenge: how could a physical environment replace the stress associated with managing money?",
+      "The concept work explored belonging, restoration, discovery and shared problem-solving as pathways toward confidence, connecting the atmosphere of the space to the experience of receiving help, from the first welcome to the privacy of a consultation.",
+    ],
+    story: [
+      "For Retail, the ambition was to make that care consistent across different footprints through clear arrivals, thoughtful intake, shared information and protected conversations. For Flagship, it extended into a broader neighborhood presence, where hospitality, learning and programming could build relationships throughout the year.",
+      "Confidence could emerge through tangible experiences: knowing where to go, understanding what was happening, feeling comfortable asking a question and trusting the person beside you.",
+      "Early workshops explored four service models, a members club, a spa, a lab and a theater. No single one became the concept; each contributed ideas about belonging, restoration, discovery and shared problem-solving.",
+      "Wave 1 findings pointed to acoustic crossover, difficult intake, obscured concierge sightlines and too little support space for staff. Wave 2 answers them with a visible welcome, seated intake, protected documents and privacy that increases as a customer moves deeper into the space. Offset seating and shared screens give customer and expert a common focus, so the conversation happens side by side. That is a design intention, not a measured reduction in stress.",
+      "In Chicago, the Tribune building's historic facade and plaza draw people toward an interior Forum. Early studies moved from circular geometry, planting and gathering to concierge, coffee, workbench and protected consultation spaces. Limited natural light and ceiling constraints made lighting and the overhead treatment significant decisions.",
+      "In Santa Monica, the space extends the public character of the Third Street Promenade. A proposed discovery interaction connects physical controls, a printed takeaway and phone sharing. It is a proposal, not a launched activation, and the images throughout are design visualizations.",
     ],
     challenge: [
       "TurboTax wanted a retail experience that could open in very different markets and still read as one brand. The stores had to work at three real sizes, Micro, Compact, and Core, serve walk-in discovery and appointment-based filing at the same time, and hold up for several Intuit teams whose priorities pulled in different directions: experience design, real estate, service design, marketing, and leadership.",

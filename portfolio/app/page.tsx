@@ -80,7 +80,7 @@ export default function HomePage() {
             <h2 id="work-heading" className="work-section__heading">Work</h2>
             <p className="work-section__range">&copy;{portfolio.workRangeLabel}</p>
             <p className="work-section__intro">
-              <strong>A clear idea, carried into experience.</strong> From workplaces and shared amenities to retail environments and brand platforms, these projects show how one idea can guide a team and take form at different scales.
+              <strong>a clear idea carried into tangible experiences</strong> From workplaces and shared amenities to retail environments and brand platforms, these projects show how one idea can guide a team and take form at different scales.
             </p>
           </div>
           <div className="work-section__cards">
@@ -134,8 +134,7 @@ export default function HomePage() {
                 <ul className="ruled-list">
                   {recognition.map((claim) => (
                     <li key={claim.id} className={`line-row ${claim.status === "awaiting" ? "claim--awaiting" : ""}`} data-reveal data-sweep>
-                      {claim.wording}
-                      {claim.status === "awaiting" && <> <span className="draft-marker draft-marker--on-accent">Awaiting verification</span></>}
+                      {claim.url ? <a href={claim.url} rel="noopener" data-sweep className="sweep-link">{claim.wording}</a> : claim.wording}
                       <span className="line-row__line" aria-hidden="true" />
                     </li>
                   ))}

@@ -23,7 +23,7 @@ export const portfolio: Portfolio = {
   // Confirm that the location should appear publicly.
   location: "Los Angeles",
   availability: "I am interested in Creative Director opportunities where spatial design, brand, and human experience meet.",
-  internationalAvailability: "Based in Los Angeles. Exploring international Creative Director opportunities with multidisciplinary design practices, particularly across Southeast Asia.",
+  internationalAvailability: "Based in Los Angeles. Exploring US-based and international Creative Director opportunities with multidisciplinary design practices.",
   versionDate: "2026-10-14",
   copyrightHolder: "Jamel Williams",
   workRangeLabel: "2010 to 26",

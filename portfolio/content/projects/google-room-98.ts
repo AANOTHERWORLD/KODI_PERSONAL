@@ -12,7 +12,7 @@ export const googleRoom98: ProjectBundle = {
     inPdf: true,
     landingTile: true,
     tiles: [{ x: 64, y: 72, depth: 2, order: 6 }],
-    thesis: "A shared idea for brand, space, and program.",
+    thesis: "A flexible, theatrical setting for an offering that keeps changing.",
     clientDisplayName: "Google, Customer Experience Center (Los Angeles)",
     practice: "Rapt Studio",
     location: "Playa Vista, Los Angeles, California",
@@ -37,9 +37,14 @@ export const googleRoom98: ProjectBundle = {
   narrative: {
     projectId: id,
     summary: [
-      "Room 98 uses the structure of theater to turn a presentation into active participation. The spatial sequence moves guests from watching to working together, connecting the identity of the center with the experience it hosts.",
-      "I led creative direction and strategy across naming, interiors, and program, working with the Rapt Studio team to develop these elements together.",
-      "This completed experience center demonstrates how a single idea can organize both a place and what happens within it.",
+      "Room 98 was designed to give physical form to an offering that is difficult to see and continually changing. The challenge was to make Google's capabilities relevant to different businesses while supporting new content, questions and ways of working.",
+      "We developed the space and experience together, using theater to organize a sequence of demonstration, exploration and decision-making.",
+    ],
+    story: [
+      "In the Presentation Room, light, sound and data establish a shared focus. A large screen then splits open, revealing the space beyond. Guests move through what had been the stage and take a more active role in the conversation.",
+      "Each setting supports a different relationship with information. A wall of light makes data visible at the scale of the room. Interactive tables invite smaller groups to investigate together. In the Deliberation Room, information is projected onto the floor, keeping people oriented toward one another as they compare options and discuss next steps.",
+      "Flexibility is built into the experience. Seats swivel as attention moves around the room. Tables change height to support different working postures. Lighting and media signal transitions and bring quiet architectural surfaces to life.",
+      "The environment can be staged around the customer and the question at hand, giving an evolving digital offering a setting where people can understand its relevance and begin to work with it.",
     ],
     challenge: [
       "Google wanted a place in Los Angeles to host executive customers, somewhere that would move a visit from presentation to working session, and that would carry a name and identity of its own rather than reading as a meeting suite. The space was small, 4,000 square feet, and the program was ambitious: a presentation room, a deliberation room, two collaboration rooms, and a sequence of sessions that had to feel designed rather than scheduled.",

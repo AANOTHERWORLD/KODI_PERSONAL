@@ -38,9 +38,14 @@ export const wattPlaza: ProjectBundle = {
   narrative: {
     projectId: id,
     summary: [
-      "Watt Plaza explores alternative directions for repositioning an existing building. AI-assisted visualization helped make the differences between those directions tangible enough to discuss before committing to detailed development.",
-      "I led the visual direction and AI workflow, defining references, evaluating outputs, and incorporating design feedback. Strategy, plans, and parts of the imagery were developed collaboratively within the studio.",
-      "The work remains an unbuilt concept. Its value in this portfolio is the relationship between exploration and judgment: how alternatives were presented, critiqued, and refined into a clearer direction.",
+      "Our work at Watt Plaza began with a focused request to improve the plaza and ground-floor experience. The earlier studies looked at access, planting, signage, seating and the relationship between the exterior and the service tenants experienced inside.",
+      "When the brief expanded, we reconsidered the building as a whole. We developed three potential futures, each taking a different position on the relationship between Watt Plaza, its tenants and Century City.",
+    ],
+    story: [
+      "Departure opened the building toward the neighborhood, with a public market, shared gardens and a more generous ground plane. Extension concentrated on the tenant experience, connecting the towers through private amenities and a more considered arrival. Expansion introduced an active retail and dining promenade, with tenant spaces overlooking the activity below.",
+      "I worked with the NY and LA teams to develop these concepts while leading the development of AI skills in the studio. We brought sketches, site information and architectural references into a shared workflow in Weave. These gave the studies a direction and a basis for reviewing what came back.",
+      "Drawing remained part of the process throughout. We marked up generated views to specify changes to the architecture, landscape and arrival experience, then used those drawings to guide further iterations. We could test a larger formal idea, review it at the scale of the building and return to specific decisions about access, planting or material.",
+      "The studies gave the client a way to compare futures for the building and discuss how much change each required. As the work developed, we tested material options and more limited interventions, connecting the larger ideas back to the use of the site. The views are concept visualizations and do not establish construction feasibility.",
     ],
     challenge: [
       "Watt Plaza started as a focused landscape and ground-floor refresh. After the spring concept rounds the owners came back with a bigger request: a building that reads as a destination. The scope moved from the plaza to the whole building, facade, landscape, amenities, program, and identity, in a matter of weeks.",

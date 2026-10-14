@@ -111,6 +111,8 @@ export interface Narrative {
   };
   // Optional short labels for the summary paragraphs ("The ambition", "My leadership", ...).
   summaryLabels?: string[];
+  // Longer account of how the work developed, shown after the opening.
+  story?: string[];
   // Light pages use summary (about 150 to 300 words). Full pages use the sections below.
   summary?: string[];
   challenge: string[];
@@ -155,6 +157,8 @@ export interface Claim {
   placement: ClaimPlacement;
   wording: string;
   evidenceSource: string;
+  // Optional public citation for the claim (an issue, an official result, or a project page).
+  url?: string;
   verifier: string;
   status: ClaimStatus;
 }
