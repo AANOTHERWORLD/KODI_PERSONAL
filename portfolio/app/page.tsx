@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getCoreProjects, getExtendedProjects, getLandingTiles, getLensCounts, getProfileAsset, getProfileClaimsById, portfolio, profile, approachSteps } from "@/lib/content";
+import { getCoreProjects, getLandingTiles, getLensCounts, getProfileAsset, getProfileClaimsById, portfolio, profile, approachSteps } from "@/lib/content";
 import { getDownloads } from "@/lib/files";
 import { withBasePath } from "@/lib/basePath";
 import Picture from "@/components/Picture";
@@ -14,7 +14,6 @@ import { lensIntro } from "@/content/lenses";
 export default function HomePage() {
   const tiles = getLandingTiles();
   const core = getCoreProjects();
-  const extended = getExtendedProjects();
   const counts = getLensCounts();
   const portrait = getProfileAsset(profile.portraitAssetId);
   const recognition = getProfileClaimsById(profile.recognitionClaimIds);
@@ -117,14 +116,6 @@ export default function HomePage() {
           <div className="work-section__cards">
             {core.length ? core.map((bundle, i) => <WorkCard key={bundle.project.id} bundle={bundle} index={i} />) : (
               <p className="empty-state">Core projects appear here once their permission is confirmed. Build with NEXT_PUBLIC_SHOW_DRAFTS=true to preview them.</p>
-            )}
-            {extended.length > 0 && (
-              <div className="more-work">
-                <p className="tag">More work</p>
-                <div className="more-work__grid">
-                  {extended.map((bundle, i) => <WorkCard key={bundle.project.id} bundle={bundle} index={i} variant="small" />)}
-                </div>
-              </div>
             )}
             <p data-reveal><Link href="/work/" className="button" data-sweep>View All Work</Link></p>
           </div>

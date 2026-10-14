@@ -86,13 +86,20 @@ export default function SiteHeader() {
 
   useEffect(() => {
     const bands = Array.from(document.querySelectorAll<HTMLElement>("[data-header-invert]"));
+    document.documentElement.style.setProperty("--header-bg", "var(--bg)");
     if (!bands.length) {
       setInverted(false);
       return;
     }
     const headerHeight = 72;
     const observer = new IntersectionObserver(
-      (entries) => setInverted(entries.some((e) => e.isIntersecting)),
+      (entries) => {
+        const crossing = entries.find((e) => e.isIntersecting);
+        setInverted(!!crossing);
+        // Tint the header's backing band with the color of the section beneath it.
+        const bg = crossing ? getComputedStyle(crossing.target).backgroundColor : "";
+        document.documentElement.style.setProperty("--header-bg", bg && bg !== "rgba(0, 0, 0, 0)" ? bg : "var(--bg)");
+      },
       { rootMargin: `-${headerHeight}px 0px -${Math.max(window.innerHeight - headerHeight, 1)}px 0px`, threshold: 0 },
     );
     bands.forEach((b) => observer.observe(b));

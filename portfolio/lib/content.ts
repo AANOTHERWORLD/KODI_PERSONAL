@@ -143,7 +143,7 @@ export function getApproachExamples(stepId: string) {
 // statement. A project appears when it has landingTile and explicit tile coordinates (x and y as
 // percentages of the viewport, depth 1 to 3 for drift speed, order for stacking). The field is
 // capped at LANDING_TILE_LIMIT tiles, taken in order. Everything else is reachable from Work.
-export const LANDING_TILE_LIMIT = 6;
+export const LANDING_TILE_LIMIT = 8;
 
 export interface LandingTile {
   key: string;
