@@ -9,21 +9,21 @@ import { LensAwareEntry } from "./LensContext";
 // and headline appear. The text is always in the markup for screen readers and search.
 export default function WorkTile({ bundle, index }: { bundle: ProjectBundle; index: number }) {
   const { project } = bundle;
-  const asset = getHeroAsset(bundle) ?? getIndexAsset(bundle);
+  const asset = getIndexAsset(bundle) ?? getHeroAsset(bundle);
   const category = project.typeLabel;
   return (
     <LensAwareEntry lensIds={project.lenses} as="li" className="work-tile" mode="filter">
       <Link href={`/work/${project.slug}/`} className="work-tile__link cursor-tile">
         <div className="work-tile__media">
           {asset ? <Picture asset={asset} showCaption={false} fit="cover" sizes="(min-width: 1100px) 25vw, (min-width: 720px) 50vw, 100vw" priority={index < 4} /> : <div className="picture__placeholder">Image pending</div>}
+          <div className="work-tile__text">
+            <p className="work-tile__category tag">{category}</p>
+            <h3 className="work-tile__title">{project.title}</h3>
+            <p className="work-tile__headline">{project.thesis}</p>
+            {project.permission === "pending" && <span className="draft-marker">Draft: permission pending</span>}
+          </div>
         </div>
-        <p className="work-tile__name">{project.title}</p>
-        <div className="work-tile__text">
-          <p className="work-tile__category tag">{category}</p>
-          <h2 className="work-tile__title">{project.title}</h2>
-          <p className="work-tile__headline">{project.thesis}</p>
-          {project.permission === "pending" && <span className="draft-marker">Draft: permission pending</span>}
-        </div>
+        <p className="work-tile__name" aria-hidden="true">{project.title}</p>
       </Link>
     </LensAwareEntry>
   );

@@ -34,7 +34,7 @@ export const googleWsp: ProjectBundle = {
     permission: "confirmed",
     permissionNote: "Design development imagery from the 2020 WSP design updates. Footers and page furniture are cropped out.",
     heroAssetId: "wsp-axon",
-    indexAssetId: "wsp-rideshare",
+    indexAssetId: "wsp-axon",
   },
   narrative: {
     projectId: id,
@@ -59,7 +59,7 @@ export const googleWsp: ProjectBundle = {
       { lens: "interiors-behavior", assetId: "wsp-axon", caption: "Behavior: team neighborhoods drawn across the floor plate, each a home base inside a very large building." },
     ],
     leadership: [
-      "As senior designer, I developed concepts and design strategy with the Rapt team, from early development through delivery and execution. The Rapt team developed the neighborhood planning and the amenity spaces with Google and the architecture and landscape partners.",
+      "As Senior Designer, I developed concepts and design strategy with the Rapt team, working with Google and the architecture and landscape partners on neighborhood planning and amenity spaces. The work concluded in 2021 after Google changed direction during the pandemic.",
     ],
     outcome: [
       "The campus was not built. Google changed direction during the pandemic and the project wrapped in 2021. The images show design development studies and concept views, and document the planning approach.",

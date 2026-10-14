@@ -262,6 +262,72 @@ function ClosingGroup({ bundle }: { bundle: ProjectBundle }) {
   );
 }
 
+function DecisionText({ decision, index }: { decision: ProjectBundle["decisions"][number]; index: number }) {
+  return (
+    <div className="expression-decision">
+      <h3 className="decision__title"><span className="decision__index">{index}</span>{decision.title}</h3>
+      <dl>
+        <div><dt>Question</dt><dd>{decision.question}</dd></div>
+        <div><dt>Choice</dt><dd>{decision.choice}</dd></div>
+        <div><dt>Reason</dt><dd>{decision.rationale}</dd></div>
+        <div><dt>Tradeoff</dt><dd>{decision.tradeoff}</dd></div>
+        {decision.personalContribution && <div><dt>My part</dt><dd>{decision.personalContribution}</dd></div>}
+      </dl>
+    </div>
+  );
+}
+
+// Named expression sections (cities, formats): an intro, then images and decisions in the order given.
+function Expressions({ bundle }: { bundle: ProjectBundle }) {
+  const { narrative, decisions } = bundle;
+  const sections = narrative.expressions ?? [];
+  const sizes = "(min-width: 900px) 50vw, 100vw";
+  return (
+    <>
+      {narrative.intro && (
+        <Section id="intro" tag="Introduction" title={narrative.intro.title} asset={null} side="right">
+          {narrative.intro.paragraphs.map((p, i) => <p key={i}>{p}</p>)}
+        </Section>
+      )}
+      {sections.map((section) => {
+        const blocks: React.ReactNode[] = [];
+        let run: Asset[] = [];
+        const flush = () => {
+          if (run.length) blocks.push(<div className="expression-grid" key={`g-${blocks.length}`}>{run.map((a) => <Picture key={a.id} asset={a} sizes={sizes} showLens />)}</div>);
+          run = [];
+        };
+        section.items.forEach((item, i) => {
+          const asset = item.assetId ? getAsset(bundle, item.assetId) : null;
+          const decisionIndex = item.decisionId ? decisions.findIndex((d) => d.id === item.decisionId) : -1;
+          const decision = decisionIndex >= 0 ? decisions[decisionIndex] : null;
+          if (decision) {
+            flush();
+            blocks.push(
+              <div className="decision" key={`d-${i}`}>
+                <DecisionText decision={decision} index={decisionIndex + 1} />
+                {asset && <div className="decision__media"><Picture asset={asset} sizes="(min-width: 900px) 55vw, 100vw" /></div>}
+              </div>,
+            );
+          } else if (asset && item.wide) {
+            flush();
+            blocks.push(<div className="expression-wide" key={`w-${i}`}><Picture asset={asset} sizes="(min-width: 1100px) 1100px, 100vw" showLens /></div>);
+          } else if (asset) {
+            run.push(asset);
+          }
+        });
+        flush();
+        return (
+          <section className="project-section" aria-labelledby={section.id} id={section.id} key={section.id}>
+            <div className="project-section__head"><p className="tag">{section.id === "retail" ? "Retail formats" : "Flagship"}</p><h2 id={`${section.id}-heading`} className="section__title">{section.title}</h2></div>
+            <div className="prose expression-prose">{section.paragraphs.map((p, i) => <p key={i}>{p}</p>)}</div>
+            {blocks}
+          </section>
+        );
+      })}
+    </>
+  );
+}
+
 function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
   const { project, narrative, decisions } = bundle;
   const assets = visibleAssets(bundle);
@@ -270,41 +336,41 @@ function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
   const assignedIds = Object.values(assigned).flatMap((v) => (Array.isArray(v) ? v : v ? [v] : []));
   const group = narrative.closingGroup;
   const groupIds = group ? [...group.assetIds, ...(group.photoId ? [group.photoId] : [])] : [];
-  for (const id of [...assignedIds, ...groupIds]) if (!assets.some((a) => a.id === id)) throw new Error(`${project.id}: image assignment references missing asset ${id}`);
-  const usedIds = new Set<string>([project.heroAssetId, ...assignedIds, ...groupIds, ...decisions.flatMap((d) => d.assetIds), ...(narrative.scaleTranslation.map((s) => s.assetId).filter(Boolean) as string[])]);
+  const expressionIds = (narrative.expressions ?? []).flatMap((e) => e.items.map((i) => i.assetId).filter(Boolean) as string[]);
+  const otherIds = [...decisions.flatMap((d) => d.assetIds), ...(narrative.scaleTranslation.map((s) => s.assetId).filter(Boolean) as string[])];
+  for (const e of narrative.expressions ?? []) for (const it of e.items) if (it.decisionId && !decisions.some((d) => d.id === it.decisionId)) throw new Error(`${project.id}: expression references missing decision ${it.decisionId}`);
+  for (const id of [...assignedIds, ...groupIds, ...otherIds, ...expressionIds]) if (!assets.some((a) => a.id === id)) throw new Error(`${project.id}: image assignment references missing asset ${id}`);
+  const usedIds = new Set<string>([project.heroAssetId, ...assignedIds, ...groupIds, ...expressionIds, ...decisions.flatMap((d) => d.assetIds), ...(narrative.scaleTranslation.map((s) => s.assetId).filter(Boolean) as string[])]);
   const pool = assets.filter((a) => !usedIds.has(a.id) && a.id !== narrative.featuredPublication?.assetId);
-  // Assigned sections use their pinned image (or none); the rest take the next unused image.
-  const next = () => pool.shift() ?? null;
-  const pickAll = (key: keyof typeof assigned, auto: () => ReturnType<typeof next>): Asset[] => {
-    if (!(key in assigned)) {
-      const one = auto();
-      return one ? [one] : [];
-    }
+  // Only an explicit asset id (or list) produces a section image. A missing key or null is text-only.
+  const pickAll = (key: keyof typeof assigned): Asset[] => {
     const v = assigned[key];
     return (Array.isArray(v) ? v : v ? [v] : []).map((id) => getAsset(bundle, id)).filter((a): a is Asset => !!a);
   };
-  const storyImgAll = pickAll("story", () => (narrative.story?.length ? next() : null));
+  const storyImgAll = pickAll("story");
   const storyImg = storyImgAll[0] ?? null;
-  const challengeImgAll = pickAll("challenge", next);
+  const challengeImgAll = pickAll("challenge");
   const challengeImg = challengeImgAll[0] ?? null;
-  const visionImgAll = pickAll("vision", next);
+  const visionImgAll = pickAll("vision");
   const visionImg = visionImgAll[0] ?? null;
-  const leadershipImgAll = pickAll("leadership", next);
+  const leadershipImgAll = pickAll("leadership");
   const leadershipImg = leadershipImgAll[0] ?? null;
-  const outcomeImgAll = pickAll("outcome", next);
+  const outcomeImgAll = pickAll("outcome");
   const outcomeImg = outcomeImgAll[0] ?? null;
   return (
     <article className="wrap">
       <Opening bundle={bundle} />
       <FeaturedPublication bundle={bundle} />
 
+      {narrative.expressions?.length ? <Expressions bundle={bundle} /> : (
+        <>
       {narrative.story && narrative.story.length > 0 && (
         <Section id="story" tag="The story" title={titles.story ?? "How the work developed"} asset={storyImg} extra={storyImgAll.slice(1)} side="right">
           {narrative.story.map((p, i) => <p key={i}>{p}</p>)}
         </Section>
       )}
 
-      <Section id="challenge" tag="Context" title={titles.challenge ?? "The challenge"} asset={narrative.summary?.length ? challengeImg : null} side="right">
+      <Section id="challenge" tag="Context" title={titles.challenge ?? "The challenge"} asset={challengeImg} extra={challengeImgAll.slice(1)} side="right">
         {narrative.challenge.map((p, i) => <p key={i}>{p}</p>)}
         <ClaimList claims={getClaims(bundle, "context")} />
       </Section>
@@ -333,6 +399,9 @@ function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
           })}
         </div>
       </section>
+
+        </>
+      )}
 
       <Section id="leadership" tag="Leadership and collaboration" title={titles.leadership ?? "What was led, and by whom"} asset={leadershipImg} extra={leadershipImgAll.slice(1)} side="right">
         {narrative.leadership.map((p, i) => <p key={i}>{p}</p>)}

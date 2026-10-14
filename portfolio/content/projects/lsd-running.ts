@@ -97,7 +97,7 @@ export const lsdRunning: ProjectBundle = {
     sectionImages: {
       story: "lsd-product-run-1",
       challenge: "lsd-workshop",
-      vision: "lsd-scheme-minimal",
+      vision: "lsd-render-store-1",
       leadership: null,
       outcome: "lsd-photo-bench-wide",
     },

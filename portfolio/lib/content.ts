@@ -36,6 +36,20 @@ function bySequence(a: ProjectBundle, b: ProjectBundle) {
 
 // Core projects in sequence, then extended projects in their own sequence.
 // Fail the build on a featured id that does not exist or a duplicated entry.
+export function assertContentReferences() {
+  const ids = new Set(projectBundles.map((b) => b.project.id));
+  const slugs = projectBundles.map((b) => b.project.slug);
+  if (new Set(slugs).size !== slugs.length) throw new Error("Duplicate project slug");
+  for (const e of approachExamples) if (!ids.has(e.projectId)) throw new Error(`Approach example references missing project ${e.projectId}`);
+  for (const b of projectBundles) {
+    const p = b.project;
+    if (p.relatedProject && !ids.has(p.relatedProject)) throw new Error(`${p.id}: relatedProject ${p.relatedProject} not found`);
+    const assetIds = new Set(b.assets.map((a) => a.id));
+    const refs = [p.heroAssetId, p.indexAssetId, ...b.decisions.flatMap((d) => d.assetIds), ...b.narrative.scaleTranslation.map((s) => s.assetId)].filter(Boolean) as string[];
+    for (const r of refs) if (!assetIds.has(r)) throw new Error(`${p.id}: asset reference ${r} not found`);
+  }
+}
+
 function assertSelections() {
   const known = new Set(projectBundles.map((b) => b.project.id));
   for (const id of SELECTED_WORK_IDS) if (!known.has(id)) throw new Error(`Selected work id not found: ${id}`);
@@ -80,6 +94,7 @@ export function getExtendedProjects(): ProjectBundle[] {
 export const PLACEHOLDER_SLUG = "coming-soon";
 
 export function getAllProjectSlugs(): string[] {
+  assertContentReferences();
   const slugs = getProjects().map((b) => b.project.slug);
   if (!slugs.length) {
     buildLog(`no projects cleared for publication; generating placeholder route /work/${PLACEHOLDER_SLUG}/`);

@@ -99,7 +99,7 @@ export const approachExamples: ApproachExample[] = [
   },
   {
     step: "protect-the-intent",
-    projectId: "openai-tokyo",
-    example: "A twelve-month schedule in an existing high-rise was met by keeping the architecture and systems, and spending the design effort on hospitality, furniture, and a few deliberate brand moments.",
+    projectId: "openai",
+    example: "In Tokyo, retaining much of the existing fit-out focused the design effort on hospitality, furniture and targeted changes within an accelerated schedule.",
   },
 ];

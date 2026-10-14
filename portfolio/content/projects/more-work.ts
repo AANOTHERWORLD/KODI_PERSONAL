@@ -188,7 +188,7 @@ const specs: Spec[] = [
     location: "",
     relatedProject: "mama-rouge",
     heroIndex: 4,
-    indexIndex: 1,
+    indexIndex: 4,
     images: [
       { file: "april-jean-01-brand-illustration.png", type: "graphic", caption: "Brand illustration: a hand holding a mint cocktail, with the wordmark.", alt: "Collage illustration of a hand holding a tall mint cocktail on a dark green ground, with the April Jean wordmark.", lens: "brand-detail" },
       { file: "april-jean-02-wordmark.jpg", type: "graphic", caption: "The April Jean wordmark in cream script on rust red.", alt: "The words Bar April Jean in cream script on a rust-red field.", lens: "brand-detail" },

@@ -130,6 +130,16 @@ export interface Narrative {
   // null makes the section text-only. A section left out falls back to the next unused image.
   // Reordering the gallery never changes an assigned pairing.
   // Optional project-specific headings for the full template's narrative sections.
+  // Optional shared introduction and named expression sections (for example cities or formats).
+  // When present, the full template renders these instead of the story, challenge, vision and
+  // scale sections. Each item is an image, a decision, or an image beside its decision.
+  intro?: { title: string; paragraphs: string[] };
+  expressions?: {
+    id: string;
+    title: string;
+    paragraphs: string[];
+    items: { assetId?: string; decisionId?: string; wide?: boolean }[];
+  }[];
   sectionTitles?: Partial<Record<"story" | "challenge" | "vision" | "leadership" | "outcome", string>>;
   sectionImages?: Partial<Record<"story" | "challenge" | "vision" | "leadership" | "outcome", string | string[] | null>>;
   // A compact row of small items (for example prompt cards) with a related photograph, shown before the gallery.

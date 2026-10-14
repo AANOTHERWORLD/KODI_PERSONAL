@@ -77,7 +77,7 @@ export function LensKey({ counts, compact = false, total, noun = "projects", mod
             <p className="lens-key__result">
               {mode === "filter" ? "Showing" : "Highlighting"} {counts[activeLens.id]}{total ? ` of ${total}` : ""} {noun} in {activeLens.name}
             </p>
-            <button type="button" className="lens-key__clear" onClick={() => setActive(null)}>Show all</button>
+            <button type="button" className="lens-key__clear" onClick={() => setActive(null)}>Show all work</button>
           </>
         ) : (
           <p className="lens-key__result lens-key__result--hint">Select a lens to {verb} the projects.</p>
@@ -86,6 +86,31 @@ export function LensKey({ counts, compact = false, total, noun = "projects", mod
       <p id={liveId} className="visually-hidden" aria-live="polite">
         {activeLens ? `${activeLens.name} selected. ${mode === "filter" ? "Showing" : "Highlighting"} ${counts[activeLens.id]} matching ${noun}.` : `No lens selected. All ${noun} shown.`}
       </p>
+    </div>
+  );
+}
+
+// A titled group of entries that disappears, heading included, when no entry matches the active lens.
+export function LensGroup({ title, projectLenses, children }: { title: string; projectLenses: LensId[][]; children: ReactNode }) {
+  const { active } = useContext(LensContext);
+  const count = active === null ? projectLenses.length : projectLenses.filter((l) => l.includes(active)).length;
+  if (count === 0) return null;
+  return (
+    <>
+      <h2 className="work-group__title">{title}</h2>
+      {children}
+    </>
+  );
+}
+
+// Shown when the active lens matches no project in any group.
+export function LensEmpty({ projectLenses }: { projectLenses: LensId[][] }) {
+  const { active, setActive } = useContext(LensContext);
+  if (active === null || projectLenses.some((l) => l.includes(active))) return null;
+  return (
+    <div className="empty-state" role="status">
+      <p>No projects match this lens. Show all work to explore the full collection.</p>
+      <button type="button" className="lens-key__clear" onClick={() => setActive(null)}>Show all work</button>
     </div>
   );
 }

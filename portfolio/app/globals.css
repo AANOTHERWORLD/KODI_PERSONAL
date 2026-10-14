@@ -1773,7 +1773,7 @@ ol {
   filter: brightness(1);
   transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1), filter 500ms var(--ease);
 }
-.work-tile__link::after {
+.work-tile__media::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -1782,8 +1782,8 @@ ol {
   transition: opacity 400ms var(--ease);
   pointer-events: none;
 }
-.work-tile__link:hover::after,
-.work-tile__link:focus-visible::after {
+.work-tile__link:hover .work-tile__media::after,
+.work-tile__link:focus-visible .work-tile__media::after {
   opacity: 1;
 }
 .work-tile__text {
@@ -1831,7 +1831,7 @@ ol {
   transform: translateY(0);
 }
 @media (hover: none) {
-  .work-tile__link::after {
+  .work-tile__media::after {
     display: none;
   }
   .work-tile__text {
@@ -2538,12 +2538,7 @@ ol {
 .work-tile__media {
   position: relative;
   overflow: hidden;
-}
-.work-tile__link::after {
-  bottom: 2.1rem;
-}
-.work-tile__text {
-  bottom: 2.1rem;
+  background: var(--surface);
 }
 .work-group__title {
   font-size: var(--text-page);
@@ -2595,4 +2590,31 @@ ol {
 }
 .card-row .picture--light .picture__media {
   padding: 0;
+}
+
+/* Named expression sections (Intuit: Chicago, Santa Monica, Retail) */
+.expression-prose {
+  max-width: 62ch;
+  margin-bottom: var(--space-4);
+}
+.expression-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  align-items: start;
+  margin-bottom: var(--space-4);
+}
+.expression-wide {
+  margin-bottom: var(--space-4);
+}
+.expression-wide .picture__media img {
+  max-height: none;
+}
+.expression-decision dl {
+  margin: 0;
+}
+@media (max-width: 720px) {
+  .expression-grid {
+    grid-template-columns: 1fr;
+  }
 }

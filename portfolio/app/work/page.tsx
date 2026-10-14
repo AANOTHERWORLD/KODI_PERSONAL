@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getWorkGroups, getHeroAsset, getLensCounts } from "@/lib/content";
 import Picture from "@/components/Picture";
 import WorkTile from "@/components/WorkTile";
-import { LensProvider, LensKey } from "@/components/LensContext";
+import { LensProvider, LensKey, LensGroup, LensEmpty } from "@/components/LensContext";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -38,17 +38,18 @@ export default function WorkPage() {
         </div>
         {projects.length ? (
           <>
-            <h2 className="work-group__title">Selected projects</h2>
-            <ol className="work-grid" aria-label="Selected projects">
-              {selected.map((bundle, index) => <WorkTile key={bundle.project.id} bundle={bundle} index={index} />)}
-            </ol>
+            <LensEmpty projectLenses={projects.map((b) => b.project.lenses)} />
+            <LensGroup title="Selected projects" projectLenses={selected.map((b) => b.project.lenses)}>
+              <ol className="work-grid" aria-label="Selected projects">
+                {selected.map((bundle, index) => <WorkTile key={bundle.project.id} bundle={bundle} index={index} />)}
+              </ol>
+            </LensGroup>
             {further.length > 0 && (
-              <>
-                <h2 className="work-group__title">Further work</h2>
+              <LensGroup title="Further work" projectLenses={further.map((b) => b.project.lenses)}>
                 <ol className="work-grid" aria-label="Further work">
                   {further.map((bundle, index) => <WorkTile key={bundle.project.id} bundle={bundle} index={selected.length + index} />)}
                 </ol>
-              </>
+              </LensGroup>
             )}
           </>
         ) : (

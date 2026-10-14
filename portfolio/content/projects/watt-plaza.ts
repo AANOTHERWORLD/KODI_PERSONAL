@@ -60,7 +60,7 @@ export const wattPlaza: ProjectBundle = {
     scaleTranslation: [
       {
         lens: "culture-strategy",
-        assetId: "watt-process-weave-workflow",
+        assetId: "watt-weave-workflow",
         caption: "Method: sketches, site information and architectural references brought into one shared workflow in Weave.",
       },
       {
@@ -98,8 +98,8 @@ export const wattPlaza: ProjectBundle = {
     sectionImages: {
       story: "watt-expansion-aerial",
       challenge: "watt-earlier-plan",
-      vision: "watt-departure-sketch",
-      leadership: "watt-weave-workflow",
+      vision: "watt-departure-arrival",
+      leadership: null,
       outcome: "watt-expansion-arrival",
     },
     involvement:
@@ -124,7 +124,7 @@ export const wattPlaza: ProjectBundle = {
       choice: "Mark up generated views with instructions for the architecture, landscape and arrival, then use the drawings to guide the next iteration.",
       rationale: "On the Extension view, terraced steps, a fountain, a valet stand, landscaping, an accessible ramp, a glass atrium and an indoor and outdoor planter were each located on the image.",
       tradeoff: "A markup says what to change, not how it would be built, so the views remain concept visualizations.",
-      assetIds: ["watt-process-extension-markup"],
+      assetIds: ["watt-extension-markup"],
     },
     {
       id: "watt-d3",

@@ -13,7 +13,7 @@ export const googleGso: ProjectBundle = {
     location: "United States, data center communities (pilot example: The Dalles, Oregon)",
     years: "2024 to present",
     status: "in-progress",
-    statusNote: "Platform delivered. Further applications in progress, subject to update.",
+    statusNote: "Brand platform delivered, with learning environments, communications and program applications developed across the engagement.",
     role: "Design Director, Rapt Studio",
     scope:
       "Brand platform and messaging, owned channels, event and object design, community programs, and the design of GSO University, a learning center inside an active data center, followed by a pop-up learning playbook and the IDI Field of Dreams playbook.",
@@ -83,7 +83,7 @@ export const googleGso: ProjectBundle = {
       "I led the design with the internal Rapt team, from the discovery that reframed the brief to the platform and the decision to carry it into space. The team developed the collateral system, the event kits and the learning center design with Google's GSO and Cloud stakeholders.",
     ],
     outcome: [
-      "The platform was delivered and rolled into collateral, external Life at Google data center pages, an internal resource hub of playbooks and templates, learning spaces, and a pop-up learning playbook for 2025 to 2026. Brick and Mortar design reviews, a naming workshop, and the IDI Field of Dreams playbook followed in 2026. No measured results to report.",
+      "The work extended into recruiting collateral, external Life at Google data center pages, an internal resource hub of playbooks and templates, learning environments and a pop-up learning playbook for 2025 to 2026. Further work in 2026 included Brick and Mortar design reviews, a naming workshop and the IDI Field of Dreams playbook.",
     ],
     imageCredit: "Photographs: Jamel Williams. Diagrams and process images: Rapt Studio. The Dalles study was generated with Gemini during the project.",
     sectionTitles: {

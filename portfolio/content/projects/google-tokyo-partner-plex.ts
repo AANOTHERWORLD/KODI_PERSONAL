@@ -28,7 +28,7 @@ export const googleTokyoPartnerPlex: ProjectBundle = {
     disciplines: "Interiors, Environmental graphics, Hospitality",
     sequence: 7,
     tileSize: 2,
-    relatedProject: "openai-tokyo",
+    relatedProject: "openai",
     permission: "confirmed",
     permissionNote: "Awaiting Google and Rapt Studio permission. Photography copyright Kohei Take per asset metadata; credit wording to be confirmed.",
     heroAssetId: "ppx-03",
