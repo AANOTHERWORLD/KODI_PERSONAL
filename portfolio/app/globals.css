@@ -2551,3 +2551,48 @@ ol {
   letter-spacing: -0.02em;
   margin: var(--space-5) 0 0;
 }
+
+/* Artwork on a light panel: complete, uncropped, transparency preserved */
+.picture--light .picture__media {
+  background: #f4f3ef;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+}
+.picture--light .picture__media img {
+  object-position: center;
+}
+/* Prompt cards in a compact row beside a photograph of them in use */
+.card-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+.card-row {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.card-row li {
+  width: 180px;
+  max-width: calc(50% - 0.4rem);
+}
+.card-row .picture__media {
+  background: #f4f3ef;
+}
+.card-row img {
+  display: block;
+  width: 100%;
+  max-width: 180px;
+  height: auto;
+  aspect-ratio: 180 / 252;
+}
+.card-group__photo {
+  flex: 1 1 280px;
+  max-width: 560px;
+}
+.card-row .picture--light .picture__media {
+  padding: 0;
+}

@@ -1,6 +1,7 @@
 import type { Asset } from "@/content/types";
 import { resolveImage } from "@/lib/images";
 import { lensById } from "@/content/lenses";
+import { withBasePath } from "@/lib/basePath";
 
 type Props = {
   asset: Asset;
@@ -38,9 +39,23 @@ export default function Picture({ asset, sizes = "(min-width: 1100px) 1100px, 10
   }
   const typeLabel = asset.projectId === "watt-plaza" && asset.type === "render" ? "AI-assisted concept render" : TYPE_LABEL[asset.type];
   return (
-    <figure className={`picture ${fit === "cover" ? "picture--cover" : ""} ${image.vector ? "picture--vector" : ""} ${className ?? ""}`}>
+    <figure className={`picture ${fit === "cover" ? "picture--cover" : ""} ${image.vector ? "picture--vector" : ""} ${asset.surface === "light" ? "picture--light" : ""} ${className ?? ""}`}>
       <div className="picture__media" style={fit === "cover" ? { aspectRatio: `${image.width} / ${image.height}` } : undefined}>
-        <img
+        {asset.motion && showCaption ? <video
+          controls
+          playsInline
+          preload="none"
+          poster={image.src}
+          width={image.width}
+          height={image.height}
+          loop={asset.motion.loop}
+          muted={asset.motion.muted}
+          aria-label={asset.alt}
+          style={{ display: "block", width: "100%", height: "auto" }}
+        >
+          <source src={withBasePath(`/projects/${asset.motion.file}`)} type="video/mp4" />
+          <a href={withBasePath(`/projects/${asset.motion.file}`)}>Watch the film</a>
+        </video> : <img
           src={image.src}
           srcSet={image.srcSet}
           sizes={image.srcSet ? sizes : undefined}
@@ -50,12 +65,12 @@ export default function Picture({ asset, sizes = "(min-width: 1100px) 1100px, 10
           loading={priority ? "eager" : "lazy"}
           decoding={priority ? "sync" : "async"}
           fetchPriority={priority ? "high" : undefined}
-        />
+        />}
       </div>
       {showCaption && (
         <figcaption className="picture__caption">
           {showLens && asset.lens && <span className="tag tag--lens">{lensById[asset.lens].name}</span>}
-          <span className="tag">{typeLabel}</span>
+          <span className="tag">{asset.motion ? "Film" : typeLabel}</span>
           <span className="picture__text">{asset.caption}</span>
           {asset.credit && <span className="picture__credit">{asset.credit}</span>}
           {asset.permission === "pending" && <span className="draft-marker">Draft: permission pending</span>}

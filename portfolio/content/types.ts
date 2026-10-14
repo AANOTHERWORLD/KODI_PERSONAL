@@ -131,7 +131,9 @@ export interface Narrative {
   // Reordering the gallery never changes an assigned pairing.
   // Optional project-specific headings for the full template's narrative sections.
   sectionTitles?: Partial<Record<"story" | "challenge" | "vision" | "leadership" | "outcome", string>>;
-  sectionImages?: Partial<Record<"story" | "challenge" | "vision" | "leadership" | "outcome", string | null>>;
+  sectionImages?: Partial<Record<"story" | "challenge" | "vision" | "leadership" | "outcome", string | string[] | null>>;
+  // A compact row of small items (for example prompt cards) with a related photograph, shown before the gallery.
+  closingGroup?: { assetIds: string[]; photoId?: string; caption: string };
 }
 
 export interface Decision {
@@ -181,6 +183,8 @@ export interface Asset {
   credit: string;
   permission: Permission;
   lens?: LensId;
+  // "light" shows the artwork on a light panel, uncropped, so transparency and complete artwork read.
+  surface?: "light";
 }
 
 export interface ExperienceItem {

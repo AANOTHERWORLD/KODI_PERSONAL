@@ -206,7 +206,7 @@ function DecisionBlocks({ bundle }: { bundle: ProjectBundle }) {
   );
 }
 
-function Section({ id, tag, title, asset, side, children }: { id: string; tag: string; title: string; asset?: Asset | null; side: "left" | "right"; children: React.ReactNode }) {
+function Section({ id, tag, title, asset, extra = [], side, children }: { id: string; tag: string; title: string; asset?: Asset | null; extra?: Asset[]; side: "left" | "right"; children: React.ReactNode }) {
   if (!asset) {
     return (
       <section className="project-section" aria-labelledby={id}>
@@ -224,7 +224,7 @@ function Section({ id, tag, title, asset, side, children }: { id: string; tag: s
           <div className="project-section__head"><p className="tag">{tag}</p><h2 id={id} className="section__title">{title}</h2></div>
           <div className="prose">{children}</div>
         </div>
-        <div className="spread__media"><Picture asset={asset} sizes="(min-width: 900px) 50vw, 100vw" showLens /></div>
+        <div className="spread__media"><Picture asset={asset} sizes="(min-width: 900px) 50vw, 100vw" showLens />{extra.map((a) => <Picture key={a.id} asset={a} sizes="(min-width: 900px) 50vw, 100vw" showLens />)}</div>
       </div>
     </section>
   );
@@ -243,30 +243,63 @@ function Gallery({ assets, title }: { assets: ProjectBundle["assets"]; title: st
   );
 }
 
+function ClosingGroup({ bundle }: { bundle: ProjectBundle }) {
+  const group = bundle.narrative.closingGroup;
+  if (!group) return null;
+  const items = group.assetIds.map((id) => getAsset(bundle, id)).filter((a): a is Asset => !!a);
+  const photo = getAsset(bundle, group.photoId);
+  if (!items.length) return null;
+  return (
+    <section className="project-section" aria-label={group.caption}>
+      <div className="card-group">
+        <ul className="card-row">
+          {items.map((a) => <li key={a.id}><Picture asset={a} showCaption={false} /></li>)}
+        </ul>
+        {photo && <div className="card-group__photo"><Picture asset={photo} showCaption={false} sizes="(min-width: 900px) 40vw, 100vw" /></div>}
+      </div>
+      <p className="picture__caption"><span className="tag">Graphic</span><span className="picture__text">{group.caption}</span></p>
+    </section>
+  );
+}
+
 function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
   const { project, narrative, decisions } = bundle;
   const assets = visibleAssets(bundle);
   const titles = narrative.sectionTitles ?? {};
   const assigned = narrative.sectionImages ?? {};
-  const assignedIds = Object.values(assigned).filter((v): v is string => !!v);
-  for (const id of assignedIds) if (!assets.some((a) => a.id === id)) throw new Error(`${project.id}: sectionImages references missing asset ${id}`);
-  const usedIds = new Set<string>([project.heroAssetId, ...assignedIds, ...decisions.flatMap((d) => d.assetIds), ...(narrative.scaleTranslation.map((s) => s.assetId).filter(Boolean) as string[])]);
+  const assignedIds = Object.values(assigned).flatMap((v) => (Array.isArray(v) ? v : v ? [v] : []));
+  const group = narrative.closingGroup;
+  const groupIds = group ? [...group.assetIds, ...(group.photoId ? [group.photoId] : [])] : [];
+  for (const id of [...assignedIds, ...groupIds]) if (!assets.some((a) => a.id === id)) throw new Error(`${project.id}: image assignment references missing asset ${id}`);
+  const usedIds = new Set<string>([project.heroAssetId, ...assignedIds, ...groupIds, ...decisions.flatMap((d) => d.assetIds), ...(narrative.scaleTranslation.map((s) => s.assetId).filter(Boolean) as string[])]);
   const pool = assets.filter((a) => !usedIds.has(a.id) && a.id !== narrative.featuredPublication?.assetId);
   // Assigned sections use their pinned image (or none); the rest take the next unused image.
   const next = () => pool.shift() ?? null;
-  const pick = (key: keyof typeof assigned, auto: () => ReturnType<typeof next>) => (key in assigned ? getAsset(bundle, assigned[key] ?? undefined) : auto());
-  const storyImg = pick("story", () => (narrative.story?.length ? next() : null));
-  const challengeImg = pick("challenge", next);
-  const visionImg = pick("vision", next);
-  const leadershipImg = pick("leadership", next);
-  const outcomeImg = pick("outcome", next);
+  const pickAll = (key: keyof typeof assigned, auto: () => ReturnType<typeof next>): Asset[] => {
+    if (!(key in assigned)) {
+      const one = auto();
+      return one ? [one] : [];
+    }
+    const v = assigned[key];
+    return (Array.isArray(v) ? v : v ? [v] : []).map((id) => getAsset(bundle, id)).filter((a): a is Asset => !!a);
+  };
+  const storyImgAll = pickAll("story", () => (narrative.story?.length ? next() : null));
+  const storyImg = storyImgAll[0] ?? null;
+  const challengeImgAll = pickAll("challenge", next);
+  const challengeImg = challengeImgAll[0] ?? null;
+  const visionImgAll = pickAll("vision", next);
+  const visionImg = visionImgAll[0] ?? null;
+  const leadershipImgAll = pickAll("leadership", next);
+  const leadershipImg = leadershipImgAll[0] ?? null;
+  const outcomeImgAll = pickAll("outcome", next);
+  const outcomeImg = outcomeImgAll[0] ?? null;
   return (
     <article className="wrap">
       <Opening bundle={bundle} />
       <FeaturedPublication bundle={bundle} />
 
       {narrative.story && narrative.story.length > 0 && (
-        <Section id="story" tag="The story" title={titles.story ?? "How the work developed"} asset={storyImg} side="right">
+        <Section id="story" tag="The story" title={titles.story ?? "How the work developed"} asset={storyImg} extra={storyImgAll.slice(1)} side="right">
           {narrative.story.map((p, i) => <p key={i}>{p}</p>)}
         </Section>
       )}
@@ -276,7 +309,7 @@ function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
         <ClaimList claims={getClaims(bundle, "context")} />
       </Section>
 
-      <Section id="vision" tag="Insight and vision" title={titles.vision ?? "The idea that guided the team"} asset={visionImg} side="left">
+      <Section id="vision" tag="Insight and vision" title={titles.vision ?? "The idea that guided the team"} asset={visionImg} extra={visionImgAll.slice(1)} side="left">
         {narrative.insight.map((p, i) => <p key={`i-${i}`} className="statement">{p}</p>)}
         {narrative.vision.map((p, i) => <p key={`v-${i}`}>{p}</p>)}
       </Section>
@@ -301,18 +334,19 @@ function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
         </div>
       </section>
 
-      <Section id="leadership" tag="Leadership and collaboration" title={titles.leadership ?? "What was led, and by whom"} asset={leadershipImg} side="right">
+      <Section id="leadership" tag="Leadership and collaboration" title={titles.leadership ?? "What was led, and by whom"} asset={leadershipImg} extra={leadershipImgAll.slice(1)} side="right">
         {narrative.leadership.map((p, i) => <p key={i}>{p}</p>)}
         {narrative.leadershipMoment && (<><p className="tag">A moment of alignment</p><p>{narrative.leadershipMoment}</p></>)}
         <ClaimList claims={getClaims(bundle, "leadership")} />
       </Section>
 
-      <Section id="outcome" tag="Outcome and reflection" title={titles.outcome ?? (project.status === "concept" ? "How far the design went" : "What was delivered")} asset={outcomeImg} side="left">
+      <Section id="outcome" tag="Outcome and reflection" title={titles.outcome ?? (project.status === "concept" ? "How far the design went" : "What was delivered")} asset={outcomeImg} extra={outcomeImgAll.slice(1)} side="left">
         {narrative.outcome.map((p, i) => <p key={i}>{p}</p>)}
         <ClaimList claims={getClaims(bundle, "outcome")} />
         {narrative.reflection && (<><p className="tag">Reflection</p><p className="statement statement--small">{narrative.reflection}</p></>)}
       </Section>
 
+      <ClosingGroup bundle={bundle} />
       <Gallery assets={pool} title="More views" />
       <ProjectInfo bundle={bundle} />
       <ProjectNav bundle={bundle} />
