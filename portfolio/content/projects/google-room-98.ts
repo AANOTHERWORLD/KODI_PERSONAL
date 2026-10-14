@@ -19,7 +19,7 @@ export const googleRoom98: ProjectBundle = {
     // PLACEHOLDER: confirm project years.
     years: "2019 to 2020",
     status: "completed",
-    role: "Design Director, Rapt Studio, partnering with the creative director",
+    role: "Senior Designer, Rapt Studio, working directly with the creative director and account lead",
     scope: "A 4,000 square foot executive experience center: brand strategy, naming, and identity; architecture and interiors; and program guidelines.",
     team: ["Rapt Studio team"],
     collaborators: ["Google stakeholders"],
@@ -73,13 +73,13 @@ export const googleRoom98: ProjectBundle = {
       },
     ],
     leadership: [
-      "I led the design with the internal Rapt team, partnering with the creative director to develop, translate and execute it across the three deliverables, so that naming, architecture and program were decided together. The team developed the interiors, the identity system and the program guidelines with Google's stakeholders.",
+      "As senior designer, I worked directly with the creative director and account lead to develop concepts and design strategy, from early development through delivery and execution. Across the three deliverables, naming, architecture and program were decided together. The Rapt team developed the interiors, the identity system and the program guidelines with Google's stakeholders.",
     ],
     outcome: [
       "Completed. The measures stated for the center at the time, full occupancy, customer conversion, and follow-on meetings, were goals. No measured results are reported here.",
     ],
     imageCredit: "Photography: MO Studio. Renderings and plans: Rapt Studio. The theater diagram is redrawn for this portfolio.",
-    involvement: "Design Director. Led the design with the Rapt team, partnering with the creative director across brand strategy, naming and identity, architecture and interiors, and program guidelines.",
+    involvement: "Senior Designer. Worked directly with the creative director and account lead across brand strategy, naming and identity, architecture and interiors, and program guidelines, from early development to delivery.",
   },
   decisions: [
     {

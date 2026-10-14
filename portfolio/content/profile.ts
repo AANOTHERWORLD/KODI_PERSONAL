@@ -121,7 +121,7 @@ export const profileClaims: Claim[] = [
     id: "profile-lead-01",
     projectId: "profile",
     placement: "profile-leadership",
-    wording: "I led the design on every project shown here with the internal Rapt team. I was the only design director on Intuit and OpenAI. On the other projects I partnered with the creative director to develop, translate and execute the design.",
+    wording: "I was the only design director on Intuit and OpenAI. On other projects from 2024 I partnered with the creative director to develop, translate and execute the design. On projects before 2024 I worked as a senior designer, directly with the creative director and account lead, from early development to delivery.",
     evidenceSource: "portfolio_research.md and portfolio_brief.md, Section 5.",
     verifier: "Jamel Williams",
     status: "verified",
