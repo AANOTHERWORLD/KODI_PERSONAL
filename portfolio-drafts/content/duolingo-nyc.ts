@@ -1,0 +1,71 @@
+import type { ProjectBundle } from "../types";
+
+const id = "duolingo-nyc";
+
+// Extended project (website only), light page with a captioned gallery.
+export const duolingoNyc: ProjectBundle = {
+  project: {
+    id,
+    title: "Duolingo, 4 World Trade Center",
+    slug: id,
+    thesis: "A gallery, a cafe and a library inside an office.",
+    clientDisplayName: "Duolingo",
+    practice: "Rapt Studio",
+    location: "New York, New York",
+    years: "2023 to 2024",
+    status: "completed",
+    role: "Senior Designer, Rapt Studio, working directly with the creative director and account lead",
+    scope: "Workplace interiors for Duolingo's New York office on two floors of 4 World Trade Center.",
+    team: ["Rapt Studio team"],
+    collaborators: [],
+    lenses: ["interiors-behavior", "brand-detail"],
+    tier: "core",
+    caseStudy: "light",
+    inPdf: false,
+    landingTile: true,
+    tiles: [{ x: 82, y: 40, depth: 2, order: 19 }],
+    portfolioRole: "A brand with a world of its own",
+    typeLabel: "Workplace",
+    disciplines: "Interiors, Workplace, Brand",
+    sequence: 19,
+    tileSize: 3,
+    relatedProject: "figma-sf",
+    permission: "confirmed",
+    permissionNote: "Photography by Christian Harder.",
+    heroAssetId: "duo-gallery-level-26",
+    indexAssetId: "duo-dining-room",
+  },
+  narrative: {
+    projectId: id,
+    summary: [
+      "Duolingo's New York office spreads across two floors of 4 World Trade Center. Level 26 holds a workshop, a gallery of framed paintings of Duolingo's characters and the Green Bean cafe. Level 27 holds a dining room, a private dining room, a bookshop and a reading room.",
+      "I worked directly with the creative director and account lead, with the Rapt Studio team, to develop concepts and design strategy, from early development through delivery and execution. The photographs show the completed floors.",
+    ],
+    challenge: [],
+    insight: [],
+    vision: [],
+    scaleTranslation: [],
+    leadership: [
+      "As senior designer, I worked directly with the creative director and account lead to develop concepts and design strategy, from early development through delivery and execution.",
+    ],
+    outcome: [
+      "Completed and photographed in August 2024. No measured results are reported here.",
+    ],
+    photographyCredit: "Photography: Christian Harder.",
+    involvement: "Senior Designer. Worked directly with the creative director and account lead on concepts and design strategy, from early development to delivery.",
+  },
+  decisions: [],
+  assets: [
+    { id: "duo-workshop-level-26", projectId: id, file: "duolingo-nyc/duolingo-4wtc-workshop-level-26.jpg", type: "photo", caption: "Level 26: the workshop, where teams pin up and work through artwork.", alt: "Two people laying out large artwork on the floor and pinning prints to a wall in a bright room with timber chairs.", creator: "Christian Harder", credit: "Photography: Christian Harder", permission: "confirmed", lens: "interiors-behavior" },
+    { id: "duo-gallery-level-26", projectId: id, file: "duolingo-nyc/duolingo-4wtc-gallery-level-26.jpg", type: "photo", caption: "Level 26: the gallery, with framed paintings and a sculpture.", alt: "A gallery with gilt-framed paintings of animated characters, a pale sculpture on a plinth and two visitors.", creator: "Christian Harder", credit: "Photography: Christian Harder", permission: "confirmed", lens: "brand-detail" },
+    { id: "duo-gallery-sculpture-and-frames", projectId: id, file: "duolingo-nyc/duolingo-4wtc-gallery-sculpture-and-frames.jpg", type: "photo", caption: "The gallery from the corner, with a bench for looking.", alt: "A corner of the gallery with framed character paintings, a sculpture on a plinth and a leather bench.", creator: "Christian Harder", credit: "Photography: Christian Harder", permission: "confirmed", lens: "brand-detail" },
+    { id: "duo-gallery-frame-detail", projectId: id, file: "duolingo-nyc/duolingo-4wtc-gallery-frame-detail.jpg", type: "photo", caption: "A frame and its wall label, in detail.", alt: "Close view of a carved gilt frame holding a painting, with a small wall label beside it.", creator: "Christian Harder", credit: "Photography: Christian Harder", permission: "confirmed", lens: "brand-detail" },
+    { id: "duo-green-bean-cafe", projectId: id, file: "duolingo-nyc/duolingo-4wtc-green-bean-cafe.jpg", type: "photo", caption: "Level 26: the Green Bean cafe.", alt: "A cafe with green sofas, timber chairs, hanging plants, globe lights and a green counter.", creator: "Christian Harder", credit: "Photography: Christian Harder", permission: "confirmed", lens: "interiors-behavior" },
+    { id: "duo-dining-room", projectId: id, file: "duolingo-nyc/duolingo-4wtc-dining-room.jpg", type: "photo", caption: "Level 27: the dining room, with sage banquettes and a glass-block wall.", alt: "A dining room with sage green banquettes, timber tables and a warm glass-block wall.", creator: "Christian Harder", credit: "Photography: Christian Harder", permission: "confirmed", lens: "interiors-behavior" },
+    { id: "duo-coffee-mugs-detail", projectId: id, file: "duolingo-nyc/duolingo-4wtc-coffee-mugs-detail.jpg", type: "photo", caption: "Coffee mugs on a blue table.", alt: "Two people at a navy table holding mugs printed with a Duolingo illustration.", creator: "Christian Harder", credit: "Photography: Christian Harder", permission: "confirmed", lens: "brand-detail" },
+    { id: "duo-private-dining", projectId: id, file: "duolingo-nyc/duolingo-4wtc-private-dining.jpg", type: "photo", caption: "Level 27: private dining above the city.", alt: "A round table with rust-colored chairs under an orange ceiling beside floor-to-ceiling windows with a city view.", creator: "Christian Harder", credit: "Photography: Christian Harder", permission: "confirmed", lens: "interiors-behavior" },
+    { id: "duo-reading-room", projectId: id, file: "duolingo-nyc/duolingo-4wtc-reading-room.jpg", type: "photo", caption: "Level 27: the reading room.", alt: "A long room of timber carrels and reading tables along windows, with bookshelves and people working.", creator: "Christian Harder", credit: "Photography: Christian Harder", permission: "confirmed", lens: "interiors-behavior" },
+    { id: "duo-reading-carrel", projectId: id, file: "duolingo-nyc/duolingo-4wtc-reading-carrel.jpg", type: "photo", caption: "A reading carrel with a window and a lamp.", alt: "A timber carrel with a desk, a wall lamp, an open book and a view of Manhattan buildings.", creator: "Christian Harder", credit: "Photography: Christian Harder", permission: "confirmed", lens: "interiors-behavior" },
+  ],
+  claims: [],
+};
