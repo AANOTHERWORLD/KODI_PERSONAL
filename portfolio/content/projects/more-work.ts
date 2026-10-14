@@ -271,7 +271,7 @@ const specs: Spec[] = [
       "Printed materials, a green menu card, and arrangements of anthurium, citron, and cabbage made the details of the table part of the program.",
       "I led the design with the Rapt Studio team. The images are event documentation.",
     ],
-    years: "2024",
+    years: "2023",
     location: "Napa Valley, California",
     relatedProject: "club-gemini",
     heroIndex: 1,
