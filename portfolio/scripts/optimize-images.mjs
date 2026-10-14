@@ -18,8 +18,8 @@ const OUTPUT_DIR = path.join(ROOT, "public", "generated");
 const MANIFEST_DIR = path.join(ROOT, "content", "generated");
 const MANIFEST_PATH = path.join(MANIFEST_DIR, "image-manifest.json");
 
-const WIDTHS = [480, 960, 1440, 2000];
-const QUALITY = 78;
+const WIDTHS = [480, 960, 1440, 2000, 2800];
+const QUALITY = 82;
 const SOURCE_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff"]);
 const DEBUG = process.env.NEXT_PUBLIC_DEBUG === "true" || process.argv.includes("--verbose");
 
