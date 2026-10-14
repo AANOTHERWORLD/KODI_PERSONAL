@@ -121,7 +121,7 @@ export const profileClaims: Claim[] = [
     id: "profile-lead-01",
     projectId: "profile",
     placement: "profile-leadership",
-    wording: "Creative and strategy lead on every project shown here, confirmed by Jamel on 13 October 2026.",
+    wording: "I led the design on every project shown here with the internal Rapt team. I was the only design director on Intuit and OpenAI. On the other projects I partnered with the creative director to develop, translate and execute the design.",
     evidenceSource: "portfolio_research.md and portfolio_brief.md, Section 5.",
     verifier: "Jamel Williams",
     status: "verified",

@@ -54,7 +54,7 @@ function build(spec: Spec): ProjectBundle {
       location: spec.location,
       years: spec.years,
       status: "completed",
-      role: "Creative and Strategy Lead, Rapt Studio",
+      role: "Design Director, Rapt Studio, partnering with the creative director",
       scope: "",
       team: [],
       collaborators: [],
@@ -78,7 +78,7 @@ function build(spec: Spec): ProjectBundle {
       scaleTranslation: [],
       leadership: [],
       outcome: [],
-      involvement: "Creative and strategy lead, Rapt Studio.",
+      involvement: "Design Director, Rapt Studio, partnering with the creative director.",
     },
     decisions: [],
     assets,
@@ -100,7 +100,7 @@ const specs: Spec[] = [
     summary: [
       "Lightspark's workplace sits beneath exposed timber trusses, where a dark stair and black millwork volumes organize the floor into places to work, meet, and pause.",
       "Within that structure, a library alcove of collected objects, a lounge beneath the company mark, and a shared kitchen under a typographic light fixture give the brand a physical presence in everyday spaces.",
-      "I led creative direction and strategy with the Rapt Studio team. The photographs show the completed interior.",
+      "I led the design with the Rapt Studio team, partnering with the creative director. The photographs show the completed interior.",
     ],
     years: "",
     location: "",
@@ -132,7 +132,7 @@ const specs: Spec[] = [
     summary: [
       "Mama Rouge is a restaurant interior in which saturated red lacquer, patterned banquettes, and warm timber tables meet a tin ceiling and an oval soffit holding a golden fiber chandelier.",
       "Cast ornamental screens, a mirrored back bar, and a corridor of streaking yellow and red light lead guests between rooms, so detail and atmosphere carry the identity as much as the plan does.",
-      "I led creative direction and strategy with the Rapt Studio team. The photographs show the completed restaurant.",
+      "I led the design with the Rapt Studio team, partnering with the creative director. The photographs show the completed restaurant.",
     ],
     years: "",
     location: "",
@@ -166,7 +166,7 @@ const specs: Spec[] = [
     summary: [
       "Bar April Jean pairs a flowing script wordmark with a palette of rust red and deep green, and carries it through a collage illustration style, menus, social posts, and a projecting sign on a green corner building.",
       "At the bar itself, the identity meets the everyday: hands, glasses, and printed menus on stands, with warm timber and a full back bar.",
-      "I led creative direction and strategy with the Rapt Studio team. The images combine photographs of the bar with identity and signage design.",
+      "I led the design with the Rapt Studio team, partnering with the creative director. The images combine photographs of the bar with identity and signage design.",
     ],
     years: "",
     location: "",
@@ -198,7 +198,7 @@ const specs: Spec[] = [
     summary: [
       "At The Mark, a continuous line of white light loops across a lobby of black stone, vertical timber, and pale terrazzo, drawing the eye from the entry through to the reception desk.",
       "Outside, a terrace of small black tables, pale paving, and planting continues the quiet palette.",
-      "I led creative direction and strategy with the Rapt Studio team. The photographs show the completed lobby and terrace; two further images are reference studies.",
+      "I led the design with the Rapt Studio team, partnering with the creative director. The photographs show the completed lobby and terrace; two further images are reference studies.",
     ],
     years: "",
     location: "Los Angeles",
@@ -227,7 +227,7 @@ const specs: Spec[] = [
     summary: [
       "Club Gemini turns a room into an evening lounge: deep violet velvet curtains, low blue sofas, candlelight, and dark florals, all under saturated purple and magenta light.",
       "The details, a hand-held glass, a menu card beside a candle, a coffee table of flowers, keep the atmosphere intimate and specific.",
-      "I led creative direction and strategy with the Rapt Studio team. The images are event documentation.",
+      "I led the design with the Rapt Studio team, partnering with the creative director. The images are event documentation.",
     ],
     years: "",
     location: "",
@@ -253,7 +253,7 @@ const specs: Spec[] = [
     summary: [
       "The Napa Leadership Retreat gathered leaders for a multi-day program, with the setting drawn from textile, table, and harvest: draped cream fabric, warm pools of light, plants on plinths, and seasonal centerpieces.",
       "Printed materials, a green menu card, and arrangements of anthurium, citron, and cabbage made the details of the table part of the program.",
-      "I led creative direction and strategy with the Rapt Studio team. The images are event documentation.",
+      "I led the design with the Rapt Studio team, partnering with the creative director. The images are event documentation.",
     ],
     years: "2024",
     location: "Napa Valley, California",
@@ -282,7 +282,7 @@ const specs: Spec[] = [
     summary: [
       "A Place at the Table is a dinner built around one long shared table: candles, green stemware, blue-patterned plates, folded napkins, and small arrangements of flowers.",
       "Guests carry their own chairs to the table, share dishes, and gather at the end around a cake, so the evening is made by the people at it as much as by the setting.",
-      "I led creative direction and strategy with the Rapt Studio team. The images are event documentation.",
+      "I led the design with the Rapt Studio team, partnering with the creative director. The images are event documentation.",
     ],
     years: "",
     location: "",

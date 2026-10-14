@@ -14,10 +14,10 @@ export const intuitTurbotaxRetail: ProjectBundle = {
     years: "2025 to present",
     status: "in-progress",
     statusNote: "Design direction and playbook system in development. Flagships in documentation and construction.",
-    role: "Creative and Strategy Lead (Design Director, Rapt Studio), co-directed with a second design director",
+    role: "Design Director, Rapt Studio (the only design director on the project)",
     scope:
       "Retail experience design for TurboTax stores built around walk-in discovery and appointment-based service. The engagement grew from a single retail playbook for architects into the Store Bible, a four-book cross-functional system: Retail Strategy, Locations, Experience + Service + Technology, and Programming + Merchandising. In parallel, Rapt is designing four flagship stores.",
-    team: ["Rapt Studio design team", "Co-directed with a second Rapt Studio design director"],
+    team: ["Rapt Studio design team"],
     collaborators: [
       "Intuit stakeholders across Experience Design, Real Estate and Development, Service Design, Marketing and Partnerships, and Leadership",
       "Gensler, architect",
@@ -90,7 +90,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
       },
     ],
     leadership: [
-      "I co-directed the engagement and led the evolution from a single playbook into the four-book Store Bible. My own work sat in the strategy and the structure: naming the emotional territory, setting the ritual spine and the four imperatives, and deciding how the books divide the argument. The Rapt team developed the environments, the hero system, and the flagship designs, and the client teams shaped the service model.",
+      "I was the only design director on the engagement and led the design with the internal Rapt team. I led the evolution from a single playbook into the four-book Store Bible: naming the emotional territory, setting the ritual spine and the four imperatives, and deciding how the books divide the argument. I directed the environments, the hero system and the flagship designs, which the Rapt team developed, and the client teams shaped the service model.",
     ],
     leadershipMoment:
       "Alignment came from vocabulary. Early in the work we built a naming crosswalk that retired legacy terminology before the first client presentation, so every Intuit team was discussing the same stores, the same tiers, and the same environments. Several later disagreements turned out to be arguments about words, and the crosswalk settled them.",
@@ -99,7 +99,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
     ],
     imageCredit: "Concept renders and plans by Rapt Studio, from the Intuit Flagship Reference deck.",
     involvement:
-      "Creative and strategy lead, co-directing with a second design director. Led the Store Bible structure, the emotional territory, the ritual spine, and the four imperatives. Reviewed and directed the environment designs, the hero system, and the flagship concepts.",
+      "Design Director, and the only design director on the engagement. Led the Store Bible structure, the emotional territory, the ritual spine, and the four imperatives, and directed the environment designs, the hero system, and the flagship concepts.",
   },
   decisions: [
     {

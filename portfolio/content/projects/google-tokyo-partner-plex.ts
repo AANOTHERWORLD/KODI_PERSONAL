@@ -14,7 +14,7 @@ export const googleTokyoPartnerPlex: ProjectBundle = {
     location: "Shibuya, Tokyo, Japan",
     years: "2019 to 2020",
     status: "completed",
-    role: "Creative and Strategy Lead, Rapt Studio",
+    role: "Design Director, Rapt Studio, partnering with the creative director",
     scope: "Experience concept, interiors, and environmental graphics for a platform where APAC teams host business partners, doubling Google's Tokyo presence.",
     team: ["Rapt Studio team"],
     collaborators: ["Google APAC stakeholders"],
@@ -38,7 +38,7 @@ export const googleTokyoPartnerPlex: ProjectBundle = {
     projectId: id,
     summary: [
       "Above Shibuya, the Partner Plex creates a deliberate shift from the energy of the city to a setting for hosting, exchange, and reflection. Water provides the central idea, informing the sequence of arrival and the character of spaces for different kinds of interaction.",
-      "I led creative direction and strategy, working with the Rapt Studio team and Google's APAC stakeholders to connect the experience concept, interiors, and environmental graphics.",
+      "I led the design, partnering with the creative director and working with the Rapt Studio team and Google's APAC stakeholders to connect the experience concept, interiors, and environmental graphics.",
       "The completed project shows how a global organization's ambitions can take a locally responsive form through hospitality, movement, and detail.",
     ],
     challenge: [
@@ -58,12 +58,12 @@ export const googleTokyoPartnerPlex: ProjectBundle = {
       { lens: "interiors-behavior", assetId: "ppx-10", caption: "Compression: the corridor narrows and curves before a room opens." },
       { lens: "brand-detail", assetId: "ppx-23", caption: "Magic: an immersive room where color becomes the medium." },
     ],
-    leadership: ["I led creative and strategy for the center, with the Rapt team developing the interiors and graphics with Google's APAC stakeholders."],
+    leadership: ["I led the design for the center with the internal Rapt team, partnering with the creative director to develop, translate and execute the concept. The team developed the interiors and graphics with Google's APAC stakeholders."],
     outcome: [
       "Completed and photographed. The stated success goals at the time were full daily activation of half the space and higher client engagement and satisfaction. Those are goals, and no measured results are reported here.",
     ],
     photographyCredit: "Photography: Kohei Take.",
-    involvement: "Creative and strategy lead for the experience concept and its expression in interiors and graphics.",
+    involvement: "Design Director. Led the design with the Rapt team, partnering with the creative director on the experience concept and its expression in interiors and graphics.",
   },
   decisions: [
     {

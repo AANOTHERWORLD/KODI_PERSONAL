@@ -13,7 +13,7 @@ export const tinderHq: ProjectBundle = {
     location: "West Hollywood, California",
     years: "2019 to 2022",
     status: "completed",
-    role: "Creative and Strategy Lead, Rapt Studio",
+    role: "Design Director, Rapt Studio, partnering with the creative director",
     scope:
       "Workplace headquarters across the ground floor and floors three to seven, delivered in phases: discovery, concept, interiors, environmental graphics, a redesign for a distributed workforce, and photography direction.",
     team: [
@@ -106,7 +106,7 @@ export const tinderHq: ProjectBundle = {
       },
     ],
     leadership: [
-      "I directed discovery and the concept, then carried the idea through interiors, environmental graphics, and construction. When the company moved to a distributed workforce in 2020, I led the redesign that re-tested the floors against how teams actually worked. I also authored the photography direction: approachable and familiar, populated spaces, eye-level views, and details that reinforce the story points.",
+      "I led the design with the internal Rapt team, partnering with the creative director to develop, translate and execute it. I directed discovery and the concept, then carried the idea through interiors, environmental graphics, and construction. When the company moved to a distributed workforce in 2020, I led the redesign that re-tested the floors against how teams actually worked. I also authored the photography direction: approachable and familiar, populated spaces, eye-level views, and details that reinforce the story points.",
     ],
     leadershipMoment:
       "The brand was evolving while the building was being designed, so the look and feel had to land without a fixed brand system to lean on. We resolved it by anchoring the interiors to behavior rather than to the identity, and by treating the environmental graphics as story moments that could absorb a changing brand: Built in LA photography, the prize wall, a curated library, a patio mural of app innovations, and a commissioned artwork on the connection stair.",
@@ -114,7 +114,7 @@ export const tinderHq: ProjectBundle = {
       "Completed and professionally photographed in 2022. The redesign for a distributed workforce tested six new space typologies, force-ranked them against team working styles, and added four new collaboration spaces. The framing we used for the shift: from centralized to distributed, from a site of work to a site of collaboration, and from collaboration by proximity to collaboration by intention.",
     ],
     involvement:
-      "Creative and strategy lead. Directed discovery, concept, interiors, and environmental graphics, led the 2020 redesign for a distributed workforce, and authored the photography direction.",
+      "Design Director. Led the design with the Rapt team, partnering with the creative director: directed discovery, concept, interiors, and environmental graphics, led the 2020 redesign for a distributed workforce, and authored the photography direction.",
   },
   decisions: [
     {

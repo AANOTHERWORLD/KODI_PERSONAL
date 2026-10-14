@@ -14,7 +14,7 @@ export const wattPlaza: ProjectBundle = {
     years: "2025 to present",
     status: "concept",
     statusNote: "Unbuilt concept studies.",
-    role: "Creative and strategy lead, Rapt Studio",
+    role: "Design Director, Rapt Studio, partnering with the creative director",
     scope:
       "Concept studies for a Century City office property: an earlier plaza and ground-floor study, then three potential futures for the whole building, developed through sketches, markups and a shared Weave workflow.",
     team: ["Rapt Studio, New York and Los Angeles teams"],
@@ -79,7 +79,7 @@ export const wattPlaza: ProjectBundle = {
       },
     ],
     leadership: [
-      "I worked with the NY and LA teams on the concepts and led the development of AI skills in the studio, including the shared Weave workflow.",
+      "I led the design with the internal Rapt teams in New York and Los Angeles, partnering with the creative director to develop, translate and execute the concepts. I also led the development of AI skills in the studio, including the shared Weave workflow.",
     ],
     leadershipMoment: "",
     outcome: [
@@ -89,7 +89,7 @@ export const wattPlaza: ProjectBundle = {
       "Drawing stayed part of the process. Marking up generated views let us specify changes and return to specific decisions about access, planting and material.",
     imageCredit: "Concept studies and process imagery, Rapt Studio. AI-assisted concept images developed in Weave. Unbuilt.",
     involvement:
-      "Creative and strategy lead. Worked with the NY and LA teams and led the development of AI skills in the studio.",
+      "Design Director. Led the design with the NY and LA teams, partnering with the creative director, and led the development of AI skills in the studio.",
   },
   decisions: [
     {
@@ -346,7 +346,7 @@ export const wattPlaza: ProjectBundle = {
       id: "watt-c3",
       projectId: id,
       placement: "role",
-      wording: "Led the development of AI skills in the studio and worked with the NY and LA teams on the three futures.",
+      wording: "Led the design of the three futures with the NY and LA teams, partnering with the creative director, and led the development of AI skills in the studio.",
       evidenceSource: "Narrative and evidence note, Watt Plaza package, October 14, 2026.",
       verifier: "Jamel Williams",
       status: "verified",

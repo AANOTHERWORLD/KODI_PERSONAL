@@ -14,7 +14,7 @@ export const lsdRunning: ProjectBundle = {
     years: "2023 to 2024",
     status: "completed",
     statusNote: "The supplied photographs and film document the built space.",
-    role: "Creative and Strategy Lead, Rapt Studio",
+    role: "Design Director, Rapt Studio, partnering with the creative director",
     scope:
       "An on-site workshop covering the store, brand identity, and online presence, then concept design through five schemes to a synthesized final design, and handoff to the fabricator, including expansion into the adjacent space.",
     team: ["Kali Lewis", "Linda Dervishaj", "Katie Ubben", "Lexi Beal", "Nicola Kerger", "Ruth Marcotte", "Mariam Mollaghaffari", "Ashley Chen"],
@@ -78,7 +78,7 @@ export const lsdRunning: ProjectBundle = {
       },
     ],
     leadership: [
-      "I led the on-site workshop with the client and the fabricator, then directed the LA studio's iterative swarms through five schemes to the final design, and the handoff to fabrication.",
+      "I led the design with the internal Rapt team, partnering with the creative director to develop, translate and execute it. I led the on-site workshop with the client and the fabricator, then directed the LA studio's iterative swarms through five schemes to the final design, and the handoff to fabrication.",
     ],
     leadershipMoment:
       "The five schemes were strong in different ways, and the easy move was to pick one. Instead we treated them as a set of answers to the three prompts and combined them: the perimeter storage from the Functional scheme, the convertible modules from Communal, the landscape idea from Experiential, and the restraint of Minimal. The final design is a synthesis rather than a winner.",
@@ -87,7 +87,7 @@ export const lsdRunning: ProjectBundle = {
     ],
     imageCredit: "Renders, axonometric drawings, and workshop photography by Rapt Studio, from the LSD Running project book.",
     involvement:
-      "Creative and strategy lead. Led the workshop, directed the five-scheme exploration and the synthesis, and directed the handoff to the fabricator.",
+      "Design Director. Led the design with the Rapt team, partnering with the creative director: ran the workshop, directed the five-scheme exploration and the synthesis, and directed the handoff to the fabricator.",
   },
   decisions: [
     {
