@@ -87,7 +87,7 @@ export default function AboutPage() {
 
       <section className="section" aria-labelledby="availability">
         <div className="grid-2">
-          <div><p className="tag">Contact</p><h2 id="availability" className="section__title">Let&apos;s shape what comes next</h2></div>
+          <div><p className="tag">Contact</p><h2 id="availability" className="section__title">Open to Creative Director roles</h2></div>
           <div className="prose">
             <p>{portfolio.internationalAvailability}</p>
             <div className="actions">

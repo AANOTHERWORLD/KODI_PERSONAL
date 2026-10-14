@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { PLACEHOLDER_SLUG, getAllProjectSlugs, getProject, getCoreProjects, getAsset, getHeroAsset, getIndexAsset, getClaims, visibleAssets, lensById } from "@/lib/content";
+import { PLACEHOLDER_SLUG, getAllProjectSlugs, getProject, getWorkOrder, getAsset, getHeroAsset, getIndexAsset, getClaims, visibleAssets, lensById } from "@/lib/content";
 import Picture from "@/components/Picture";
 import LensTags from "@/components/LensTags";
 import DraftBadge from "@/components/DraftBadge";
@@ -152,7 +152,7 @@ function Credits({ bundle }: { bundle: ProjectBundle }) {
 
 // Previous and next project, in Work order, each with its image: a clear way on from any case study.
 function ProjectNav({ bundle }: { bundle: ProjectBundle }) {
-  const list = getCoreProjects();
+  const list = getWorkOrder();
   const i = list.findIndex((b) => b.project.id === bundle.project.id);
   if (i < 0 || list.length < 2) return null;
   const prev = list[(i - 1 + list.length) % list.length];
@@ -302,7 +302,7 @@ function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
         <ClaimList claims={getClaims(bundle, "leadership")} />
       </Section>
 
-      <Section id="outcome" tag="Outcome and reflection" title="What was delivered" asset={outcomeImg} side="left">
+      <Section id="outcome" tag="Outcome and reflection" title={project.status === "concept" ? "How far the design went" : "What was delivered"} asset={outcomeImg} side="left">
         {narrative.outcome.map((p, i) => <p key={i}>{p}</p>)}
         <ClaimList claims={getClaims(bundle, "outcome")} />
         {narrative.reflection && (<><p className="tag">Reflection</p><p className="statement statement--small">{narrative.reflection}</p></>)}

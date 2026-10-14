@@ -35,12 +35,40 @@ function bySequence(a: ProjectBundle, b: ProjectBundle) {
 }
 
 // Core projects in sequence, then extended projects in their own sequence.
+// Fail the build on a featured id that does not exist or a duplicated entry.
+function assertSelections() {
+  const known = new Set(projectBundles.map((b) => b.project.id));
+  for (const id of SELECTED_WORK_IDS) if (!known.has(id)) throw new Error(`Selected work id not found: ${id}`);
+  if (new Set(SELECTED_WORK_IDS).size !== SELECTED_WORK_IDS.length) throw new Error("Duplicate id in selected work");
+}
 export function getProjects(): ProjectBundle[] {
   return [...getCoreProjects(), ...getExtendedProjects()];
 }
 
 export function getCoreProjects(): ProjectBundle[] {
   return projectBundles.filter((b) => b.project.tier === "core").filter(projectVisible).sort(bySequence);
+}
+
+// Editorial selection, independent of the general project sequence. Order matters.
+export const HOMEPAGE_IDS = ["tinder-hq", "intuit-turbotax-retail", "lsd-running", "google-gso-home-of-the-internet", "google-room-98", "kilroy-oyster-point"];
+export const SELECTED_WORK_IDS = [...HOMEPAGE_IDS, "openai", "watt-plaza"];
+
+const byIds = (ids: string[]) => (assertSelections(), ids).map((id) => getCoreProjects().find((b) => b.project.id === id)).filter((b): b is ProjectBundle => !!b);
+
+export function getHomepageProjects(): ProjectBundle[] {
+  return byIds(HOMEPAGE_IDS);
+}
+
+// Work page order: selected projects in editorial order, then the rest in their existing sequence.
+export function getWorkGroups(): { selected: ProjectBundle[]; further: ProjectBundle[] } {
+  const selected = byIds(SELECTED_WORK_IDS);
+  const further = getCoreProjects().filter((b) => !SELECTED_WORK_IDS.includes(b.project.id));
+  return { selected, further };
+}
+
+export function getWorkOrder(): ProjectBundle[] {
+  const { selected, further } = getWorkGroups();
+  return [...selected, ...further];
 }
 
 export function getExtendedProjects(): ProjectBundle[] {

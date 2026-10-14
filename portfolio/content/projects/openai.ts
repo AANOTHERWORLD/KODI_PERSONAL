@@ -40,10 +40,10 @@ export const openai: ProjectBundle = {
     projectId: id,
     summary: [
       "OpenAI's workplaces asked a shared question: how could a company shaping digital tools create physical places that feel deeply human? Bellevue and Tokyo approached that question through hospitality, craft and the character of each city.",
-      "I worked with August Petersen and strategist David Michon on the early concept work that helped win the project. We explored hospitality as a way to remove everyday friction and make people feel considered, supported by environments that invite curiosity, conversation and focused work.",
+      "I developed the early concept work with August Petersen and strategist David Michon, helping establish the direction that won the project. We explored hospitality as a way to remove everyday friction and make people feel considered, supported by environments that invite curiosity, conversation and focused work. I then served as Design Director through design development for both Bellevue and Tokyo.",
     ],
     story: [
-      "Credit for the early pitch goes to Jamel Williams, August Petersen and David Michon. The later design work was carried by the wider Rapt Studio team and local partners.",
+      "The early pitch was developed by Jamel Williams, August Petersen and David Michon. Design development and the work that followed were carried by the wider Rapt Studio team and local partners.",
       "In Bellevue, the early studies explored psychological safety, discovery and craft as a source of human connection. The later narrative brings together Pacific Northwest forests and coastline, the visible hand of the maker, and layered hospitality, expressed through timber, colored stone, upholstery, planting, art and varied settings for gathering and retreat. Floors 16 and 17 are built, and Floors 15 and 18 are in development.",
       "In Tokyo, a shared hospitality sensibility is translated through Quiet Depth, Harness Dynamism and Crafted Utility. Discovery connects OpenAI's San Francisco identity with local expectations of care, hosting and informal connection. The strategy combines the anticipation of omotenashi with Californian ease, and keeps much of the existing fit-out. About 36,500 RSF and about 200 desks are design-program figures, not occupied headcount.",
     ],
@@ -80,11 +80,11 @@ export const openai: ProjectBundle = {
       },
     ],
     leadership: [
-      "I lead the design for both offices with the internal Rapt team, including the shared sensibility that frames them and the decision to let each city set its own form. The team develops the designs with OpenAI's stakeholders in San Francisco, Bellevue, and Tokyo, with local partners in Bellevue.",
+      "As Design Director through design development, I worked closely with the team to translate the early concepts into developed designs for Bellevue and Tokyo. As the work evolved, I guided responses to client feedback and goals while maintaining the core design intent, including the shared sensibility that frames both offices and the decision to let each city set its own form. My involvement ended at design development; later phases were carried by the wider Rapt team and local partners.",
     ],
     outcome: ["In progress. In Bellevue, Floors 16 and 17 are built and Floors 15 and 18 are in development. Tokyo has completion photography. No measured results to report."],
-    imageCredit: "Diagrams redrawn for this portfolio. Bellevue photography by Trevor Tondro exists and is held until permission is confirmed.",
-    involvement: "Design Director for both offices: the shared sensibility, the Bellevue mood-led process, the Tokyo reuse and hospitality strategy, and direction through design development.",
+    imageCredit: "Diagrams redrawn for this portfolio. Bellevue photography: Trevor Tondro. Tokyo photography: Erik.",
+    involvement: "Design Director through design development, from early concept collaboration to guiding the team's translation of the concept in response to client feedback and goals.",
   },
   decisions: [
     {

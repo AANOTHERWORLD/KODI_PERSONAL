@@ -11,7 +11,7 @@ export const portfolio: Portfolio = {
   statement: "One Vision. Multiple Scales.",
   statementBody:
     "I lead multidisciplinary design teams to transform culture, strategy, and brand into meaningful spatial experiences, connecting the big idea to the smallest detail.",
-  leadershipHeading: "Creative Vision. Collective Execution.",
+  leadershipHeading: "Leading multidisciplinary teams",
   leadershipProof: [
     "As Design Director at Rapt Studio, I lead a multidisciplinary team of approximately 11 across seven concurrent projects, guiding creative direction from initial strategy through delivery.",
     "My role brings together design leadership, client partnership, responsibility for project profitability, and contributions to business development and staffing, balancing ambitious ideas with the realities of bringing them to life.",

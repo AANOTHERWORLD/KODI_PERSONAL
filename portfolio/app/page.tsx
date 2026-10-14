@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getAsset, getProjectById, getCoreProjects, getLandingTiles, getLensCounts, getProfileAsset, getProfileClaimsById, portfolio, profile, approachSteps } from "@/lib/content";
+import { getAsset, getProjectById, getHomepageProjects, getLandingTiles, getLensCounts, getProfileAsset, getProfileClaimsById, portfolio, profile, approachSteps } from "@/lib/content";
 import { getDownloads } from "@/lib/files";
 import { withBasePath } from "@/lib/basePath";
 import Picture from "@/components/Picture";
@@ -11,12 +11,10 @@ import WorkCard from "@/components/WorkCard";
 import { LensProvider, LensKey } from "@/components/LensContext";
 import { lensIntro, lensHeading } from "@/content/lenses";
 
-// Home features the first six core projects in sequence; the rest live on the Work page.
-const FEATURED_LIMIT = 6;
 
 export default function HomePage() {
   const tiles = getLandingTiles();
-  const featured = getCoreProjects().slice(0, FEATURED_LIMIT);
+  const featured = getHomepageProjects();
   const counts = getLensCounts();
   const lsd = getProjectById("lsd-running");
   const mobileHero = lsd ? getAsset(lsd, "lsd-photo-bench-arc") : null;
@@ -167,8 +165,8 @@ export default function HomePage() {
       </section>
 
       <section className="section wrap section--invite" aria-labelledby="invite-heading" data-reveal>
-        <p className="tag">Next</p>
-        <h2 id="invite-heading" className="section__title">Let&apos;s shape what comes next</h2>
+        <p className="tag">Availability</p>
+        <h2 id="invite-heading" className="section__title">Open to Creative Director roles</h2>
         <p className="lede">{portfolio.availability}</p>
         <p className="tag">{portfolio.internationalAvailability}</p>
         <div className="actions">

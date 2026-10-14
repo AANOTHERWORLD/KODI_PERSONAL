@@ -26,7 +26,7 @@
 
   --bg: #dddddd;
   --ink: #404040;
-  --ink-muted: rgba(64, 64, 64, 0.6);
+  --ink-muted: rgba(64, 64, 64, 0.8);
   --ink-faint: rgba(64, 64, 64, 0.18);
   --accent: #8c4339;
   --accent-soft: rgba(140, 67, 57, 0.12);
@@ -1845,6 +1845,12 @@ ol {
   .work-tile__headline {
     color: var(--ink-muted);
   }
+  .work-tile__title {
+    color: var(--ink);
+  }
+  .work-tile__name {
+    display: none;
+  }
   .work-tile__link {
     color: var(--ink);
   }
@@ -2514,4 +2520,34 @@ ol {
   .scroll-cue {
     color: #fff;
   }
+}
+
+/* Work page: persistent project names under thumbnails, group headings */
+.work-tile__name {
+  margin: 0;
+  padding: 0.6rem 0 0;
+  font-size: var(--text-tag);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.work-tile__link {
+  overflow: visible;
+  background: transparent;
+}
+.work-tile__media {
+  position: relative;
+  overflow: hidden;
+}
+.work-tile__link::after {
+  bottom: 2.1rem;
+}
+.work-tile__text {
+  bottom: 2.1rem;
+}
+.work-group__title {
+  font-size: var(--text-page);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: var(--space-5) 0 0;
 }

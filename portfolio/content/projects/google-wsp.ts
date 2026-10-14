@@ -39,8 +39,8 @@ export const googleWsp: ProjectBundle = {
   narrative: {
     projectId: id,
     summary: [
-      "Google's WSP campus in Los Angeles is a 540,000 square foot adaptive reuse of the Westside Pavilion. The design had to make a very large floor plate feel like a place where teams belong, and stay flexible for the long term.",
-      "I worked alongside Google's real estate and workplace team, ZGF Architects and SWA Landscape Architecture, to develop concepts and design strategy, from early development through delivery and execution.",
+      "Unbuilt concept, developed 2020 to 2021. Google's WSP campus was a proposed 540,000 square foot adaptive reuse of the Westside Pavilion in Los Angeles. The design had to make a very large floor plate feel like a place where teams belong, and stay flexible for the long term.",
+      "I worked alongside Google's real estate and workplace team, ZGF Architects and SWA Landscape Architecture on concepts and design strategy, from early development through the design stage reached. Google changed direction during the pandemic and the project wrapped in 2021.",
     ],
     challenge: [
       "The brief was to transform a 540,000 square foot adaptive reuse project into a design built for long-horizon flexibility. Scale was the risk. A floor plate that large can feel anonymous, and the way teams work will keep changing over the life of the building.",

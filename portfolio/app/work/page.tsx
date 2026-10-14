@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getCoreProjects, getHeroAsset, getLensCounts } from "@/lib/content";
+import { getWorkGroups, getHeroAsset, getLensCounts } from "@/lib/content";
 import Picture from "@/components/Picture";
 import WorkTile from "@/components/WorkTile";
 import { LensProvider, LensKey } from "@/components/LensContext";
@@ -11,7 +11,8 @@ export const metadata: Metadata = {
 
 export default function WorkPage() {
   // Core projects only: extended placeholders stay out of navigation until they have a story and assets.
-  const core = getCoreProjects();
+  const { selected, further } = getWorkGroups();
+  const core = [...selected, ...further];
   const projects = core;
   const counts = getLensCounts();
   const hero = core.length ? getHeroAsset(core[0]) : null;
@@ -25,10 +26,8 @@ export default function WorkPage() {
         )}
         <div className="work-banner__scrim" aria-hidden="true" />
         <div className="work-banner__text wrap">
-          <p className="tag">Work</p>
-          <h1 id="work-title" className="work-banner__title">One Direction, Read at Every Scale.</h1>
-          <p className="work-banner__lede">Each project begins with a distinct challenge and a clear creative idea. Through architecture, interiors, brand, and experience, that idea takes different forms while retaining its purpose.</p>
-          <p className="work-banner__lede work-banner__lede--second">The work represents different sectors, scales, and teams, connected by a consistent approach to creative direction.</p>
+          <h1 id="work-title" className="work-banner__title">Work</h1>
+          <p className="work-banner__lede">I help teams carry a clear idea from concept into the places and experiences people encounter every day, across workplaces, shared amenities, retail environments and brand platforms.</p>
         </div>
       </section>
       <div className="wrap">
@@ -38,9 +37,20 @@ export default function WorkPage() {
           <LensKey counts={counts} compact total={projects.length} />
         </div>
         {projects.length ? (
-          <ol className="work-grid" aria-label="Projects">
-            {projects.map((bundle, index) => <WorkTile key={bundle.project.id} bundle={bundle} index={index} />)}
-          </ol>
+          <>
+            <h2 className="work-group__title">Selected projects</h2>
+            <ol className="work-grid" aria-label="Selected projects">
+              {selected.map((bundle, index) => <WorkTile key={bundle.project.id} bundle={bundle} index={index} />)}
+            </ol>
+            {further.length > 0 && (
+              <>
+                <h2 className="work-group__title">Further work</h2>
+                <ol className="work-grid" aria-label="Further work">
+                  {further.map((bundle, index) => <WorkTile key={bundle.project.id} bundle={bundle} index={selected.length + index} />)}
+                </ol>
+              </>
+            )}
+          </>
         ) : (
           <p className="empty-state">
             No projects are cleared for publication yet. Set a project&apos;s permission to confirmed in its content file, or build with NEXT_PUBLIC_SHOW_DRAFTS=true to preview drafts.

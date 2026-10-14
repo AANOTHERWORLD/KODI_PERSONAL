@@ -17,6 +17,7 @@ export default function WorkTile({ bundle, index }: { bundle: ProjectBundle; ind
         <div className="work-tile__media">
           {asset ? <Picture asset={asset} showCaption={false} fit="cover" sizes="(min-width: 1100px) 25vw, (min-width: 720px) 50vw, 100vw" priority={index < 4} /> : <div className="picture__placeholder">Image pending</div>}
         </div>
+        <p className="work-tile__name">{project.title}</p>
         <div className="work-tile__text">
           <p className="work-tile__category tag">{category}</p>
           <h2 className="work-tile__title">{project.title}</h2>
