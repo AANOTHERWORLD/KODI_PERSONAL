@@ -2452,3 +2452,66 @@ ol {
   background: rgba(0, 0, 0, 0.06);
   border: 3px solid var(--cursor-color);
 }
+
+/* Phones: a single still (LSD, IMG_0157) sits behind the statement; the tile field is hidden
+   because the desktop pan does not translate to a touch layout. */
+.stage__mobile-bg {
+  display: none;
+}
+@media (max-width: 719px) {
+  .stage-section {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    --header-band: #1c1c1c;
+  }
+  .stage__mobile-bg {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: #1c1c1c;
+  }
+  .stage__mobile-bg .picture,
+  .stage__mobile-bg .picture__media {
+    height: 100%;
+  }
+  .stage__mobile-bg .picture__media {
+    aspect-ratio: auto !important;
+  }
+  .stage__mobile-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .stage__mobile-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.15) 35%, rgba(0, 0, 0, 0.72) 100%);
+  }
+  .stage {
+    position: relative;
+    z-index: 1;
+    padding-top: 7rem;
+    padding-bottom: 4.5rem;
+  }
+  .stage__field {
+    display: none;
+  }
+  .stage__statement,
+  .stage__identity span,
+  .stage__statement .button {
+    color: #fff;
+  }
+  .stage__statement .button {
+    --button-line: #fff;
+  }
+  .stage__identity span {
+    color: rgba(255, 255, 255, 0.75);
+  }
+  .scroll-cue {
+    color: #fff;
+  }
+}

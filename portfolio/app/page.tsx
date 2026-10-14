@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getCoreProjects, getLandingTiles, getLensCounts, getProfileAsset, getProfileClaimsById, portfolio, profile, approachSteps } from "@/lib/content";
+import { getAsset, getProjectById, getCoreProjects, getLandingTiles, getLensCounts, getProfileAsset, getProfileClaimsById, portfolio, profile, approachSteps } from "@/lib/content";
 import { getDownloads } from "@/lib/files";
 import { withBasePath } from "@/lib/basePath";
 import Picture from "@/components/Picture";
@@ -18,6 +18,8 @@ export default function HomePage() {
   const tiles = getLandingTiles();
   const featured = getCoreProjects().slice(0, FEATURED_LIMIT);
   const counts = getLensCounts();
+  const lsd = getProjectById("lsd-running");
+  const mobileHero = lsd ? getAsset(lsd, "lsd-photo-bench-arc") : null;
   const portrait = getProfileAsset(profile.portraitAssetId);
   const recognition = getProfileClaimsById(profile.recognitionClaimIds);
   const downloads = getDownloads();
@@ -27,6 +29,12 @@ export default function HomePage() {
     <>
       {/* 1. Stage: statement at the center of a mouse-panned canvas with the tile field around it */}
       <section aria-labelledby="statement" className="stage-section">
+        {/* Phones: one still behind the statement. The tile field and its panning are desktop only. */}
+        {mobileHero && (
+          <div className="stage__mobile-bg" data-header-invert aria-hidden="true">
+            <Picture asset={mobileHero} showCaption={false} fit="cover" sizes="100vw" priority />
+          </div>
+        )}
         <ScrollStage>
           <div className="stage__statement" data-statement>
             <p className="stage__identity"><strong>{portfolio.name}</strong> <span>{profile.currentTitle}</span></p>
