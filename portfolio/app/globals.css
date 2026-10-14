@@ -195,10 +195,22 @@ h4 {
   line-height: 1.1;
   letter-spacing: -0.01em;
   margin: 0 0 var(--space-2);
+  text-wrap: balance;
+}
+p,
+figcaption,
+li {
+  text-wrap: pretty;
 }
 p {
   margin: 0 0 var(--space-2);
   max-width: var(--measure);
+}
+.lede,
+.statement,
+.picture__caption,
+.work-section__intro {
+  text-wrap: pretty;
 }
 ul,
 ol {
@@ -1421,15 +1433,10 @@ ol {
 }
 .work-section__intro {
   margin: var(--space-3) 0 0;
-  max-width: 34ch;
-  font-size: calc(var(--text-body) * 0.95);
-  color: var(--ink-muted);
-}
-.work-section__intro strong {
-  display: block;
-  font-weight: 500;
+  max-width: 38ch;
+  font-size: calc(var(--text-body) * 1.02);
+  line-height: 1.45;
   color: var(--ink);
-  margin-bottom: 0.3rem;
 }
 @media (min-width: 900px) {
   .work-section__intro {

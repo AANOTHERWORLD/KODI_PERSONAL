@@ -40,7 +40,7 @@ export const lensById: Record<LensId, Lens> = Object.fromEntries(lenses.map((l) 
   Lens
 >;
 
-export const lensHeading = "Four lenses. One connected practice.";
+export const lensHeading = "Designing across disciplines";
 
 export const lensIntro =
-  "Culture gives the work meaning. Place gives it context. Interiors shape behavior. Details make identity tangible. I move between these lenses throughout a project, using discoveries at one scale to sharpen decisions at another.";
+  "I bring culture, place, interiors and detail into the same design conversation, connecting what an organization stands for with how people experience it. Each perspective informs the others as the work develops, from the overall concept to the smallest detail.";

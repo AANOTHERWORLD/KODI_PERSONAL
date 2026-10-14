@@ -80,7 +80,7 @@ export default function HomePage() {
             <h2 id="work-heading" className="work-section__heading">Work</h2>
             <p className="work-section__range">&copy;{portfolio.workRangeLabel}</p>
             <p className="work-section__intro">
-              <strong>a clear idea carried into tangible experiences</strong> From workplaces and shared amenities to retail environments and brand platforms, these projects show how one idea can guide a team and take form at different scales.
+              I help teams carry a clear idea from concept into the places and experiences people encounter every day, across workplaces, shared amenities, retail environments and brand platforms.
             </p>
           </div>
           <div className="work-section__cards">
