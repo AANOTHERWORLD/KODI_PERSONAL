@@ -8,6 +8,7 @@ import { openai } from "./openai";
 import { kilroyOysterPoint } from "./kilroy-oyster-point";
 import { wattPlaza } from "./watt-plaza";
 import { googleTokyoPartnerPlex } from "./google-tokyo-partner-plex";
+import { googleWsp } from "./google-wsp";
 import { moreWork } from "./more-work";
 
 // To add a project: create a file in this folder that exports a ProjectBundle, add the source
@@ -24,5 +25,6 @@ export const projectBundles: ProjectBundle[] = [
   kilroyOysterPoint,
   wattPlaza,
   googleTokyoPartnerPlex,
+  googleWsp,
   ...moreWork,
 ];
