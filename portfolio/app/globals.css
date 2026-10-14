@@ -2618,3 +2618,28 @@ ol {
     grid-template-columns: 1fr;
   }
 }
+
+/* Work cards: the image fills its frame completely. Inline images leave a descender gap under them. */
+.work-card__media .picture,
+.work-card__media .picture__media,
+.work-card__media img {
+  display: block;
+}
+.work-card__media .picture {
+  margin: 0;
+}
+.work-card__media .picture__media {
+  line-height: 0;
+}
+@media (min-width: 900px) {
+  /* Side by side the frame takes the image's own height, so no parallax offset: it would pull the image up and leave a strip. */
+  .work-card__media img {
+    object-fit: cover;
+    max-height: none;
+    height: 100%;
+    transform: none;
+  }
+  .work-card__link:hover .work-card__media img {
+    transform: scale(1.05);
+  }
+}
