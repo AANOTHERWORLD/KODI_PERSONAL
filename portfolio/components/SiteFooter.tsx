@@ -13,7 +13,7 @@ export default function SiteFooter() {
     <footer className="site-footer" data-header-invert>
       <div className="site-footer__inner">
         <div className="site-footer__lead">
-          <p className="site-footer__headline">Let&apos;s talk about working together</p>
+          <p className="site-footer__headline">Let&apos;s shape what comes next</p>
           <a href={mailto} className="footer-link" data-sweep>Email Me</a>
           <svg className="site-footer__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
             <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" strokeWidth="7" />
@@ -34,13 +34,15 @@ export default function SiteFooter() {
               {downloads.cvPdf && <li><a href={withBasePath(downloads.cvPdf)} className="footer-link" data-sweep>CV</a></li>}
             </ul>
           </div>
-          <div>
-            <p className="site-footer__label">Follow me</p>
-            <ul>
-              <li><a href={portfolio.linkedin} rel="me noopener" className="footer-link" data-sweep>LinkedIn</a></li>
-              <li><a href={portfolio.instagram} rel="me noopener" className="footer-link" data-sweep>Instagram</a></li>
-            </ul>
-          </div>
+          {(portfolio.linkedin || portfolio.instagram) && (
+            <div>
+              <p className="site-footer__label">Follow me</p>
+              <ul>
+                {portfolio.linkedin && <li><a href={portfolio.linkedin} rel="me noopener" className="footer-link" data-sweep>LinkedIn</a></li>}
+                {portfolio.instagram && <li><a href={portfolio.instagram} rel="me noopener" className="footer-link" data-sweep>Instagram</a></li>}
+              </ul>
+            </div>
+          )}
           <div>
             <p className="site-footer__label">Contact</p>
             <p className="site-footer__contact">{portfolio.location}</p>

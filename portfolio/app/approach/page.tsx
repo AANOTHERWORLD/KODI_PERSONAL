@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { approachSteps, getApproachExamples, lenses } from "@/lib/content";
-import { lensIntro } from "@/content/lenses";
+import { approachSteps, getApproachExamples, getProjectById, lenses } from "@/lib/content";
+import { approachAi, approachHeading, approachIntro } from "@/content/approach";
+import { lensHeading, lensIntro } from "@/content/lenses";
 
 export const metadata: Metadata = {
   title: "Approach",
@@ -13,8 +14,8 @@ export default function ApproachPage() {
     <div className="wrap">
       <section className="page-head" aria-labelledby="approach-title">
         <p className="tag">Approach</p>
-        <h1 id="approach-title" className="page-head__title">A method that repeats, with results that never do</h1>
-        <p className="lede">Five steps run through every project. They adapt to the client, the scale, and the team, and they keep the larger idea connected to the experience of the individual.</p>
+        <h1 id="approach-title" className="page-head__title">{approachHeading}</h1>
+        <p className="lede">{approachIntro}</p>
       </section>
 
       <section className="section" aria-label="The five steps">
@@ -46,15 +47,28 @@ export default function ApproachPage() {
         </div>
       </section>
 
+      <section className="section" aria-labelledby="ai-title">
+        <div className="grid-2">
+          <div><p className="tag">Tools</p><h2 id="ai-title" className="section__title">{approachAi.heading}</h2></div>
+          <div className="prose">
+            <p>{approachAi.body}</p>
+            {getProjectById(approachAi.projectId) && (
+              <p><Link href={`/work/${getProjectById(approachAi.projectId)!.project.slug}/`} className="text-link" data-sweep>See the Watt Plaza study</Link></p>
+            )}
+          </div>
+        </div>
+      </section>
+
       <section className="section" aria-labelledby="lenses-title">
         <p className="tag">The four lenses</p>
-        <h2 id="lenses-title" className="section__title">How the work is interpreted</h2>
+        <h2 id="lenses-title" className="section__title">{lensHeading}</h2>
         <p className="lede">{lensIntro}</p>
         <div className="lens-framework">
           {lenses.map((lens) => (
             <div className="lens-framework__item" key={lens.id}>
               <h3><span className="lens-key__dot" aria-hidden="true" />{lens.name}</h3>
-              <p>{lens.question}</p>
+              <p>{lens.role}</p>
+              <p className="tag">{lens.question}</p>
             </div>
           ))}
         </div>

@@ -4,34 +4,44 @@ export const approachSteps: ApproachStep[] = [
   {
     id: "read-the-context",
     number: 1,
-    title: "Read the context",
-    summary: "Understand culture, audience, place, and ambition before proposing anything. The brief is a starting point. The real problem usually sits one level beneath it.",
+    title: "Understand the context",
+    summary: "Start with the people, place, and ambition. Listen for the needs behind the brief and identify the tension the design must resolve.",
   },
   {
     id: "define-the-direction",
     number: 2,
-    title: "Define the direction",
-    summary: "Establish one idea and the criteria for judging decisions against it. A direction that cannot say no to something is a mood, and a mood cannot lead a team.",
+    title: "Establish the direction",
+    summary: "Define an idea the client and team can use. Translate it into clear criteria for evaluating concepts, communicating choices, and deciding what matters most.",
   },
   {
     id: "connect-the-scales",
     number: 3,
     title: "Connect the scales",
-    summary: "Translate the idea across disciplines and touchpoints, from site and plan to seating angle and signage, so each scale can be read as the same decision.",
+    summary: "Test the direction in the plan, the experience, the material, and the detail. Let discoveries at each scale improve the others.",
   },
   {
     id: "guide-the-team",
     number: 4,
-    title: "Guide the team",
-    summary: "Create alignment, critique constructively, and resolve competing priorities. Shared vocabulary and visible criteria let the team make decisions without waiting for a director.",
+    title: "Guide the collaboration",
+    summary: "Create room for different disciplines to contribute. Use reviews to clarify choices, develop the work, and resolve competing priorities around a shared intent.",
   },
   {
     id: "protect-the-intent",
     number: 5,
-    title: "Protect the intent",
-    summary: "Adapt to budget, schedule, and client feedback while preserving what matters. Some moves are negotiable. The ones that carry the idea are named early and defended.",
+    title: "Carry the idea through",
+    summary: "Adapt to changing needs, budgets, and delivery constraints. Identify the decisions that carry the idea and maintain their continuity as the project develops.",
   },
 ];
+
+export const approachHeading = "A shared direction. A deliberate process.";
+export const approachIntro =
+  "Every project asks for a different response. My process creates continuity between understanding the brief, defining an idea, and making the decisions that bring it to life.";
+
+export const approachAi = {
+  heading: "AI and design judgment",
+  body: "I use AI-assisted visualization to explore alternatives and make early choices easier to discuss. The value lies in the design judgment around it: defining the question, selecting references, evaluating outputs, and translating promising directions into work the team can test and develop.",
+  projectId: "watt-plaza",
+};
 
 export const approachExamples: ApproachExample[] = [
   {
@@ -77,7 +87,7 @@ export const approachExamples: ApproachExample[] = [
   {
     step: "protect-the-intent",
     projectId: "tinder-hq",
-    example: "When the workforce became distributed in 2020, six new space typologies were tested and force-ranked against team working styles, and density was reduced without losing the connection spaces.",
+    example: "When the workforce became distributed in 2020, the floors were re-tested against how teams actually worked, and the plan changed without losing the connection spaces.",
   },
   {
     step: "protect-the-intent",

@@ -27,7 +27,7 @@ export const openai: ProjectBundle = {
     collaborators: ["JPC Architects, Bellevue architect of record", "BNBuilders, Bellevue general contractor", "OpenAI stakeholders in San Francisco, Bellevue, and Tokyo"],
     lenses: ["culture-strategy", "interiors-behavior", "brand-detail"],
     portfolioRole: "Culture at two scales",
-    sequence: 6,
+    sequence: 9,
     tileSize: 3,
     relatedProject: "kilroy-oyster-point",
     permission: "pending",

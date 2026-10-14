@@ -97,8 +97,10 @@ export default function SiteHeader() {
         const crossing = entries.find((e) => e.isIntersecting);
         setInverted(!!crossing);
         // Tint the header's backing band with the color of the section beneath it.
-        const bg = crossing ? getComputedStyle(crossing.target).backgroundColor : "";
-        document.documentElement.style.setProperty("--header-bg", bg && bg !== "rgba(0, 0, 0, 0)" ? bg : "var(--bg)");
+        const cs = crossing ? getComputedStyle(crossing.target) : null;
+        const band = cs?.getPropertyValue("--header-band").trim();
+        const bg = cs?.backgroundColor;
+        document.documentElement.style.setProperty("--header-bg", band || (bg && bg !== "rgba(0, 0, 0, 0)" ? bg : "var(--bg)"));
       },
       { rootMargin: `-${headerHeight}px 0px -${Math.max(window.innerHeight - headerHeight, 1)}px 0px`, threshold: 0 },
     );
@@ -155,8 +157,8 @@ export default function SiteHeader() {
           </ol>
           <ul className="menu__links">
             <li><a href={`mailto:${portfolio.email}?subject=${encodeURIComponent(portfolio.emailSubject)}`} data-sweep className="sweep-link">{portfolio.email}</a></li>
-            <li><a href={portfolio.linkedin} rel="me noopener" data-sweep className="sweep-link">LinkedIn</a></li>
-            <li><a href={portfolio.instagram} rel="me noopener" data-sweep className="sweep-link">Instagram</a></li>
+            {portfolio.linkedin && <li><a href={portfolio.linkedin} rel="me noopener" data-sweep className="sweep-link">LinkedIn</a></li>}
+            {portfolio.instagram && <li><a href={portfolio.instagram} rel="me noopener" data-sweep className="sweep-link">Instagram</a></li>}
           </ul>
         </nav>
       </div>

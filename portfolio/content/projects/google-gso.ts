@@ -7,13 +7,13 @@ export const googleGso: ProjectBundle = {
     id,
     title: "Google GSO, Home of the Internet",
     slug: id,
-    thesis: "A recruiting brief reframed as a community platform built on hometown pride, then carried into collateral, events, a learning center, and pop-ups.",
+    thesis: "From a recruiting brief to a community-centered platform.",
     clientDisplayName: "Google, Global Server Operations (data centers)",
     practice: "Rapt Studio",
     location: "United States, data center communities (pilot example: The Dalles, Oregon)",
     years: "2024 to present",
     status: "in-progress",
-    statusNote: "Brand platform delivered. Learning center, pop-ups, and playbooks ongoing.",
+    statusNote: "Platform delivered. Further applications in progress, subject to update.",
     role: "Creative and Strategy Lead, Rapt Studio",
     scope:
       "Brand platform and messaging, owned channels, event and object design, community programs, and the design of GSO University, a learning center inside an active data center, followed by a pop-up learning playbook and the IDI Field of Dreams playbook.",
@@ -26,7 +26,7 @@ export const googleGso: ProjectBundle = {
     landingTile: true,
     tiles: [{ x: 26, y: 78, depth: 1, order: 5 }],
     portfolioRole: "Strategic reframing",
-    sequence: 2,
+    sequence: 5,
     tileSize: 3,
     relatedProject: "tinder-hq",
     permission: "pending",
@@ -35,6 +35,11 @@ export const googleGso: ProjectBundle = {
   },
   narrative: {
     projectId: id,
+    summary: [
+      "Home of the Internet reframes data-center recruitment around the communities that make the network possible. The idea connects a global organization to local identity and creates a shared basis for communications, events, and learning experiences.",
+      "I led creative direction and strategy, from reframing the brief to shaping the platform and its expression in space. The Rapt Studio team developed the applications with Google stakeholders and local partners.",
+      "The platform has been developed into a wider set of tools and experiences. This case distinguishes delivered work from elements still in development; no recruitment or engagement uplift is claimed.",
+    ],
     challenge: [
       "Google's data centers were growing faster than the towns around them could understand. There was no shared marketing strategy for recruiting and retention. Efforts were local and inconsistent in a competitive hiring market, and data center work was poorly understood even inside Google. The brief, in July 2024, asked for a global and local strategy and roadmap aimed at local recruits and at existing Googlers, covering short-term needs and a scalable long-term platform.",
       "The creative judgment sat in the gap between what was asked and what would work. A recruiting campaign could fill a few roles. It could not change how a community felt about a building it was never allowed to enter.",

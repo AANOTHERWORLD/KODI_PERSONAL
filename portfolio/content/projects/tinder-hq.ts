@@ -7,7 +7,7 @@ export const tinderHq: ProjectBundle = {
     id,
     title: "Tinder HQ, 8800 Sunset",
     slug: id,
-    thesis: "A headquarters built on human connection as a gradient, with each floor tuned to a real-world place where people meet.",
+    thesis: "A workplace organized around human connection.",
     clientDisplayName: "Tinder (Match Group)",
     practice: "Rapt Studio",
     location: "West Hollywood, California",
@@ -42,7 +42,7 @@ export const tinderHq: ProjectBundle = {
     landingTile: true,
     tiles: [{ x: 86, y: 30, depth: 1, order: 3, assetId: "tinder-30" }],
     portfolioRole: "Human experience",
-    sequence: 3,
+    sequence: 1,
     tileSize: 3,
     relatedProject: "lsd-running",
     permission: "pending",
@@ -52,8 +52,13 @@ export const tinderHq: ProjectBundle = {
   },
   narrative: {
     projectId: id,
+    summary: [
+      "Tinder's headquarters brings different ways of connecting into one workplace, from informal encounters to focused work and smaller conversations. The design translates that range into distinct settings, giving people choices in how they gather and participate.",
+      "As creative and strategy lead within Rapt Studio, I directed discovery and concept development, then carried the idea through interiors, environmental graphics, and construction. When the brief changed for a distributed workforce, I led the redesign around how teams would use the office together.",
+      "The result is a completed headquarters in which spatial planning and brand expression support the same ambition: making connection tangible.",
+    ],
     challenge: [
-      "Tinder wanted a headquarters that told the true story of its culture after a difficult early chapter. The brief sounded like an interiors project. The real challenge was to define what culture meant for Tinder, in a company that had changed fast and whose brand was still evolving while the building was designed.",
+      "Tinder wanted a headquarters that told the true story of its culture. The brief sounded like an interiors project. The real challenge was to define what culture meant for Tinder, in a company that had changed fast and whose brand was still evolving while the building was designed.",
       "Discovery was built to answer that question before any plan was drawn: five interview sessions with nine stakeholders and eight internal team swarms, organized into four findings, Brand, Organization, Culture, and Future. The judgment required was to turn a company that connects strangers into a place where its own people felt seen, heard, and valued.",
     ],
     insight: [
@@ -96,9 +101,8 @@ export const tinderHq: ProjectBundle = {
     leadershipMoment:
       "The brand was evolving while the building was being designed, so the look and feel had to land without a fixed brand system to lean on. We resolved it by anchoring the interiors to behavior rather than to the identity, and by treating the environmental graphics as story moments that could absorb a changing brand: Built in LA photography, the prize wall, a curated library, a patio mural of app innovations, and a commissioned artwork on the connection stair.",
     outcome: [
-      "Completed and professionally photographed in 2022. The redesign for a distributed workforce tested six new space typologies, force-ranked them against team working styles, added four new collaboration spaces, and reduced density by 34 percent across levels one and three to seven. The framing we used for the shift: from centralized to distributed, from a site of work to a site of collaboration, and from collaboration by proximity to collaboration by intention.",
+      "Completed and professionally photographed in 2022. The redesign for a distributed workforce tested six new space typologies, force-ranked them against team working styles, and added four new collaboration spaces. The framing we used for the shift: from centralized to distributed, from a site of work to a site of collaboration, and from collaboration by proximity to collaboration by intention.",
     ],
-    reflection: "PLACEHOLDER: a short reflection on what the project taught about designing for connection.",
     photographyCredit: "Photographer credit to be confirmed before publication.",
     involvement:
       "Creative and strategy lead. Directed discovery, concept, interiors, and environmental graphics, led the 2020 redesign for a distributed workforce, and authored the photography direction.",
@@ -131,7 +135,7 @@ export const tinderHq: ProjectBundle = {
       title: "Redesign for a distributed workforce",
       question: "When most people stop coming in every day, what is the office for?",
       choice:
-        "Six new space typologies tested and force-ranked against team working styles, four new collaboration spaces added, and density reduced by 34 percent across levels one and three to seven.",
+        "Six new space typologies tested and force-ranked against team working styles, four new collaboration spaces added, and desk density reduced across the work floors.",
       rationale: "The office became a site of collaboration by intention. Desks that sat empty gave their space to the reasons people would still travel.",
       tradeoff: "Fewer desks and a changed plan late in the project, in exchange for a building that matched the company it was built for.",
       assetIds: ["tinder-07", "tinder-13"],

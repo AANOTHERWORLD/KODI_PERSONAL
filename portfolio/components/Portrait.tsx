@@ -21,7 +21,7 @@ export default function Portrait({ children }: { children: ReactNode }) {
     return () => ctx.revert();
   }, []);
   return (
-    <div ref={ref} className="portrait">
+    <div ref={ref} className="portrait" data-header-invert>
       <div className="portrait__card" data-card>
         {children}
       </div>

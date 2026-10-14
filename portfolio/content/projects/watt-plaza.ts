@@ -7,13 +7,13 @@ export const wattPlaza: ProjectBundle = {
     id,
     title: "Watt Plaza",
     slug: id,
-    thesis: "When the owners asked for ten times the impact, an AI pipeline pushed three building postures to their far end in days, so they could choose before paying for precision.",
+    thesis: "Making early design choices visible.",
     clientDisplayName: "Family-owned commercial office owner, Century City",
     practice: "Rapt Studio",
     location: "Century City, Los Angeles, California",
     years: "2025 to present",
     status: "concept",
-    statusNote: "AI-assisted concept renders for a test study. Direction being synthesized. Unbuilt.",
+    statusNote: "Unbuilt, AI-assisted concept. Direction being synthesized.",
     role: "Creative and strategy lead; author and operator of the AI workflow",
     scope:
       "Building repositioning study for twin office towers, plaza, and parking structure: a competitive survey, three directions pushed to their boundary condition, and a sketch-to-render pipeline that produced facade, base, landscape, and night views between two owner reviews.",
@@ -35,9 +35,14 @@ export const wattPlaza: ProjectBundle = {
   },
   narrative: {
     projectId: id,
+    summary: [
+      "Watt Plaza explores alternative directions for repositioning an existing building. AI-assisted visualization helped make the differences between those directions tangible enough to discuss before committing to detailed development.",
+      "I led the visual direction and AI workflow, defining references, evaluating outputs, and incorporating design feedback. Strategy, plans, and parts of the imagery were developed collaboratively within the studio.",
+      "The work remains an unbuilt concept. Its value in this portfolio is the relationship between exploration and judgment: how alternatives were presented, critiqued, and refined into a clearer direction.",
+    ],
     challenge: [
-      "Watt Plaza started as a focused landscape and ground-floor refresh. After the spring concept rounds the owners came back with a bigger request: roughly ten times the impact, and a building that reads as a destination. The scope moved from the plaza to the whole building, facade, landscape, amenities, program, and identity, in a matter of weeks.",
-      "That created a production problem. A building-scale repositioning needs facade, bridge, retail base, landscape, and night views for several competing ideas. Conventional visualization for each would have taken longer than the gap between meetings, and would have committed fees to ideas the owners might reject on sight.",
+      "Watt Plaza started as a focused landscape and ground-floor refresh. After the spring concept rounds the owners came back with a bigger request: a building that reads as a destination. The scope moved from the plaza to the whole building, facade, landscape, amenities, program, and identity, in a matter of weeks.",
+            "That created a production problem. A building-scale repositioning needs facade, bridge, retail base, landscape, and night views for several competing ideas, and the owners needed to compare them before committing fees to detailed development of any one.",
     ],
     insight: [
       "The strategy came first. A survey of twelve Century City buildings sorted their amenities into table stakes, common, and rare, and found that no competitor had built a repositioning around one coherent posture toward the neighborhood. That gave three directions, each answering a gap: Departure, where the building faces out with a public market and shared roof garden; Extension, where it faces in with a members' club on an amenity bridge and a top-of-building restaurant; and Expansion, which meets the city halfway with a raised open-air promenade.",
@@ -109,7 +114,7 @@ export const wattPlaza: ProjectBundle = {
       choice:
         "Direction travels through redlines and plain-language intent. A dedicated visualizer agent writes the prompts, and every edit is scoped to one part of the building.",
       rationale: "The designer stays in the language of design, and each decision stays separable and reviewable.",
-      tradeoff: "Many runs per decision, twenty to forty-five at key steps, and curating them takes judgment.",
+      tradeoff: "Many candidate images per decision, and curating them takes judgment.",
       assetIds: ["watt-pipeline"],
     },
   ],
@@ -147,7 +152,7 @@ export const wattPlaza: ProjectBundle = {
       wording: "About 195 image generations and 110 prompt-writing runs, from the node run counters in the flow.",
       evidenceSource: "watt_plaza_ai_case_study.md, At a glance; Appendix A.",
       verifier: "Jamel Williams",
-      status: "awaiting",
+      status: "omit",
     },
     {
       id: "watt-c2",

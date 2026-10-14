@@ -9,11 +9,14 @@ import LensMarquee from "@/components/LensMarquee";
 import Portrait from "@/components/Portrait";
 import WorkCard from "@/components/WorkCard";
 import { LensProvider, LensKey } from "@/components/LensContext";
-import { lensIntro } from "@/content/lenses";
+import { lensIntro, lensHeading } from "@/content/lenses";
+
+// Home features the first six core projects in sequence; the rest live on the Work page.
+const FEATURED_LIMIT = 6;
 
 export default function HomePage() {
   const tiles = getLandingTiles();
-  const core = getCoreProjects();
+  const featured = getCoreProjects().slice(0, FEATURED_LIMIT);
   const counts = getLensCounts();
   const portrait = getProfileAsset(profile.portraitAssetId);
   const recognition = getProfileClaimsById(profile.recognitionClaimIds);
@@ -26,8 +29,13 @@ export default function HomePage() {
       <section aria-labelledby="statement" className="stage-section">
         <ScrollStage>
           <div className="stage__statement" data-statement>
-            <p className="tag">{portfolio.name}, {portfolio.descriptor}</p>
+            <p className="stage__identity"><strong>{portfolio.name}</strong> <span>{portfolio.tagline}</span></p>
             <h1 id="statement" className="stage__headline">{portfolio.statement}</h1>
+            <p className="stage__body">{portfolio.statementBody}</p>
+            <p className="stage__actions">
+              <Link href="/work/" className="button" data-sweep>View Selected Work</Link>
+              <Link href="/about/" className="button" data-sweep>About My Practice</Link>
+            </p>
           </div>
           <ol className="stage__field" aria-label="Project tiles">
             {tiles.map((tile) => (
@@ -52,12 +60,28 @@ export default function HomePage() {
       </section>
 
       <LensProvider>
-        {/* 2. Lens marquee and lens key */}
+        {/* 2. Selected work: sticky heading, six cards beside their text */}
+        <section className="work-section wrap" aria-labelledby="work-heading">
+          <div className="work-section__sticky" data-reveal>
+            <h2 id="work-heading" className="work-section__heading">Work</h2>
+            <p className="work-section__range">&copy;{portfolio.workRangeLabel}</p>
+            <p className="work-section__intro">
+              <strong>A clear idea, carried into experience.</strong> From workplaces and shared amenities to retail environments and brand platforms, these projects show how one idea can guide a team and take form at different scales.
+            </p>
+          </div>
+          <div className="work-section__cards">
+            {featured.length ? featured.map((bundle, i) => <WorkCard key={bundle.project.id} bundle={bundle} index={i} />) : (
+              <p className="empty-state">Core projects appear here once their permission is confirmed. Build with NEXT_PUBLIC_SHOW_DRAFTS=true to preview them.</p>
+            )}
+            <p data-reveal><Link href="/work/" className="button" data-sweep>View All Work</Link></p>
+          </div>
+        </section>
+        {/* 3. Lens marquee and lens key */}
         <section id="lenses" className="section section--marquee" aria-labelledby="lenses-heading">
           <LensMarquee />
           <div className="wrap">
-            <h2 id="lenses-heading" className="visually-hidden">Four lenses</h2>
-            <p className="lede">{lensIntro}</p>
+            <h2 id="lenses-heading" className="section__title lens-heading" data-reveal>{lensHeading}</h2>
+            <p className="lede lens-lede" data-reveal>{lensIntro}</p>
             <LensKey counts={counts} compact />
           </div>
         </section>
@@ -75,7 +99,11 @@ export default function HomePage() {
             <h2 id="about-heading" className="visually-hidden">About</h2>
             <div className="about-band__top" data-reveal>
               <p className="about-band__bio">{profile.bio}</p>
-              <p className="about-band__statement">{profile.aboutStatement}</p>
+              <p className="about-band__statement">{profile.leadershipStatement}</p>
+            </div>
+            <div className="band-row">
+              <p className="band-row__label" data-reveal>Leadership</p>
+              <p className="about-band__lead" data-reveal>{profile.leadershipSummary}</p>
             </div>
             <div className="band-row">
               <p className="band-row__label" data-reveal>Experience</p>
@@ -107,19 +135,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 5. Work section: sticky heading, framed cards */}
-        <section className="work-section wrap" aria-labelledby="work-heading">
-          <div className="work-section__sticky" data-reveal>
-            <h2 id="work-heading" className="work-section__heading">Work</h2>
-            <p className="work-section__range">&copy;{portfolio.workRangeLabel}</p>
-          </div>
-          <div className="work-section__cards">
-            {core.length ? core.map((bundle, i) => <WorkCard key={bundle.project.id} bundle={bundle} index={i} />) : (
-              <p className="empty-state">Core projects appear here once their permission is confirmed. Build with NEXT_PUBLIC_SHOW_DRAFTS=true to preview them.</p>
-            )}
-            <p data-reveal><Link href="/work/" className="button" data-sweep>View All Work</Link></p>
-          </div>
-        </section>
       </LensProvider>
 
       {/* 6. Approach preview and invitation */}
@@ -136,10 +151,10 @@ export default function HomePage() {
 
       <section className="section wrap section--invite" aria-labelledby="invite-heading" data-reveal>
         <p className="tag">Next</p>
-        <h2 id="invite-heading" className="section__title">Start a conversation</h2>
+        <h2 id="invite-heading" className="section__title">Let&apos;s shape what comes next</h2>
         <p className="lede">{portfolio.availability}</p>
         <div className="actions">
-          <a href={mailto} className="button button--accent" data-sweep>Start a conversation</a>
+          <a href={mailto} className="button button--accent" data-sweep>Get in touch</a>
           {downloads.portfolioPdf && <a href={withBasePath(downloads.portfolioPdf)} className="button" data-sweep>Portfolio PDF</a>}
         </div>
       </section>

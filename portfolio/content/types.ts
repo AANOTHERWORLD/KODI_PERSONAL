@@ -9,7 +9,10 @@ export interface Lens {
   id: LensId;
   name: string;
   short: string;
+  // What the lens asks of a project, used on project pages.
   question: string;
+  // What the lens does, used on Home and Approach.
+  role: string;
   numeral: string;
 }
 
@@ -25,12 +28,17 @@ export interface Portfolio {
   wordmark: string;
   descriptor: string;
   headline: string;
+  // H1 on Home. The explanation beneath it is statementBody.
   statement: string;
+  statementBody: string;
+  // One line under the name: discipline positioning, distinct from the employment title.
+  tagline: string;
   positioning: string;
   email: string;
   emailSubject: string;
-  linkedin: string;
-  instagram: string;
+  // Social links render only when a verified profile URL is present.
+  linkedin?: string;
+  instagram?: string;
   location: string;
   availability: string;
   versionDate: string;
@@ -161,7 +169,10 @@ export interface Profile {
   currentTitle: string;
   bio: string;
   aboutStatement: string;
+  leadershipStatement: string;
+  leadershipSummary: string;
   careerNarrative: string[];
+  leadershipNarrative: string[];
   workingStyle: string[];
   experience: ExperienceItem[];
   recognitionClaimIds: string[];

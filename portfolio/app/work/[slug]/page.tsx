@@ -162,6 +162,14 @@ function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
       <Opening bundle={bundle} />
       <Glance bundle={bundle} />
 
+      {narrative.summary && narrative.summary.length > 0 && (
+        <section className="project-section project-section--lead" aria-label="In brief">
+          <div className="grid-2">
+            <div className="project-section__head"><p className="tag">In brief</p></div>
+            <div className="prose">{narrative.summary.map((p, i) => <p key={i} className={i === 0 ? "statement statement--small" : undefined}>{p}</p>)}</div>
+          </div>
+        </section>
+      )}
       <section className="project-section" aria-labelledby="challenge">
         <div className="grid-2">
           <div className="project-section__head"><p className="tag">Context</p><h2 id="challenge" className="section__title">The challenge</h2></div>

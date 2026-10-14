@@ -12,7 +12,7 @@ export const googleRoom98: ProjectBundle = {
     inPdf: true,
     landingTile: true,
     tiles: [{ x: 64, y: 72, depth: 2, order: 6 }],
-    thesis: "An executive experience center in Playa Vista built as theater, where guests are presented to from the stage and then walk through it to work.",
+    thesis: "A shared idea for brand, space, and program.",
     clientDisplayName: "Google, Customer Experience Center (Los Angeles)",
     practice: "Rapt Studio",
     location: "Playa Vista, Los Angeles, California",
@@ -25,7 +25,7 @@ export const googleRoom98: ProjectBundle = {
     collaborators: ["Google stakeholders"],
     lenses: ["culture-strategy", "interiors-behavior", "brand-detail"],
     portfolioRole: "Brand as place",
-    sequence: 5,
+    sequence: 7,
     tileSize: 2,
     relatedProject: "openai",
     permission: "pending",
@@ -34,6 +34,11 @@ export const googleRoom98: ProjectBundle = {
   },
   narrative: {
     projectId: id,
+    summary: [
+      "Room 98 uses the structure of theater to turn a presentation into active participation. The spatial sequence moves guests from watching to working together, connecting the identity of the center with the experience it hosts.",
+      "I led creative direction and strategy across naming, interiors, and program, working with the Rapt Studio team to develop these elements together.",
+      "This completed experience center demonstrates how a single idea can organize both a place and what happens within it.",
+    ],
     challenge: [
       "Google wanted a place in Los Angeles to host executive customers, somewhere that would move a visit from presentation to working session, and that would carry a name and identity of its own rather than reading as a meeting suite. The space was small, 4,000 square feet, and the program was ambitious: a presentation room, a deliberation room, two collaboration rooms, and a sequence of sessions that had to feel designed rather than scheduled.",
       "The creative judgment was in the order of operations. Brand, architecture, and program were three deliverables for the same room, and each could have been resolved on its own. The project only worked if all three enacted the same idea.",

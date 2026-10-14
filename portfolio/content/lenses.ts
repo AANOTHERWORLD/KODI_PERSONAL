@@ -7,6 +7,7 @@ export const lenses: Lens[] = [
     name: "Culture / Strategy",
     short: "Culture",
     question: "What context, audience, or ambition gives the work meaning?",
+    role: "Define the purpose, audience, and ambition.",
   },
   {
     id: "architecture-place",
@@ -14,6 +15,7 @@ export const lenses: Lens[] = [
     name: "Architecture / Place",
     short: "Place",
     question: "How does the idea shape a setting and its relationship to its surroundings?",
+    role: "Connect the idea to its setting.",
   },
   {
     id: "interiors-behavior",
@@ -21,6 +23,7 @@ export const lenses: Lens[] = [
     name: "Interiors / Behavior",
     short: "Behavior",
     question: "How does the environment influence what people do and feel?",
+    role: "Design for how people meet, move, work, and feel.",
   },
   {
     id: "brand-detail",
@@ -28,6 +31,7 @@ export const lenses: Lens[] = [
     name: "Brand / Detail",
     short: "Detail",
     question: "How does identity become recognizable in lived experience?",
+    role: "Make the idea recognizable in everyday encounters.",
   },
 ];
 
@@ -36,5 +40,7 @@ export const lensById: Record<LensId, Lens> = Object.fromEntries(lenses.map((l) 
   Lens
 >;
 
+export const lensHeading = "Four lenses. One connected practice.";
+
 export const lensIntro =
-  "Scale means physical size, reach of influence, and the distance between strategic intent and individual experience. The four lenses interpret the work. Influence runs both ways: a detail can change the strategy, and a strategy can decide a detail.";
+  "Culture gives the work meaning. Place gives it context. Interiors shape behavior. Details make identity tangible. I move between these lenses throughout a project, using discoveries at one scale to sharpen decisions at another.";

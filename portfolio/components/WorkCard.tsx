@@ -35,7 +35,7 @@ export default function WorkCard({ bundle, index, variant = "card" }: Props) {
           </div>
         </div>
         <div className="work-card__text">
-          <p className="work-card__tagline tag">{project.lenses.map((l) => LENS_SHORT[l]).join(", ")}</p>
+          <p className="work-card__tagline tag">{project.lenses.slice(0, 2).map((l) => LENS_SHORT[l]).join(", ")}</p>
           <p className="work-card__kicker">
             <span className="tag">{String(project.sequence).padStart(2, "0")} {project.portfolioRole}</span>
             {project.status !== "completed" && <span className="tag tag--status">{STATUS_LABEL[project.status]}</span>}

@@ -7,7 +7,7 @@ export const kilroyOysterPoint: ProjectBundle = {
     id,
     title: "Kilroy Oyster Point",
     slug: id,
-    thesis: "A waterfront life science campus whose amenity building became the social heart, open to tenants and the public, over five years of delivery.",
+    thesis: "A social heart for a waterfront campus.",
     clientDisplayName: "Kilroy Realty",
     practice: "Rapt Studio",
     location: "South San Francisco, California",
@@ -24,7 +24,7 @@ export const kilroyOysterPoint: ProjectBundle = {
     inPdf: true,
     landingTile: true,
     portfolioRole: "Leadership under complexity",
-    sequence: 7,
+    sequence: 2,
     tileSize: 3,
     relatedProject: "watt-plaza",
     permission: "pending",
@@ -33,6 +33,11 @@ export const kilroyOysterPoint: ProjectBundle = {
   },
   narrative: {
     projectId: id,
+    summary: [
+      "At Kilroy Oyster Point, shared amenities connect the daily life of a workplace campus with the character of the California coast. Dining, gathering, and retreat become part of a continuous experience, expressed through materials, furnishings, and the relationship between inside and outside.",
+      "I led creative direction and strategy for Rapt Studio's scope, maintaining the concept through design development and construction. The work required coordination with the wider project team so that interiors, architecture, and landscape could contribute to a coherent place.",
+      "The completed interiors demonstrate how hospitality can give a large campus a more personal scale.",
+    ],
     challenge: [
       "Oyster Point is a ground-up waterfront campus for life science and biotechnology work, about three million square feet across twelve buildings on fifty acres, with a new phase adding four workspace buildings and a food and beverage building. Rapt was brought on by the base-building architect to design the interiors that would make the campus a place: lobbies, amenities, the fitness and conference centers, the food hall, and the furnishings in the landscape.",
       "The judgment required was patience as much as invention. Five years of design and delivery, a developer client, a base-building architect, a landscape architect, and a general contractor each held part of the outcome. The amenity building could easily have become a serviceable corporate cafe. The ambition was for it to be the reason people crossed the campus.",

@@ -7,13 +7,13 @@ export const lsdRunning: ProjectBundle = {
     id,
     title: "LSD Running",
     slug: id,
-    thesis: "A small store where luxury means craft, curation, and innovation, and the brand's own material becomes the wall.",
+    thesis: "A small store shaped by craft, curation, and community.",
     clientDisplayName: "LSD Running",
     practice: "Rapt Studio, Los Angeles",
     location: "Echo Park, Los Angeles, California",
     years: "2023 to 2024",
     status: "concept",
-    statusNote: "Designed and handed to a fabricator. Build status to be confirmed.",
+    statusNote: "Design handoff. Built status unconfirmed; the images shown are design visualizations.",
     role: "Creative and Strategy Lead, Rapt Studio",
     scope:
       "An on-site workshop covering the store, brand identity, and online presence, then concept design through five schemes to a synthesized final design, and handoff to the fabricator, including expansion into the adjacent space.",
@@ -25,7 +25,7 @@ export const lsdRunning: ProjectBundle = {
     inPdf: true,
     landingTile: true,
     portfolioRole: "Identity in detail",
-    sequence: 4,
+    sequence: 6,
     tileSize: 2,
     relatedProject: "google-room-98",
     permission: "pending",
@@ -34,6 +34,11 @@ export const lsdRunning: ProjectBundle = {
   },
   narrative: {
     projectId: id,
+    summary: [
+      "LSD Running brings product, material, and gathering into a compact retail concept. Concealed storage keeps the experience focused, adaptable furniture supports different uses, and the brand's ripstop material becomes part of the interior itself.",
+      "I led the client workshop and directed the team's exploration through five schemes, bringing their strongest ideas into one design. The final direction connected the brand's values to practical decisions about display, storage, and community use.",
+      "The design was handed to the fabricator. Built status remains unconfirmed; the images shown are design visualizations.",
+    ],
     challenge: [
       "LSD Running, named for long slow distance running, was opening its first store at 1533 Echo Park Avenue. The plan was to sell international brands new to the United States, then move toward its own products. Community sat at the center of the business: run clubs, events, and races.",
       "The store had to do four things in a small footprint. Express luxury without the usual signals of it. Host a running community in the evening and sell shoes during the day. Support product testing on the floor. And manage a heavy shoe inventory without letting boxes define the room.",

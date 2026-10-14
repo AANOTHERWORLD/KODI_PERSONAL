@@ -15,14 +15,12 @@ export default function ContactPage() {
     <div className="wrap">
       <section className="page-head" aria-labelledby="contact-title">
         <p className="tag">Contact</p>
-        <h1 id="contact-title" className="page-head__title">Let&apos;s talk about creative leadership</h1>
-        <p className="lede">
-          I am interested in Creative Director roles and in collaborations where a shared idea has to hold across strategy, place, interiors, and brand. Email is the fastest way to reach me.
-        </p>
+        <h1 id="contact-title" className="page-head__title">Let&apos;s shape what comes next</h1>
+        <p className="lede">{portfolio.availability} Email is the fastest way to reach me.</p>
         <ul className="contact-links">
           <li><a href={mailto}>{portfolio.email}</a></li>
-          <li><a href={portfolio.linkedin} rel="me noopener">LinkedIn</a></li>
-          <li><a href={portfolio.instagram} rel="me noopener">Instagram</a></li>
+          {portfolio.linkedin && <li><a href={portfolio.linkedin} rel="me noopener">LinkedIn</a></li>}
+          {portfolio.instagram && <li><a href={portfolio.instagram} rel="me noopener">Instagram</a></li>}
           {downloads.portfolioPdf && <li><a href={withBasePath(downloads.portfolioPdf)}>Portfolio PDF</a></li>}
           {downloads.cvPdf && <li><a href={withBasePath(downloads.cvPdf)}>CV</a></li>}
         </ul>

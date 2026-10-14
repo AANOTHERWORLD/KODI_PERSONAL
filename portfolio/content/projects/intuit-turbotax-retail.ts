@@ -7,7 +7,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
     id,
     title: "Intuit TurboTax Retail, Wave 2",
     slug: id,
-    thesis: "One idea of relief, carried from a four-book store bible through three store tiers to four flagship stores in three cities.",
+    thesis: "One retail idea, expressed across formats.",
     clientDisplayName: "Intuit (TurboTax)",
     practice: "Rapt Studio",
     location: "United States, multiple markets",
@@ -32,7 +32,7 @@ export const intuitTurbotaxRetail: ProjectBundle = {
     landingTile: true,
     tiles: [{ x: -6, y: 12, depth: 2, order: 1 }],
     portfolioRole: "Flagship integration",
-    sequence: 1,
+    sequence: 4,
     tileSize: 4,
     relatedProject: "google-gso-home-of-the-internet",
     permission: "pending",
@@ -42,6 +42,11 @@ export const intuitTurbotaxRetail: ProjectBundle = {
   },
   narrative: {
     projectId: id,
+    summary: [
+      "The TurboTax retail engagement connects a shared experience strategy with stores of different sizes and settings. The central idea of relief guides how the customer arrives, interacts with the service, and moves through the space.",
+      "I co-directed the engagement with another Rapt Studio design director and led the strategic structure connecting the playbook to the physical experience. The work brought different stakeholder needs into one framework while allowing individual locations to respond to their context.",
+      "The project is in progress. This case presents the design direction and system developed to date; the images are concept visualizations, not photographs of completed stores.",
+    ],
     challenge: [
       "TurboTax wanted a retail experience that could open in very different markets and still read as one brand. The stores had to work at three real sizes, Micro, Compact, and Core, serve walk-in discovery and appointment-based filing at the same time, and hold up for several Intuit teams whose priorities pulled in different directions: experience design, real estate, service design, marketing, and leadership.",
       "The original ask was a retail playbook for architects. That document could describe a store. It could not settle the arguments between teams about what the store was for, and it could not explain why a decision made for the smallest format should also hold in a flagship. The tension that required creative judgment was between consistency and fit: enough constancy for instant recognition, enough flex for a tax store in Chicago to feel different from one on the Santa Monica promenade.",

@@ -16,10 +16,15 @@ const inter = localFont({
 
 export const metadata: Metadata = {
   title: {
-    default: `${portfolio.name}, ${portfolio.descriptor}`,
-    template: `%s | ${portfolio.wordmark}`,
+    default: `${portfolio.name} | Creative Direction, Architecture and Interiors`,
+    template: `%s | ${portfolio.name}`,
   },
   description: `${portfolio.headline} ${portfolio.positioning}`,
+  openGraph: {
+    title: `${portfolio.name}, ${portfolio.headline}`,
+    description: portfolio.positioning,
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

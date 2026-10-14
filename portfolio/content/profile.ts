@@ -5,13 +5,18 @@ import type { Asset, Claim, Profile } from "./types";
 export const profile: Profile = {
   name: "Jamel Williams",
   currentTitle: "Design Director, Rapt Studio",
-  bio: "I trained as an architect and moved into brand and creative strategy, working with cross-disciplinary teams across many industries. I bring spatial rigor, creative range, and collaborative fluency to every project.",
-  aboutStatement: "Design Director who sets one direction and carries it across place, brand, and the details people touch.",
+  bio: "I am Jamel Williams, a Design Director at Rapt Studio with a background in architecture and a practice spanning interiors, brand, and creative strategy. I bring these disciplines together to set direction, guide collaboration, and keep the central idea present through design and delivery.",
+  aboutStatement: "Creative direction, from the larger idea to the individual experience.",
+  leadershipStatement: "Direction that a team can build on.",
+  leadershipSummary:
+    "My role is to make the ambition clear, give the team useful criteria, and help resolve the decisions that shape the work. I lead through shared language, constructive critique, and close attention to how the idea becomes a real experience.",
   careerNarrative: [
-    "The work moves between scales on purpose. A retail playbook for a national brand, a six-floor headquarters, a learning center inside a data center, and a single store for a running community each ask the same questions in a different order: what gives this work meaning, how does the idea shape a place, what should people feel and do there, and where does identity become recognizable.",
-    "Architecture taught me to hold a plan, a section, and a detail in my head at the same time. Brand and strategy work taught me to hold an audience there too. Working across both has shaped a particular kind of judgment: it is easier to tell when a detail is carrying a strategy, and when a strategy is about to lose its detail.",
-    // PLACEHOLDER: add a paragraph on formative experience and how it shaped the practice.
-    "PLACEHOLDER: a paragraph on formative experience and how it shaped the practice.",
+    "I am Jamel Williams, a Design Director at Rapt Studio. My background in architecture informs a practice that spans interiors, brand, and creative strategy. I work across these disciplines because a place is experienced as a whole: its story, spatial organization, material character, and smallest interactions shape one another.",
+    "Architecture taught me to move between the whole and the detail. Brand and strategy expanded that view to include the people a project needs to reach and the meaning it should carry. Together, they shape how I establish direction and judge whether a design decision serves the larger idea.",
+  ],
+  leadershipNarrative: [
+    "I establish a clear idea early, then work with the team to translate it into decisions. My contribution moves between framing the brief, guiding concepts, discussing choices with clients, and maintaining continuity as the design develops.",
+    "I value critique that explains why a choice matters. Shared criteria give collaborators room to contribute and make it easier to resolve competing priorities. The aim is a coherent result that benefits from the strengths of the people making it.",
   ],
   workingStyle: [
     "Establish the idea early and write down the criteria for judging decisions against it.",
@@ -25,10 +30,9 @@ export const profile: Profile = {
   ],
   recognitionClaimIds: ["rec-01", "rec-02", "rec-03", "rec-04", "rec-05"],
   leadershipClaimIds: ["profile-lead-01", "profile-lead-02", "profile-lead-03"],
-  credentials: [
-    // PLACEHOLDER: degrees, licences, talks, publications.
-    "PLACEHOLDER: education and credentials",
-  ],
+  // Degrees, institutions, and registration (with jurisdiction and status) go here once
+  // confirmed. The section stays hidden while the list is empty.
+  credentials: [],
   portraitAssetId: "profile-portrait",
   cvReference: "/cv.pdf",
 };
