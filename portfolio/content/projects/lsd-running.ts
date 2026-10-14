@@ -87,6 +87,13 @@ export const lsdRunning: ProjectBundle = {
       "The design was completed and handed to the fabricator, with expansion into the adjacent space included in the scope. Supplied photographs and film document the built space. Not every concept detail is proven built, and the renders shown alongside are design visualizations.",
     ],
     imageCredit: "Renders, axonometric drawings, and workshop photography by Rapt Studio, from the LSD Running project book.",
+    sectionImages: {
+      story: "lsd-product-run-1",
+      challenge: "lsd-workshop",
+      vision: "lsd-scheme-minimal",
+      leadership: null,
+      outcome: "lsd-photo-bench-wide",
+    },
     involvement:
       "Design Director. Led the design with the Rapt team: ran the workshop, directed the five-scheme exploration and the synthesis, and directed the handoff to the fabricator.",
   },
@@ -125,6 +132,45 @@ export const lsdRunning: ProjectBundle = {
     },
   ],
   assets: [
+{
+    "id": "lsd-video-06s-interior",
+    "projectId": "lsd-running",
+    "file": "lsd-running/video-06s-interior.jpg",
+    "type": "process",
+    "caption": "LSD Running film: the store, material details and brand in use.",
+    "alt": "LSD Running film: the store, material details and brand in use.",
+    "creator": "Supplied LSD Running film",
+    "credit": "Supplied project film",
+    "permission": "confirmed",
+    "lens": "brand-detail",
+    "motion": {
+        "file": "lsd-running/lsd-film.mp4"
+    }
+},
+{
+    "id": "lsd-video-15s-bench-and-space",
+    "projectId": "lsd-running",
+    "file": "lsd-running/video-15s-bench-and-space.jpg",
+    "type": "process",
+    "caption": "Film still: a botanical detail within the store.",
+    "alt": "Close view of flowers beside a window in the LSD Running film.",
+    "creator": "Supplied LSD Running film",
+    "credit": "Still extracted from the supplied project film",
+    "permission": "confirmed",
+    "lens": "brand-detail"
+},
+{
+    "id": "lsd-video-30s-wordmark",
+    "projectId": "lsd-running",
+    "file": "lsd-running/video-30s-wordmark.jpg",
+    "type": "process",
+    "caption": "Film still: the finished LSD Running wordmark application.",
+    "alt": "Los Angeles skyline with the LSD wordmark and Long Slow Distance tagline overlaid.",
+    "creator": "Supplied LSD Running film",
+    "credit": "Still extracted from the supplied project film",
+    "permission": "confirmed",
+    "lens": "brand-detail"
+},
     {
       id: "lsd-photo-bench-arc",
       projectId: id,

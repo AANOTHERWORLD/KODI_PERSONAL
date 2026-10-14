@@ -88,6 +88,13 @@ export const wattPlaza: ProjectBundle = {
     reflection:
       "Drawing stayed part of the process. Marking up generated views let us specify changes and return to specific decisions about access, planting and material.",
     imageCredit: "Concept studies and process imagery, Rapt Studio. AI-assisted concept images developed in Weave. Unbuilt.",
+    sectionImages: {
+      story: "watt-expansion-aerial",
+      challenge: "watt-earlier-plan",
+      vision: "watt-departure-sketch",
+      leadership: "watt-weave-workflow",
+      outcome: "watt-expansion-arrival",
+    },
     involvement:
       "Design Director. Led the design with the NY and LA teams and led the development of AI skills in the studio.",
   },

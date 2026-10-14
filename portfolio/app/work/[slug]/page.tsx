@@ -246,15 +246,19 @@ function Gallery({ assets, title }: { assets: ProjectBundle["assets"]; title: st
 function FullTemplate({ bundle }: { bundle: ProjectBundle }) {
   const { project, narrative, decisions } = bundle;
   const assets = visibleAssets(bundle);
-  const usedIds = new Set<string>([project.heroAssetId, ...decisions.flatMap((d) => d.assetIds), ...(narrative.scaleTranslation.map((s) => s.assetId).filter(Boolean) as string[])]);
+  const assigned = narrative.sectionImages ?? {};
+  const assignedIds = Object.values(assigned).filter((v): v is string => !!v);
+  for (const id of assignedIds) if (!assets.some((a) => a.id === id)) throw new Error(`${project.id}: sectionImages references missing asset ${id}`);
+  const usedIds = new Set<string>([project.heroAssetId, ...assignedIds, ...decisions.flatMap((d) => d.assetIds), ...(narrative.scaleTranslation.map((s) => s.assetId).filter(Boolean) as string[])]);
   const pool = assets.filter((a) => !usedIds.has(a.id) && a.id !== narrative.featuredPublication?.assetId);
-  // Each narrative section takes the next unused image and sits beside it, alternating sides.
+  // Assigned sections use their pinned image (or none); the rest take the next unused image.
   const next = () => pool.shift() ?? null;
-  const storyImg = narrative.story?.length ? next() : null;
-  const challengeImg = next();
-  const visionImg = next();
-  const leadershipImg = next();
-  const outcomeImg = next();
+  const pick = (key: keyof typeof assigned, auto: () => ReturnType<typeof next>) => (key in assigned ? getAsset(bundle, assigned[key] ?? undefined) : auto());
+  const storyImg = pick("story", () => (narrative.story?.length ? next() : null));
+  const challengeImg = pick("challenge", next);
+  const visionImg = pick("vision", next);
+  const leadershipImg = pick("leadership", next);
+  const outcomeImg = pick("outcome", next);
   return (
     <article className="wrap">
       <Opening bundle={bundle} />

@@ -113,6 +113,13 @@ export const tinderHq: ProjectBundle = {
     outcome: [
       "Completed and professionally photographed in 2022. The redesign for a distributed workforce tested six new space typologies, force-ranked them against team working styles, and added four new collaboration spaces. The framing we used for the shift: from centralized to distributed, from a site of work to a site of collaboration, and from collaboration by proximity to collaboration by intention.",
     ],
+    sectionImages: {
+      story: null,
+      challenge: "tinder-20",
+      vision: "tinder-30",
+      leadership: null,
+      outcome: "tinder-15",
+    },
     involvement:
       "Senior Designer. Worked from early development to delivery: discovery, concept, interiors, and environmental graphics, the 2020 redesign for a distributed workforce, and the photography direction.",
   },

@@ -79,6 +79,13 @@ export const googleRoom98: ProjectBundle = {
       "Completed. The measures stated for the center at the time, full occupancy, customer conversion, and follow-on meetings, were goals. No measured results are reported here.",
     ],
     imageCredit: "Photography: MO Studio. Renderings and plans: Rapt Studio. The theater diagram is redrawn for this portfolio.",
+    sectionImages: {
+      story: "room98-photo-screen-seating",
+      challenge: "room98-photo-entry-arch",
+      vision: "room98-plan-floor",
+      leadership: null,
+      outcome: "room98-photo-collaboration-room",
+    },
     involvement: "Senior Designer. Worked across brand strategy, naming and identity, architecture and interiors, and program guidelines, from early development to delivery.",
   },
   decisions: [
@@ -114,6 +121,57 @@ export const googleRoom98: ProjectBundle = {
     },
   ],
   assets: [
+{
+    "id": "room98-motion-presentation",
+    "projectId": "google-room-98",
+    "file": "google-room-98/room98-motion-presentation.jpg",
+    "motion": {
+        "file": "google-room-98/room98-motion-presentation.mp4",
+        "loop": true,
+        "muted": true
+    },
+    "type": "process",
+    "caption": "The presentation setting changes through the supplied motion sequence.",
+    "alt": "Room 98 presentation animation. Play to view the changes in the room.",
+    "creator": "Rapt Studio project archive",
+    "credit": "Source animation from the Room 98 project archive",
+    "permission": "confirmed",
+    "lens": "interiors-behavior"
+},
+{
+    "id": "room98-motion-collaboration",
+    "projectId": "google-room-98",
+    "file": "google-room-98/room98-motion-collaboration.jpg",
+    "motion": {
+        "file": "google-room-98/room98-motion-collaboration.mp4",
+        "loop": true,
+        "muted": true
+    },
+    "type": "process",
+    "caption": "The collaboration setting shifts between working configurations.",
+    "alt": "Room 98 collaboration animation. Play to view the changes in the room.",
+    "creator": "Rapt Studio project archive",
+    "credit": "Source animation from the Room 98 project archive",
+    "permission": "confirmed",
+    "lens": "interiors-behavior"
+},
+{
+    "id": "room98-motion-deliberation",
+    "projectId": "google-room-98",
+    "file": "google-room-98/room98-motion-deliberation.jpg",
+    "motion": {
+        "file": "google-room-98/room98-motion-deliberation.mp4",
+        "loop": true,
+        "muted": true
+    },
+    "type": "process",
+    "caption": "The deliberation setting changes through the supplied motion sequence.",
+    "alt": "Room 98 deliberation animation. Play to view the changes in the room.",
+    "creator": "Rapt Studio project archive",
+    "credit": "Source animation from the Room 98 project archive",
+    "permission": "confirmed",
+    "lens": "interiors-behavior"
+},
     {
       id: "room98-photo-screen-reveal",
       projectId: id,

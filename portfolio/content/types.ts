@@ -126,6 +126,10 @@ export interface Narrative {
   photographyCredit?: string;
   imageCredit?: string;
   involvement: string;
+  // Explicit image for each narrative section of the full template. An asset id pins the image;
+  // null makes the section text-only. A section left out falls back to the next unused image.
+  // Reordering the gallery never changes an assigned pairing.
+  sectionImages?: Partial<Record<"story" | "challenge" | "vision" | "leadership" | "outcome", string | null>>;
 }
 
 export interface Decision {
@@ -164,6 +168,7 @@ export interface Claim {
 }
 
 export interface Asset {
+  motion?: { file: string; loop?: boolean; muted?: boolean };
   id: string;
   projectId: string;
   file: string;

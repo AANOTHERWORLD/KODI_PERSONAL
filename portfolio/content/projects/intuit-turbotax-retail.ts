@@ -98,6 +98,13 @@ export const intuitTurbotaxRetail: ProjectBundle = {
       "In progress. The Store Bible and the hero system are in development, and the flagship stores at Third Street Promenade in Santa Monica, Tribune Tower and 39 South State Street in Chicago, and The Orchard in Long Island City are in documentation and construction with local architect Partners by Design and prototyping by Kihl Studios. No measured results to report.",
     ],
     imageCredit: "Concept renders and plans by Rapt Studio, from the Intuit Flagship Reference deck.",
+    sectionImages: {
+      story: "intuit-retail-lounge",
+      challenge: "intuit-chicago-existing",
+      vision: "intuit-retail-concierge",
+      leadership: null,
+      outcome: "intuit-chicago-plan",
+    },
     involvement:
       "Design Director. Led the Store Bible structure, the emotional territory, the ritual spine, and the imperatives, and directed the environment designs, the hero system, and the flagship concepts.",
   },

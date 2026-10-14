@@ -84,6 +84,13 @@ export const openai: ProjectBundle = {
     ],
     outcome: ["In progress. In Bellevue, Floors 16 and 17 are built and Floors 15 and 18 are in development. Tokyo has completion photography. No measured results to report."],
     imageCredit: "Diagrams redrawn for this portfolio. Bellevue photography: Trevor Tondro. Tokyo photography: Erik.",
+    sectionImages: {
+      story: "openai-bellevue-library",
+      challenge: "openai-two-cities",
+      vision: "openai-tokyo-1622",
+      leadership: null,
+      outcome: "openai-tokyo-1735",
+    },
     involvement: "Design Director through design development, from early concept collaboration to guiding the team's translation of the concept in response to client feedback and goals.",
   },
   decisions: [

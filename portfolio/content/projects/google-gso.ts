@@ -86,6 +86,13 @@ export const googleGso: ProjectBundle = {
       "The platform was delivered and rolled into collateral, external Life at Google data center pages, an internal resource hub of playbooks and templates, learning spaces, and a pop-up learning playbook for 2025 to 2026. Brick and Mortar design reviews, a naming workshop, and the IDI Field of Dreams playbook followed in 2026. No measured results to report.",
     ],
     imageCredit: "Photographs: Jamel Williams. Diagrams and process images: Rapt Studio. The Dalles study was generated with Gemini during the project.",
+    sectionImages: {
+      story: null,
+      challenge: "gso-strategic-framework",
+      vision: "gso-brand-system",
+      leadership: null,
+      outcome: "gso-university-space",
+    },
     involvement: "Design Director. Led the design with the Rapt team on discovery, the reframing of the brief, the Home of the Internet platform, and the direction for the learning center and pop-up kits.",
   },
   decisions: [
