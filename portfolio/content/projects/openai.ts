@@ -20,7 +20,7 @@ export const openai: ProjectBundle = {
     years: "2025 to present",
     status: "in-progress",
     statusNote: "Bellevue: Floors 16 and 17 built, Floors 15 and 18 in development. Tokyo in design.",
-    role: "Design Director, Rapt Studio (the only design director on the project)",
+    role: "Design Director, Rapt Studio",
     scope:
       "Bellevue: a phased home for the emerging Applied team in the Pacific Northwest, a hospitality-driven workplace for engineers at scale. Tokyo: an interim home of about 36,500 square feet in an existing high-rise, on an accelerated twelve-month schedule, for about two hundred people who host clients.",
     team: ["Rapt Studio team"],
@@ -80,11 +80,11 @@ export const openai: ProjectBundle = {
       },
     ],
     leadership: [
-      "I am the only design director on the project and lead the design for both offices with the internal Rapt team, including the shared sensibility that frames them and the decision to let each city set its own form. The team develops the designs with OpenAI's stakeholders in San Francisco, Bellevue, and Tokyo, with local partners in Bellevue.",
+      "I lead the design for both offices with the internal Rapt team, including the shared sensibility that frames them and the decision to let each city set its own form. The team develops the designs with OpenAI's stakeholders in San Francisco, Bellevue, and Tokyo, with local partners in Bellevue.",
     ],
     outcome: ["In progress. In Bellevue, Floors 16 and 17 are built and Floors 15 and 18 are in development. Tokyo is in design. No measured results to report."],
     imageCredit: "Diagrams redrawn for this portfolio. Bellevue photography by Trevor Tondro exists and is held until permission is confirmed.",
-    involvement: "Design Director, and the only design director on the project, for both offices: the shared sensibility, the Bellevue mood-led process, the Tokyo reuse and hospitality strategy, and direction through design development.",
+    involvement: "Design Director for both offices: the shared sensibility, the Bellevue mood-led process, the Tokyo reuse and hospitality strategy, and direction through design development.",
   },
   decisions: [
     {
