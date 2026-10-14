@@ -8,4 +8,4 @@ To publish later:
 3. In `portfolio/content/projects/index.ts`, import `figmaSf` and `duolingoNyc` and add them after `googleWsp`.
 4. Build and check.
 
-Roles: Senior Designer, working directly with the creative director and account lead. Duolingo photography: Christian Harder. Figma photographs are credited "supplied by Rapt Studio" (photographer not established).
+Roles: Senior Designer. Duolingo photography: Christian Harder. Figma photographs are credited "supplied by Rapt Studio" (photographer not established).

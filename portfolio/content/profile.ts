@@ -121,7 +121,7 @@ export const profileClaims: Claim[] = [
     id: "profile-lead-01",
     projectId: "profile",
     placement: "profile-leadership",
-    wording: "I led the design with the internal Rapt team on every project where I was Design Director. On Room 98, Tokyo, Tinder and The Mark I worked as a senior designer, directly with the creative director and account lead, from early development to delivery.",
+    wording: "I led the design with the internal Rapt team on every project where I was Design Director. On Room 98, Tokyo, Tinder, The Mark, Napa and Google WSP I worked as a senior designer, from early development to delivery.",
     evidenceSource: "portfolio_research.md and portfolio_brief.md, Section 5.",
     verifier: "Jamel Williams",
     status: "verified",

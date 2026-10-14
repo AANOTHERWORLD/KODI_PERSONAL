@@ -26,18 +26,18 @@ interface Spec {
   images: Img[];
 }
 
-const SENIOR_ROLE = "Senior Designer, Rapt Studio, working directly with the creative director and account lead";
+const SENIOR_ROLE = "Senior Designer, Rapt Studio";
 const DIRECTOR_ROLE = "Design Director, Rapt Studio";
 const DESIGNER_ROLE = "Designer, Collective Architecture";
-const NEUTRAL_ROLE = "Rapt Studio, working directly with the creative director";
+const NEUTRAL_ROLE = "Rapt Studio";
 // Titles follow the project dates: Senior Designer before 2024, Design Director from 2024,
 // with Lightspark, April Jean, Club Gemini and A Place at the Table confirmed as Design Director,
 // The Mark as Senior Designer, and Mama Rouge (2016) as Designer.
 // Projects without a confirmed title carry none.
 function roleFor(id: string) {
-  if (id === "the-mark") return SENIOR_ROLE;
+  if (id === "the-mark" || id === "napa-retreat") return SENIOR_ROLE;
   if (id === "mama-rouge") return DESIGNER_ROLE;
-  if (["napa-retreat", "club-gemini", "place-at-table", "lightspark", "april-jean"].includes(id)) return DIRECTOR_ROLE;
+  if (["club-gemini", "place-at-table", "lightspark", "april-jean"].includes(id)) return DIRECTOR_ROLE;
   return NEUTRAL_ROLE;
 }
 
@@ -214,7 +214,7 @@ const specs: Spec[] = [
     summary: [
       "At The Mark, a continuous line of white light loops across a lobby of black stone, vertical timber, and pale terrazzo, drawing the eye from the entry through to the reception desk.",
       "Outside, a terrace of small black tables, pale paving, and planting continues the quiet palette.",
-      "As senior designer, I worked directly with the creative director and account lead to develop concepts and design strategy, from early development through delivery and execution. The photographs show the completed lobby and terrace; two further images are reference studies.",
+      "As senior designer, I developed concepts and design strategy with the Rapt team, from early development through delivery and execution. The photographs show the completed lobby and terrace; two further images are reference studies.",
     ],
     years: "2021",
     location: "Los Angeles",
@@ -269,7 +269,7 @@ const specs: Spec[] = [
     summary: [
       "The Napa Leadership Retreat gathered leaders for a multi-day program, with the setting drawn from textile, table, and harvest: draped cream fabric, warm pools of light, plants on plinths, and seasonal centerpieces.",
       "Printed materials, a green menu card, and arrangements of anthurium, citron, and cabbage made the details of the table part of the program.",
-      "I led the design with the Rapt Studio team. The images are event documentation.",
+      "As senior designer, I developed concepts and design strategy with the Rapt team, from early development through delivery and execution. The images are event documentation.",
     ],
     years: "2023",
     location: "Napa Valley, California",

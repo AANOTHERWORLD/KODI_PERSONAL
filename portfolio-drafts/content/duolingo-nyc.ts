@@ -14,7 +14,7 @@ export const duolingoNyc: ProjectBundle = {
     location: "New York, New York",
     years: "2023 to 2024",
     status: "completed",
-    role: "Senior Designer, Rapt Studio, working directly with the creative director and account lead",
+    role: "Senior Designer, Rapt Studio",
     scope: "Workplace interiors for Duolingo's New York office on two floors of 4 World Trade Center.",
     team: ["Rapt Studio team"],
     collaborators: [],
@@ -39,20 +39,20 @@ export const duolingoNyc: ProjectBundle = {
     projectId: id,
     summary: [
       "Duolingo's New York office spreads across two floors of 4 World Trade Center. Level 26 holds a workshop, a gallery of framed paintings of Duolingo's characters and the Green Bean cafe. Level 27 holds a dining room, a private dining room, a bookshop and a reading room.",
-      "I worked directly with the creative director and account lead, with the Rapt Studio team, to develop concepts and design strategy, from early development through delivery and execution. The photographs show the completed floors.",
+      "I worked with the Rapt Studio team to develop concepts and design strategy, from early development through delivery and execution. The photographs show the completed floors.",
     ],
     challenge: [],
     insight: [],
     vision: [],
     scaleTranslation: [],
     leadership: [
-      "As senior designer, I worked directly with the creative director and account lead to develop concepts and design strategy, from early development through delivery and execution.",
+      "As senior designer, I developed concepts and design strategy with the Rapt team, from early development through delivery and execution.",
     ],
     outcome: [
       "Completed and photographed in August 2024. No measured results are reported here.",
     ],
     photographyCredit: "Photography: Christian Harder.",
-    involvement: "Senior Designer. Worked directly with the creative director and account lead on concepts and design strategy, from early development to delivery.",
+    involvement: "Senior Designer. Worked on concepts and design strategy, from early development to delivery.",
   },
   decisions: [],
   assets: [

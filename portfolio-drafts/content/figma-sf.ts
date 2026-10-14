@@ -14,7 +14,7 @@ export const figmaSf: ProjectBundle = {
     location: "San Francisco, California",
     years: "2022",
     status: "completed",
-    role: "Senior Designer, Rapt Studio, working directly with the creative director and account lead",
+    role: "Senior Designer, Rapt Studio",
     scope: "Workplace interiors for Figma's San Francisco office.",
     team: ["Rapt Studio team"],
     collaborators: [],
@@ -39,19 +39,19 @@ export const figmaSf: ProjectBundle = {
     projectId: id,
     summary: [
       "Figma's San Francisco office is built from color. Murals, patterned rugs and color-blocked walls divide a large floor into places to work, meet and gather, and shelves of books and objects give each area a point of view.",
-      "I worked directly with the creative director and account lead, with the Rapt Studio team, to develop concepts and design strategy, from early development through delivery and execution. The photographs show the completed office.",
+      "I worked with the Rapt Studio team to develop concepts and design strategy, from early development through delivery and execution. The photographs show the completed office.",
     ],
     challenge: [],
     insight: [],
     vision: [],
     scaleTranslation: [],
     leadership: [
-      "As senior designer, I worked directly with the creative director and account lead to develop concepts and design strategy, from early development through delivery and execution.",
+      "As senior designer, I developed concepts and design strategy with the Rapt team, from early development through delivery and execution.",
     ],
     outcome: [
       "Completed and photographed. No measured results are reported here.",
     ],
-    involvement: "Senior Designer. Worked directly with the creative director and account lead on concepts and design strategy, from early development to delivery.",
+    involvement: "Senior Designer. Worked on concepts and design strategy, from early development to delivery.",
   },
   decisions: [],
   assets: [

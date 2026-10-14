@@ -15,7 +15,7 @@ export const googleWsp: ProjectBundle = {
     years: "2020 to 2021",
     status: "concept",
     statusNote: "Unbuilt. Google changed direction during the pandemic and the project wrapped in 2021.",
-    role: "Senior Designer, Rapt Studio, working directly with the creative director and account lead",
+    role: "Senior Designer, Rapt Studio",
     scope: "Workplace concept and planning strategy for the adaptive reuse of the Westside Pavilion into a Google campus: integrated team neighborhoods, a planning framework and indoor and outdoor amenity spaces.",
     team: ["Rapt Studio team"],
     collaborators: ["Google Real Estate and Workplace Services", "ZGF Architects", "SWA Landscape Architecture"],
@@ -40,7 +40,7 @@ export const googleWsp: ProjectBundle = {
     projectId: id,
     summary: [
       "Google's WSP campus in Los Angeles is a 540,000 square foot adaptive reuse of the Westside Pavilion. The design had to make a very large floor plate feel like a place where teams belong, and stay flexible for the long term.",
-      "I worked directly with the creative director and account lead, alongside Google's real estate and workplace team, ZGF Architects and SWA Landscape Architecture, to develop concepts and design strategy, from early development through delivery and execution.",
+      "I worked alongside Google's real estate and workplace team, ZGF Architects and SWA Landscape Architecture, to develop concepts and design strategy, from early development through delivery and execution.",
     ],
     challenge: [
       "The brief was to transform a 540,000 square foot adaptive reuse project into a design built for long-horizon flexibility. Scale was the risk. A floor plate that large can feel anonymous, and the way teams work will keep changing over the life of the building.",
@@ -59,12 +59,12 @@ export const googleWsp: ProjectBundle = {
       { lens: "interiors-behavior", assetId: "wsp-axon", caption: "Behavior: team neighborhoods drawn across the floor plate, each a home base inside a very large building." },
     ],
     leadership: [
-      "As senior designer, I worked directly with the creative director and account lead to develop concepts and design strategy, from early development through delivery and execution. The Rapt team developed the neighborhood planning and the amenity spaces with Google and the architecture and landscape partners.",
+      "As senior designer, I developed concepts and design strategy with the Rapt team, from early development through delivery and execution. The Rapt team developed the neighborhood planning and the amenity spaces with Google and the architecture and landscape partners.",
     ],
     outcome: [
       "The campus was not built. Google changed direction during the pandemic and the project wrapped in 2021. The images show design development studies and concept views, and document the planning approach.",
     ],
-    involvement: "Senior Designer. Worked directly with the creative director and account lead on concepts and design strategy, from early development to delivery.",
+    involvement: "Senior Designer. Worked on concepts and design strategy, from early development to delivery.",
   },
   decisions: [
     {
@@ -102,7 +102,7 @@ export const googleWsp: ProjectBundle = {
       id: "wsp-c1",
       projectId: id,
       placement: "role",
-      wording: "Senior Designer on the Google WSP campus, working directly with the creative director and account lead.",
+      wording: "Senior Designer on the Google WSP campus.",
       evidenceSource: "Confirmed by Jamel Williams, October 14, 2026.",
       verifier: "Jamel Williams",
       status: "verified",
