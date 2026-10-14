@@ -121,7 +121,7 @@ export const profileClaims: Claim[] = [
     id: "profile-lead-01",
     projectId: "profile",
     placement: "profile-leadership",
-    wording: "I was the only design director on Intuit and OpenAI. On other projects from 2024 I partnered with the creative director to develop, translate and execute the design. On projects before 2024 I worked as a senior designer, directly with the creative director and account lead, from early development to delivery.",
+    wording: "I was the only design director on Intuit and OpenAI. On other projects from 2024 I partnered with the creative director to develop, translate and execute the design. On Room 98, Tokyo, Tinder and The Mark I worked as a senior designer, directly with the creative director and account lead, from early development to delivery.",
     evidenceSource: "portfolio_research.md and portfolio_brief.md, Section 5.",
     verifier: "Jamel Williams",
     status: "verified",

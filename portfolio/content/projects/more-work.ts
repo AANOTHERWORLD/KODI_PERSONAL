@@ -28,11 +28,12 @@ interface Spec {
 const SENIOR_ROLE = "Senior Designer, Rapt Studio, working directly with the creative director and account lead";
 const DIRECTOR_ROLE = "Design Director, Rapt Studio, partnering with the creative director";
 const NEUTRAL_ROLE = "Rapt Studio, working directly with the creative director";
-// Titles follow the project dates: Senior Designer before 2024, Design Director from 2024.
-// Projects without confirmed dates carry no title.
+// Titles follow the project dates: Senior Designer before 2024, Design Director from 2024,
+// with Club Gemini and A Place at the Table confirmed as Design Director.
+// Projects without a confirmed title carry none.
 function roleFor(id: string) {
   if (id === "the-mark") return SENIOR_ROLE;
-  if (id === "napa-retreat") return DIRECTOR_ROLE;
+  if (["napa-retreat", "club-gemini", "place-at-table"].includes(id)) return DIRECTOR_ROLE;
   return NEUTRAL_ROLE;
 }
 
@@ -238,7 +239,7 @@ const specs: Spec[] = [
     summary: [
       "Club Gemini turns a room into an evening lounge: deep violet velvet curtains, low blue sofas, candlelight, and dark florals, all under saturated purple and magenta light.",
       "The details, a hand-held glass, a menu card beside a candle, a coffee table of flowers, keep the atmosphere intimate and specific.",
-      "I worked directly with the creative director and the Rapt Studio team on the design. The images are event documentation.",
+      "I led the design with the Rapt Studio team, partnering with the creative director. The images are event documentation.",
     ],
     years: "",
     location: "",
@@ -293,7 +294,7 @@ const specs: Spec[] = [
     summary: [
       "A Place at the Table is a dinner built around one long shared table: candles, green stemware, blue-patterned plates, folded napkins, and small arrangements of flowers.",
       "Guests carry their own chairs to the table, share dishes, and gather at the end around a cake, so the evening is made by the people at it as much as by the setting.",
-      "I worked directly with the creative director and the Rapt Studio team on the design. The images are event documentation.",
+      "I led the design with the Rapt Studio team, partnering with the creative director. The images are event documentation.",
     ],
     years: "",
     location: "",

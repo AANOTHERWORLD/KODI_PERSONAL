@@ -13,7 +13,7 @@ export const kilroyOysterPoint: ProjectBundle = {
     location: "South San Francisco, California",
     years: "2020 to 2025",
     status: "completed",
-    role: "Senior Designer, Rapt Studio, working directly with the creative director and account lead",
+    role: "Design Director, Rapt Studio, partnering with the creative director",
     scope:
       "Interiors and FF&E for lobbies, amenities, the fitness center, the conference center, and a two-story food and beverage building, plus outdoor placemaking with the landscape architect, across multiple buildings on a ground-up campus.",
     team: ["Rapt Studio team"],
@@ -37,7 +37,7 @@ export const kilroyOysterPoint: ProjectBundle = {
     projectId: id,
     summary: [
       "At Kilroy Oyster Point, shared amenities connect the daily life of a workplace campus with the character of the California coast. Dining, gathering, and retreat become part of a continuous experience, expressed through materials, furnishings, and the relationship between inside and outside.",
-      "I worked directly with the creative director and account lead on Rapt Studio's scope, maintaining the concept through design development and construction. The work required coordination with the wider project team so that interiors, architecture, and landscape could contribute to a coherent place.",
+      "I led the design for Rapt Studio's scope, partnering with the creative director and maintaining the concept through design development and construction. The work required coordination with the wider project team so that interiors, architecture, and landscape could contribute to a coherent place.",
       "The completed interiors demonstrate how hospitality can give a large campus a more personal scale.",
     ],
     challenge: [
@@ -78,14 +78,14 @@ export const kilroyOysterPoint: ProjectBundle = {
       },
     ],
     leadership: [
-      "As senior designer, I worked directly with the creative director and account lead on Rapt's scope to develop concepts and design strategy, holding the concept from the first marketing renderings through construction and the photography in August 2025. The Rapt team developed the interiors and furnishings, DGA designed the buildings, Field Operations designed the landscape, and Kilroy directed the campus.",
+      "I led the design for Rapt's scope with the internal team, partnering with the creative director to develop, translate and execute it, holding the concept from the first marketing renderings through construction and the photography in August 2025. The Rapt team developed the interiors and furnishings, DGA designed the buildings, Field Operations designed the landscape, and Kilroy directed the campus.",
     ],
     outcome: [
       "Completed and photographed in August 2025 across the south amenity building, a lobby, the fitness center, and the north amenity. The photography brief placed materials at the center as the placemaking tool: uniting employees through a dining and campus amenity experience. The campus opened its new phase in 2024.",
     ],
     imageCredit: "Marketing renderings by Rapt Studio. Completed photography, August 2025.",
     involvement:
-      "Senior Designer for Rapt Studio's scope, working directly with the creative director and account lead. Held the concept across design, documentation, construction, and photography direction.",
+      "Design Director for Rapt Studio's scope, partnering with the creative director. Held the concept across design, documentation, construction, and photography direction.",
   },
   decisions: [
     {
