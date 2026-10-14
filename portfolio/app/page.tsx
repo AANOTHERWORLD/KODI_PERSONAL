@@ -7,7 +7,7 @@ import LensTags from "@/components/LensTags";
 import ScrollStage from "@/components/ScrollStage";
 import LensMarquee from "@/components/LensMarquee";
 import Portrait from "@/components/Portrait";
-import WorkCard, { tilePx } from "@/components/WorkCard";
+import WorkCard from "@/components/WorkCard";
 import { LensProvider, LensKey } from "@/components/LensContext";
 import { lensIntro } from "@/content/lenses";
 
@@ -23,7 +23,7 @@ export default function HomePage() {
 
   return (
     <>
-      {/* 1. Scroll stage: fixed statement and drifting tile field */}
+      {/* 1. Stage: statement at the center of a mouse-panned canvas with the tile field around it */}
       <section aria-labelledby="statement" className="stage-section">
         <ScrollStage>
           <div className="stage__statement" data-statement>
@@ -32,18 +32,12 @@ export default function HomePage() {
           </div>
           <ol className="stage__field" aria-label="Project tiles">
             {tiles.map((tile) => (
-              <li
-                key={tile.key}
-                className={`tile tile--size-${tile.bundle.project.tileSize}`}
-                data-tile
-                data-depth={tile.spec.depth}
-                style={{ "--tile-x": `${tile.spec.x}%`, "--tile-y": `${tile.spec.y}%`, "--tile-w": `${tilePx(tile.bundle.project.tileSize)}px` } as React.CSSProperties}
-              >
-                <Link href={`/work/${tile.bundle.project.slug}/`} className="tile__link" data-cursor="ring">
+              <li key={tile.key} className={`tile tile--size-${tile.bundle.project.tileSize}`} data-tile data-size={1 + ((tile.bundle.project.tileSize - 1) * 4) / 3}>
+                <Link href={`/work/${tile.bundle.project.slug}/`} className="tile__link cursor-tile">
                   <div className="tile__media">
                     {tile.asset ? <Picture asset={tile.asset} showCaption={false} fit="cover" sizes="(min-width: 720px) 40vw, 50vw" priority={tile.spec.order <= 2} /> : <div className="picture__placeholder">Image pending</div>}
                   </div>
-                  <p className="tile__name">{tile.label}</p>
+                  <span className="tile__name">{tile.label}</span>
                   <LensTags lenses={tile.bundle.project.lenses} max={2} className="tile__lenses" />
                 </Link>
               </li>
@@ -74,31 +68,32 @@ export default function HomePage() {
         <section className="about-band" data-header-invert aria-labelledby="about-heading">
           <div className="wrap">
             <h2 id="about-heading" className="visually-hidden">About</h2>
-            <div className="about-band__top">
+            <div className="about-band__top" data-reveal>
               <p className="about-band__bio">{profile.bio}</p>
               <p className="about-band__statement">{profile.aboutStatement}</p>
             </div>
             <div className="band-row">
-              <p className="band-row__label">Experience</p>
+              <p className="band-row__label" data-reveal>Experience</p>
               <div>
                 <ol className="timeline">
                   {profile.experience.map((item) => (
-                    <li key={`${item.title}-${item.years}`} className="timeline__row">
-                      <span>{item.title}</span><span>{item.practice}</span><span className="timeline__years">{item.years}</span>
+                    <li key={`${item.title}-${item.years}`} className="timeline__row line-row" data-reveal data-sweep>
+                      <span>{item.title}</span><span>{item.practice}</span><span className="timeline__years">{item.years}</span><span className="line-row__line" aria-hidden="true" />
                     </li>
                   ))}
                 </ol>
-                <p className="band-row__link"><Link href="/about/" className="text-link text-link--on-accent" data-cursor="ring">More about me</Link></p>
+                <p className="band-row__link" data-reveal><Link href="/about/" className="text-link text-link--on-accent" data-sweep>More about me</Link></p>
               </div>
             </div>
             {recognition.length > 0 && (
               <div className="band-row">
-                <p className="band-row__label">Recognition Highlights</p>
+                <p className="band-row__label" data-reveal>Recognition Highlights</p>
                 <ul className="ruled-list">
                   {recognition.map((claim) => (
-                    <li key={claim.id} className={claim.status === "awaiting" ? "claim--awaiting" : undefined}>
+                    <li key={claim.id} className={`line-row ${claim.status === "awaiting" ? "claim--awaiting" : ""}`} data-reveal data-sweep>
                       {claim.wording}
                       {claim.status === "awaiting" && <> <span className="draft-marker draft-marker--on-accent">Awaiting verification</span></>}
+                      <span className="line-row__line" aria-hidden="true" />
                     </li>
                   ))}
                 </ul>
@@ -109,7 +104,7 @@ export default function HomePage() {
 
         {/* 5. Work section: sticky heading, framed cards */}
         <section className="work-section wrap" aria-labelledby="work-heading">
-          <div className="work-section__sticky">
+          <div className="work-section__sticky" data-reveal>
             <h2 id="work-heading" className="work-section__heading">Work</h2>
             <p className="work-section__range">&copy;{portfolio.workRangeLabel}</p>
           </div>
@@ -125,13 +120,13 @@ export default function HomePage() {
                 </div>
               </div>
             )}
-            <p><Link href="/work/" className="button" data-cursor="ring">View All Work</Link></p>
+            <p data-reveal><Link href="/work/" className="button" data-sweep>View All Work</Link></p>
           </div>
         </section>
       </LensProvider>
 
       {/* 6. Approach preview and invitation */}
-      <section className="section wrap" aria-labelledby="approach-heading">
+      <section className="section wrap" aria-labelledby="approach-heading" data-reveal>
         <p className="tag">Approach</p>
         <h2 id="approach-heading" className="section__title">Direction is established early and carried through teams</h2>
         <ol className="step-row">
@@ -139,16 +134,16 @@ export default function HomePage() {
             <li key={step.id}><span className="step-row__num">{String(step.number).padStart(2, "0")}</span>{step.title}</li>
           ))}
         </ol>
-        <p><Link href="/approach/" className="text-link" data-cursor="ring">Read the approach</Link></p>
+        <p><Link href="/approach/" className="text-link" data-sweep>Read the approach</Link></p>
       </section>
 
-      <section className="section wrap section--invite" aria-labelledby="invite-heading">
+      <section className="section wrap section--invite" aria-labelledby="invite-heading" data-reveal>
         <p className="tag">Next</p>
         <h2 id="invite-heading" className="section__title">Start a conversation</h2>
         <p className="lede">{portfolio.availability}</p>
         <div className="actions">
-          <a href={mailto} className="button button--accent" data-cursor="ring">Start a conversation</a>
-          {downloads.portfolioPdf && <a href={withBasePath(downloads.portfolioPdf)} className="button" data-cursor="ring">Portfolio PDF</a>}
+          <a href={mailto} className="button button--accent" data-sweep>Start a conversation</a>
+          {downloads.portfolioPdf && <a href={withBasePath(downloads.portfolioPdf)} className="button" data-sweep>Portfolio PDF</a>}
         </div>
       </section>
     </>

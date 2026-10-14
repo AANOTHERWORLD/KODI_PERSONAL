@@ -26,8 +26,8 @@ export default function WorkCard({ bundle, index, variant = "card" }: Props) {
   const asset = getIndexAsset(bundle);
   const side = index % 2 === 0 ? "left" : "right";
   return (
-    <LensAwareEntry lensIds={project.lenses} as="article" className={`work-card work-card--${variant} work-card--${side} work-card--size-${project.tileSize}`}>
-      <Link href={`/work/${project.slug}/`} className="work-card__link" data-cursor="ring">
+    <LensAwareEntry lensIds={project.lenses} as="article" className={`work-card work-card--${variant} work-card--${side} work-card--size-${project.tileSize}`} reveal>
+      <Link href={`/work/${project.slug}/`} className="work-card__link">
         <div className="work-card__frame">
           <div className="work-card__media" data-parallax style={{ "--tile-height": `${tilePx(project.tileSize)}px` } as React.CSSProperties}>
             {asset ? <Picture asset={asset} showCaption={false} fit="cover" sizes="(min-width: 900px) 60vw, 100vw" priority={index === 0} /> : <div className="picture__placeholder">Image pending</div>}

@@ -34,7 +34,7 @@ export default function ApproachPage() {
                       {examples.map(({ example, project }) => (
                         <li key={`${step.id}-${project.project.id}`}>
                           {example.example}
-                          <Link href={`/work/${project.project.slug}/`} data-cursor="ring">{project.project.title}</Link>
+                          <Link href={`/work/${project.project.slug}/`}>{project.project.title}</Link>
                         </li>
                       ))}
                     </ul>

@@ -1,5 +1,5 @@
 // GSAP is loaded client-side only, and ScrollTrigger is registered once here.
-// Allowed uses: the landing scroll stage, the lens marquee, and the Work section.
+// Uses: the lens marquee, the portrait parallax, and the footer curtain (all scroll scrubs).
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 

@@ -20,11 +20,11 @@ export default function ContactPage() {
           I am interested in Creative Director roles and in collaborations where a shared idea has to hold across strategy, place, interiors, and brand. Email is the fastest way to reach me.
         </p>
         <ul className="contact-links">
-          <li><a href={mailto} data-cursor="ring">{portfolio.email}</a></li>
-          <li><a href={portfolio.linkedin} rel="me noopener" data-cursor="ring">LinkedIn</a></li>
-          <li><a href={portfolio.instagram} rel="me noopener" data-cursor="ring">Instagram</a></li>
-          {downloads.portfolioPdf && <li><a href={withBasePath(downloads.portfolioPdf)} data-cursor="ring">Portfolio PDF</a></li>}
-          {downloads.cvPdf && <li><a href={withBasePath(downloads.cvPdf)} data-cursor="ring">CV</a></li>}
+          <li><a href={mailto}>{portfolio.email}</a></li>
+          <li><a href={portfolio.linkedin} rel="me noopener">LinkedIn</a></li>
+          <li><a href={portfolio.instagram} rel="me noopener">Instagram</a></li>
+          {downloads.portfolioPdf && <li><a href={withBasePath(downloads.portfolioPdf)}>Portfolio PDF</a></li>}
+          {downloads.cvPdf && <li><a href={withBasePath(downloads.cvPdf)}>CV</a></li>}
         </ul>
         <p className="tag">{portfolio.location}</p>
       </section>

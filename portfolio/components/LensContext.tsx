@@ -17,11 +17,11 @@ export function LensProvider({ children }: { children: ReactNode }) {
   return <LensContext.Provider value={{ active, setActive }}>{children}</LensContext.Provider>;
 }
 
-export function LensAwareEntry({ lensIds, children, className, as: Tag = "div" }: { lensIds: LensId[]; children: ReactNode; className?: string; as?: "div" | "li" | "article" }) {
+export function LensAwareEntry({ lensIds, children, className, as: Tag = "div", reveal = false }: { lensIds: LensId[]; children: ReactNode; className?: string; as?: "div" | "li" | "article"; reveal?: boolean }) {
   const { active } = useContext(LensContext);
   const dimmed = active !== null && !lensIds.includes(active);
   return (
-    <Tag className={`${className ?? ""} ${dimmed ? "is-dimmed" : ""}`} data-lens-entry data-dimmed={dimmed || undefined}>
+    <Tag className={`${className ?? ""} ${dimmed ? "is-dimmed" : ""}`} data-lens-entry data-dimmed={dimmed || undefined} data-reveal={reveal || undefined}>
       {children}
     </Tag>
   );
@@ -48,7 +48,7 @@ export function LensKey({ counts, compact = false }: { counts: Record<LensId, nu
                 type="button"
                 className={`lens-key__button ${pressed ? "is-active" : ""}`}
                 aria-pressed={pressed}
-                data-cursor="ring"
+               
                 onMouseEnter={() => activate(lens.id)}
                 onFocus={() => activate(lens.id)}
                 onBlur={() => activate(null)}

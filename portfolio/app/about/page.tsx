@@ -78,8 +78,8 @@ export default function AboutPage() {
           <div>
             <ul>{profile.credentials.map((c) => <li key={c}>{c}</li>)}</ul>
             <div className="actions">
-              {downloads.portfolioPdf && <a href={withBasePath(downloads.portfolioPdf)} className="button" data-cursor="ring">Portfolio PDF</a>}
-              {downloads.cvPdf && <a href={withBasePath(downloads.cvPdf)} className="button" data-cursor="ring">CV</a>}
+              {downloads.portfolioPdf && <a href={withBasePath(downloads.portfolioPdf)} className="button" data-sweep>Portfolio PDF</a>}
+              {downloads.cvPdf && <a href={withBasePath(downloads.cvPdf)} className="button" data-sweep>CV</a>}
             </div>
             <p className="tag" style={{ marginTop: "var(--space-3)" }}>{portfolio.location}. {portfolio.availability}</p>
           </div>

@@ -99,7 +99,7 @@ function Related({ bundle }: { bundle: ProjectBundle }) {
   return (
     <section className="related" aria-labelledby="related">
       <p className="tag">Related project</p>
-      <Link href={`/work/${related.project.slug}/`} className="related__link" data-cursor="ring">
+      <Link href={`/work/${related.project.slug}/`} className="related__link">
         {asset && <Picture asset={asset} showCaption={false} fit="cover" sizes="(min-width: 800px) 45vw, 100vw" />}
         <div>
           <h2 id="related" className="section__title">{related.project.title}</h2>
@@ -268,8 +268,8 @@ export default async function ProjectPage({ params }: Props) {
           <h1 className="page-head__title">Case studies are being cleared for publication</h1>
           <p className="lede">Project pages appear here once client and studio permission is confirmed. In the meantime, the approach and contact pages are open.</p>
           <div className="actions">
-            <Link href="/approach/" className="button" data-cursor="ring">Read the approach</Link>
-            <Link href="/contact/" className="text-link" data-cursor="ring">Get in touch</Link>
+            <Link href="/approach/" className="button" data-sweep>Read the approach</Link>
+            <Link href="/contact/" className="text-link" data-sweep>Get in touch</Link>
           </div>
         </section>
       </div>

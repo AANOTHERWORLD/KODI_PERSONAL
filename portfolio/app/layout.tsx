@@ -4,6 +4,7 @@ import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import CursorTrail from "@/components/CursorTrail";
+import Motion from "@/components/Motion";
 import { portfolio, isDraftMode } from "@/lib/content";
 
 // One family, Inter, self-hosted from public/fonts and served at weight 500 nearly everywhere.
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <SiteFooter />
+        <Motion />
         <CursorTrail />
       </body>
     </html>
