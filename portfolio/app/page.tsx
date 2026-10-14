@@ -39,10 +39,10 @@ export default function HomePage() {
           </div>
           <ol className="stage__field" aria-label="Project tiles">
             {tiles.map((tile) => (
-              <li key={tile.key} className={`tile tile--size-${tile.bundle.project.tileSize}`} data-tile data-size={1 + ((tile.bundle.project.tileSize - 1) * 4) / 3}>
+              <li key={tile.key} className={`tile tile--size-${tile.bundle.project.tileSize}`} data-tile data-size={tile.size}>
                 <Link href={`/work/${tile.bundle.project.slug}/`} className="tile__link cursor-tile">
                   <div className="tile__media">
-                    {tile.asset ? <Picture asset={tile.asset} showCaption={false} fit="cover" sizes="(min-width: 720px) 40vw, 50vw" priority={tile.spec.order <= 2} /> : <div className="picture__placeholder">Image pending</div>}
+                    {tile.asset ? <Picture asset={tile.asset} showCaption={false} fit="cover" sizes="(min-width: 720px) 40vw, 50vw" priority={tile.spec.order <= 2 && tile.key.endsWith("-0")} /> : <div className="picture__placeholder">Image pending</div>}
                   </div>
                   <span className="tile__name">{tile.label}</span>
                   <LensTags lenses={tile.bundle.project.lenses} max={2} className="tile__lenses" />

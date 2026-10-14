@@ -21,13 +21,13 @@ import { debug } from "@/lib/debug";
 
 const SIZE_MIN = 1;
 const SIZE_MAX = 5;
-const MIN_TILE_W = 200;
+const MIN_TILE_W = 180;
 const MAX_TILE_W = 440;
 const SIZE_JITTER = 0.14;
 const SAFE_ZONE_PADDING = 140;
 const MIN_GAP = 130;
 const SPIRAL_TURN = 0.62;
-const RADIAL_STEP = 190;
+const RADIAL_STEP = 210;
 const JITTER = 110;
 const MAX_TRIES_PER_TILE = 900;
 const SEED = 1337;

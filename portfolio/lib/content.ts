@@ -142,8 +142,12 @@ export function getApproachExamples(stepId: string) {
 // Landing tile field. The stage is one viewport tall, so only a handful of tiles fit around the
 // statement. A project appears when it has landingTile and explicit tile coordinates (x and y as
 // percentages of the viewport, depth 1 to 3 for drift speed, order for stacking). The field is
-// capped at LANDING_TILE_LIMIT tiles, taken in order. Everything else is reachable from Work.
-export const LANDING_TILE_LIMIT = 8;
+// The landing field features project imagery: photographs and renders, never diagrams or plans.
+// Each core project contributes its hero (or first image) first, then projects with more imagery
+// contribute a second and a third, smaller tile, until the limit. Projects whose only assets are diagrams
+// (platform maps, concept diagrams) stay out of the field and are reached from Work.
+export const LANDING_TILE_LIMIT = 14;
+const IMAGE_TYPES: Asset["type"][] = ["photo", "render"];
 
 export interface LandingTile {
   key: string;
@@ -151,23 +155,26 @@ export interface LandingTile {
   asset: Asset | null;
   spec: TileSpec;
   label: string;
+  // 1 to 5: drives the tile's size in the field (see components/ScrollStage.tsx).
+  size: number;
 }
 
 export function getLandingTiles(): LandingTile[] {
-  const out: LandingTile[] = [];
-  for (const bundle of getProjects()) {
-    if (!bundle.project.landingTile || !bundle.project.tiles?.length) continue;
-    bundle.project.tiles.forEach((spec, i) => {
-      out.push({
-        key: `${bundle.project.id}-${i}`,
-        bundle,
-        asset: getAsset(bundle, spec.assetId) ?? getIndexAsset(bundle),
-        spec,
-        label: spec.label ?? bundle.project.title,
-      });
-    });
+  const rounds: LandingTile[][] = [[], [], []];
+  const sized = (project: ProjectBundle["project"]) => 1 + ((project.tileSize - 1) * 4) / 3;
+  for (const bundle of getCoreProjects()) {
+    if (!bundle.project.landingTile) continue;
+    const images = visibleAssets(bundle).filter((a) => IMAGE_TYPES.includes(a.type));
+    if (!images.length) continue;
+    const hero = images.find((a) => a.id === bundle.project.heroAssetId) ?? images[0];
+    const second = images.find((a) => a.id !== hero.id && a.id === bundle.project.indexAssetId) ?? images.find((a) => a.id !== hero.id);
+    const base: TileSpec = bundle.project.tiles?.[0] ?? { x: 0, y: 0, depth: 2, order: bundle.project.sequence };
+    rounds[0].push({ key: `${bundle.project.id}-0`, bundle, asset: hero, spec: { ...base, order: bundle.project.sequence }, label: bundle.project.title, size: sized(bundle.project) });
+    if (second) rounds[1].push({ key: `${bundle.project.id}-1`, bundle, asset: second, spec: { ...base, order: bundle.project.sequence }, label: bundle.project.title, size: Math.max(1, sized(bundle.project) - 1.5) });
+    const third = images.find((a) => a.id !== hero.id && a.id !== second?.id);
+    if (third) rounds[2].push({ key: `${bundle.project.id}-2`, bundle, asset: third, spec: { ...base, order: bundle.project.sequence }, label: bundle.project.title, size: Math.max(1, sized(bundle.project) - 2.5) });
   }
-  return out.sort((a, b) => a.spec.order - b.spec.order).slice(0, LANDING_TILE_LIMIT);
+  return [...rounds[0], ...rounds[1], ...rounds[2]].slice(0, LANDING_TILE_LIMIT);
 }
 
 export { portfolio, profile, approachSteps, lenses, lensById };
