@@ -16,10 +16,11 @@ export default function SiteFooter() {
           <p className="site-footer__headline">Let&apos;s shape what comes next</p>
           <a href={mailto} className="footer-link" data-sweep>Email Me</a>
           <svg className="site-footer__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-            <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" strokeWidth="7" />
-            <circle cx="56" cy="32" r="6" fill="currentColor" />
-            <circle cx="70" cy="56" r="6" fill="currentColor" />
-            <path d="M30 34 A26 26 0 0 0 54 72" fill="none" stroke="currentColor" strokeWidth="7" strokeLinecap="round" />
+            <g stroke="currentColor" strokeWidth="9" strokeLinecap="round">
+              <line x1="50" y1="8" x2="50" y2="92" />
+              <line x1="13.6" y1="29" x2="86.4" y2="71" />
+              <line x1="13.6" y1="71" x2="86.4" y2="29" />
+            </g>
           </svg>
         </div>
         <div className="site-footer__cols">

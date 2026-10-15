@@ -2375,6 +2375,17 @@ ol {
   width: 7.5rem;
   height: 7.5rem;
   margin-top: var(--space-5);
+  animation: asterisk-turn 40s linear infinite;
+}
+@keyframes asterisk-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-footer__mark {
+    animation: none;
+  }
 }
 .site-footer__cols {
   display: grid;

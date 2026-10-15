@@ -13,7 +13,7 @@ export const portfolio: Portfolio = {
     "I lead multidisciplinary design teams to transform culture, strategy, and brand into meaningful spatial experiences, connecting the big idea to the smallest detail.",
   leadershipHeading: "Leading multidisciplinary teams",
   leadershipProof: [
-    "As Design Director at Rapt Studio, I lead a multidisciplinary team of approximately 11 across seven concurrent projects, guiding creative direction from initial strategy through delivery.",
+    "As Design Director at Rapt Studio, I lead a multidisciplinary team of 13 across seven concurrent projects, guiding creative direction from initial strategy through delivery.",
     "My role brings together design leadership, client partnership, responsibility for project profitability, and contributions to business development and staffing, balancing ambitious ideas with the realities of bringing them to life.",
   ],
   positioning:
@@ -26,5 +26,5 @@ export const portfolio: Portfolio = {
   internationalAvailability: "Based in Los Angeles. Exploring US-based and international Creative Director opportunities with multidisciplinary design practices.",
   versionDate: "2026-10-14",
   copyrightHolder: "Jamel Williams",
-  workRangeLabel: "2010 to 26",
+  workRangeLabel: "2010 to 2026",
 };

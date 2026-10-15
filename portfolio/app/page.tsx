@@ -74,7 +74,7 @@ export default function HomePage() {
           {portfolio.leadershipProof.map((p, i) => <p key={i}>{p}</p>)}
         </div>
         <ul className="leadership-proof__figures" aria-label="Leadership scope">
-          <li><strong>~11</strong><span>Designers across disciplines</span></li>
+          <li><strong>13</strong><span>Designers across disciplines</span></li>
           <li><strong>7</strong><span>Concurrent projects</span></li>
           <li><strong>15+</strong><span>Years in architecture, interiors, and experience</span></li>
         </ul>
