@@ -22,7 +22,17 @@
         },
         {
             "slot": "1104",
-            "name": "More Providers",
+            "name": "Apple TV+",
+            "toggle": "true"
+        },
+        {
+            "slot": "1106",
+            "name": "Disney+",
+            "toggle": "true"
+        },
+        {
+            "slot": "1107",
+            "name": "Prime Video",
             "toggle": "true"
         }
     ],
@@ -31,9 +41,9 @@
         "1102",
         "1103",
         "1104",
-        "1105",
         "1106",
         "1107",
-        "1108"
+        "1108",
+        "1109"
     ]
 }

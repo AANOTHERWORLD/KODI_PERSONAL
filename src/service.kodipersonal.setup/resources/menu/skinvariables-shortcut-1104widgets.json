@@ -1,44 +1,37 @@
 [
     {
-        "label": "New Movies on Apple TV+",
+        "label": "New Movies",
         "icon": "",
-        "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=350&watch_region=US&with_watch_monetization_types=flatrate&sort_by=primary_release_date.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=350&watch_region=US&with_watch_monetization_types=flatrate&primary_release_date.gte=t-30&primary_release_date.lte=t&sort_by=popularity.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
         "target": "videos",
-        "guid": "guid-c7131138"
+        "guid": "guid-fffede5c"
     },
     {
-        "label": "New Series on Apple TV+",
+        "label": "New and Returning Series",
         "icon": "",
-        "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=350&watch_region=US&with_watch_monetization_types=flatrate&sort_by=first_air_date.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=350&watch_region=US&with_watch_monetization_types=flatrate&air_date.gte=t-14&air_date.lte=t&sort_by=popularity.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
         "target": "videos",
-        "guid": "guid-4f2e65c7"
+        "guid": "guid-0d89597e"
     },
     {
-        "label": "New Movies on Disney+",
+        "label": "Trending Series",
         "icon": "",
-        "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=337&watch_region=US&with_watch_monetization_types=flatrate&sort_by=primary_release_date.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=350&watch_region=US&with_watch_monetization_types=flatrate&sort_by=popularity.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
         "target": "videos",
-        "guid": "guid-9add1084"
+        "guid": "guid-f9b91fa8"
     },
     {
-        "label": "New Series on Disney+",
+        "label": "Trending Movies",
         "icon": "",
-        "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=337&watch_region=US&with_watch_monetization_types=flatrate&sort_by=first_air_date.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=350&watch_region=US&with_watch_monetization_types=flatrate&sort_by=popularity.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
         "target": "videos",
-        "guid": "guid-7593c4c8"
+        "guid": "guid-5b79390d"
     },
     {
-        "label": "New Movies on Prime Video",
+        "label": "Top Rated",
         "icon": "",
-        "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=9&watch_region=US&with_watch_monetization_types=flatrate&sort_by=primary_release_date.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
+        "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=movie&with_watch_providers=350&watch_region=US&with_watch_monetization_types=flatrate&sort_by=vote_average.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
         "target": "videos",
-        "guid": "guid-05c3ddf9"
-    },
-    {
-        "label": "New Series on Prime Video",
-        "icon": "",
-        "path": "plugin://plugin.video.themoviedb.helper/?info=discover&tmdb_type=tv&with_watch_providers=9&watch_region=US&with_watch_monetization_types=flatrate&sort_by=first_air_date.desc&reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&widget=true",
-        "target": "videos",
-        "guid": "guid-5d8be13d"
+        "guid": "guid-54c304a6"
     }
 ]

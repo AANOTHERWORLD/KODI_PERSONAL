@@ -8,7 +8,9 @@
 # startup and silently heals what it can. Also runs a scheduled texture-cache
 # prune (data efficiency) that drops textures unused for a while, on a timer so
 # it does not run every start. Sets Trakt scrobble ownership (Red Light owns
-# it, script.trakt scrobbling off). Logging is verbose by design.
+# it, script.trakt scrobbling off). Hotfixes TMDb Helper's Trakt episode play
+# params so calendar episodes play, and asserts Kodi's video cache settings.
+# Logging is verbose by design.
 
 import os
 import json
@@ -45,7 +47,7 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.8.5'
+SERVICE_VERSION = '0.8.6'
 
 # Scheduled texture-cache prune (data efficiency). A texture unused for longer
 # than the stale window is removed, and the prune itself runs at most once per
@@ -104,6 +106,97 @@ TRAKTSYNC_REPAIR_BUILTIN = (
 # rebuild sync data.
 TRAKTSYNC_REPAIR_SETTLE_SECONDS = 15
 
+# TMDb Helper's own window properties, as its get_property writes them (it
+# prefixes every name with 'TMDbHelper.').
+TRAKT_AUTH_PROPERTY = 'TMDbHelper.TraktIsAuth'
+TRAKT_ATTEMPTS_PROPERTY = 'TMDbHelper.TraktRefreshAttempts'
+
+# One-time maintenance revisions. Up to 0.8.5 these jobs were gated on the addon
+# version, so EVERY service update re-ran them: a full texture cache wipe (all
+# art re-downloaded, slow first browse, extra data), Magneto's defaults action
+# (which can overwrite provider choices), and a full Trakt sync rebuild (a burst
+# of Trakt calls and a blank Up Next while it rebuilds). Each job now runs once
+# per revision. Bump a revision only when that job genuinely needs to run again.
+# A device that already ran a job under the old per-version gate (any non-empty
+# marker) is treated as done and its marker is rewritten to the revision.
+TEXTURE_CLEAR_REVISION = 'caps-405-720'
+MAGNETO_INIT_REVISION = 'magneto-1'
+TRAKTSYNC_REPAIR_REVISION = 'traktsync-1'
+
+# Kodi cache (video buffer) settings. Kodi 21 Omega moved these from
+# advancedsettings.xml <cache> into the GUI and now ignores the XML tags, so the
+# old <cache> block never applied. They are asserted here through JSON-RPC,
+# read first and written only when different, like the update policy.
+# Values come from Kodi's own option lists (ServicesSettings.cpp):
+#   filecache.buffermode 4  = buffer all network filesystems, which includes
+#                             internet streams (Kodi default)
+#   filecache.memorysize 48 = 48 MB forward buffer (Kodi default 20). A 4K
+#                             debrid stream around 60 Mbit/s is about 7.5 MB/s
+#                             (60 / 8 = 7.5), so 20 MB holds under 3 seconds and
+#                             48 MB about 6.4 seconds (48 / 7.5 = 6.4). Modest on
+#                             a 2 GB device; drop to 32 if the GUI gets tight.
+#   filecache.readfactor 0  = Adaptive: fills fast, then settles at 1.5x.
+KODI_CACHE_SETTINGS = (
+    ('filecache.buffermode', 4, 'Cache buffer mode', 'all network filesystems'),
+    ('filecache.memorysize', 48, 'Cache memory size', '48 MB'),
+    ('filecache.readfactor', 0, 'Cache read factor', 'adaptive'),
+)
+
+# Weather. AF3 already prints 'time • temperature' in its header whenever Kodi has
+# a weather provider (Furniture_Header_Right, unless Header.DisableWeather is
+# set), so all the build needs is a provider. Open-Meteo is in Kodi's official
+# repository, needs no API key, and on first run locates the device by IP and
+# fills its first location itself (its service.py geoip step), so nothing
+# location specific is stored here. It only refreshes while it is Kodi's
+# selected weather add-on, which is what weather.addon asserts.
+WEATHER_ADDON_ID = 'weather.openmeteo'
+WEATHER_KODI_SETTINGS = (
+    ('weather.addon', WEATHER_ADDON_ID, 'Weather provider', 'Open-Meteo'),
+    ('weather.currentlocation', 1, 'Weather location', 'first location'),
+)
+# One-time Open-Meteo preferences for a low-RAM stick: no radar map tiles (it
+# downloads and stitches map images on every refresh) and no severe-weather
+# popups over playback. Applied once per WEATHER_PREFS_REVISION so a later
+# change made by hand in its settings sticks.
+WEATHER_PREFS = (('loc1maps', 'false'), ('loc1alert', 'false'))
+WEATHER_PREFS_REVISION = 'weather-1'
+
+# Seconds to wait after a forced SkinVariables rebuild (which reloads the skin)
+# before re-asserting skin settings. AF3's startup actions re-set some TMDb
+# Helper bools on load (for example EnableCurrentWindowImages back to true), so
+# without a second pass a menu change would silently undo those settings until
+# the next boot.
+SKIN_RELOAD_SETTLE_SECONDS = 10
+
+# TMDb Helper episode play params hotfix. TMDb Helper's newer Trakt item mapper
+# (resources/tmdbhelper/lib/items/directories/mapper_standard.py, used by the
+# Trakt calendar and other standard Trakt lists) builds episode items whose play
+# params carry only info, tmdb_type and tmdb_id. Season and episode live in the
+# infolabels but never reach the params. Clicking such an episode therefore calls
+# the player with season=None, TMDb Helper falls back to its movie dictionary,
+# which has no season/episode keys and returns its '_' placeholder, and Red Light
+# crashes on int('_') in sources.py playback_prep. That is the For You My Calendar
+# play error. The legacy Trakt path (api/trakt/items.py EPISODE_PARAMS) and the
+# stacked calendar path (specified_episodes) both include season and episode,
+# which is why Up Next and multi-episode stacks still play.
+# The patch adds a get_params override to EpisodeItemMapper that appends season
+# and episode. It is applied on every start because a TMDb Helper update replaces
+# the file, it is idempotent (marker line), and it stands down by itself if
+# upstream adds its own get_params to EpisodeItemMapper or the anchor text changes.
+TMDBH_MAPPER_RELPATH = os.path.join(
+    'resources', 'tmdbhelper', 'lib', 'items', 'directories', 'mapper_standard.py')
+TMDBH_PATCH_MARKER = '# KODIPERSONAL-PATCH episode-params'
+TMDBH_PATCH_ANCHOR = (
+    "        infolabels['episode'] = self.meta.get('number')\n"
+    "        return infolabels\n")
+TMDBH_PATCH_BLOCK = (
+    "\n"
+    "    def get_params(self):  " + TMDBH_PATCH_MARKER + "\n"
+    "        params = super().get_params()\n"
+    "        params['season'] = self.meta.get('season')\n"
+    "        params['episode'] = self.meta.get('number')\n"
+    "        return params\n")
+
 
 def log(msg, level=xbmc.LOGINFO):
     line = '{} {}'.format(LOG_TAG, msg)
@@ -116,6 +209,21 @@ def log(msg, level=xbmc.LOGINFO):
             fh.write('{} {}\n'.format(stamp, msg))
     except Exception as exc:  # never let logging crash the service
         xbmc.log('{} logfile write failed: {}'.format(LOG_TAG, exc), xbmc.LOGWARNING)
+
+
+# kodipersonal.log is appended on every boot and had no size cap. Rotate it once
+# per start when it passes 512 KB (512 * 1024 = 524288 bytes), keeping one
+# previous file, so it cannot grow without bound on a low-storage stick.
+LOGFILE_MAX_BYTES = 524288
+
+
+def rotate_logfile():
+    try:
+        if os.path.isfile(LOGFILE) and os.path.getsize(LOGFILE) > LOGFILE_MAX_BYTES:
+            os.replace(LOGFILE, LOGFILE + '.old')
+            log('Rotated kodipersonal.log (previous run kept as kodipersonal.log.old).')
+    except Exception as exc:
+        xbmc.log('{} log rotation failed: {}'.format(LOG_TAG, exc), xbmc.LOGWARNING)
 
 
 def notify(message):
@@ -228,6 +336,47 @@ def _copy_if_different(src_data, dest_dir, dest, label):
         return False
 
 
+def _skin_string(sid):
+    return xbmc.getInfoLabel('Skin.String({})'.format(sid)) or ''
+
+
+def _skin_bool(sid):
+    return bool(xbmc.getCondVisibility('Skin.HasSetting({})'.format(sid)))
+
+
+def _set_skin_string(sid, value):
+    # Write a skin string only when it differs. Every Skin.SetString is queued on
+    # the GUI thread and re-evaluates skin conditions, so blindly re-setting about
+    # 40 strings on every boot is avoidable startup work. Returns True if written.
+    value = '' if value is None else str(value)
+    if _skin_string(sid) == value:
+        return False
+    # Quote the value so paths with brackets, parentheses or commas pass through
+    # the builtin parser intact.
+    xbmc.executebuiltin('Skin.SetString({},"{}")'.format(sid, value))
+    return True
+
+
+def _set_skin_bool(sid, enabled):
+    # Set or clear a skin bool only when it differs. Returns True if written.
+    if _skin_bool(sid) == bool(enabled):
+        return False
+    if enabled:
+        xbmc.executebuiltin('Skin.SetBool({})'.format(sid))
+    else:
+        xbmc.executebuiltin('Skin.Reset({})'.format(sid))
+    return True
+
+
+def _reset_skin_setting(sid):
+    # Skin.Reset only when the setting holds something (string value or bool on).
+    # Returns True if written.
+    if not _skin_string(sid) and not _skin_bool(sid):
+        return False
+    xbmc.executebuiltin('Skin.Reset({})'.format(sid))
+    return True
+
+
 def apply_colour_theme():
     # Runs on EVERY start, not gated by the version check. AF3 owns its colors
     # folder, and an AF3 update can wipe our overlay, so we re-copy it whenever
@@ -274,12 +423,13 @@ def apply_background():
         return
 
     if xbmc.getSkinDir() == AF3_ID:
-        xbmc.executebuiltin(
-            'Skin.SetString(Background.Image,'
-            'special://skin/extras/backgrounds/{})'.format(BACKGROUND_FILE))
-        log('Set Background.Image to the ThoughtStream background.')
-        xbmc.executebuiltin('Skin.SetString(Background.DialogImage,Chalk)')
-        log('Set Background.DialogImage to Chalk.')
+        image = 'special://skin/extras/backgrounds/{}'.format(BACKGROUND_FILE)
+        if _set_skin_string('Background.Image', image):
+            log('Set Background.Image to the ThoughtStream background.')
+        else:
+            log('Background.Image already the ThoughtStream background.')
+        if _set_skin_string('Background.DialogImage', 'Chalk'):
+            log('Set Background.DialogImage to Chalk.')
     else:
         log('Active skin is {}, not {}; left background skin strings unchanged.'.format(
             xbmc.getSkinDir(), AF3_ID))
@@ -384,13 +534,20 @@ def deploy_menu():
 
     # Clear any known slot that is NOT in the active set (migrates away from old
     # layouts, e.g. the previous Disney+/Prime Video on 1105/1106).
+    # Switch off inactive slots. Only the Toggle (which decides whether AF3 shows
+    # the hub) and the Name are cleared. Mode is left alone on purpose: AF3's
+    # startup refills an empty Mode on every load (for example 1107 and 1108 to
+    # Wall), so clearing it would look like a change on every boot and force a
+    # rebuild and skin reload each time. Up to 0.8.5 every inactive slot counted
+    # as a change regardless, which is exactly what forced that per-boot reload.
     for slot in known_slots:
         if slot not in active_ids:
-            xbmc.executebuiltin('Skin.Reset(HomeSwitcher.{}.Name)'.format(slot))
-            xbmc.executebuiltin('Skin.Reset(homeswitcher.{}.toggle)'.format(slot))
-            xbmc.executebuiltin('Skin.Reset(homeswitcher.{}.mode)'.format(slot))
-            changed = True
-            log('Cleared stale HomeSwitcher slot {}.'.format(slot))
+            cleared = False
+            for sid in ('HomeSwitcher.{}.Name', 'homeswitcher.{}.toggle'):
+                cleared = _reset_skin_setting(sid.format(slot)) or cleared
+            if cleared:
+                changed = True
+                log('Switched off stale HomeSwitcher slot {}.'.format(slot))
 
     for entry in active_slots:
         slot = entry.get('slot')
@@ -398,27 +555,38 @@ def deploy_menu():
         toggle = str(entry.get('toggle', 'true')).lower()
         if not slot:
             continue
-        xbmc.executebuiltin('Skin.SetString(HomeSwitcher.{}.Name,{})'.format(slot, name))
+        written = _set_skin_string('HomeSwitcher.{}.Name'.format(slot), name)
         # The home slot is always present, so it carries no toggle; the custom
-        # slots (1101-1104) are toggled on.
+        # slots are toggled on.
         if toggle == 'true':
-            xbmc.executebuiltin('Skin.SetString(homeswitcher.{}.toggle,true)'.format(slot))
-        xbmc.executebuiltin('Skin.SetString(homeswitcher.{}.mode,Standard)'.format(slot))
-        log('Set HomeSwitcher slot {} ({}): Name{}, mode.'.format(
-            slot, name, ', toggle' if toggle == 'true' else ''))
+            written = _set_skin_string('homeswitcher.{}.toggle'.format(slot), 'true') or written
+        written = _set_skin_string('homeswitcher.{}.mode'.format(slot), 'Standard') or written
+        # Hub type: empty means Custom (widget rows). A slot repurposed from one
+        # of AF3's prebuilt types (NextAired, LiveTV, Addons) must be reset or it
+        # would render that hub instead of our rows.
+        if slot != 'home' and _skin_string('HomeSwitcher.{}.Type'.format(slot)) not in ('', 'Custom'):
+            written = _reset_skin_setting('HomeSwitcher.{}.Type'.format(slot)) or written
+            log('Reset HomeSwitcher slot {} type to Custom.'.format(slot))
+        if written:
+            changed = True
+            log('Set HomeSwitcher slot {} ({}): Name{}, mode.'.format(
+                slot, name, ', toggle' if toggle == 'true' else ''))
+        else:
+            log('HomeSwitcher slot {} ({}) already current.'.format(slot, name))
 
     # The home menu is compiled by SkinVariables into a generator includes file
     # (script-skinvariables-generator-includes-.xml); dropping node JSON alone
     # does not update it, and the generator's own hash check ignores node-data
     # changes. So when anything changed we force a rebuild: action=buildtemplate
     # with force bypasses that gate, recompiles the includes from our nodes
-    # (including the More Providers Custom_Submenu subgroups), and reloads the
+    # (including any Custom_Submenu subgroups), and reloads the
     # skin itself, so the new rows actually appear without a cold restart.
     if changed:
         xbmc.executebuiltin('RunScript(script.skinvariables,action=buildtemplate,force=1)')
         log('Menu changed; forced SkinVariables template rebuild and skin reload.')
     else:
         log('No menu changes; SkinVariables rebuild not needed.')
+    return changed
 
 
 def apply_skin_settings():
@@ -433,14 +601,13 @@ def apply_skin_settings():
         return
     bools = cfg.get('bools', {})
     strings = cfg.get('strings', {})
+    # Each setting is read first and written only when it differs, so a steady
+    # state boot issues no skin builtins at all. Counts are of writes made.
     nb = 0
     for sid, val in bools.items():
         try:
-            if val is True or str(val).lower() == 'true':
-                xbmc.executebuiltin('Skin.SetBool({})'.format(sid))
-            else:
-                xbmc.executebuiltin('Skin.Reset({})'.format(sid))
-            nb += 1
+            if _set_skin_bool(sid, val is True or str(val).lower() == 'true'):
+                nb += 1
         except Exception as exc:
             log('Could not set bool {}: {}'.format(sid, exc), xbmc.LOGWARNING)
     ns = 0
@@ -448,20 +615,20 @@ def apply_skin_settings():
         if val is None or val == '':
             continue
         try:
-            # Quote the value so paths with brackets, parentheses or commas pass
-            # through the builtin parser intact.
-            xbmc.executebuiltin('Skin.SetString({},"{}")'.format(sid, val))
-            ns += 1
+            if _set_skin_string(sid, val):
+                ns += 1
         except Exception as exc:
             log('Could not set string {}: {}'.format(sid, exc), xbmc.LOGWARNING)
     nr = 0
     for sid in cfg.get('reset', []):
         try:
-            xbmc.executebuiltin('Skin.Reset({})'.format(sid))
-            nr += 1
+            if _reset_skin_setting(sid):
+                nr += 1
         except Exception as exc:
             log('Could not reset {}: {}'.format(sid, exc), xbmc.LOGWARNING)
-    log('Applied skin settings: {} bool(s), {} string(s), {} reset.'.format(nb, ns, nr))
+    log('Skin settings checked ({} bool(s), {} string(s), {} reset(s)); wrote {} bool(s), '
+        '{} string(s), {} reset(s).'.format(len(bools), len(strings),
+                                            len(cfg.get('reset', [])), nb, ns, nr))
 
 
 def apply_viewtypes():
@@ -515,19 +682,36 @@ def _delete_dir_contents(path):
     return count
 
 
+def _revision_done(marker, revision, label):
+    # True when a one-time job (see the *_REVISION constants) has already run.
+    # A marker holding an old addon version means the job ran under the legacy
+    # per-version gate; count that as done and rewrite it to the revision so the
+    # next service update does not re-run the job.
+    current = ADDON.getSetting(marker)
+    if current == revision:
+        log('{} already done for revision {}; skipping.'.format(label, revision))
+        return True
+    if current:
+        ADDON.setSetting(marker, revision)
+        log('{} already ran under the old per-version gate (marker {}); recorded '
+            'revision {} so updates no longer re-run it.'.format(label, current, revision))
+        return True
+    return False
+
+
 def clear_texture_cache_once():
     # One-time texture cache clear so the imageres/fanartres caps in
     # advancedsettings.xml actually take effect on an existing device. Kodi only
     # applies the caps to art cached AFTER the change, so already-cached art in
     # Thumbnails and Textures*.db keeps its old size until the cache is cleared
     # once. Version-gated the same way as the TMDb Helper setup (stored marker
-    # texturecache_cleared), so it runs exactly once per version, never every
-    # start. Fully guarded so nothing here can crash the service.
-    if ADDON.getSetting('texturecache_cleared') == ADDON_VERSION:
-        log('Texture cache already cleared for v{}; skipping.'.format(ADDON_VERSION))
+    # texturecache_cleared), so it runs once per TEXTURE_CLEAR_REVISION (bump it
+    # only when the caps change), never every start and no longer on every
+    # service update. Fully guarded so nothing here can crash the service.
+    if _revision_done('texturecache_cleared', TEXTURE_CLEAR_REVISION, 'Texture cache clear'):
         return
 
-    log('===== Texture cache clear start (v{}) ====='.format(ADDON_VERSION))
+    log('===== Texture cache clear start (revision {}) ====='.format(TEXTURE_CLEAR_REVISION))
     deleted = 0
     try:
         # 1) Thumbnails folder: the hex subfolders 0-f and Video/ hold the cached
@@ -559,10 +743,10 @@ def clear_texture_cache_once():
             except Exception as exc:
                 log('Could not delete {}: {}'.format(full, exc), xbmc.LOGWARNING)
 
-        ADDON.setSetting('texturecache_cleared', ADDON_VERSION)
-        log('Texture cache clear done for v{}; {} item(s) removed. The first '
+        ADDON.setSetting('texturecache_cleared', TEXTURE_CLEAR_REVISION)
+        log('Texture cache clear done for revision {}; {} item(s) removed. The first '
             'browse after this will be slower while art re-caches under the new '
-            'caps.'.format(ADDON_VERSION, deleted))
+            'caps.'.format(TEXTURE_CLEAR_REVISION, deleted))
         notify('Art cache reset for the performance update.')
     except Exception as exc:
         log('Texture cache clear failed: {}'.format(exc), xbmc.LOGERROR)
@@ -680,11 +864,12 @@ def prune_texture_cache():
 
 def initialise_magneto(monitor):
     # Trigger Magneto's scraper setup so a fresh device does not need the manual
-    # step of opening Magneto under Program add-ons to prompt it. Version-gated
-    # by the stored marker magneto_initialised so it runs once per version, not
-    # every start. Fully guarded so nothing here can crash the service.
-    if ADDON.getSetting('magneto_initialised') == ADDON_VERSION:
-        log('Magneto already initialised for v{}; skipping.'.format(ADDON_VERSION))
+    # step of opening Magneto under Program add-ons to prompt it. Gated by the
+    # stored marker magneto_initialised so it runs once per MAGNETO_INIT_REVISION,
+    # not on every service update (re-running the defaults action can overwrite
+    # provider choices made since). Fully guarded so nothing here can crash the
+    # service.
+    if _revision_done('magneto_initialised', MAGNETO_INIT_REVISION, 'Magneto scraper init'):
         return
 
     try:
@@ -694,7 +879,7 @@ def initialise_magneto(monitor):
             xbmc.LOGWARNING)
         return
 
-    log('===== Magneto scraper init start (v{}) ====='.format(ADDON_VERSION))
+    log('===== Magneto scraper init start (revision {}) ====='.format(MAGNETO_INIT_REVISION))
     try:
         xbmc.executebuiltin(MAGNETO_DEFAULTS_BUILTIN)
         log('Requested Magneto default providers via {}'.format(MAGNETO_DEFAULTS_BUILTIN))
@@ -720,9 +905,9 @@ def initialise_magneto(monitor):
                 failed += 1
                 log('Could not enable Magneto {}: {}'.format(provider, exc), xbmc.LOGWARNING)
 
-        ADDON.setSetting('magneto_initialised', ADDON_VERSION)
-        log('Magneto scraper init done for v{}: defaults requested, {} extra '
-            'provider(s) enabled, {} failed.'.format(ADDON_VERSION, enabled, failed))
+        ADDON.setSetting('magneto_initialised', MAGNETO_INIT_REVISION)
+        log('Magneto scraper init done for revision {}: defaults requested, {} extra '
+            'provider(s) enabled, {} failed.'.format(MAGNETO_INIT_REVISION, enabled, failed))
     except Exception as exc:
         log('Magneto scraper init failed: {}'.format(exc), xbmc.LOGERROR)
     log('===== Magneto scraper init end =====')
@@ -745,14 +930,30 @@ def enforce_addon_update_policy():
     # script.module.infotagger version X could not be satisfied'. 0.7.9 forced
     # addons.updatemode to 0 by mistake; this asserts the correct values, reading
     # first and writing only what differs. Guarded and logged.
-    wanted = (
+    _assert_kodi_settings((
         ('general.addonupdates', 0, 'Updates', 'install automatically'),
         ('addons.updatemode', 1, 'Update official add-ons from', 'any repositories'),
-    )
+    ), 'Update policy')
+
+
+def apply_cache_settings():
+    # Video buffer settings (see KODI_CACHE_SETTINGS). Read first, written only
+    # when different, so a steady state boot changes nothing.
+    _assert_kodi_settings(KODI_CACHE_SETTINGS, 'Cache setting')
+
+
+def _assert_kodi_settings(wanted, purpose):
+    # Shared read-then-write helper for Kodi GUI settings via JSON-RPC.
     for setting, value, label, meaning in wanted:
         try:
             resp = _jsonrpc('Settings.GetSettingValue', {'setting': setting})
-            current = resp.get('result', {}).get('value') if resp else None
+            if not resp or 'error' in resp:
+                # For example the filecache.* settings do not exist before Kodi 21.
+                log('{} {} is not available on this Kodi ({}); skipping.'.format(
+                    purpose, setting, resp.get('error') if resp else 'no response'),
+                    xbmc.LOGWARNING)
+                continue
+            current = resp.get('result', {}).get('value')
             if current == value:
                 log('{} already {} ({}); nothing to change.'.format(label, value, meaning))
                 continue
@@ -764,8 +965,33 @@ def enforce_addon_update_policy():
             else:
                 log('Could not set {}: {}'.format(setting, result), xbmc.LOGWARNING)
         except Exception as exc:
-            log('Update policy check for {} failed to run: {}'.format(setting, exc),
+            log('{} check for {} failed to run: {}'.format(purpose, setting, exc),
                 xbmc.LOGWARNING)
+
+
+def apply_weather():
+    # Point Kodi at Open-Meteo once it is installed (it arrives through this
+    # addon's <requires>), then apply its lean preferences once. Guarded and
+    # logged; nothing location specific is written.
+    try:
+        xbmcaddon.Addon(WEATHER_ADDON_ID)
+    except Exception:
+        log('{} is not installed yet; weather provider not set this pass.'.format(
+            WEATHER_ADDON_ID), xbmc.LOGWARNING)
+        return
+    _assert_kodi_settings(WEATHER_KODI_SETTINGS, 'Weather setting')
+    if _revision_done('weather_configured', WEATHER_PREFS_REVISION, 'Weather preferences'):
+        return
+    try:
+        weather = xbmcaddon.Addon(WEATHER_ADDON_ID)
+        for key, value in WEATHER_PREFS:
+            weather.setSetting(key, value)
+            log('Open-Meteo {} set to {}.'.format(key, value))
+        ADDON.setSetting('weather_configured', WEATHER_PREFS_REVISION)
+        log('Weather preferences applied for revision {}. Open-Meteo finds the '
+            'location itself on its first run.'.format(WEATHER_PREFS_REVISION))
+    except Exception as exc:
+        log('Weather preferences failed: {}'.format(exc), xbmc.LOGWARNING)
 
 
 def check_trakt_auth():
@@ -776,10 +1002,14 @@ def check_trakt_auth():
     # stays empty and scrobbling silently stops, while cached widget rows still
     # render, so the build looks fine but nothing gets marked watched. We only read
     # and log it so there is evidence in the log. Fully guarded.
+    # The property names carry TMDb Helper's 'TMDbHelper.' prefix: its
+    # get_property (script.module.jurialmunkey window.py) prepends it to every
+    # name. Up to 0.8.5 this read the bare names, which never exist, so the log
+    # always reported EMPTY even on a healthy device.
     try:
         window = xbmcgui.Window(10000)
-        value = window.getProperty('TraktIsAuth')
-        attempts = window.getProperty('TraktRefreshAttempts') or '0'
+        value = window.getProperty(TRAKT_AUTH_PROPERTY)
+        attempts = window.getProperty(TRAKT_ATTEMPTS_PROPERTY) or '0'
         if not _tmdbhelper_has_trakt_token():
             log('Trakt auth: TMDb Helper has NO stored Trakt token. This is why Up '
                 'Next is empty and why a Trakt login dialog appears on every launch '
@@ -878,12 +1108,13 @@ def _tmdbhelper_has_trakt_token():
 def repair_trakt_sync(monitor):
     # One-time rebuild of TMDb Helper's watched, playback and next-episode sync
     # data through its own Clear sync data > Progress action, so a blank Up Next
-    # recovers without waiting for the half day stamp. Version-gated by
-    # traktsync_repaired. Skipped, with the marker left unset so it retries, when
-    # TMDb Helper is missing or has no stored Trakt token, because without a token
-    # the rebuild only produces an empty table and forces a login prompt.
-    if ADDON.getSetting('traktsync_repaired') == ADDON_VERSION:
-        log('Trakt sync already repaired for v{}; skipping.'.format(ADDON_VERSION))
+    # recovers without waiting for the half day stamp. Gated by traktsync_repaired
+    # so it runs once per TRAKTSYNC_REPAIR_REVISION, not on every service update
+    # (each rebuild clears and refetches all watched data from Trakt). Skipped,
+    # with the marker left unset so it retries, when TMDb Helper is missing or has
+    # no stored Trakt token, because without a token the rebuild only produces an
+    # empty table and forces a login prompt.
+    if _revision_done('traktsync_repaired', TRAKTSYNC_REPAIR_REVISION, 'Trakt sync repair'):
         return
     try:
         xbmcaddon.Addon(TMDBHELPER_ID)
@@ -898,19 +1129,121 @@ def repair_trakt_sync(monitor):
                 'Authorise Trakt in TMDb Helper settings once; the repair runs on the '
                 'next start after that.', xbmc.LOGWARNING)
             return
-        log('===== Trakt sync repair start (v{}) ====='.format(ADDON_VERSION))
+        log('===== Trakt sync repair start (revision {}) ====='.format(TRAKTSYNC_REPAIR_REVISION))
         if monitor.waitForAbort(TRAKTSYNC_REPAIR_SETTLE_SECONDS):
             log('Abort during Trakt sync repair; leaving marker unset so it retries.',
                 xbmc.LOGWARNING)
             return
         xbmc.executebuiltin(TRAKTSYNC_REPAIR_BUILTIN)
-        ADDON.setSetting('traktsync_repaired', ADDON_VERSION)
+        ADDON.setSetting('traktsync_repaired', TRAKTSYNC_REPAIR_REVISION)
         log('Trakt sync repair requested via {}. A background progress bar shows '
             'while TMDb Helper rebuilds; Up Next fills in once it finishes.'.format(
                 TRAKTSYNC_REPAIR_BUILTIN))
     except Exception as exc:
         log('Trakt sync repair failed: {}'.format(exc), xbmc.LOGERROR)
     log('===== Trakt sync repair end =====')
+
+
+def _episode_mapper_block(text):
+    # Return (start, end) of the EpisodeItemMapper class body in mapper_standard.py,
+    # ending at the next top level class or def, or (-1, -1) if it is not found.
+    start = text.find('\nclass EpisodeItemMapper(')
+    if start == -1:
+        return -1, -1
+    ends = [i for i in (text.find('\nclass ', start + 1), text.find('\ndef ', start + 1))
+            if i != -1]
+    return start, (min(ends) if ends else len(text))
+
+
+def patch_tmdbhelper_episode_params():
+    # Hotfix for the calendar play error (see TMDBH_PATCH_* above). Runs on every
+    # start because a TMDb Helper update overwrites the file. Fully guarded and
+    # logged; any unexpected shape leaves the file untouched. Returns True only
+    # when the file was changed in this pass, so the caller can refresh widgets.
+    try:
+        helper = xbmcaddon.Addon(TMDBHELPER_ID)
+    except Exception:
+        log('{} is not installed yet; skipping episode params patch.'.format(
+            TMDBHELPER_ID), xbmc.LOGWARNING)
+        return False
+    try:
+        helper_version = helper.getAddonInfo('version')
+        helper_path = xbmcvfs.translatePath(helper.getAddonInfo('path'))
+        target = os.path.join(helper_path, TMDBH_MAPPER_RELPATH)
+        if not os.path.isfile(target):
+            log('Episode params patch: {} not found in TMDb Helper v{}; layout changed, '
+                'standing down.'.format(TMDBH_MAPPER_RELPATH, helper_version),
+                xbmc.LOGWARNING)
+            return False
+        with open(target, 'r', encoding='utf-8') as fh:
+            text = fh.read()
+
+        if TMDBH_PATCH_MARKER in text:
+            log('Episode params patch already present in TMDb Helper v{}.'.format(
+                helper_version))
+            return False
+
+        start, end = _episode_mapper_block(text)
+        if start == -1:
+            log('Episode params patch: EpisodeItemMapper not found in TMDb Helper v{}; '
+                'standing down.'.format(helper_version), xbmc.LOGWARNING)
+            return False
+        block = text[start:end]
+        if 'def get_params' in block:
+            log('Episode params patch not needed: TMDb Helper v{} defines its own '
+                'EpisodeItemMapper.get_params (likely fixed upstream). Verify calendar '
+                'episodes play, then this patch can be retired.'.format(helper_version))
+            return False
+        if block.count(TMDBH_PATCH_ANCHOR) != 1:
+            log('Episode params patch: anchor text not found exactly once in '
+                'EpisodeItemMapper (TMDb Helper v{}); standing down so nothing is '
+                'corrupted.'.format(helper_version), xbmc.LOGWARNING)
+            return False
+
+        anchor_at = start + block.index(TMDBH_PATCH_ANCHOR) + len(TMDBH_PATCH_ANCHOR)
+        patched = text[:anchor_at] + TMDBH_PATCH_BLOCK + text[anchor_at:]
+
+        # Sanity check the result compiles before it replaces the original.
+        compile(patched, target, 'exec')
+
+        backup = target + '.kodipersonal.bak'
+        shutil.copy2(target, backup)
+        tmp = target + '.kodipersonal.tmp'
+        with open(tmp, 'w', encoding='utf-8') as fh:
+            fh.write(patched)
+        os.replace(tmp, target)
+
+        # Drop the stale bytecode so the next plugin call compiles the patched file.
+        cache_dir = os.path.join(os.path.dirname(target), '__pycache__')
+        if os.path.isdir(cache_dir):
+            for name in os.listdir(cache_dir):
+                if name.startswith('mapper_standard.'):
+                    try:
+                        os.remove(os.path.join(cache_dir, name))
+                        log('Removed stale bytecode {}'.format(name))
+                    except Exception as exc:
+                        log('Could not remove bytecode {}: {}'.format(name, exc),
+                            xbmc.LOGWARNING)
+
+        log('Episode params patch applied to TMDb Helper v{} ({}); backup at {}. '
+            'Calendar episodes now pass season and episode to the player.'.format(
+                helper_version, target, backup))
+        return True
+    except Exception as exc:
+        log('Episode params patch failed: {}'.format(exc), xbmc.LOGERROR)
+        return False
+
+
+def refresh_tmdbhelper_widgets():
+    # Bump TMDb Helper's widget reload property, which every For You widget path
+    # includes, so Kodi re-requests the lists and picks up the patched params
+    # instead of serving the listing it built before the patch.
+    try:
+        stamp = str(int(time.time()))
+        xbmcgui.Window(10000).setProperty('TMDbHelper.Widgets.Reload', stamp)
+        log('TMDb Helper widgets reload requested (stamp {}).'.format(stamp))
+    except Exception as exc:
+        log('Widget reload request failed: {}'.format(exc), xbmc.LOGWARNING)
 
 
 def needs_apply():
@@ -935,12 +1268,22 @@ def run_setup():
 
 def main():
     monitor = xbmc.Monitor()
+    rotate_logfile()
     log('Service started on {} (addon v{}, service v{})'.format(
         xbmc.getInfoLabel('System.BuildVersion'), ADDON_VERSION, SERVICE_VERSION))
+
+    # Patch TMDb Helper's episode params before the 20 second settle, so the
+    # home widgets that load during that window already get playable calendar
+    # episodes. Only touches a file; if it changes anything, ask the widgets to
+    # reload after the settle in case they were built from the old code.
+    episode_patch_changed = patch_tmdbhelper_episode_params()
 
     # Give Kodi a moment to finish loading addons before we touch other addons.
     if monitor.waitForAbort(20):
         return
+
+    if episode_patch_changed:
+        refresh_tmdbhelper_widgets()
 
     # Clear corrupt cached addon packages first so any install the dependency
     # healer or Kodi's auto update does next fetches a fresh zip.
@@ -958,7 +1301,16 @@ def main():
     apply_advancedsettings()
     clear_texture_cache_once()
     prune_texture_cache()
-    deploy_menu()
+    menu_changed = deploy_menu()
+
+    # A menu change forces a SkinVariables rebuild, which reloads the skin, and
+    # AF3's startup actions then re-set some TMDb Helper skin bools. Re-assert our
+    # skin settings once the reload has settled so that change sticks.
+    if menu_changed:
+        if monitor.waitForAbort(SKIN_RELOAD_SETTLE_SECONDS):
+            return
+        log('Re-applying skin settings after the skin reload.')
+        apply_skin_settings()
 
     # Scraper setup, version-gated, so a fresh device does not need the manual
     # step of opening Magneto to prompt it.
@@ -968,6 +1320,8 @@ def main():
     # updates from any repository), then log TMDb Helper's Trakt auth health
     # (it drives the For You rows) so problems leave a trace.
     enforce_addon_update_policy()
+    apply_cache_settings()
+    apply_weather()
     check_trakt_auth()
 
     # TMDb Helper defaults stay version-gated so they only reapply after updates.

@@ -36,7 +36,7 @@ settings on every start.
 5. Set the skin to **Arctic Fuse 3** if it did not switch automatically
    (Settings > Interface > Skin), then restart Kodi once. On that first start the
    setup service applies the ThoughtStream colours and background, the home menu
-   (Discover, For You, Netflix, Max, More Providers), the skin settings, and the
+   (Discover, For You, Netflix, Max, Apple TV+, Disney+, Prime Video), the skin settings, and the
    view types.
 
 That is the whole bootstrap. The only unavoidable manual step is installing the
@@ -49,8 +49,11 @@ the build on purpose.
 
 - **Trakt**: authorize it in TMDb Helper (Settings > add-on settings for TMDb
   Helper > Trakt account), and in the Trakt service add-on if it prompts. This
-  powers Up Next, Continue Watching, the calendar, the watchlist, and
-  recommendations in For You.
+  powers Continue Watching, Up Next, New From My Shows and the watchlist in For
+  You, and the recommendation rows in Discover.
+- **MDbList**: enter your MDbList API key in TMDb Helper (Settings > API Keys >
+  MDbList API Key). This powers the Top Streaming Today rows in Discover and the
+  extra ratings. Without it those two rows stay empty.
 - **Debrid (Premiumize)**: authorize it in ResolveURL settings (Universal
   Resolvers > Premiumize). Red Light is the source layer and plays through it.
 

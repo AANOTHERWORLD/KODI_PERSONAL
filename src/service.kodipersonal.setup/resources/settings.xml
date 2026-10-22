@@ -45,6 +45,12 @@
           <control type="label" />
           <visible>false</visible>
         </setting>
+        <setting id="weather_configured" type="string">
+          <level>0</level>
+          <default></default>
+          <control type="label" />
+          <visible>false</visible>
+        </setting>
         <setting id="traktsync_repaired" type="string">
           <level>0</level>
           <default></default>

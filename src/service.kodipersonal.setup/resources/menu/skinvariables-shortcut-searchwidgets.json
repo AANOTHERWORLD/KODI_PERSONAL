@@ -1,0 +1,26 @@
+[
+    {
+        "label": "TV Shows",
+        "icon": "special://skin/extras/icons/tv.png",
+        "path": "DefaultSearch-TMDBShows",
+        "target": "videos",
+        "guid": "guid-0617b91d",
+        "widget_style": "Poster"
+    },
+    {
+        "label": "Movies",
+        "icon": "special://skin/extras/icons/film.png",
+        "path": "DefaultSearch-TMDBMovies",
+        "target": "videos",
+        "guid": "guid-f061fc39",
+        "widget_style": "Poster"
+    },
+    {
+        "label": "People",
+        "icon": "special://skin/extras/icons/person.png",
+        "path": "DefaultSearch-TMDBPeople",
+        "target": "videos",
+        "guid": "guid-29691232",
+        "widget_style": "Poster"
+    }
+]

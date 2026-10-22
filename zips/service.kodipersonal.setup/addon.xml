@@ -16,7 +16,7 @@
      notifies if a source was unreachable at install time. -->
 <addon id="service.kodipersonal.setup"
        name="KODI Personal Setup"
-       version="0.8.5"
+       version="0.8.6"
        provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
@@ -34,14 +34,32 @@
          it; the service still initialises it when present. -->
     <import addon="script.module.magneto" version="0.0.1" optional="true" />
     <import addon="plugin.program.openwizard" version="0.0.1" />
+    <!-- Weather provider for the header temperature. Kodi's official repo, no
+         API key; the service selects it and it locates itself by IP. -->
+    <import addon="weather.openmeteo" version="0.0.1" />
   </requires>
   <extension point="xbmc.service" library="service.py" />
   <extension point="xbmc.addon.metadata">
     <summary lang="en_GB">Personal setup service for the lightweight build</summary>
-    <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set and background, applies the curated AF3 skin settings and view types, and deploys the home menu (Discover, For You, Netflix, Max, and a More Providers submenu) into Arctic Fuse 3 on every start so the look and menu self-heal after a skin update. Declares the build stack as dependencies so Kodi installs them automatically, and verifies them on startup, healing anything missing or disabled. Stores no secrets. Logs to its own profile folder.</description>
+    <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set and background, applies the curated AF3 skin settings and view types, and deploys the home menu (Discover, For You, and a page per provider: Netflix, Max, Apple TV+, Disney+, Prime Video) into Arctic Fuse 3 on every start so the look and menu self-heal after a skin update. Declares the build stack as dependencies so Kodi installs them automatically, and verifies them on startup, healing anything missing or disabled. Stores no secrets. Logs to its own profile folder.</description>
     <platform>all</platform>
     <license>MIT</license>
-    <news>v0.8.5
+    <news>v0.8.6
+- Fix For You My Calendar episodes failing to play (Red Light: invalid literal for int() with base 10: '_'). TMDb Helper's newer Trakt item mapper builds episode items without season and episode in their play params, so its player falls back to a placeholder of '_' and Red Light crashes. The service now patches TMDb Helper's EpisodeItemMapper on every start to pass season and episode through (idempotent, backed up, compile checked, and it stands down by itself once TMDb Helper ships its own fix), then reloads the TMDb Helper widgets.
+- Stop a full home menu rebuild and skin reload on every boot. Inactive known slots (1105 to 1108) always counted as a change, which forced SkinVariables to rebuild its template and reload the skin each start. Slots and skin settings are now read first and written only when they differ.
+- Stop service updates re-running one-time jobs. The texture cache wipe, Magneto defaults and Trakt sync rebuild were gated on the addon version, so every update wiped all cached art, could reset scraper choices, and refetched all Trakt watched data. They now run once per revision; devices that already ran them are recognised.
+- Video cache settings now actually apply. Kodi 21 ignores the advancedsettings.xml cache block, so the service sets buffer mode, a 48 MB buffer and an adaptive read factor through Kodi's own settings.
+- Fix the Trakt auth health line always reporting EMPTY (it read TMDb Helper's window properties without their TMDbHelper. prefix).
+- Re-apply skin settings after a menu rebuild, since AF3 re-enables some TMDb Helper options when the skin reloads.
+- ThoughtStream: add panel_bg_90 and panel_bg_30, new in AF3 3.4.x, which fell back to black panels in the plot dialog and weather.
+- Skin settings: drop five keys AF3 no longer has and turn off the info dialog online gallery row.
+- Home menu redesign. Discover is now about what is new and trending: Top Streaming Shows and Movies Today (MDbList, needs the API key in TMDb Helper), daily Trending Series and Movies, New Episodes and New Movies across all subscribed services, then Trakt recommendations (moved from For You). For You is only what you are watching, in order of intent: Continue Watching, Up Next, New From My Shows (the calendar), Continue Movies, Watchlist. AF3 3.4.x has eight hub slots, so Apple TV+, Disney+ and Prime Video each get their own page instead of the More Providers submenu, and every provider page uses one template: New Movies (released in the last 30 days), New and Returning Series (an episode aired in the last 14 days, so returning seasons show up), Trending Series, Trending Movies, Top Rated.
+- Inactive hub slots are switched off by Toggle and Name only, so AF3 refilling an empty Mode at startup no longer looks like a change; repurposed slots get their hub type reset to Custom.
+- Weather: installs Open-Meteo (official repo, no API key) and selects it as Kodi's weather provider, so the header shows the temperature next to the time. It finds your location by IP on first run; radar maps and weather popups are off to keep it light.
+- Options window: tile 4 is now an Add-ons shortcut (opens the add-on browser) and the layout shows four tiles: Now Playing, Settings, Weather, Add-ons.
+- Search: the Search hub goes straight to results instead of a Discover / Search / Decades / Keywords selector, and results lead with TV Shows, Movies and People from TMDb instead of four empty local library rows.
+- Dependency check no longer asks Kodi to install entries that are optional or have no source (upstream repos, Magneto), which could raise a dialog on every start. Its log lines now also go to kodipersonal.log, and that log rotates at 512 KB.
+v0.8.5
 - Stop the Trakt login dialog appearing on every launch, and explain the empty Up Next. Both have one cause: TMDb Helper's stored Trakt token is gone (it deletes the token after repeated refresh failures), and every Trakt sync then forces its login prompt, once per process, so once per launch. The sync repair added in 0.8.1 was gated on a stale window property and so kept triggering that prompt; it is now gated on the real stored token and defers, with a clear log line, until Trakt is authorised in TMDb Helper. Authorise Trakt once in TMDb Helper settings; Up Next rebuilds on the next start.
 v0.8.4
 - Fix the setup service update failing with script.module.magneto 'Not available'. Magneto's only source (the kodiyashimaru repo) was emptied upstream on 2026-10-01, so Kodi could no longer satisfy the required import and refused every update, which also kept the 0.8.1 to 0.8.3 For You fixes from reaching devices. Magneto is now an optional import: devices that have it keep it and it still initialises; new devices get Red Light's built-in scrapers until a maintained Magneto source exists.

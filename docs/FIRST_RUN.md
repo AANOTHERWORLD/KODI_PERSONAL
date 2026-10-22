@@ -51,12 +51,20 @@ minutes, mostly waiting. You install one thing; it pulls in everything else.
   personal rows work.
 - **Premiumize / debrid** (for playback): open ResolveURL settings > Universal
   Resolvers > Premiumize, and authorize it. Red Light plays through this.
+- **MDbList** (Top Streaming Today rows in Discover): open TMDb Helper's settings
+  > API Keys > MDbList API Key and enter your key.
 
 ## Check it worked
 
-- The home shows Discover, For You, Netflix, Max, and More Providers, with the
-  warm ThoughtStream look.
-- More Providers opens Apple TV+, Disney+, and Prime Video, each with their rows.
+- The home shows Discover, For You, Netflix, Max, Apple TV+, Disney+, and Prime
+  Video, with the warm ThoughtStream look. Every provider page has the same rows:
+  New Movies, New and Returning Series, Trending Series, Trending Movies, Top
+  Rated.
+- Wherever the clock shows in a header, the temperature follows it (for example
+  3:45 PM • 72°F). Open-Meteo finds your location by IP on its first run; to
+  change it, open Settings > Services > Weather > Settings for Open-Meteo.
+- The Options window has four tiles: Now Playing, Settings, Weather, Add-ons.
+- Search goes straight to results, with TV Shows, Movies and People rows.
 - Play something. If it finds sources and plays, the source and debrid side is
   good.
 

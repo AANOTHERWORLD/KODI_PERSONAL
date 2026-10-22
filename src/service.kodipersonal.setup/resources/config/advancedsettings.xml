@@ -21,16 +21,15 @@
      so an existing device also needs a one-time texture cache clear (handled by
      the setup service) for them to take effect.
 
-     Cache buffer is kept modest so playback does not compound GUI memory
-     pressure; redraws are limited to dirty regions to ease the weak GPU. -->
+     Video cache: Kodi 21 Omega moved the cache settings into the GUI
+     (Settings > Services > Caching) and ignores a <cache> block here, so the
+     old block never applied. The setup service now sets them through JSON-RPC
+     (see KODI_CACHE_SETTINGS in service.py).
+
+     Redraws are limited to dirty regions to ease the weak GPU. -->
 <advancedsettings>
     <imageres>405</imageres>
     <fanartres>720</fanartres>
-    <cache>
-        <buffermode>1</buffermode>
-        <memorysize>20971520</memorysize>
-        <readfactor>4</readfactor>
-    </cache>
     <gui>
         <algorithmdirtyregions>3</algorithmdirtyregions>
         <nofliptimeout>0</nofliptimeout>

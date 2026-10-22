@@ -23,6 +23,18 @@ LOG_PREFIX = "[KODIPERSONAL.DEPS]"
 
 def log(message, level=xbmc.LOGINFO):
     xbmc.log("{} {}".format(LOG_PREFIX, message), level=level)
+    # Mirror into the service's own kodipersonal.log so the dependency pass sits
+    # next to the rest of the startup trace. Never let logging break the check.
+    try:
+        import time
+        import xbmcvfs
+        profile = xbmcvfs.translatePath(ADDON.getAddonInfo("profile"))
+        if not os.path.isdir(profile):
+            os.makedirs(profile, exist_ok=True)
+        with open(os.path.join(profile, "kodipersonal.log"), "a", encoding="utf-8") as handle:
+            handle.write("{} DEPS {}\n".format(time.strftime("%Y-%m-%d %H:%M:%S"), message))
+    except Exception as error:  # noqa: BLE001
+        xbmc.log("{} logfile write failed: {}".format(LOG_PREFIX, error), xbmc.LOGWARNING)
 
 
 def _manifest_path():
@@ -105,6 +117,14 @@ def _process(label, entries):
         # Missing.
         log("MISSING {} '{}' ({}){}".format(
             label, name, addon_id, " [CRITICAL]" if critical else ""), xbmc.LOGWARNING)
+        # install_if_missing false: log only. InstallAddon raises a Kodi dialog,
+        # and for an entry with no live source (Magneto) or one that is optional
+        # (upstream repos the aggregator already covers) that dialog would
+        # appear on every start with nothing the user can do about it.
+        if not entry.get("install_if_missing", True):
+            log("Not requesting install of {}: install_if_missing is false "
+                "(optional or no live source).".format(addon_id))
+            continue
         if _try_install(addon_id):
             healed.append((name, critical))
         else:

@@ -4,14 +4,14 @@
 # AF3 skinvariables files into service.kodipersonal.setup/resources/menu/:
 #   - the home (Discover) widget file (rows shown on the home section)
 #   - one widget file per home slot (rows shown on that section)
-#   - a 1104 submenu file (More Providers) built with AF3 native Custom_Submenu
-#     subgroups: each provider (Apple TV+ / Disney+ / Prime Video) nests its own
-#     rows (Latest Series / Latest Movies) the way the skin generator expects
+#   - optionally a submenu file for a 'submenu' section (AF3 native
+#     Custom_Submenu subgroups); no section uses this since AF3 3.4.x
+#   - the Search hub widget file (search_widgets in lists.json)
 #   - slots.json (the slot manifest the setup service applies)
 #
-# AF3 only renders widget rows on home + slots 1101-1104 (the 5-slot cap, taken
-# from the skin's own generator). Extra providers therefore live under the 1104
-# submenu, each opening its own sub-page rather than a home row.
+# AF3 3.4.x renders widget rows on home plus eight custom hub slots (1101 to
+# 1104 and 1106 to 1109; 1105 is Search), so each provider gets its own page.
+# The old five slot cap that forced a More Providers submenu no longer applies.
 #
 # A widget row may define its TMDb Helper query in one of three ways:
 #   - "params": an ordered map of query keys to values (used for the bespoke
@@ -77,16 +77,20 @@ def params_path(cfg, params, as_widget):
     return url + widget_tail(cfg, as_widget)
 
 
-def discover_path(cfg, tmdb_type, provider_id, sort_by, as_widget):
+def discover_path(cfg, tmdb_type, provider_id, sort_by, as_widget, extra=None):
     # Standard TMDb Helper discover URL for a watch provider. as_widget adds the
     # item limit + widget reload token for home rows; navigation items omit it.
+    # extra is an ordered map of further discover params (for example relative
+    # date windows like primary_release_date.gte=t-30) appended before sort_by.
+    extra_query = "".join("&{}={}".format(k, v) for k, v in (extra or {}).items())
     url = (
         "{tmdbh}?info=discover&tmdb_type={t}&with_watch_providers={pid}"
         "&watch_region={region}&with_watch_monetization_types={monet}"
-        "&sort_by={sort}"
+        "{extra}&sort_by={sort}"
     ).format(
         tmdbh=cfg["tmdbh"], t=tmdb_type, pid=provider_id,
-        region=cfg["watch_region"], monet=cfg["monetization"], sort=sort_by,
+        region=cfg["watch_region"], monet=cfg["monetization"],
+        extra=extra_query, sort=sort_by,
     )
     return url + widget_tail(cfg, as_widget)
 
@@ -134,7 +138,7 @@ def build():
         name = section["name"]
         kind = section.get("type", "provider")
         # The home slot is always present in AF3, so it is never toggled. The
-        # custom slots (1101-1104) are toggled on.
+        # custom slots are toggled on.
         slots.append({
             "slot": slot,
             "name": name,
@@ -154,7 +158,8 @@ def build():
             pid = section["provider_id"]
             items = []
             for r in cfg["full_provider_rows"]:
-                p = discover_path(cfg, r["tmdb_type"], pid, r["sort_by"], as_widget=True)
+                p = discover_path(cfg, r["tmdb_type"], pid, r["sort_by"], as_widget=True,
+                                  extra=r.get("extra"))
                 items.append(row(r["label"], p, guid_for(slot, r["label"])))
             fname = "{}{}widgets.json".format(FILE_PREFIX, slot)
             write_menu(fname, items)
@@ -207,12 +212,31 @@ def build():
         else:
             log("WARNING: unknown section type '{}' for slot {}".format(kind, slot))
 
+    # Search hub rows. Written under AF3's own node name so it replaces the
+    # skin's default search set (see search_widgets in lists.json).
+    if cfg.get("search_widgets"):
+        items = []
+        for w in cfg["search_widgets"]:
+            item = row(w["label"], w["path"], guid_for("search", w["label"]),
+                       target=w.get("target", "videos"), icon=w.get("icon", ""))
+            if w.get("widget_style"):
+                item["widget_style"] = w["widget_style"]
+            items.append(item)
+        sname = "{}searchwidgets.json".format(FILE_PREFIX)
+        write_menu(sname, items)
+        written.add(sname)
+
     # Slot manifest the setup service consumes. Recording the full known slot
-    # range lets the service clear any stale slots (e.g. old 1105/1106) that a
-    # previous version may have set.
+    # range lets the service switch off any slot a previous layout used. The
+    # range comes from lists.json known_slots (every AF3 custom hub slot).
+    known = cfg.get("known_slots") or ["1101", "1102", "1103", "1104",
+                                       "1106", "1107", "1108", "1109"]
+    for entry in slots:
+        if entry["slot"] != "home" and entry["slot"] not in known:
+            log("WARNING: slot {} is active but not in known_slots".format(entry["slot"]))
     manifest = {
         "active_slots": slots,
-        "known_slots": ["1101", "1102", "1103", "1104", "1105", "1106", "1107", "1108"],
+        "known_slots": known,
     }
     with open(os.path.join(MENU_DIR, "slots.json"), "w", encoding="utf-8") as handle:
         json.dump(manifest, handle, indent=4)
