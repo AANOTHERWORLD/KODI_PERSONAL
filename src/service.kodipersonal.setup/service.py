@@ -47,7 +47,7 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.8.6'
+SERVICE_VERSION = '0.8.7'
 
 # Scheduled texture-cache prune (data efficiency). A texture unused for longer
 # than the stale window is removed, and the prune itself runs at most once per
@@ -254,6 +254,12 @@ def verify_dependencies():
         log('Dependency check failed to run: {}'.format(exc), xbmc.LOGWARNING)
 
 
+def _is_secret_key(key):
+    # Setting ids that hold credentials (for example TMDb Helper mdblist_apikey).
+    low = key.lower()
+    return any(part in low for part in ('apikey', 'api_key', 'token', 'secret', 'password'))
+
+
 def _apply_addon_settings_file(name, label):
     # Apply a settings map from resources/config/<name> to the addon it names
     # (target_addon). Shared by the TMDb Helper defaults and the scrobbler
@@ -275,12 +281,16 @@ def _apply_addon_settings_file(name, label):
 
     applied, failed = 0, 0
     for key, value in cfg.get('settings', {}).items():
+        # Never write a credential value into kodi.log or kodipersonal.log.
+        shown = '(hidden)' if _is_secret_key(key) else value
         try:
             addon.setSetting(key, str(value))
             applied += 1
+            if _is_secret_key(key):
+                log('{} {} applied (value hidden).'.format(label, key))
         except Exception as exc:
             failed += 1
-            log('Could not set {}={} : {}'.format(key, value, exc), xbmc.LOGWARNING)
+            log('Could not set {}={} : {}'.format(key, shown, exc), xbmc.LOGWARNING)
     log('{} settings applied: {} ok, {} failed.'.format(label, applied, failed))
     return failed == 0
 

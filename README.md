@@ -51,9 +51,10 @@ the build on purpose.
   Helper > Trakt account), and in the Trakt service add-on if it prompts. This
   powers Continue Watching, Up Next, New From My Shows and the watchlist in For
   You, and the recommendation rows in Discover.
-- **MDbList**: enter your MDbList API key in TMDb Helper (Settings > API Keys >
-  MDbList API Key). This powers the Top Streaming Today rows in Discover and the
-  extra ratings. Without it those two rows stay empty.
+- **MDbList**: nothing to do. The setup service applies the MDbList API key
+  (stored in tmdbhelper_settings.json; this repo is public, so treat that key as
+  public and regenerate it at mdblist.com if it is ever abused). It powers the
+  Top Streaming Today rows in Discover and the extra ratings.
 - **Debrid (Premiumize)**: authorize it in ResolveURL settings (Universal
   Resolvers > Premiumize). Red Light is the source layer and plays through it.
 

@@ -51,8 +51,6 @@ minutes, mostly waiting. You install one thing; it pulls in everything else.
   personal rows work.
 - **Premiumize / debrid** (for playback): open ResolveURL settings > Universal
   Resolvers > Premiumize, and authorize it. Red Light plays through this.
-- **MDbList** (Top Streaming Today rows in Discover): open TMDb Helper's settings
-  > API Keys > MDbList API Key and enter your key.
 
 ## Check it worked
 
