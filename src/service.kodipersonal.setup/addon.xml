@@ -16,7 +16,7 @@
      notifies if a source was unreachable at install time. -->
 <addon id="service.kodipersonal.setup"
        name="KODI Personal Setup"
-       version="0.8.7"
+       version="0.8.8"
        provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
@@ -44,7 +44,11 @@
     <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set and background, applies the curated AF3 skin settings and view types, and deploys the home menu (Discover, For You, and a page per provider: Netflix, Max, Apple TV+, Disney+, Prime Video) into Arctic Fuse 3 on every start so the look and menu self-heal after a skin update. Declares the build stack as dependencies so Kodi installs them automatically, and verifies them on startup, healing anything missing or disabled. Stores no secrets except the MDbList API key, by the owner's choice. Logs to its own profile folder.</description>
     <platform>all</platform>
     <license>MIT</license>
-    <news>v0.8.7
+    <news>v0.8.8
+- Device-tier profiles: the service now detects RAM at startup and chooses between lite and full profiles. Lite (2-3 GB) uses imageres 405 and fanartres 720 (original ONN settings). Full (3+ GB) uses imageres 720, fanartres 1080, hub preloading enabled, and audio passthrough (AC3 over optical) configured for maximum quality on larger screens and devices like the Shield. Each profile has its own advancedsettings.xml; when a device switches profiles, the texture cache is cleared once so the new caps apply to all art.
+- Hourly maintenance: texture prune, dependency check and theme/menu self-heal now run on a hourly schedule instead of only at startup. The Shield sleeps instead of closing Kodi, so jobs at startup rarely run; moving them to hourly keeps the build fresh and stable across weeks of uptime. Each job stays idempotent and keeps its own time gate (texture prune still runs at most once per 7 days). Nothing that reloads the skin runs while something is playing.
+- Playback settings for full profile: AC3 passthrough enabled, refresh rate adjustment disabled (standard 60 Hz assumed). Tuned for Samsung TV + soundbar over optical.
+v0.8.7
 - MDbList API key is now applied to TMDb Helper on every device by the setup service, so the Discover Top Streaming rows work with no manual step. The key lives in the public repo by choice; regenerate it at mdblist.com and update tmdbhelper_settings.json if it is ever abused. Credential values are never written to the logs.
 v0.8.6
 - Fix For You My Calendar episodes failing to play (Red Light: invalid literal for int() with base 10: '_'). TMDb Helper's newer Trakt item mapper builds episode items without season and episode in their play params, so its player falls back to a placeholder of '_' and Red Light crashes. The service now patches TMDb Helper's EpisodeItemMapper on every start to pass season and episode through (idempotent, backed up, compile checked, and it stands down by itself once TMDb Helper ships its own fix), then reloads the TMDb Helper widgets.

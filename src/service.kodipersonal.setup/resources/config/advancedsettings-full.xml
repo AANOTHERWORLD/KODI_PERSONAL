@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Full profile: tuned for devices with ample RAM (3+ GB), like an NVIDIA Shield.
+     The setup service copies this to the user profile and self-heals after updates.
+     Takes effect after a Kodi restart (Kodi reads advancedsettings.xml at startup).
+
+     Texture resolution caps (imageres, fanartres):
+     Kodi caps decoded texture size, expressed as pixel height at a 16:9 area.
+     Kodi 21 defaults are imageres 540 and fanartres 1080.
+       imageres 720: higher than default, trades memory for sharper art on large
+       screens and higher resolutions. Still safe on 3+ GB devices.
+       fanartres 1080: Kodi default; fanart and hero backgrounds can now be enabled
+       in the skin for a richer visual presentation.
+
+     Redraws are limited to dirty regions to ease the GPU.
+
+     Video cache: Kodi 21 Omega moved cache settings into the GUI and ignores
+     <cache> blocks here. The setup service now sets them through JSON-RPC to
+     100-150 MB (larger buffer for 3+ GB devices). -->
+<advancedsettings>
+    <imageres>720</imageres>
+    <fanartres>1080</fanartres>
+    <gui>
+        <algorithmdirtyregions>3</algorithmdirtyregions>
+        <nofliptimeout>0</nofliptimeout>
+    </gui>
+</advancedsettings>

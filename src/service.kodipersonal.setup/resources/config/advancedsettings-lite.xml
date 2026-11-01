@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Lite profile: tuned for low-RAM devices (2-3 GB), like an ONN streaming stick.
+     The setup service copies this to the user profile and self-heals after updates.
+     Takes effect after a Kodi restart (Kodi reads advancedsettings.xml at startup).
+
+     Texture resolution caps (imageres, fanartres):
+     Kodi caps decoded texture size, expressed as pixel height at a 16:9 area.
+     Kodi 21 defaults are imageres 540 (a 960x540 budget for posters, thumbs and
+     landscape art) and fanartres 1080 (fanart and hero backgrounds).
+       imageres 405: about 44 percent less memory per poster than 540, and at TV
+       viewing distance in a widget row it is visually near identical.
+       fanartres 720: a safety cap only. Fanart and hero backgrounds are currently
+       disabled in the skin settings, so this rarely bites.
+
+     Redraws are limited to dirty regions to ease the weak GPU.
+
+     Video cache: Kodi 21 Omega moved cache settings into the GUI and ignores
+     <cache> blocks here. The setup service now sets them through JSON-RPC. -->
+<advancedsettings>
+    <imageres>405</imageres>
+    <fanartres>720</fanartres>
+    <gui>
+        <algorithmdirtyregions>3</algorithmdirtyregions>
+        <nofliptimeout>0</nofliptimeout>
+    </gui>
+</advancedsettings>

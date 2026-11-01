@@ -1,9 +1,13 @@
 # KODI_PERSONAL
 
-A lightweight, self-updating Kodi build for low-powered streamers (the target is
-an ONN Google TV box, 2 to 3 GB RAM). It is a thin personal layer on top of
-Arctic Fuse 3 + TMDb Helper + Trakt, installed and kept in sync from this one
-repo. Nothing secret is stored here; accounts are authenticated on each device.
+A lightweight, self-updating Kodi build for home theatre PCs and low-powered
+streamers (ONN Google TV box 2-3 GB, NVIDIA Shield 3+ GB). It is a thin personal
+layer on top of Arctic Fuse 3 + TMDb Helper + Trakt, installed and kept in sync
+from this one repo. Nothing secret is stored here; accounts are authenticated on
+each device. The setup service detects RAM at startup and applies a device-tier
+profile: lite for 2-3 GB devices (smaller texture caps for headroom), full for
+3+ GB devices (higher texture caps, audio passthrough, hub preloading for richer
+visuals).
 
 For the design and reasoning see the project notes; for the theme see
 [docs/THEME_THOUGHTSTREAM.md](docs/THEME_THOUGHTSTREAM.md).

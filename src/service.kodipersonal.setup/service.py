@@ -47,7 +47,20 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.8.7'
+SERVICE_VERSION = '0.8.8'
+
+# Device-tier profiles. RAM is detected at startup and device profile is chosen
+# to balance texture quality against memory pressure. Lite profile is 2-3 GB devices
+# (imageres 405, fanartres 720); full profile is 3+ GB devices (imageres 720,
+# fanartres 1080, hub preloading, audio passthrough). The threshold is 2.8 GB
+# (2899 MB to account for OS overhead); >= 2.8 GB chooses full, else lite.
+# Each profile has its own advancedsettings.xml (lite vs full) so texture caps
+# take effect after the next Kodi restart. When a device switches profiles, the
+# texture cache is cleared once per revision so the new caps apply to all art.
+PROFILE_THRESHOLD_MB = 2899
+PROFILE_LITE = 'lite'
+PROFILE_FULL = 'full'
+PROFILE_REVISION = 'device-profile-1'
 
 # Scheduled texture-cache prune (data efficiency). A texture unused for longer
 # than the stale window is removed, and the prune itself runs at most once per
@@ -316,6 +329,38 @@ def _read_bytes(path):
             return fh.read()
     except Exception:
         return None
+
+
+def detect_device_profile():
+    # Detect total RAM and return 'full' (3+ GB) or 'lite' (< 3 GB).
+    # Full profile uses higher texture caps and audio passthrough; lite is conservative.
+    # On Android, read /proc/meminfo. On other platforms fall back to Kodi's
+    # System.Memory(total) (may be unavailable or inaccurate).
+    try:
+        if os.path.exists('/proc/meminfo'):
+            with open('/proc/meminfo', 'r') as fh:
+                for line in fh:
+                    if line.startswith('MemTotal:'):
+                        parts = line.split()
+                        if len(parts) >= 2:
+                            total_kb = int(parts[1])
+                            total_mb = total_kb // 1024
+                            profile = PROFILE_FULL if total_mb >= PROFILE_THRESHOLD_MB else PROFILE_LITE
+                            log('Detected {} MB RAM; chose {} profile.'.format(total_mb, profile))
+                            return profile
+    except Exception:
+        pass
+    try:
+        info = xbmc.getInfoLabel('System.Memory(total)')
+        if info:
+            total_mb = int(info.replace('MB', '').strip())
+            profile = PROFILE_FULL if total_mb >= PROFILE_THRESHOLD_MB else PROFILE_LITE
+            log('Detected {} MB RAM (from Kodi); chose {} profile.'.format(total_mb, profile))
+            return profile
+    except Exception:
+        pass
+    log('Could not detect RAM; defaulting to lite profile.', xbmc.LOGWARNING)
+    return PROFILE_LITE
 
 
 def resolve_af3_path():
@@ -655,18 +700,32 @@ def apply_viewtypes():
     _copy_if_different(src_data, dest_dir, dest, 'View types')
 
 
-def apply_advancedsettings():
+def apply_advancedsettings(profile=None):
     # Deploy advancedsettings.xml into the user profile to cap caches and give a
     # low-RAM device more headroom. Self-healing copy; only takes effect after a
     # Kodi restart, since Kodi reads advancedsettings.xml at startup.
-    src = os.path.join(CONFIG_DIR, ADVANCEDSETTINGS_FILE)
+    # If profile is not given, detect RAM and choose 'lite' or 'full'.
+    if profile is None:
+        profile = detect_device_profile()
+
+    # Check if profile switched (full -> lite or vice versa) and clear texture
+    # cache once so the new caps apply to all cached art.
+    stored_profile = ADDON.getSetting('device_profile')
+    if stored_profile and stored_profile != profile:
+        log('Device profile changed from {} to {}; will clear texture cache.'.format(
+            stored_profile, profile))
+        ADDON.setSetting('texturecache_cleared', '')
+    ADDON.setSetting('device_profile', profile)
+
+    src = os.path.join(CONFIG_DIR, 'advancedsettings-{}.xml'.format(profile))
     src_data = _read_bytes(src)
     if src_data is None:
-        log('advancedsettings.xml source missing at {}; skipping.'.format(src), xbmc.LOGERROR)
+        log('advancedsettings-{}.xml source missing at {}; skipping.'.format(profile, src),
+            xbmc.LOGERROR)
         return
     dest = xbmcvfs.translatePath(ADVANCEDSETTINGS_DEST)
     dest_dir = os.path.dirname(dest)
-    log('advancedsettings destination: {}'.format(dest))
+    log('advancedsettings destination: {} (profile: {})'.format(dest, profile))
     if _copy_if_different(src_data, dest_dir, dest, 'advancedsettings.xml'):
         log('advancedsettings.xml in place; takes effect on next Kodi restart.')
 
@@ -707,6 +766,46 @@ def _revision_done(marker, revision, label):
             'revision {} so updates no longer re-run it.'.format(label, current, revision))
         return True
     return False
+
+
+def apply_playback_settings():
+    # Apply playback settings (audio passthrough, refresh rate) for the full profile.
+    # Only applies on full profile devices (3+ GB RAM). Uses the existing
+    # _assert_kodi_settings pattern (read first, write only if different).
+    profile = ADDON.getSetting('device_profile') or PROFILE_LITE
+    if profile != PROFILE_FULL:
+        return
+
+    cfg = load_config('playback_settings.json')
+    if not cfg:
+        return
+
+    settings = cfg.get('settings', {})
+    if not settings:
+        return
+
+    applied, skipped = 0, 0
+    for key, desired in settings.items():
+        try:
+            actual = xbmc.executeJSONRPC(json.dumps({
+                'jsonrpc': '2.0', 'id': 1, 'method': 'Settings.GetSettingValue',
+                'params': {'setting': key}}))
+            actual_data = json.loads(actual).get('result', {})
+            actual_value = actual_data.get('value')
+
+            if actual_value != desired:
+                xbmc.executeJSONRPC(json.dumps({
+                    'jsonrpc': '2.0', 'id': 1, 'method': 'Settings.SetSettingValue',
+                    'params': {'setting': key, 'value': desired}}))
+                log('Playback setting {} changed to {}.'.format(key, desired))
+                applied += 1
+            else:
+                skipped += 1
+        except Exception as exc:
+            log('Could not apply playback setting {}: {}'.format(key, exc), xbmc.LOGWARNING)
+
+    if applied > 0:
+        log('Playback settings applied: {} changed, {} already correct.'.format(applied, skipped))
 
 
 def clear_texture_cache_once():
@@ -1276,6 +1375,23 @@ def run_setup():
     log('===== Setup pass end =====')
 
 
+def hourly_maintenance():
+    # Scheduled maintenance that runs once per hour in the idle loop. Includes
+    # texture prune, dependency health check, and menu/theme self-heal. Each job
+    # stays idempotent and keeps its own time gate so it does not spam.
+    # Nothing that reloads the skin runs while something is playing.
+    try:
+        is_playing = xbmc.Player().isPlaying()
+    except Exception:
+        is_playing = False
+
+    prune_texture_cache()
+    verify_dependencies()
+
+    if not is_playing:
+        deploy_menu()
+
+
 def main():
     monitor = xbmc.Monitor()
     rotate_logfile()
@@ -1299,8 +1415,8 @@ def main():
     # healer or Kodi's auto update does next fetches a fresh zip.
     purge_addon_package_cache()
 
-    # Make sure the required stack is present/enabled before we depend on it.
-    verify_dependencies()
+    # Detect device profile and apply appropriate settings before other steps.
+    profile = detect_device_profile()
 
     # Theme assets, skin settings, view types and the home menu self-heal on
     # every start, independent of the version gate.
@@ -1308,9 +1424,8 @@ def main():
     apply_background()
     apply_skin_settings()
     apply_viewtypes()
-    apply_advancedsettings()
+    apply_advancedsettings(profile)
     clear_texture_cache_once()
-    prune_texture_cache()
     menu_changed = deploy_menu()
 
     # A menu change forces a SkinVariables rebuild, which reloads the skin, and
@@ -1332,6 +1447,7 @@ def main():
     enforce_addon_update_policy()
     apply_cache_settings()
     apply_weather()
+    apply_playback_settings()
     check_trakt_auth()
 
     # TMDb Helper defaults stay version-gated so they only reapply after updates.
@@ -1344,10 +1460,13 @@ def main():
     # Helper's Trakt sync data once so a blank Up Next recovers.
     repair_trakt_sync(monitor)
 
-    # Idle. The service exists mainly to run the setup pass after updates.
+    # Idle loop. Run hourly maintenance (texture prune, dependency health check,
+    # menu/theme self-heal) once per hour. The service exists mainly to run the
+    # setup pass after updates and keep maintenance tasks on schedule.
     while not monitor.abortRequested():
         if monitor.waitForAbort(3600):
             break
+        hourly_maintenance()
     log('Service stopping.')
 
 

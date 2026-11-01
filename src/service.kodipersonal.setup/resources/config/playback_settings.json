@@ -1,0 +1,16 @@
+{
+  "target_addon": "xbmc",
+  "profile": "full",
+  "description": "Playback settings for full profile (3+ GB devices). AC3 passthrough over optical, standard refresh rate.",
+  "settings": {
+    "audiooutput.passthrough": true,
+    "audiooutput.ac3passthrough": true,
+    "audiooutput.ac3transcode": false,
+    "audiooutput.eac3passthrough": false,
+    "audiooutput.dtspassthrough": false,
+    "audiooutput.truehdpassthrough": false,
+    "audiooutput.dtshdpassthrough": false,
+    "videoplayer.adjustrefreshrate": 0,
+    "videoscreen.delayrefreshchange": 0
+  }
+}
