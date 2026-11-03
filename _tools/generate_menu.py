@@ -242,6 +242,50 @@ def build():
         json.dump(manifest, handle, indent=4)
     log("Wrote slots.json ({} active slot(s))".format(len(slots)))
 
+    # Generate hubs.json for AF3 3.4.16+: defines which hub slots are enabled.
+    # SkinVariables uses this to generate skinvariables-hubs-* includes that AF3
+    # needs. Enabled slots have disabled="" (empty); disabled slots have disabled="True".
+    active_slot_ids = {entry["slot"] for entry in slots if entry["slot"] != "home"}
+    hubs_items = []
+    window_labels = {
+        "1101": "$LOCALIZE[636]",  # Default/generic
+        "1102": "$LOCALIZE[636]",
+        "1103": "$LOCALIZE[636]",
+        "1104": "$LOCALIZE[636]",
+        "1106": "$LOCALIZE[31605]",  # Calendar
+        "1107": "$LOCALIZE[31085]",  # Live TV
+        "1108": "$LOCALIZE[24001]",  # Add-ons
+        "1109": "$LOCALIZE[31639]",  # Settings
+    }
+    window_icons = {
+        "1101": "special://skin/extras/icons/shapes.png",
+        "1102": "special://skin/extras/icons/shapes.png",
+        "1103": "special://skin/extras/icons/shapes.png",
+        "1104": "special://skin/extras/icons/shapes.png",
+        "1106": "special://skin/extras/icons/calendar.png",
+        "1107": "special://skin/extras/icons/livetv.png",
+        "1108": "special://skin/extras/icons/addon.png",
+        "1109": "special://skin/extras/icons/shapes.png",
+    }
+    slot_nums = {"1101": "01", "1102": "02", "1103": "03", "1104": "04",
+                 "1106": "06", "1107": "07", "1108": "08", "1109": "09"}
+    for slot_id in known:
+        if slot_id == "home" or slot_id == "1105":
+            continue  # Home is fixed; 1105 is Search (not a custom slot)
+        hubs_items.append({
+            "label": window_labels.get(slot_id, "$LOCALIZE[636]"),
+            "icon": window_icons.get(slot_id, "special://skin/extras/icons/shapes.png"),
+            "path": "",
+            "target": "",
+            "window": slot_id,
+            "slot": slot_nums.get(slot_id, "00"),
+            "disabled": "" if slot_id in active_slot_ids else "True",
+            "guid": guid_for("hubs", slot_id),
+        })
+    fname = "{}hubs.json".format(FILE_PREFIX)
+    write_menu(fname, hubs_items)
+    written.add(fname)
+
     # Remove any stale generated menu files no longer in the blueprint.
     for existing in os.listdir(MENU_DIR):
         if existing.startswith(FILE_PREFIX) and existing.endswith(".json"):
