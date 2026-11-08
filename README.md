@@ -35,7 +35,7 @@ settings on every start.
    Program add-ons (or Services) > install **KODI Personal Setup**.
    Installing it automatically pulls the rest of the stack from the aggregated
    repo: Arctic Fuse 3, TMDb Helper and its Trakt and MDbList provider add-ons,
-   SkinVariables, the jurialmunkey module, Trakt, Red Light, and ResolveURL. The setup service also re-checks the stack
+   SkinVariables, the jurialmunkey module, Red Light, and ResolveURL. The setup service also re-checks the stack
    on every start and heals anything the installer missed.
 5. Set the skin to **Arctic Fuse 3** if it did not switch automatically
    (Settings > Interface > Skin), then restart Kodi once. On that first start the
@@ -53,8 +53,11 @@ the build on purpose.
 
 - **Trakt**: authorize it in TMDb Helper (TMDb Helper settings > Accounts >
   Trakt, which opens the TMDb Helper Trakt provider add-on; since TMDb Helper
-  6.20 the token lives there), and in the Trakt service add-on if it prompts.
-  The build already selects Trakt as TMDb Helper's sync source. This
+  6.20 the token lives there), and in Red Light (Red Light settings > Accounts >
+  Trakt, then Yes to Trakt as the Watched Status Provider). Those are the only
+  two Trakt connections the build uses, which fits Trakt's connected-app limit
+  for free accounts; the official Trakt add-on is disabled by the service. The
+  build already selects Trakt as TMDb Helper's sync source. TMDb Helper's token
   powers Continue Watching, Up Next, New From My Shows and the watchlist in For
   You, and the recommendation rows in Discover.
 - **MDbList**: nothing to do. The setup service applies the MDbList API key

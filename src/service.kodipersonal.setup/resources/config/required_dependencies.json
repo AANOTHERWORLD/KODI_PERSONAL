@@ -13,7 +13,6 @@
     { "id": "script.module.tmdbhelper.sync.mdblist", "name": "TMDb Helper MDbList provider", "critical": false },
     { "id": "script.skinvariables",          "name": "SkinVariables",        "critical": true },
     { "id": "script.module.jurialmunkey",    "name": "Jurialmunkey Module",  "critical": true },
-    { "id": "script.trakt",                  "name": "Trakt",                "critical": false },
     { "id": "plugin.video.redlight",         "name": "Red Light (source)",   "critical": false },
     { "id": "script.module.resolveurl",      "name": "ResolveURL",           "critical": false },
     { "id": "script.module.magneto",         "name": "Magneto Module (scrapers)", "critical": false, "install_if_missing": false },

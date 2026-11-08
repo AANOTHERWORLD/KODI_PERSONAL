@@ -7,8 +7,9 @@
 # an AF3 update overwrites those files. Verifies required add-ons/repos on
 # startup and silently heals what it can. Also runs a scheduled texture-cache
 # prune (data efficiency) that drops textures unused for a while, on a timer so
-# it does not run every start. Sets Trakt scrobble ownership (Red Light owns
-# it, script.trakt scrobbling off). Hotfixes TMDb Helper's Trakt episode play
+# it does not run every start. Keeps the Trakt setup to two connections (TMDb
+# Helper reads, Red Light writes): disables the official script.trakt add-on and
+# checks that Red Light is signed in to Trakt. Hotfixes TMDb Helper's Trakt episode play
 # params so calendar episodes play, and asserts Kodi's video cache settings.
 # Logging is verbose by design.
 
@@ -17,6 +18,7 @@ import json
 import time
 import shutil
 import re
+import sqlite3
 import zipfile
 
 import xbmc
@@ -48,7 +50,7 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.8.9'
+SERVICE_VERSION = '0.9.0'
 
 # Device-tier profiles. RAM is detected at startup and device profile is chosen
 # to balance texture quality against memory pressure. Lite profile is 2-3 GB devices
@@ -326,15 +328,111 @@ def apply_mdblist_settings():
     return _apply_addon_settings_file('mdblist_settings.json', 'TMDb Helper MDbList module')
 
 
-def apply_scrobbler_settings():
-    # Trakt scrobble ownership. With the Red Light auto player TMDb Helper never
-    # learns what is playing (its resolver takes the executebuiltin branch that
-    # skips the playerstring), and Red Light steps aside whenever script.trakt is
-    # authorised with scrobbling on, expecting script.trakt to do it. That
-    # hand-off is what left nothing marking episodes watched. Switching
-    # script.trakt scrobbling off makes Red Light the single owner: it scrobbles
-    # start/stop with exact TMDb ids and writes watched history at 90 percent.
-    return _apply_addon_settings_file('scrobbler_settings.json', 'script.trakt scrobble')
+# Trakt connections (0.9.0). Free Trakt accounts are now limited in how many
+# third-party apps can be connected at once, so the build uses exactly two:
+#   TMDb Helper (Trakt provider module) reads: For You, Up Next, calendar,
+#     watchlist, recommendations.
+#   Red Light writes: it starts playback, so it scrobbles with exact TMDb ids and
+#     writes watched history at 90 percent.
+# The official script.trakt add-on had no remaining job (its scrobbling was
+# already off, no Kodi library is used) and a leftover sign-in there only risks
+# a re-authorisation prompt that would take one of the two connections. Red
+# Light also steps aside whenever script.trakt is enabled, authorised and set to
+# scrobble, which is how nothing got marked watched before 0.8.0. Disabling
+# script.trakt removes that hand-off for good. It is left installed (not
+# uninstalled) so re-enabling it later is one click.
+OFFICIAL_TRAKT_ID = 'script.trakt'
+REDLIGHT_ID = 'plugin.video.redlight'
+REDLIGHT_SETTINGS_DB = ('special://profile/addon_data/plugin.video.redlight/'
+                        'databases/settings.db')
+REDLIGHT_TRAKT_WATCHED_INDICATOR = '1'  # Red Light watched_indicators: 0 Red Light, 1 Trakt
+REDLIGHT_CHECK_INTERVAL = 86400  # seconds; the TV notification repeats at most daily
+_last_redlight_notice = 0.0
+
+
+def disable_official_trakt():
+    details = _jsonrpc('Addons.GetAddonDetails',
+                       {'addonid': OFFICIAL_TRAKT_ID, 'properties': ['enabled']})
+    addon = (details.get('result') or {}).get('addon')
+    if not addon:
+        log('script.trakt is not installed; nothing to disable.')
+        return True
+    if not addon.get('enabled'):
+        log('script.trakt already disabled (Red Light owns Trakt writes).')
+        return True
+    result = _jsonrpc('Addons.SetAddonEnabled',
+                      {'addonid': OFFICIAL_TRAKT_ID, 'enabled': False})
+    if result.get('result') == 'OK':
+        log('Disabled script.trakt: the build uses two Trakt connections only '
+            '(TMDb Helper reads, Red Light writes).')
+        return True
+    log('Could not disable script.trakt: {}'.format(result), xbmc.LOGWARNING)
+    return False
+
+
+def _redlight_trakt_state():
+    # Reads Red Light's settings database read-only. Returns a dict with user,
+    # has_token and watched_indicators, or None if it cannot be read. Token
+    # values are never logged.
+    path = xbmcvfs.translatePath(REDLIGHT_SETTINGS_DB)
+    if not os.path.exists(path):
+        return None
+    try:
+        conn = sqlite3.connect('file:{}?mode=ro'.format(path), uri=True, timeout=5)
+        try:
+            rows = dict(conn.execute(
+                "SELECT setting_id, setting_value FROM settings WHERE setting_id IN "
+                "('trakt.user', 'trakt.token', 'watched_indicators')").fetchall())
+        finally:
+            conn.close()
+    except Exception as exc:
+        log('Could not read Red Light settings: {}'.format(exc), xbmc.LOGWARNING)
+        return None
+    empty = (None, '', '0', 'empty_setting')
+    user = rows.get('trakt.user')
+    return {
+        'user': '' if user in empty else user,
+        'has_token': rows.get('trakt.token') not in empty,
+        'watched_indicators': rows.get('watched_indicators') or '',
+    }
+
+
+def check_redlight_trakt(force_notice=False):
+    # Red Light is the only thing that marks playback watched on Trakt. Before
+    # 0.9.0 nothing checked it, so a device ran a week with Red Light signed out
+    # and nothing reached Trakt. Logs the state every call and puts a TV
+    # notification up (at most once a day, regardless of show_notifications)
+    # when Red Light is signed out or not using Trakt for watched status.
+    global _last_redlight_notice
+    try:
+        xbmcaddon.Addon(REDLIGHT_ID)
+    except Exception:
+        log('Red Light is not installed; skipping its Trakt check.', xbmc.LOGWARNING)
+        return False
+    state = _redlight_trakt_state()
+    if state is None:
+        log('Red Light Trakt check: settings database not readable yet; skipping.')
+        return False
+    problems = []
+    if not (state['user'] and state['has_token']):
+        problems.append('not signed in to Trakt')
+    if state['watched_indicators'] != REDLIGHT_TRAKT_WATCHED_INDICATOR:
+        problems.append('watched status provider is not Trakt (value {})'.format(
+            state['watched_indicators'] or 'unset'))
+    if not problems:
+        log('Red Light Trakt OK: signed in as {}, watched status provider is Trakt.'.format(
+            state['user']))
+        return True
+    log('Red Light Trakt problem: {}. Nothing will be marked watched on Trakt. '
+        'Fix: Red Light settings > Accounts > Trakt > Authorise, and say Yes to '
+        'Trakt as the Watched Status Provider.'.format('; '.join(problems)), xbmc.LOGWARNING)
+    now = time.time()
+    if force_notice or now - _last_redlight_notice >= REDLIGHT_CHECK_INTERVAL:
+        _last_redlight_notice = now
+        xbmcgui.Dialog().notification(
+            'KODI Personal', 'Red Light is not syncing to Trakt. Open Red Light > Accounts > Trakt.',
+            xbmcgui.NOTIFICATION_WARNING, 8000)
+    return False
 
 
 def _read_bytes(path):
@@ -1396,9 +1494,9 @@ def needs_apply():
 def run_setup():
     log('===== Setup pass start (addon v{}) ====='.format(ADDON_VERSION))
     # Each file is applied even if an earlier one failed, so a missing add-on only
-    # holds back its own settings; the pass is recorded only when all four apply.
+    # holds back its own settings; the pass is recorded only when all three apply.
     results = [apply_tmdbhelper_settings(), apply_trakt_module_settings(),
-               apply_mdblist_settings(), apply_scrobbler_settings()]
+               apply_mdblist_settings()]
     ok = all(results)
     if ok:
         ADDON.setSetting('last_applied_version', ADDON_VERSION)
@@ -1503,11 +1601,13 @@ def hourly_maintenance(monitor):
     now = time.time()
     if now - _last_dependency_check >= DEPENDENCY_CHECK_INTERVAL:
         verify_dependencies()
+        disable_official_trakt()
         _last_dependency_check = now
     else:
         log('Dependency check ran {} hour(s) ago; next one is daily.'.format(
             int((now - _last_dependency_check) // 3600)))
 
+    check_redlight_trakt()
     heal_menu_after_skin_update(monitor)
     log('Hourly maintenance end.')
 
@@ -1572,6 +1672,8 @@ def main():
     apply_weather()
     apply_playback_settings()
     check_trakt_auth()
+    disable_official_trakt()
+    check_redlight_trakt(force_notice=True)
 
     # TMDb Helper defaults stay version-gated so they only reapply after updates.
     if needs_apply():

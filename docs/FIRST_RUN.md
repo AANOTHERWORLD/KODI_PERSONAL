@@ -27,8 +27,8 @@ minutes, mostly waiting. You install one thing; it pulls in everything else.
 4. Settings > Add-ons > **Install from repository** > KODI_PERSONAL Repository >
    install **KODI Personal Setup**. Say yes to the additional add-ons it asks
    for. This one install pulls the whole stack automatically (the skin, TMDb
-   Helper and its Trakt and MDbList provider add-ons, Trakt, Red Light,
-   ResolveURL, and the rest). Give it a minute or two.
+   Helper and its Trakt and MDbList provider add-ons, Red Light, ResolveURL,
+   and the rest). Give it a minute or two.
 
 5. If the skin did not switch on its own, set it: Settings > Interface > Skin >
    **Arctic Fuse 3**. If AF3's setup wizard opens the first time the skin loads,
@@ -43,6 +43,10 @@ minutes, mostly waiting. You install one thing; it pulls in everything else.
    normal and only happens once.
 
 ## Sign in (once per device)
+
+Trakt limits how many apps a free account can connect, so the build uses
+exactly two: Red Light (writes) and TMDb Helper (reads). Do not authorise the
+official Trakt add-on; the build disables it.
 
 - **Trakt in Red Light** (marks what you watch as watched): open Red Light's
   settings, Accounts section, and authorize Trakt. When it offers to set Trakt as
@@ -81,9 +85,13 @@ minutes, mostly waiting. You install one thing; it pulls in everything else.
 
 - **Watched status is not reaching Trakt:** Red Light must be authorized with
   Trakt and have Trakt as its Watched Status Provider (Red Light settings,
-  Accounts). The build turns scrobbling off in the Trakt add-on and in TMDb
-  Helper on purpose so Red Light is the only scrobbler; do not turn those back
-  on, or Red Light will step aside again and nothing will be marked.
+  Accounts). The service checks this on every start and hourly, shows a TV
+  notification when it is wrong, and logs `Red Light Trakt problem` in
+  `kodipersonal.log`. The build disables the official Trakt add-on and keeps
+  TMDb Helper scrobbling off on purpose so Red Light is the only scrobbler; do
+  not turn those back on, or Red Light will step aside again and nothing will be
+  marked. If Trakt refuses a new authorisation, check trakt.tv > Settings >
+  Connected Apps: only TMDb Helper and Red Light should be connected.
 - **TMDb Helper will not update (InfoTagger version could not be satisfied):**
   InfoTagger comes from Kodi's official repository, and Kodi will not take a
   newer copy from another repository unless allowed. Settings > System >

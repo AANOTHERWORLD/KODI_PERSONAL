@@ -109,7 +109,7 @@ menu engine must trigger that rebuild after changing menu data.
 | `plugin.video.themoviedb.helper` (TMDb Helper) | The browsing engine. Builds all rows, holds the player slot. Not a scraper. | jurialmunkey |
 | `script.skinvariables` | Drives the AF3 home menu and widgets. | jurialmunkey |
 | `script.module.jurialmunkey` | Shared module for the above. | jurialmunkey |
-| `script.trakt` | Watch history and library sync. Its scrobbling is switched OFF by the setup service; Red Light owns scrobbling, because Red Light steps aside whenever script.trakt scrobbles, and that hand-off left nothing marking watched. | Kodi official repo |
+| `script.trakt` | Not used since 0.9.0. No longer a dependency, and the service disables it if present: Trakt allows free accounts only a small number of connected apps, so the build uses two (TMDb Helper reads, Red Light writes), and Red Light steps aside whenever script.trakt scrobbles. | Kodi official repo (not installed by the build) |
 | `plugin.video.redlight` | The source layer. Plugs into TMDb Helper's player slot. | The Red Repo (redwizard.xyz) |
 | `script.module.resolveurl` | Debrid resolving (Premiumize). | Gujal00 (smrzips) |
 | `script.module.magneto` | Scraper module used by Red Light. | kodiyashimaru |
@@ -137,7 +137,7 @@ blocks, so one install pulls everything):
 - The Red Repo (main, plus 21omega and 22piers variants).
 - Gujal00 smrzips (ResolveURL).
 - kodiyashimaru (Magneto).
-- Kodi official repo (script.trakt, and Red Light's own requests/pil sub-deps).
+- Kodi official repo (Red Light's own requests/pil sub-deps).
 
 ---
 

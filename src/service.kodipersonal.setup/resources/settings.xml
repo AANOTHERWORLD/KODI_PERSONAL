@@ -18,49 +18,49 @@
         <setting id="last_applied_version" type="string">
           <level>0</level>
           <default></default>
-          <control type="label" />
+          <control type="edit" format="string" />
           <visible>false</visible>
         </setting>
         <setting id="texturecache_cleared" type="string">
           <level>0</level>
           <default></default>
-          <control type="label" />
+          <control type="edit" format="string" />
           <visible>false</visible>
         </setting>
         <setting id="texturecache_pruned" type="string">
           <level>0</level>
           <default></default>
-          <control type="label" />
+          <control type="edit" format="string" />
           <visible>false</visible>
         </setting>
         <setting id="magneto_initialised" type="string">
           <level>0</level>
           <default></default>
-          <control type="label" />
+          <control type="edit" format="string" />
           <visible>false</visible>
         </setting>
         <setting id="packagecache_purged" type="string">
           <level>0</level>
           <default></default>
-          <control type="label" />
+          <control type="edit" format="string" />
           <visible>false</visible>
         </setting>
         <setting id="weather_configured" type="string">
           <level>0</level>
           <default></default>
-          <control type="label" />
+          <control type="edit" format="string" />
           <visible>false</visible>
         </setting>
         <setting id="traktsync_repaired" type="string">
           <level>0</level>
           <default></default>
-          <control type="label" />
+          <control type="edit" format="string" />
           <visible>false</visible>
         </setting>
         <setting id="af3_menu_version" type="string">
           <level>0</level>
           <default></default>
-          <control type="label" />
+          <control type="edit" format="string" />
           <visible>false</visible>
         </setting>
       </group>
