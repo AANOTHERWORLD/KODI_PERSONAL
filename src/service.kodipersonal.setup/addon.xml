@@ -9,19 +9,26 @@
      errors (script.module.jurialmunkey ships as 0.2.35, for example); these imports
      are NOT optional, because optional imports are never auto-installed by Kodi, which
      left Red Light and ResolveURL missing. Every id below resolves through the
-     aggregated repo (jurialmunkey, The Red Repo, Gujal00 for ResolveURL, kodiyashimaru
+     aggregated repo (jurialmunkey, including the TMDb Helper Trakt and MDbList
+     provider add-ons, The Red Repo, Gujal00 for ResolveURL, kodiyashimaru
      for the Magneto scraper) or Kodi's official repo (script.trakt, and the
      requests/pil sub-deps of Red Light and Magneto). The
      runtime checker (resources/lib/dependencies.py) re-enables anything disabled and
      notifies if a source was unreachable at install time. -->
 <addon id="service.kodipersonal.setup"
        name="KODI Personal Setup"
-       version="0.8.8"
+       version="0.8.9"
        provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
     <import addon="skin.arctic.fuse.3" version="0.0.1" />
     <import addon="plugin.video.themoviedb.helper" version="0.0.1" />
+    <!-- TMDb Helper 6.20+ moved Trakt and MDbList into separate provider add-ons
+         that core does not install. Trakt serves For You (calendar, Up Next,
+         Continue, Watchlist) and the Discover recommendations; MDbList serves the
+         Top Streaming Today rows. Both come from the jurialmunkey omega dir. -->
+    <import addon="script.module.tmdbhelper.sync.trakt" version="0.0.1" />
+    <import addon="script.module.tmdbhelper.sync.mdblist" version="0.0.1" />
     <import addon="script.skinvariables" version="0.0.1" />
     <import addon="script.module.jurialmunkey" version="0.0.1" />
     <import addon="script.trakt" version="0.0.1" />
@@ -44,7 +51,16 @@
     <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set and background, applies the curated AF3 skin settings and view types, and deploys the home menu (Discover, For You, and a page per provider: Netflix, Max, Apple TV+, Disney+, Prime Video) into Arctic Fuse 3 on every start so the look and menu self-heal after a skin update. Declares the build stack as dependencies so Kodi installs them automatically, and verifies them on startup, healing anything missing or disabled. Stores no secrets except the MDbList API key, by the owner's choice. Logs to its own profile folder.</description>
     <platform>all</platform>
     <license>MIT</license>
-    <news>v0.8.8
+    <news>v0.8.9
+- For You and the Trakt rows work again on TMDb Helper 6.20 and later. TMDb Helper moved Trakt and MDbList into separate provider add-ons that it does not install itself; the build now installs both and selects Trakt as the source for watched progress, watchlist and stats. Collection is off and scrobbling stays with Red Light (TMDb Helper scrobbling set to never, which also stops its provider setup prompt).
+- Discover Top Streaming Today works again: the MDbList API key is now applied to the MDbList provider add-on, since TMDb Helper core no longer has that setting.
+- The Trakt auth check reads the token from the Trakt provider add-on, so devices authorised on the new TMDb Helper no longer report a missing token and the Up Next repair is no longer deferred forever.
+- Up Next repair: uses the current TMDb Helper datatype (watched); the old one opens a selection dialog on 6.19 and later. Re-armed once (traktsync-2) to rebuild after the provider switch. One-time jobs now re-run when their revision is bumped (an older revision no longer counts as done).
+- Hub bar: the AF3 3.4.16+ hubs menu now carries the real page names and icons (For You, Netflix, Max, Apple TV+, Disney+, Prime Video) instead of AF3's stock labels.
+- Hourly maintenance no longer redeploys the menu on a timer. It only redeploys after an Arctic Fuse 3 update, and only when Home is open, nothing is playing, no dialog is up and the remote has been idle for 5 minutes. Skin settings are re-applied after that rebuild. The dependency check runs once a day instead of hourly, and a settings pass that could not finish at startup is retried hourly.
+- AF3's new setup wizard is cleared (SetupWizard.Pending) so it does not reappear over the build's menu.
+- TMDb Helper settings: removed keys TMDb Helper no longer has (mdblist_apikey, trakt_scrobbling) or now reads from the Trakt module (trakt_cacheownlists, nextepisodes_usecalendar, applied there as cache_own_lists and use_calendar).
+v0.8.8
 - Device-tier profiles: the service now detects RAM at startup and chooses between lite and full profiles. Lite (2-3 GB) uses imageres 405 and fanartres 720 (original ONN settings). Full (3+ GB) uses imageres 720, fanartres 1080, hub preloading enabled, and audio passthrough (AC3 over optical) configured for maximum quality on larger screens and devices like the Shield. Each profile has its own advancedsettings.xml; when a device switches profiles, the texture cache is cleared once so the new caps apply to all art.
 - Hourly maintenance: texture prune, dependency check and theme/menu self-heal now run on a hourly schedule instead of only at startup. The Shield sleeps instead of closing Kodi, so jobs at startup rarely run; moving them to hourly keeps the build fresh and stable across weeks of uptime. Each job stays idempotent and keeps its own time gate (texture prune still runs at most once per 7 days). Nothing that reloads the skin runs while something is playing.
 - Playback settings for full profile: AC3 passthrough enabled, refresh rate adjustment disabled (standard 60 Hz assumed). Tuned for Samsung TV + soundbar over optical.

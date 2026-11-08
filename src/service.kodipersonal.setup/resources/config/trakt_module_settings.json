@@ -1,0 +1,8 @@
+{
+  "_comment": "Settings for TMDb Helper's Trakt provider add-on (script.module.tmdbhelper.sync.trakt, TMDb Helper 6.20+). The module copied these once from TMDb Helper's old trakt_cacheownlists and nextepisodes_usecalendar keys and reads only its own copies since, so they are applied here. The Trakt token also lives in this module (setting 'token'); it is authorised on-device and never stored in this repo.",
+  "target_addon": "script.module.tmdbhelper.sync.trakt",
+  "settings": {
+    "cache_own_lists": "true",
+    "use_calendar": "false"
+  }
+}

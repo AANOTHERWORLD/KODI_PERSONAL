@@ -1,0 +1,7 @@
+{
+  "_comment": "MDbList provider add-on settings (script.module.tmdbhelper.sync.mdblist, TMDb Helper 6.20+). TMDb Helper core no longer has an mdblist_apikey setting; the key now lives here as apikey. It powers the Discover Top Streaming Today rows (info=mdblist_streamingchart, a route served by this module). One credential is stored here BY THE OWNER'S CHOICE so every device works with no manual step. This repo is public, so the key is public; if it is ever abused (Top Streaming rows go blank), regenerate it at mdblist.com and replace it here. The value is never written to the logs.",
+  "target_addon": "script.module.tmdbhelper.sync.mdblist",
+  "settings": {
+    "apikey": "nnj8qh237u76njfjkfj44yw02"
+  }
+}

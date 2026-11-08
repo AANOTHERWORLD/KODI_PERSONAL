@@ -1,0 +1,82 @@
+[
+    {
+        "label": "For You",
+        "icon": "special://skin/extras/icons/heart.png",
+        "path": "",
+        "target": "",
+        "window": "1101",
+        "slot": "01",
+        "disabled": "",
+        "guid": "guid-50ebd763"
+    },
+    {
+        "label": "Netflix",
+        "icon": "special://skin/extras/icons/netflix.png",
+        "path": "",
+        "target": "",
+        "window": "1102",
+        "slot": "02",
+        "disabled": "",
+        "guid": "guid-ac1629f4"
+    },
+    {
+        "label": "Max",
+        "icon": "special://skin/extras/icons/tv.png",
+        "path": "",
+        "target": "",
+        "window": "1103",
+        "slot": "03",
+        "disabled": "",
+        "guid": "guid-ac1dd938"
+    },
+    {
+        "label": "Apple TV+",
+        "icon": "special://skin/extras/icons/apple.png",
+        "path": "",
+        "target": "",
+        "window": "1104",
+        "slot": "04",
+        "disabled": "",
+        "guid": "guid-32547ec4"
+    },
+    {
+        "label": "Disney+",
+        "icon": "special://skin/extras/icons/disneyplus.png",
+        "path": "",
+        "target": "",
+        "window": "1106",
+        "slot": "06",
+        "disabled": "",
+        "guid": "guid-f5f775e8"
+    },
+    {
+        "label": "Prime Video",
+        "icon": "special://skin/extras/icons/play.png",
+        "path": "",
+        "target": "",
+        "window": "1107",
+        "slot": "07",
+        "disabled": "",
+        "guid": "guid-9c158628"
+    },
+    {
+        "label": "$LOCALIZE[24001]",
+        "icon": "special://skin/extras/icons/addon.png",
+        "path": "",
+        "target": "",
+        "window": "1108",
+        "slot": "08",
+        "disabled": "True",
+        "guid": "guid-a4103292"
+    },
+    {
+        "label": "$LOCALIZE[31639]",
+        "icon": "special://skin/extras/icons/shapes.png",
+        "path": "",
+        "target": "",
+        "window": "1109",
+        "slot": "09",
+        "disabled": "True",
+        "guid": "guid-2581b20b"
+    }
+]

@@ -34,8 +34,8 @@ settings on every start.
 4. Settings > Add-ons > **Install from repository** > KODI_PERSONAL Repository >
    Program add-ons (or Services) > install **KODI Personal Setup**.
    Installing it automatically pulls the rest of the stack from the aggregated
-   repo: Arctic Fuse 3, TMDb Helper, SkinVariables, the jurialmunkey module,
-   Trakt, Red Light, and ResolveURL. The setup service also re-checks the stack
+   repo: Arctic Fuse 3, TMDb Helper and its Trakt and MDbList provider add-ons,
+   SkinVariables, the jurialmunkey module, Trakt, Red Light, and ResolveURL. The setup service also re-checks the stack
    on every start and heals anything the installer missed.
 5. Set the skin to **Arctic Fuse 3** if it did not switch automatically
    (Settings > Interface > Skin), then restart Kodi once. On that first start the
@@ -51,12 +51,15 @@ first zip in step 3; everything after it is automatic.
 Do these once on each device. They are personal credentials and are kept out of
 the build on purpose.
 
-- **Trakt**: authorize it in TMDb Helper (Settings > add-on settings for TMDb
-  Helper > Trakt account), and in the Trakt service add-on if it prompts. This
+- **Trakt**: authorize it in TMDb Helper (TMDb Helper settings > Accounts >
+  Trakt, which opens the TMDb Helper Trakt provider add-on; since TMDb Helper
+  6.20 the token lives there), and in the Trakt service add-on if it prompts.
+  The build already selects Trakt as TMDb Helper's sync source. This
   powers Continue Watching, Up Next, New From My Shows and the watchlist in For
   You, and the recommendation rows in Discover.
 - **MDbList**: nothing to do. The setup service applies the MDbList API key
-  (stored in tmdbhelper_settings.json; this repo is public, so treat that key as
+  to the TMDb Helper MDbList provider add-on (stored in mdblist_settings.json;
+  this repo is public, so treat that key as
   public and regenerate it at mdblist.com if it is ever abused). It powers the
   Top Streaming Today rows in Discover and the extra ratings.
 - **Debrid (Premiumize)**: authorize it in ResolveURL settings (Universal

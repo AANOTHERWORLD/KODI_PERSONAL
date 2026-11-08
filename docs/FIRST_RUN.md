@@ -27,11 +27,13 @@ minutes, mostly waiting. You install one thing; it pulls in everything else.
 4. Settings > Add-ons > **Install from repository** > KODI_PERSONAL Repository >
    install **KODI Personal Setup**. Say yes to the additional add-ons it asks
    for. This one install pulls the whole stack automatically (the skin, TMDb
-   Helper, Trakt, Red Light, ResolveURL, Magneto, and the rest). Give it a minute
-   or two.
+   Helper and its Trakt and MDbList provider add-ons, Trakt, Red Light,
+   ResolveURL, and the rest). Give it a minute or two.
 
 5. If the skin did not switch on its own, set it: Settings > Interface > Skin >
-   **Arctic Fuse 3**.
+   **Arctic Fuse 3**. If AF3's setup wizard opens the first time the skin loads,
+   back out of it: the build supplies the menu and settings, and clears the wizard
+   so it does not come back.
 
 6. **Restart Kodi twice.**
    - First restart: the build copies in the theme, background, home menu, and
@@ -47,8 +49,10 @@ minutes, mostly waiting. You install one thing; it pulls in everything else.
   the Watched Status Provider, say Yes. Red Light is the only thing that scrobbles
   in this build, so without this step nothing gets marked watched.
 - **Trakt in TMDb Helper** (powers For You, Up Next, the calendar): open TMDb
-  Helper's settings and authorize the same Trakt account. This is what makes the
-  personal rows work.
+  Helper's settings > Accounts > Trakt (this opens the TMDb Helper Trakt provider
+  add-on) and authorize the same Trakt account. This is what makes the personal
+  rows work. The build already selects Trakt as TMDb Helper's sync source, so
+  there is no provider setup to do.
 - **Premiumize / debrid** (for playback): open ResolveURL settings > Universal
   Resolvers > Premiumize, and authorize it. Red Light plays through this.
 
@@ -89,12 +93,12 @@ minutes, mostly waiting. You install one thing; it pulls in everything else.
   Settings > Add-ons > Check for updates.
 - **A Trakt login dialog appears on every launch (and Up Next is empty):** TMDb
   Helper has lost its stored Trakt token (it drops it after repeated refresh
-  failures). Open TMDb Helper settings > Trakt > authorise, once, following the
+  failures). Open TMDb Helper settings > Accounts > Trakt > authorise, once, following the
   code on screen. Up Next rebuilds on the next start. `kodipersonal.log` says
   `TMDb Helper has NO stored Trakt token` while this is the case.
 - **Up Next shows nothing (and Trakt is authorised):** TMDb Helper stored an empty sync. Open TMDb
-  Helper settings and use **Clear sync data** > **Progress** (under Trakt on
-  TMDb Helper 6.16, under Sync on 6.17), then reload the home screen. The build
+  Helper settings and use **Clear sync data** > **Watched** (under Sync on TMDb
+  Helper 6.19 and later), then reload the home screen. The build
   does this once after updating and caps TMDb Helper's sync threads so it
   should not recur.
 - **Menu or theme looks wrong / did not appear:** restart Kodi once more. The

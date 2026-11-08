@@ -242,46 +242,48 @@ def build():
         json.dump(manifest, handle, indent=4)
     log("Wrote slots.json ({} active slot(s))".format(len(slots)))
 
-    # Generate hubs.json for AF3 3.4.16+: defines which hub slots are enabled.
-    # SkinVariables uses this to generate skinvariables-hubs-* includes that AF3
-    # needs. Enabled slots have disabled="" (empty); disabled slots have disabled="True".
-    active_slot_ids = {entry["slot"] for entry in slots if entry["slot"] != "home"}
+    # Hubs menu for AF3 3.4.16+. AF3 moved hub definitions from the
+    # HomeSwitcher.110x.* skin strings to a SkinVariables menu named "hubs"; the
+    # hub bar shows each entry's label and icon, and disabled="True" hides a slot.
+    # AF3 can migrate this file from the skin strings itself, but only when the
+    # file does not exist yet, so once we ship it, it must carry the real section
+    # names. Active slots take name and icon from their lists.json section (icon
+    # is optional per section); inactive slots keep AF3's own stock entry, as in
+    # the skin's default skinvariables-shortcut-hubs.json, and stay disabled.
+    icon_dir = "special://skin/extras/icons/"
+    sections_by_slot = {s["slot"]: s for s in cfg["sections"] if s["slot"] != "home"}
+    stock_hubs = {
+        "1101": ("$LOCALIZE[636]", "shapes.png"),
+        "1102": ("$LOCALIZE[636]", "shapes.png"),
+        "1103": ("$LOCALIZE[636]", "shapes.png"),
+        "1104": ("$LOCALIZE[636]", "shapes.png"),
+        "1106": ("$LOCALIZE[31605]", "calendar.png"),
+        "1107": ("$LOCALIZE[31085] / PVR", "livetv.png"),
+        "1108": ("$LOCALIZE[24001]", "addon.png"),
+        "1109": ("$LOCALIZE[31639]", "shapes.png"),
+    }
     hubs_items = []
-    window_labels = {
-        "1101": "$LOCALIZE[636]",  # Default/generic
-        "1102": "$LOCALIZE[636]",
-        "1103": "$LOCALIZE[636]",
-        "1104": "$LOCALIZE[636]",
-        "1106": "$LOCALIZE[31605]",  # Calendar
-        "1107": "$LOCALIZE[31085]",  # Live TV
-        "1108": "$LOCALIZE[24001]",  # Add-ons
-        "1109": "$LOCALIZE[31639]",  # Settings
-    }
-    window_icons = {
-        "1101": "special://skin/extras/icons/shapes.png",
-        "1102": "special://skin/extras/icons/shapes.png",
-        "1103": "special://skin/extras/icons/shapes.png",
-        "1104": "special://skin/extras/icons/shapes.png",
-        "1106": "special://skin/extras/icons/calendar.png",
-        "1107": "special://skin/extras/icons/livetv.png",
-        "1108": "special://skin/extras/icons/addon.png",
-        "1109": "special://skin/extras/icons/shapes.png",
-    }
-    slot_nums = {"1101": "01", "1102": "02", "1103": "03", "1104": "04",
-                 "1106": "06", "1107": "07", "1108": "08", "1109": "09"}
     for slot_id in known:
         if slot_id == "home" or slot_id == "1105":
             continue  # Home is fixed; 1105 is Search (not a custom slot)
+        section = sections_by_slot.get(slot_id)
+        if section:
+            label = section["name"]
+            icon = icon_dir + section.get("icon", "shapes.png")
+        else:
+            stock_label, stock_icon = stock_hubs.get(slot_id, ("$LOCALIZE[636]", "shapes.png"))
+            label, icon = stock_label, icon_dir + stock_icon
         hubs_items.append({
-            "label": window_labels.get(slot_id, "$LOCALIZE[636]"),
-            "icon": window_icons.get(slot_id, "special://skin/extras/icons/shapes.png"),
+            "label": label,
+            "icon": icon,
             "path": "",
             "target": "",
             "window": slot_id,
-            "slot": slot_nums.get(slot_id, "00"),
-            "disabled": "" if slot_id in active_slot_ids else "True",
+            "slot": slot_id[-2:],
+            "disabled": "" if section else "True",
             "guid": guid_for("hubs", slot_id),
         })
+        log("Hub {}: {} ({}).".format(slot_id, label, "on" if section else "off"))
     fname = "{}hubs.json".format(FILE_PREFIX)
     write_menu(fname, hubs_items)
     written.add(fname)

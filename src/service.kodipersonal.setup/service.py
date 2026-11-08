@@ -16,6 +16,7 @@ import os
 import json
 import time
 import shutil
+import re
 import zipfile
 
 import xbmc
@@ -47,7 +48,7 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.8.8'
+SERVICE_VERSION = '0.8.9'
 
 # Device-tier profiles. RAM is detected at startup and device profile is chosen
 # to balance texture quality against memory pressure. Lite profile is 2-3 GB devices
@@ -105,16 +106,17 @@ INFOTAGGER_ID = 'script.module.infotagger'
 # rate limit. The script router does not coerce booleans, so the dialog cannot
 # be switched off from a builtin; it is a background progress bar, not modal.
 TMDBHELPER_ID = 'plugin.video.themoviedb.helper'
-# Both keys are passed on purpose. TMDb Helper 6.17 renamed the script method's
-# required argument from invalidate_trakt_sync to invalidate_sync while keeping
-# the legacy route key, and its router forwards every parameter as kwargs. So the
-# legacy key alone raises TypeError on 6.17 (argument missing), and the new key
-# alone is not a route on 6.16. With both present each version finds its
-# argument and the extra key is harmlessly absorbed by **kwargs. 0.8.1 and 0.8.2
-# shipped the legacy key only, so their repair never ran on 6.17.
+# TMDb Helper 6.17 renamed the script argument to invalidate_sync (the legacy
+# invalidate_trakt_sync route key still maps to the same method). TMDb Helper
+# 6.19 then renamed the datatype: 'watchedprogress' is no longer a route and an
+# unknown datatype opens a selection dialog instead of rebuilding, so 0.8.9 uses
+# 'watched' (watched, playback progress and next episodes for the selected sync
+# provider). TMDb Helper 6.20+ is required by the Trakt provider module anyway.
 TRAKTSYNC_REPAIR_BUILTIN = (
-    'RunScript(plugin.video.themoviedb.helper,'
-    'invalidate_sync=watchedprogress,invalidate_trakt_sync=watchedprogress)')
+    'RunScript(plugin.video.themoviedb.helper,invalidate_sync=watched)')
+# TMDb Helper 6.20+ provider add-ons (Trakt and MDbList moved out of core).
+TRAKT_MODULE_ID = 'script.module.tmdbhelper.sync.trakt'
+MDBLIST_MODULE_ID = 'script.module.tmdbhelper.sync.mdblist'
 # Seconds to let TMDb Helper's own service settle after boot before asking it to
 # rebuild sync data.
 TRAKTSYNC_REPAIR_SETTLE_SECONDS = 15
@@ -134,7 +136,9 @@ TRAKT_ATTEMPTS_PROPERTY = 'TMDbHelper.TraktRefreshAttempts'
 # marker) is treated as done and its marker is rewritten to the revision.
 TEXTURE_CLEAR_REVISION = 'caps-405-720'
 MAGNETO_INIT_REVISION = 'magneto-1'
-TRAKTSYNC_REPAIR_REVISION = 'traktsync-1'
+# traktsync-2 (0.8.9): rebuild once after Trakt became TMDb Helper's selected
+# sync provider through the new provider module.
+TRAKTSYNC_REPAIR_REVISION = 'traktsync-2'
 
 # Kodi cache (video buffer) settings. Kodi 21 Omega moved these from
 # advancedsettings.xml <cache> into the GUI and now ignores the XML tags, so the
@@ -310,6 +314,16 @@ def _apply_addon_settings_file(name, label):
 
 def apply_tmdbhelper_settings():
     return _apply_addon_settings_file('tmdbhelper_settings.json', 'TMDb Helper')
+
+
+def apply_trakt_module_settings():
+    # Trakt provider add-on preferences (TMDb Helper 6.20+); see the config comment.
+    return _apply_addon_settings_file('trakt_module_settings.json', 'TMDb Helper Trakt module')
+
+
+def apply_mdblist_settings():
+    # MDbList API key for the MDbList provider add-on (TMDb Helper 6.20+).
+    return _apply_addon_settings_file('mdblist_settings.json', 'TMDb Helper MDbList module')
 
 
 def apply_scrobbler_settings():
@@ -760,7 +774,11 @@ def _revision_done(marker, revision, label):
     if current == revision:
         log('{} already done for revision {}; skipping.'.format(label, revision))
         return True
-    if current:
+    # Only an addon version number (for example 0.8.5) is a legacy per-version
+    # marker. An older revision name (for example traktsync-1) means the job is
+    # due again; up to 0.8.8 any non-empty marker counted as done, so bumping a
+    # revision could never re-run its job.
+    if current and re.match(r'^\d+(\.\d+)+$', current):
         ADDON.setSetting(marker, revision)
         log('{} already ran under the old per-version gate (marker {}); recorded '
             'revision {} so updates no longer re-run it.'.format(label, current, revision))
@@ -1123,7 +1141,7 @@ def check_trakt_auth():
             log('Trakt auth: TMDb Helper has NO stored Trakt token. This is why Up '
                 'Next is empty and why a Trakt login dialog appears on every launch '
                 '(TMDb Helper drops the token after repeated refresh failures). '
-                'Fix: TMDb Helper settings > Trakt > authorise, once.', xbmc.LOGWARNING)
+                'Fix: TMDb Helper settings > Accounts > Trakt > authorise, once.', xbmc.LOGWARNING)
             return
         if not value:
             log('Trakt auth: TraktIsAuth is EMPTY, so TMDb Helper will not scrobble '
@@ -1201,6 +1219,19 @@ def _tmdbhelper_has_trakt_token():
     # which opens the device-code login dialog. Its only guard is per process, so
     # it prompts again on every launch. Reading the token here lets us avoid
     # triggering that prompt ourselves. Presence only; the value is never logged.
+    # TMDb Helper 6.20+ keeps the token in the Trakt provider module ('token').
+    # It copies the old core 'trakt_token' across once but never clears it, so
+    # the module is checked first and is authoritative whenever it is installed;
+    # the core keys are only a fallback for a device still on an older TMDb Helper.
+    try:
+        module = xbmcaddon.Addon(TRAKT_MODULE_ID)
+    except Exception:
+        module = None
+    if module is not None:
+        try:
+            return bool(module.getSetting('token').strip())
+        except Exception:
+            return False
     try:
         helper = xbmcaddon.Addon(TMDBHELPER_ID)
     except Exception:
@@ -1364,8 +1395,11 @@ def needs_apply():
 
 def run_setup():
     log('===== Setup pass start (addon v{}) ====='.format(ADDON_VERSION))
-    ok = apply_tmdbhelper_settings()
-    ok = apply_scrobbler_settings() and ok
+    # Each file is applied even if an earlier one failed, so a missing add-on only
+    # holds back its own settings; the pass is recorded only when all four apply.
+    results = [apply_tmdbhelper_settings(), apply_trakt_module_settings(),
+               apply_mdblist_settings(), apply_scrobbler_settings()]
+    ok = all(results)
     if ok:
         ADDON.setSetting('last_applied_version', ADDON_VERSION)
         notify('Build defaults applied.')
@@ -1375,21 +1409,107 @@ def run_setup():
     log('===== Setup pass end =====')
 
 
-def hourly_maintenance():
-    # Scheduled maintenance that runs once per hour in the idle loop. Includes
-    # texture prune, dependency health check, and menu/theme self-heal. Each job
-    # stays idempotent and keeps its own time gate so it does not spam.
-    # Nothing that reloads the skin runs while something is playing.
+# Hourly maintenance policy (0.8.9). The menu is no longer redeployed on a timer:
+# a service update restarts this service, which redeploys at startup, and menu
+# files live in SkinVariables addon_data so a skin update does not remove them.
+# The one event a timer can catch is an AF3 update, so each hour we only compare
+# AF3's version with the version recorded at the last deploy, and redeploy once
+# when it changed and the box is idle on Home. Dependency checks run daily.
+AF3_VERSION_SETTING = 'af3_menu_version'
+MENU_HEAL_IDLE_SECONDS = 300
+DEPENDENCY_CHECK_INTERVAL = 86400  # seconds; 86400 = 24 hours
+_last_dependency_check = 0.0
+
+
+def _af3_version():
     try:
-        is_playing = xbmc.Player().isPlaying()
+        return xbmcaddon.Addon(AF3_ID).getAddonInfo('version')
     except Exception:
-        is_playing = False
+        return ''
+
+
+def record_af3_menu_version():
+    # Remember which AF3 version the current menu was deployed against. Only when
+    # AF3 is active, because deploy_menu skips the slot setup on any other skin.
+    if xbmc.getSkinDir() != AF3_ID:
+        log('AF3 is not the active skin; menu deploy baseline left unchanged.')
+        return
+    version = _af3_version()
+    if version and ADDON.getSetting(AF3_VERSION_SETTING) != version:
+        ADDON.setSetting(AF3_VERSION_SETTING, version)
+        log('Recorded AF3 v{} as the menu deploy baseline.'.format(version))
+
+
+def _safe_to_reload_skin():
+    # A forced SkinVariables rebuild reloads the skin, so only allow it when the
+    # user cannot be interrupted. Returns (ok, reason).
+    try:
+        if xbmc.Player().isPlaying():
+            return False, 'something is playing'
+    except Exception:
+        pass
+    if xbmc.getSkinDir() != AF3_ID:
+        return False, 'AF3 is not the active skin'
+    if not xbmc.getCondVisibility('Window.IsActive(home)'):
+        return False, 'Home is not the active window'
+    if xbmc.getCondVisibility('System.HasActiveModalDialog'):
+        return False, 'a dialog is open'
+    if not xbmc.getCondVisibility('System.IdleTime({})'.format(MENU_HEAL_IDLE_SECONDS)):
+        return False, 'the remote was used in the last {} seconds'.format(MENU_HEAL_IDLE_SECONDS)
+    return True, ''
+
+
+def heal_menu_after_skin_update(monitor):
+    current = _af3_version()
+    if not current:
+        log('Menu check: AF3 is not installed; skipping.', xbmc.LOGWARNING)
+        return
+    recorded = ADDON.getSetting(AF3_VERSION_SETTING)
+    if current == recorded:
+        log('Menu check: AF3 v{} unchanged since the last deploy; nothing to do.'.format(current))
+        return
+    ok, reason = _safe_to_reload_skin()
+    if not ok:
+        log('Menu check: AF3 changed ({} -> {}) but {}; retrying next hour.'.format(
+            recorded or 'none', current, reason))
+        return
+    log('Menu check: AF3 updated ({} -> {}); redeploying the menu while idle.'.format(
+        recorded or 'none', current))
+    changed = deploy_menu()
+    if changed:
+        if monitor.waitForAbort(SKIN_RELOAD_SETTLE_SECONDS):
+            return
+        log('Re-applying skin settings after the post-update skin reload.')
+        apply_skin_settings()
+    ADDON.setSetting(AF3_VERSION_SETTING, current)
+    log('Menu check: baseline moved to AF3 v{}.'.format(current))
+
+
+def hourly_maintenance(monitor):
+    # Runs once per hour from the idle loop. Every job is idempotent and gated:
+    # a pending settings pass is retried (an add-on it targets may have been
+    # installed since startup), texture prune runs at most weekly (its own gate),
+    # the dependency check at most daily, and the menu is redeployed only after an
+    # AF3 update and only when idle on Home.
+    global _last_dependency_check
+    log('Hourly maintenance start.')
+
+    if needs_apply():
+        log('Settings pass still pending for v{}; retrying.'.format(ADDON_VERSION))
+        run_setup()
 
     prune_texture_cache()
-    verify_dependencies()
 
-    if not is_playing:
-        deploy_menu()
+    now = time.time()
+    if now - _last_dependency_check >= DEPENDENCY_CHECK_INTERVAL:
+        verify_dependencies()
+        _last_dependency_check = now
+    else:
+        log('Dependency check ran {} hour(s) ago; next one is daily.'.format(
+            int((now - _last_dependency_check) // 3600)))
+
+    heal_menu_after_skin_update(monitor)
+    log('Hourly maintenance end.')
 
 
 def main():
@@ -1437,6 +1557,9 @@ def main():
         log('Re-applying skin settings after the skin reload.')
         apply_skin_settings()
 
+    # The menu now matches this AF3 version; the hourly check only acts when it changes.
+    record_af3_menu_version()
+
     # Scraper setup, version-gated, so a fresh device does not need the manual
     # step of opening Magneto to prompt it.
     initialise_magneto(monitor)
@@ -1460,13 +1583,13 @@ def main():
     # Helper's Trakt sync data once so a blank Up Next recovers.
     repair_trakt_sync(monitor)
 
-    # Idle loop. Run hourly maintenance (texture prune, dependency health check,
-    # menu/theme self-heal) once per hour. The service exists mainly to run the
-    # setup pass after updates and keep maintenance tasks on schedule.
+    # Idle loop. Hourly maintenance: pending settings retry, texture prune (weekly
+    # gate), dependency check (daily gate) and a menu redeploy only after an AF3
+    # update, when idle on Home. See hourly_maintenance.
     while not monitor.abortRequested():
         if monitor.waitForAbort(3600):
             break
-        hourly_maintenance()
+        hourly_maintenance(monitor)
     log('Service stopping.')
 
 

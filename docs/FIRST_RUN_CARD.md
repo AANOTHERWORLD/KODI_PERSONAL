@@ -10,6 +10,6 @@ Source URL (step 2):
 4. Install from repository > KODI_PERSONAL Repository > install KODI Personal Setup (say yes to add-ons).
 5. Settings > Interface > Skin > Arctic Fuse 3 (if not already).
 6. Restart Kodi twice. First browse is slow once, that is normal.
-7. Sign in: Trakt (in TMDb Helper settings) and Premiumize (ResolveURL > Universal Resolvers).
+7. Sign in: Trakt (TMDb Helper settings > Accounts > Trakt) and Premiumize (ResolveURL > Universal Resolvers).
 
 Done. Devices update themselves after this.
