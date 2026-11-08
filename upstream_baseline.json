@@ -1,0 +1,29 @@
+{
+  "_comment": "State for the daily KODI_PERSONAL upstream monitor (a scheduled task). Holds the upstream versions and source commits last reviewed against the build. The monitor compares live upstream against this, reports the difference, and moves the baseline forward after each run. This branch is never merged into main; devices never read it. Values of null mean the host could not be reached from the monitor's environment and must be checked on device.",
+  "last_run": "2026-11-08",
+  "build_version_reviewed": "0.8.9",
+  "addons": {
+    "plugin.video.themoviedb.helper": "6.21.1",
+    "script.module.tmdbhelper.sync.trakt": "1.2.8",
+    "script.module.tmdbhelper.sync.mdblist": "1.1.4",
+    "skin.arctic.fuse.3": "3.4.19",
+    "script.skinvariables": "2.2.14",
+    "script.module.jurialmunkey": "0.2.36",
+    "script.module.infotagger": "0.1.0",
+    "script.texturemaker": "0.2.11",
+    "script.module.resolveurl": "5.1.213",
+    "plugin.program.openwizard": "2.0.7",
+    "plugin.video.redlight": null,
+    "script.module.magneto": null
+  },
+  "source_commits": {
+    "jurialmunkey/plugin.video.themoviedb.helper": "aa83032e18343be327c41b670fa99939bb3d8b4b",
+    "jurialmunkey/skin.arctic.fuse.3": "64e7674b84ecf4c7b209056d195cd5d9439a6b0a",
+    "jurialmunkey/script.skinvariables": "2941d1f76ed65d6dfd8b366139d6c3fc924cc8cc"
+  },
+  "open_items": [
+    "Red Light version and the oldmanjax redlight.auto.json player not verified (repo.redwizard.xyz and oldmanjax.github.io unreachable from the cloud workspace).",
+    "Magneto: kodiyashimaru source dead since 2026-10-01; kodifitzwell.github.io/repo reported by TROYPOINT Aug 2026, unverified. Alternative: Gears Scrapers from The Red Repo.",
+    "Optional features not yet adopted: sync_currentlywatching row, sync_nextmovies, AF3 ranked/timeline/cards widget styles, TMDb Helper artwork_quality per device profile."
+  ]
+}
