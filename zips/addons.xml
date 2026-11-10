@@ -79,7 +79,7 @@
     <platform>all</platform>
     <license>SIL Open Font License 1.1</license>
   </extension>
-</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.9.0" provider-name="AANOTHERWORLD">
+</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.9.1" provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
     <import addon="skin.arctic.fuse.3" version="0.0.1" />
@@ -103,7 +103,9 @@
     <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set and background, applies the curated AF3 skin settings and view types, and deploys the home menu (Discover, For You, and a page per provider: Netflix, Max, Apple TV+, Disney+, Prime Video) into Arctic Fuse 3 on every start so the look and menu self-heal after a skin update. Declares the build stack as dependencies so Kodi installs them automatically, and verifies them on startup, healing anything missing or disabled. Stores no secrets except the MDbList API key, by the owner's choice. Logs to its own profile folder.</description>
     <platform>all</platform>
     <license>MIT</license>
-    <news>v0.9.0
+    <news>v0.9.1
+- TMDb Helper 6.21.2 removed its Trakt stats feature and the sync_provider_stats setting. The build no longer writes that setting, so the TMDb Helper settings pass stops writing an id TMDb Helper no longer defines. Nothing else in the build used the stats.
+v0.9.0
 - Trakt runs on exactly two connections, to fit Trakt's limit on connected apps for free accounts: TMDb Helper reads (For You, Up Next, calendar, watchlist, recommendations) and Red Light writes (marks movies and episodes watched). The official Trakt add-on (script.trakt) is no longer a dependency and the service disables it, so a leftover sign-in there can neither prompt for re-authorisation nor make Red Light step aside. It stays installed; re-enable it in Add-ons if ever needed.
 - New Red Light Trakt check: on every start and hourly the service confirms Red Light is signed in to Trakt and uses Trakt as its watched status provider. If not, it logs the problem and shows a TV notification (at most once a day). Before this, a signed-out Red Light went unnoticed and nothing reached Trakt.
 - Hidden service settings use a valid control type, which stops Kodi's "error reading control tag" warnings for traktsync_repaired and the other internal markers.

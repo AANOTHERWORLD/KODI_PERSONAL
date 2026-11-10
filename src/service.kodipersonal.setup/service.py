@@ -50,7 +50,7 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.9.0'
+SERVICE_VERSION = '0.9.1'
 
 # Device-tier profiles. RAM is detected at startup and device profile is chosen
 # to balance texture quality against memory pressure. Lite profile is 2-3 GB devices
