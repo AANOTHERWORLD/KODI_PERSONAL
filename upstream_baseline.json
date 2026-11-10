@@ -1,13 +1,13 @@
 {
   "_comment": "State for the daily KODI_PERSONAL upstream monitor (a scheduled task). Holds the upstream versions and source commits last reviewed against the build. The monitor compares live upstream against this, reports the difference, and moves the baseline forward after each run. This branch is never merged into main; devices never read it. Values of null mean the host could not be reached from the monitor's environment and must be checked on device.",
-  "last_run": "2026-11-09",
+  "last_run": "2026-11-10",
   "build_version_reviewed": "0.9.0",
   "addons": {
-    "plugin.video.themoviedb.helper": "6.21.1",
-    "script.module.tmdbhelper.sync.trakt": "1.2.8",
+    "plugin.video.themoviedb.helper": "6.21.2",
+    "script.module.tmdbhelper.sync.trakt": "1.2.9",
     "script.module.tmdbhelper.sync.mdblist": "1.1.4",
-    "skin.arctic.fuse.3": "3.4.19",
-    "script.skinvariables": "2.2.14",
+    "skin.arctic.fuse.3": "3.4.20",
+    "script.skinvariables": "2.2.16",
     "script.module.jurialmunkey": "0.2.36",
     "script.module.infotagger": "0.1.0",
     "script.texturemaker": "0.2.11",
@@ -17,15 +17,14 @@
     "script.module.magneto": null
   },
   "source_commits": {
-    "jurialmunkey/plugin.video.themoviedb.helper": "c1d826970f6b8df12d515aebfa485c90af680376",
-    "jurialmunkey/skin.arctic.fuse.3": "64e7674b84ecf4c7b209056d195cd5d9439a6b0a",
-    "jurialmunkey/script.skinvariables": "2941d1f76ed65d6dfd8b366139d6c3fc924cc8cc"
+    "jurialmunkey/plugin.video.themoviedb.helper": "db3987a9aab4914b8699a52afb6e6674589d70b1",
+    "jurialmunkey/skin.arctic.fuse.3": "704de2cf8dfaf65f9ebff4f3651fdea87772502e",
+    "jurialmunkey/script.skinvariables": "13f8c2e78a867141953cff76267201cb2092ee3b"
   },
   "open_items": [
-    "TMDb Helper source 8e8edea4 (unreleased after 6.21.1) removes setting sync_provider_stats. When the next TMDb Helper release ships, drop sync_provider_stats from tmdbhelper_settings.json (and its _comment mention) so the settings apply does not fail and retry every start.",
+    "Draft PR #1 (monitor/fix-2026-11-10, service 0.9.1) drops sync_provider_stats for TMDb Helper 6.21.2 and fixes the stale scrobbler_settings.json comment. Pending Jamel's review and merge.",
     "Red Light version and the oldmanjax redlight.auto.json player not verified (repo.redwizard.xyz and oldmanjax.github.io unreachable from the cloud workspace).",
     "Magneto: kodiyashimaru source dead since 2026-10-01; kodifitzwell.github.io/repo reported by TROYPOINT Aug 2026, unverified. Alternative: Gears Scrapers from The Red Repo.",
-    "Optional features not yet adopted: sync_currentlywatching row, sync_nextmovies, AF3 ranked/timeline/cards widget styles, TMDb Helper artwork_quality per device profile.",
-    "Stale _comment in tmdbhelper_settings.json references scrobbler_settings.json, retired in 0.9.0."
+    "Optional features not yet adopted: Trakt module use_airtime, TMDb Helper browse next episodes and contextmenu_play_random, sync_currentlywatching row, sync_nextmovies, AF3 ranked/timeline/cards widget styles, TMDb Helper artwork_quality per device profile."
   ]
 }
