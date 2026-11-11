@@ -1,7 +1,7 @@
 {
   "_comment": "State for the daily KODI_PERSONAL upstream monitor (a scheduled task). Holds the upstream versions and source commits last reviewed against the build. The monitor compares live upstream against this, reports the difference, and moves the baseline forward after each run. This branch is never merged into main; devices never read it. Values of null mean the host could not be reached from the monitor's environment and must be checked on device.",
   "last_run": "2026-11-11",
-  "build_version_reviewed": "0.9.0",
+  "build_version_reviewed": "0.9.1",
   "addons": {
     "plugin.video.themoviedb.helper": "6.21.5",
     "script.module.tmdbhelper.sync.trakt": "1.2.9",
@@ -22,7 +22,7 @@
     "jurialmunkey/script.skinvariables": "13f8c2e78a867141953cff76267201cb2092ee3b"
   },
   "open_items": [
-    "Draft PR #1 (monitor/fix-2026-11-10, service 0.9.1) drops sync_provider_stats (still absent in TMDb Helper 6.21.5) and fixes the stale scrobbler_settings.json comment. Pending Jamel's review and merge.",
+    "Resolved 2026-11-11: PR #1 (service 0.9.1, drops sync_provider_stats) fast-forwarded to main at bc0af4e on Jamel's request. Check kodipersonal.log on the Shield for 'TMDb Helper settings applied: 26 ok, 0 failed.'",
     "Red Light version and the oldmanjax redlight.auto.json player not verified (repo.redwizard.xyz and oldmanjax.github.io unreachable from the cloud workspace).",
     "Magneto: kodiyashimaru source dead since 2026-10-01; kodifitzwell.github.io/repo reported by TROYPOINT Aug 2026, unverified. Alternative: Gears Scrapers from The Red Repo.",
     "Optional features not yet adopted: Trakt module use_airtime, TMDb Helper browse next episodes and contextmenu_play_random, sync_currentlywatching row, sync_nextmovies, AF3 ranked/timeline/cards widget styles, TMDb Helper artwork_quality per device profile."
