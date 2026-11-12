@@ -1,6 +1,6 @@
 {
   "_comment": "State for the daily KODI_PERSONAL upstream monitor (a scheduled task). Holds the upstream versions and source commits last reviewed against the build. The monitor compares live upstream against this, reports the difference, and moves the baseline forward after each run. This branch is never merged into main; devices never read it. Values of null mean the host could not be reached from the monitor's environment and must be checked on device.",
-  "last_run": "2026-11-11",
+  "last_run": "2026-11-12",
   "build_version_reviewed": "0.9.1",
   "addons": {
     "plugin.video.themoviedb.helper": "6.21.5",
@@ -18,11 +18,12 @@
   },
   "source_commits": {
     "jurialmunkey/plugin.video.themoviedb.helper": "b45b430a390a258a3e42095c5ea5f921b656c108",
-    "jurialmunkey/skin.arctic.fuse.3": "254f7fadd688e434b473d443f8b9d49b71ec0102",
-    "jurialmunkey/script.skinvariables": "13f8c2e78a867141953cff76267201cb2092ee3b"
+    "jurialmunkey/skin.arctic.fuse.3": "1750d7c786984910a2e7b8f1544c218a2ad91be1",
+    "jurialmunkey/script.skinvariables": "a2bfedfe7daaee038c1011903bb59325a33af9be"
   },
   "open_items": [
     "Resolved 2026-11-11: PR #1 (service 0.9.1, drops sync_provider_stats) fast-forwarded to main at bc0af4e on Jamel's request. Check kodipersonal.log on the Shield for 'TMDb Helper settings applied: 26 ok, 0 failed.'",
+    "Watch: AF3 source (1750d7c) raises the script.skinvariables floor to 2.2.18. On the next AF3 release confirm SkinVariables 2.2.18 is in the jurialmunkey omega index and that the viewtypes/scriptwindow refactor still reads skin.arctic.fuse.3-viewtypes.json.",
     "Red Light version and the oldmanjax redlight.auto.json player not verified (repo.redwizard.xyz and oldmanjax.github.io unreachable from the cloud workspace).",
     "Magneto: kodiyashimaru source dead since 2026-10-01; kodifitzwell.github.io/repo reported by TROYPOINT Aug 2026, unverified. Alternative: Gears Scrapers from The Red Repo.",
     "Optional features not yet adopted: Trakt module use_airtime, TMDb Helper browse next episodes and contextmenu_play_random, sync_currentlywatching row, sync_nextmovies, AF3 ranked/timeline/cards widget styles, TMDb Helper artwork_quality per device profile."
