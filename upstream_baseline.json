@@ -1,6 +1,6 @@
 {
   "_comment": "State for the daily KODI_PERSONAL upstream monitor (a scheduled task). Holds the upstream versions and source commits last reviewed against the build. The monitor compares live upstream against this, reports the difference, and moves the baseline forward after each run. This branch is never merged into main; devices never read it. Values of null mean the host could not be reached from the monitor's environment and must be checked on device.",
-  "last_run": "2026-11-13",
+  "last_run": "2026-11-14",
   "build_version_reviewed": "0.9.1",
   "addons": {
     "plugin.video.themoviedb.helper": "6.21.5",
@@ -17,7 +17,7 @@
     "script.module.magneto": null
   },
   "source_commits": {
-    "jurialmunkey/plugin.video.themoviedb.helper": "7bc8e38ef66fda80762a404d69bc85c5802b9f52",
+    "jurialmunkey/plugin.video.themoviedb.helper": "5d498272c8945096949acdbb0a3508d98100f534",
     "jurialmunkey/skin.arctic.fuse.3": "1750d7c786984910a2e7b8f1544c218a2ad91be1",
     "jurialmunkey/script.skinvariables": "83ee54306037be3c4dd7157dfcd8706c7ae5024d"
   },
@@ -26,6 +26,7 @@
     "Watch: AF3 source (1750d7c) raises the script.skinvariables floor to 2.2.18. On the next AF3 release confirm SkinVariables 2.2.18 is in the jurialmunkey omega index and that the viewtypes/scriptwindow refactor still reads skin.arctic.fuse.3-viewtypes.json. Also watch for AF3 wiring in the new SkinVariables multi search window (run_multisearch, unreleased 2026-11-13).",
     "Red Light version and the oldmanjax redlight.auto.json player not verified (repo.redwizard.xyz and oldmanjax.github.io unreachable from the cloud workspace).",
     "Magneto: kodiyashimaru source dead since 2026-10-01; kodifitzwell.github.io/repo reported by TROYPOINT Aug 2026, unverified. Alternative: Gears Scrapers from The Red Repo.",
-    "Optional features not yet adopted: Trakt module use_airtime, TMDb Helper browse next episodes and contextmenu_play_random, sync_currentlywatching row, sync_nextmovies, AF3 ranked/timeline/cards widget styles, TMDb Helper artwork_quality per device profile."
+    "Optional features not yet adopted: Trakt module use_airtime, TMDb Helper browse next episodes and contextmenu_play_random, sync_currentlywatching row, sync_nextmovies, AF3 ranked/timeline/cards widget styles, TMDb Helper artwork_quality per device profile.",
+    "Watch: TMDb Helper source (c67ba549, unreleased 2026-11-14) refactors SyncDataGetterAll (query_grouping/query_ordering, filter_keys in base, query_value_item_argx removed). sync.trakt 1.2.9 and sync.mdblist 1.1.4 checked compatible. On the next TMDb Helper release confirm Up Next and Trakt next episodes still populate and that any new provider versions released alongside still resolve."
   ]
 }
