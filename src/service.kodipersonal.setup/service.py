@@ -50,7 +50,7 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.9.1'
+SERVICE_VERSION = '0.9.2'
 
 # Device-tier profiles. RAM is detected at startup and device profile is chosen
 # to balance texture quality against memory pressure. Lite profile is 2-3 GB devices
@@ -215,6 +215,28 @@ TMDBH_PATCH_BLOCK = (
     "        params['season'] = self.meta.get('season')\n"
     "        params['episode'] = self.meta.get('number')\n"
     "        return params\n")
+
+# TMDb Helper 6.22.0 (released 2026-11-15) rewrote its database connections and
+# removed DatabaseAccess.connection. The Trakt provider add-on it pairs with is
+# still 1.2.9 in the jurialmunkey omega repo, and its identifiers/database.py calls
+# self.access.connection.open() in is_queried() and get_item(). Every Trakt id
+# lookup then raises AttributeError, which empties the Trakt rows (calendar, next
+# episodes, watchlists). Upstream fixed it in source (sync.trakt 5ca18de, TMDb
+# Helper issue #2002) by using the core session instead, but has not released it.
+# This hotfix makes the same one-line change on device. It only acts when the
+# installed TMDb Helper has the new session API (files/dbconnection.py present and
+# Database.session defined), so an older core that still has .connection is left
+# alone. It is idempotent (marker), and it stands down by itself once a fixed
+# sync.trakt release replaces the file (the old call is no longer present).
+TRAKT_IDS_RELPATH = os.path.join(
+    'resources', 'lib', 'tmdbhelper_sync_trakt', 'identifiers', 'database.py')
+TRAKT_IDS_PATCH_MARKER = '# KODIPERSONAL-PATCH trakt-ids-session'
+TRAKT_IDS_OLD_CALL = 'with self.access.connection.open():'
+TRAKT_IDS_NEW_CALL = 'with self.session():  ' + TRAKT_IDS_PATCH_MARKER
+TMDBH_DBCONNECTION_RELPATH = os.path.join(
+    'resources', 'tmdbhelper', 'lib', 'files', 'dbconnection.py')
+TMDBH_DBDATA_RELPATH = os.path.join(
+    'resources', 'tmdbhelper', 'lib', 'files', 'dbdata.py')
 
 
 def log(msg, level=xbmc.LOGINFO):
@@ -1472,6 +1494,110 @@ def patch_tmdbhelper_episode_params():
         return False
 
 
+def _tmdbhelper_has_db_sessions():
+    # True when the installed TMDb Helper uses the 6.22.0 session API (and so has no
+    # DatabaseAccess.connection). Returns (flag, version) and logs nothing itself.
+    try:
+        helper = xbmcaddon.Addon(TMDBHELPER_ID)
+    except Exception:
+        return None, None
+    helper_version = helper.getAddonInfo('version')
+    helper_path = xbmcvfs.translatePath(helper.getAddonInfo('path'))
+    if not os.path.isfile(os.path.join(helper_path, TMDBH_DBCONNECTION_RELPATH)):
+        return False, helper_version
+    try:
+        with open(os.path.join(helper_path, TMDBH_DBDATA_RELPATH), 'r',
+                  encoding='utf-8') as fh:
+            return 'def session(self' in fh.read(), helper_version
+    except Exception:
+        return False, helper_version
+
+
+def patch_trakt_identifiers_session():
+    # Hotfix for the Trakt id lookup crash (see TRAKT_IDS_* above). Runs at start
+    # and hourly because either add-on can update while the box is on. Fully
+    # guarded and logged; any unexpected shape leaves the file untouched. Returns
+    # True only when the file was changed in this pass, so the caller can refresh
+    # widgets.
+    try:
+        has_sessions, helper_version = _tmdbhelper_has_db_sessions()
+        if has_sessions is None:
+            log('{} is not installed yet; skipping Trakt identifiers patch.'.format(
+                TMDBHELPER_ID), xbmc.LOGWARNING)
+            return False
+        if not has_sessions:
+            log('Trakt identifiers patch not needed: TMDb Helper v{} still has the '
+                'old database connection API.'.format(helper_version))
+            return False
+        try:
+            trakt = xbmcaddon.Addon(TRAKT_MODULE_ID)
+        except Exception:
+            log('{} is not installed yet; skipping Trakt identifiers patch.'.format(
+                TRAKT_MODULE_ID), xbmc.LOGWARNING)
+            return False
+        trakt_version = trakt.getAddonInfo('version')
+        target = os.path.join(xbmcvfs.translatePath(trakt.getAddonInfo('path')),
+                              TRAKT_IDS_RELPATH)
+        if not os.path.isfile(target):
+            log('Trakt identifiers patch: {} not found in {} v{}; layout changed, '
+                'standing down.'.format(TRAKT_IDS_RELPATH, TRAKT_MODULE_ID,
+                                        trakt_version), xbmc.LOGWARNING)
+            return False
+        with open(target, 'r', encoding='utf-8') as fh:
+            text = fh.read()
+
+        if TRAKT_IDS_PATCH_MARKER in text and TRAKT_IDS_OLD_CALL not in text:
+            log('Trakt identifiers patch already present in {} v{}.'.format(
+                TRAKT_MODULE_ID, trakt_version))
+            return False
+        count = text.count(TRAKT_IDS_OLD_CALL)
+        if count == 0:
+            log('Trakt identifiers patch not needed: {} v{} no longer uses '
+                'access.connection (likely fixed upstream). Verify Trakt rows load, '
+                'then this patch can be retired.'.format(TRAKT_MODULE_ID, trakt_version))
+            return False
+        if 'class TraktIdentifiersDatabase(Database)' not in text:
+            log('Trakt identifiers patch: TraktIdentifiersDatabase(Database) not found '
+                'in {} v{}; standing down so nothing is corrupted.'.format(
+                    TRAKT_MODULE_ID, trakt_version), xbmc.LOGWARNING)
+            return False
+
+        # Same change as upstream 5ca18de: the core Database session replaces the
+        # removed access.connection scope. Database.session() is inherited from
+        # TMDb Helper's DatabaseCore, which _tmdbhelper_has_db_sessions confirmed.
+        patched = text.replace(TRAKT_IDS_OLD_CALL, TRAKT_IDS_NEW_CALL)
+
+        # Sanity check the result compiles before it replaces the original.
+        compile(patched, target, 'exec')
+
+        backup = target + '.kodipersonal.bak'
+        shutil.copy2(target, backup)
+        tmp = target + '.kodipersonal.tmp'
+        with open(tmp, 'w', encoding='utf-8') as fh:
+            fh.write(patched)
+        os.replace(tmp, target)
+
+        # Drop the stale bytecode so the next plugin call compiles the patched file.
+        cache_dir = os.path.join(os.path.dirname(target), '__pycache__')
+        if os.path.isdir(cache_dir):
+            for name in os.listdir(cache_dir):
+                if name.startswith('database.'):
+                    try:
+                        os.remove(os.path.join(cache_dir, name))
+                        log('Removed stale bytecode {}'.format(name))
+                    except Exception as exc:
+                        log('Could not remove bytecode {}: {}'.format(name, exc),
+                            xbmc.LOGWARNING)
+
+        log('Trakt identifiers patch applied to {} v{} ({} call(s), TMDb Helper v{}); '
+            'backup at {}. Trakt id lookups use the core database session.'.format(
+                TRAKT_MODULE_ID, trakt_version, count, helper_version, backup))
+        return True
+    except Exception as exc:
+        log('Trakt identifiers patch failed: {}'.format(exc), xbmc.LOGERROR)
+        return False
+
+
 def refresh_tmdbhelper_widgets():
     # Bump TMDb Helper's widget reload property, which every For You widget path
     # includes, so Kodi re-requests the lists and picks up the patched params
@@ -1608,6 +1734,10 @@ def hourly_maintenance(monitor):
             int((now - _last_dependency_check) // 3600)))
 
     check_redlight_trakt()
+    # TMDb Helper or sync.trakt can auto-update while the box stays on; re-check
+    # the Trakt identifiers hotfix so a mismatched pair is repaired within the hour.
+    if patch_trakt_identifiers_session():
+        refresh_tmdbhelper_widgets()
     heal_menu_after_skin_update(monitor)
     log('Hourly maintenance end.')
 
@@ -1623,12 +1753,15 @@ def main():
     # episodes. Only touches a file; if it changes anything, ask the widgets to
     # reload after the settle in case they were built from the old code.
     episode_patch_changed = patch_tmdbhelper_episode_params()
+    # Same window for the Trakt identifiers hotfix (TMDb Helper 6.22.0 with
+    # sync.trakt 1.2.9), so the Trakt rows load on the first widget pass.
+    trakt_ids_patch_changed = patch_trakt_identifiers_session()
 
     # Give Kodi a moment to finish loading addons before we touch other addons.
     if monitor.waitForAbort(20):
         return
 
-    if episode_patch_changed:
+    if episode_patch_changed or trakt_ids_patch_changed:
         refresh_tmdbhelper_widgets()
 
     # Clear corrupt cached addon packages first so any install the dependency
