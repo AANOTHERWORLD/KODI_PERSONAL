@@ -50,7 +50,7 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.9.2'
+SERVICE_VERSION = '0.9.3'
 
 # Device-tier profiles. RAM is detected at startup and device profile is chosen
 # to balance texture quality against memory pressure. Lite profile is 2-3 GB devices
@@ -140,7 +140,13 @@ TEXTURE_CLEAR_REVISION = 'caps-405-720'
 MAGNETO_INIT_REVISION = 'magneto-1'
 # traktsync-2 (0.8.9): rebuild once after Trakt became TMDb Helper's selected
 # sync provider through the new provider module.
-TRAKTSYNC_REPAIR_REVISION = 'traktsync-2'
+# traktsync-3 (0.9.3): rebuild once more after TMDb Helper 6.22 rewrote its
+# database layer. On 2026-11-17 Trakt history showed a movie started that day
+# while the For You rows (Continue Watching, Continue Movies, Up Next) still
+# showed older data, so TMDb Helper's stored sync data was stale, not Trakt.
+# The rebuild clears that data and the stored last activities and refetches
+# everything from Trakt.
+TRAKTSYNC_REPAIR_REVISION = 'traktsync-3'
 
 # Kodi cache (video buffer) settings. Kodi 21 Omega moved these from
 # advancedsettings.xml <cache> into the GUI and now ignores the XML tags, so the
