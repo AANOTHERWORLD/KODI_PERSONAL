@@ -50,7 +50,7 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.9.3'
+SERVICE_VERSION = '0.9.4'
 
 # Device-tier profiles. RAM is detected at startup and device profile is chosen
 # to balance texture quality against memory pressure. Lite profile is 2-3 GB devices
@@ -243,6 +243,32 @@ TMDBH_DBCONNECTION_RELPATH = os.path.join(
     'resources', 'tmdbhelper', 'lib', 'files', 'dbconnection.py')
 TMDBH_DBDATA_RELPATH = os.path.join(
     'resources', 'tmdbhelper', 'lib', 'files', 'dbdata.py')
+
+# New From My Shows (trakt_calendar) only ever showed the oldest day of its week.
+# The Trakt provider fetches the whole calendar window in ONE request (startdate-1
+# for days+2 days, chronological, oldest first) and then slices it locally with
+# limit = pmax * 20 BEFORE filtering to the window and reversing. pmax comes from
+# TMDb Helper core: pmax = min(length, 8 if cacheonly else pagemulti_trakt). Widget
+# paths are not cacheonly, and pagemulti_trakt is 1 (its maximum is 3), so the
+# row's length=8 is ignored and only the first 20 raw items survive: about the
+# out-of-window day today-8 plus part of today-7. Everything newer is cut.
+# cacheonly=true would lift the cap but also stops online detail lookups, so new
+# episodes would show without artwork, and pagemulti_trakt cannot go above 3 or
+# be set per list. The cap exists to limit Trakt API paging, which the calendar
+# does not use (one request, sliced locally), so this patch gives the calendar
+# list the same 8 page ceiling cacheonly lists get: limit = min(length or pmax,
+# 8) * 20. A widget without length keeps the old size. Idempotent (marker), and
+# it stands down if upstream defines its own limit for calendar lists.
+TRAKT_CAL_RELPATH = os.path.join(
+    'resources', 'lib', 'tmdbhelper_sync_trakt', 'directories', 'lists_calendar_base.py')
+TRAKT_CAL_PATCH_MARKER = '# KODIPERSONAL-PATCH calendar-limit'
+TRAKT_CAL_ANCHOR = (
+    "    request_url = 'calendars/{trakt_user}/shows/{trakt_path}{start_date}/{total_days}'\n")
+TRAKT_CAL_BLOCK = (
+    "\n"
+    "    @cached_property\n"
+    "    def limit(self):  " + TRAKT_CAL_PATCH_MARKER + "\n"
+    "        return min(self.length or self.pmax, 8) * 20\n")
 
 
 def log(msg, level=xbmc.LOGINFO):
@@ -1604,6 +1630,88 @@ def patch_trakt_identifiers_session():
         return False
 
 
+def patch_trakt_calendar_limit():
+    # Lets New From My Shows hold its whole week (see TRAKT_CAL_* above). Runs at
+    # start and hourly because sync.trakt can update while the box is on, and an
+    # update replaces the file. Fully guarded and logged; any unexpected shape
+    # leaves the file untouched. Returns True only when the file was changed in
+    # this pass, so the caller can refresh widgets.
+    try:
+        try:
+            trakt = xbmcaddon.Addon(TRAKT_MODULE_ID)
+        except Exception:
+            log('{} is not installed yet; skipping calendar limit patch.'.format(
+                TRAKT_MODULE_ID), xbmc.LOGWARNING)
+            return False
+        trakt_version = trakt.getAddonInfo('version')
+        target = os.path.join(xbmcvfs.translatePath(trakt.getAddonInfo('path')),
+                              TRAKT_CAL_RELPATH)
+        if not os.path.isfile(target):
+            log('Calendar limit patch: {} not found in {} v{}; layout changed, '
+                'standing down.'.format(TRAKT_CAL_RELPATH, TRAKT_MODULE_ID,
+                                        trakt_version), xbmc.LOGWARNING)
+            return False
+        with open(target, 'r', encoding='utf-8') as fh:
+            text = fh.read()
+
+        if TRAKT_CAL_PATCH_MARKER in text:
+            log('Calendar limit patch already present in {} v{}.'.format(
+                TRAKT_MODULE_ID, trakt_version))
+            return False
+        if 'def limit(self' in text:
+            log('Calendar limit patch not needed: {} v{} defines its own calendar '
+                'limit (likely fixed upstream). Check New From My Shows reaches '
+                'yesterday, then this patch can be retired.'.format(
+                    TRAKT_MODULE_ID, trakt_version))
+            return False
+        count = text.count(TRAKT_CAL_ANCHOR)
+        if count != 1 or 'class ListCalendarProperties(' not in text:
+            log('Calendar limit patch: anchor found {} time(s) in {} v{} (expected '
+                '1); standing down so nothing is corrupted.'.format(
+                    count, TRAKT_MODULE_ID, trakt_version), xbmc.LOGWARNING)
+            return False
+        if 'from jurialmunkey.ftools import cached_property' not in text:
+            log('Calendar limit patch: cached_property import missing in {} v{}; '
+                'standing down.'.format(TRAKT_MODULE_ID, trakt_version),
+                xbmc.LOGWARNING)
+            return False
+
+        # The class level request_url line only exists in ListCalendarProperties,
+        # so the property lands in that class, which every episode and movie
+        # calendar list inherits.
+        patched = text.replace(TRAKT_CAL_ANCHOR, TRAKT_CAL_ANCHOR + TRAKT_CAL_BLOCK)
+
+        # Sanity check the result compiles before it replaces the original.
+        compile(patched, target, 'exec')
+
+        backup = target + '.kodipersonal.bak'
+        shutil.copy2(target, backup)
+        tmp = target + '.kodipersonal.tmp'
+        with open(tmp, 'w', encoding='utf-8') as fh:
+            fh.write(patched)
+        os.replace(tmp, target)
+
+        # Drop the stale bytecode so the next plugin call compiles the patched file.
+        cache_dir = os.path.join(os.path.dirname(target), '__pycache__')
+        if os.path.isdir(cache_dir):
+            for name in os.listdir(cache_dir):
+                if name.startswith('lists_calendar_base.'):
+                    try:
+                        os.remove(os.path.join(cache_dir, name))
+                        log('Removed stale bytecode {}'.format(name))
+                    except Exception as exc:
+                        log('Could not remove bytecode {}: {}'.format(name, exc),
+                            xbmc.LOGWARNING)
+
+        log('Calendar limit patch applied to {} v{}; backup at {}. New From My Shows '
+            'keeps up to 160 calendar items, so it reaches yesterday.'.format(
+                TRAKT_MODULE_ID, trakt_version, backup))
+        return True
+    except Exception as exc:
+        log('Calendar limit patch failed: {}'.format(exc), xbmc.LOGERROR)
+        return False
+
+
 def refresh_tmdbhelper_widgets():
     # Bump TMDb Helper's widget reload property, which every For You widget path
     # includes, so Kodi re-requests the lists and picks up the patched params
@@ -1742,7 +1850,10 @@ def hourly_maintenance(monitor):
     check_redlight_trakt()
     # TMDb Helper or sync.trakt can auto-update while the box stays on; re-check
     # the Trakt identifiers hotfix so a mismatched pair is repaired within the hour.
-    if patch_trakt_identifiers_session():
+    # Run both patches before refreshing so a pass that changes both reloads once.
+    trakt_ids_changed = patch_trakt_identifiers_session()
+    calendar_changed = patch_trakt_calendar_limit()
+    if trakt_ids_changed or calendar_changed:
         refresh_tmdbhelper_widgets()
     heal_menu_after_skin_update(monitor)
     log('Hourly maintenance end.')
@@ -1762,12 +1873,15 @@ def main():
     # Same window for the Trakt identifiers hotfix (TMDb Helper 6.22.0 with
     # sync.trakt 1.2.9), so the Trakt rows load on the first widget pass.
     trakt_ids_patch_changed = patch_trakt_identifiers_session()
+    # Same window for the calendar limit patch, so New From My Shows is full on
+    # the first widget pass.
+    calendar_patch_changed = patch_trakt_calendar_limit()
 
     # Give Kodi a moment to finish loading addons before we touch other addons.
     if monitor.waitForAbort(20):
         return
 
-    if episode_patch_changed or trakt_ids_patch_changed:
+    if episode_patch_changed or trakt_ids_patch_changed or calendar_patch_changed:
         refresh_tmdbhelper_widgets()
 
     # Clear corrupt cached addon packages first so any install the dependency
