@@ -11,6 +11,8 @@
 # Helper reads, Red Light writes): disables the official script.trakt add-on and
 # checks that Red Light is signed in to Trakt. Hotfixes TMDb Helper's Trakt episode play
 # params so calendar episodes play, and asserts Kodi's video cache settings.
+# Runs the Up Next autoplay fallback (resources/lib/autoplay.py): when a show is
+# caught up, the next show in For You's Up Next row plays after a countdown.
 # Logging is verbose by design.
 
 import os
@@ -50,7 +52,7 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.9.4'
+SERVICE_VERSION = '0.9.5'
 
 # Device-tier profiles. RAM is detected at startup and device profile is chosen
 # to balance texture quality against memory pressure. Lite profile is 2-3 GB devices
@@ -1938,13 +1940,32 @@ def main():
     # Helper's Trakt sync data once so a blank Up Next recovers.
     repair_trakt_sync(monitor)
 
-    # Idle loop. Hourly maintenance: pending settings retry, texture prune (weekly
-    # gate), dependency check (daily gate) and a menu redeploy only after an AF3
-    # update, when idle on Home. See hourly_maintenance.
+    # Up Next autoplay fallback (resources/lib/autoplay.py). Its player
+    # callbacks only record events; the idle loop below runs its work.
+    autoplay = None
+    try:
+        from resources.lib.autoplay import UpNextAutoplay
+        autoplay = UpNextAutoplay(ADDON, log, _jsonrpc, monitor)
+    except Exception as exc:
+        log('Autoplay: could not start ({}); the rest of the service is unaffected.'.format(
+            exc), xbmc.LOGERROR)
+
+    # Idle loop. Ticks once a second for autoplay. Hourly maintenance: pending
+    # settings retry, texture prune (weekly gate), dependency check (daily gate)
+    # and a menu redeploy only after an AF3 update, when idle on Home. See
+    # hourly_maintenance.
+    last_maintenance = time.time()
     while not monitor.abortRequested():
-        if monitor.waitForAbort(3600):
+        if monitor.waitForAbort(1):
             break
-        hourly_maintenance(monitor)
+        if autoplay is not None:
+            try:
+                autoplay.tick()
+            except Exception as exc:
+                log('Autoplay: tick failed: {}'.format(exc), xbmc.LOGERROR)
+        if time.time() - last_maintenance >= 3600:
+            hourly_maintenance(monitor)
+            last_maintenance = time.time()
     log('Service stopping.')
 
 

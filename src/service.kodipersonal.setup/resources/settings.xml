@@ -65,5 +65,39 @@
         </setting>
       </group>
     </category>
+    <category id="autoplay" label="Autoplay">
+      <group id="1">
+        <setting id="autoplay_enabled" type="boolean" label="When a show is caught up, play the next show in Up Next">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="autoplay_countdown" type="integer" label="Countdown before playing (seconds)">
+          <level>0</level>
+          <default>10</default>
+          <constraints>
+            <minimum>3</minimum>
+            <step>1</step>
+            <maximum>60</maximum>
+          </constraints>
+          <control type="slider" format="integer" />
+        </setting>
+        <setting id="autoplay_chain_limit" type="integer" label="Ask &quot;Still watching?&quot; after this many automatic plays">
+          <level>0</level>
+          <default>3</default>
+          <constraints>
+            <minimum>1</minimum>
+            <step>1</step>
+            <maximum>20</maximum>
+          </constraints>
+          <control type="slider" format="integer" />
+        </setting>
+        <setting id="autoplay_wrap" type="boolean" label="Go back to the top of Up Next when the row runs out">
+          <level>0</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+      </group>
+    </category>
   </section>
 </settings>
