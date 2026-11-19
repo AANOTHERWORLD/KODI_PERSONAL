@@ -79,7 +79,7 @@
     <platform>all</platform>
     <license>SIL Open Font License 1.1</license>
   </extension>
-</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.9.5" provider-name="AANOTHERWORLD">
+</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.9.6" provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
     <import addon="skin.arctic.fuse.3" version="0.0.1" />
@@ -103,7 +103,12 @@
     <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set and background, applies the curated AF3 skin settings and view types, and deploys the home menu (Discover, For You, and a page per provider: Netflix, Max, Apple TV+, Disney+, Prime Video) into Arctic Fuse 3 on every start so the look and menu self-heal after a skin update. Declares the build stack as dependencies so Kodi installs them automatically, and verifies them on startup, healing anything missing or disabled. Stores no secrets except the MDbList API key, by the owner's choice. Logs to its own profile folder.</description>
     <platform>all</platform>
     <license>MIT</license>
-    <news>v0.9.5
+    <news>v0.9.6
+- Fix Up Next autoplay freezing Kodi at the end of the first episode. 0.9.5 started the next episode with PlayMedia on TMDb Helper's play path, which holds Kodi's main thread while TMDb Helper hands off to Red Light, and Red Light needs that same thread, so the app hung. Autoplay now starts plays with RunPlugin, the same way TMDb Helper's own Play menu does, which returns immediately.
+- Up Next is no longer read through TMDb Helper the moment an episode starts (while the stream is still being handed off). The service refreshes its copy of the row in the background every 15 minutes while nothing is playing and freezes that copy when an episode starts.
+- Every lookup autoplay makes has a time limit, so a stuck add-on cannot stall the service.
+- Safety switch: if a play started by autoplay has not begun within 90 seconds, autoplay turns itself off on that device and shows a notification. Turn it back on in the add-on's Autoplay settings.
+v0.9.5
 - Up Next autoplay. When an episode ends on its own, Red Light still gets the first chance to play the next episode of the same show. If nothing starts within about 8 seconds (longer while Red Light is finding sources), the service checks whether that show has an aired next episode and plays it. If the show is caught up, it plays the next show in the For You Up Next row, in the order the row had when the episode started. A 10 second "Up next" countdown can be cancelled. After 3 automatic plays in a row it asks "Still watching?" and stops if nobody answers. Pressing stop never triggers it, movies never trigger it, and when the row runs out it stops. All of this is in the add-on's new Autoplay settings (on/off, countdown, how many in a row, go back to the top of the row), per device. Every decision is logged in kodipersonal.log with the prefix "Autoplay:".
 v0.9.4
 - New From My Shows shows the whole past week again, newest first, starting with yesterday. TMDb Helper's Trakt provider capped the row at 20 calendar entries and cut from the recent end, so it only ever showed episodes from about a week ago. The service now lets the calendar keep up to 160 entries, applied on start and hourly, and stands down by itself if a Trakt provider update fixes it.

@@ -22,9 +22,29 @@
 #   The callbacks only record events; all JSON-RPC and dialog work happens in
 #   tick(), which the service calls from that loop once a second.
 #
+# Freeze fix (0.9.6)
+#   0.9.5 froze Kodi at the end of the first episode. Two things in it could
+#   block the whole app:
+#     - It started the next episode with PlayMedia() on TMDb Helper's play path.
+#       A builtin runs on Kodi's GUI thread, and PlayMedia() on a plugin path
+#       makes that thread wait for the plugin to hand back a playable file.
+#       TMDb Helper instead hands off to Red Light, which also needs the GUI
+#       thread, so both wait on each other and the app hangs.
+#     - It listed Up Next through TMDb Helper at the moment playback started,
+#       while TMDb Helper and Red Light were still passing the stream along.
+#   Now: playback starts with RunPlugin(), which returns at once and lets TMDb
+#   Helper drive the hand-off exactly like its own "Play" context menu. The Up
+#   Next copy is refreshed in the background only while nothing is playing,
+#   and frozen when an episode starts. Every JSON-RPC call runs in a helper
+#   thread with a timeout, so a stuck add-on can never stall this service.
+#   Watchdog: if a play we start has not begun within 90 seconds, autoplay
+#   switches itself off on this device and says so, so a new failure can
+#   never repeat episode after episode.
+#
 # Logging is verbose by design: every decision lands in kodipersonal.log with
 # the prefix "Autoplay:".
 
+import threading
 import time
 from urllib.parse import urlencode, parse_qsl, urlsplit
 
@@ -44,6 +64,13 @@ MAX_WAIT_SECONDS = 60
 OUR_PLAY_WINDOW_SECONDS = 180
 # How long the "Still watching?" prompt waits before giving up (no autoplay).
 STILL_WATCHING_TIMEOUT_MS = 60000
+# Background refresh of the Up Next copy, only while nothing is playing.
+SNAPSHOT_REFRESH_SECONDS = 900
+# JSON-RPC time limits: quick player queries, slower plugin listings.
+RPC_TIMEOUT_QUICK = 5
+RPC_TIMEOUT_LISTING = 25
+# A play we start must begin within this many seconds, or autoplay turns off.
+START_WATCHDOG_SECONDS = 90
 
 DIRECTORY_PROPS = ['showtitle', 'season', 'episode', 'uniqueid', 'title',
                    'firstaired', 'file']
@@ -100,6 +127,9 @@ class UpNextAutoplay(object):
         self.chain = 0             # automatic plays in a row
         self.visited = set()       # shows already played in this chain
         self.last_fired = 0.0
+        self.latest = []           # newest background copy of Up Next
+        self.latest_at = 0.0
+        self.awaiting_start = None  # time we fired a play that has not begun
         self.player = _Player(self)
         self.log('Autoplay: monitor ready (enabled={}, countdown={}s, '
                  'still-watching after {}, wrap={}).'.format(
@@ -145,10 +175,49 @@ class UpNextAutoplay(object):
                 self._on_stopped()
         if self.pending_end is not None:
             self._check_pending()
+        if self.awaiting_start is not None:
+            self._check_watchdog()
+        elif self.pending_end is None:
+            self._maybe_refresh_snapshot()
+
+    def _maybe_refresh_snapshot(self):
+        if not self._enabled():
+            return
+        if time.time() - self.latest_at < SNAPSHOT_REFRESH_SECONDS:
+            return
+        if xbmc.Player().isPlaying():
+            return
+        self.latest_at = time.time()
+        items = self._read_up_next()
+        if items:
+            self.latest = items
+        self.log('Autoplay: refreshed Up Next in the background ({} shows): {}'.format(
+            len(items), ', '.join(i['showtitle'] for i in items[:12]) or 'empty'))
+
+    def _check_watchdog(self):
+        if time.time() - self.awaiting_start < START_WATCHDOG_SECONDS:
+            return
+        self.awaiting_start = None
+        self.log('Autoplay: the play started {}s ago never began. Turning autoplay '
+                 'off on this device so it cannot repeat; turn it back on in the '
+                 'service settings > Autoplay once fixed.'.format(START_WATCHDOG_SECONDS),
+                 xbmc.LOGERROR)
+        try:
+            self.addon.setSettingBool('autoplay_enabled', False)
+        except Exception as exc:  # noqa: BLE001
+            self.log('Autoplay: could not switch the setting off: {}'.format(exc),
+                     xbmc.LOGERROR)
+        xbmcgui.Dialog().notification('KODI Personal',
+                                      'Autoplay could not start the next episode and is now off.',
+                                      xbmcgui.NOTIFICATION_WARNING, 8000)
 
     # ---- event handlers ---------------------------------------------------
 
     def _on_started(self, stamp):
+        if self.awaiting_start is not None:
+            self.log('Autoplay: the play we started began after {}s.'.format(
+                int(stamp - self.awaiting_start)))
+            self.awaiting_start = None
         if self.pending_end is not None:
             self.log('Autoplay: playback started during the quiet period '
                      '(Red Light or you picked the next item); standing down.')
@@ -169,7 +238,12 @@ class UpNextAutoplay(object):
             self.log('Autoplay: disabled in settings; not reading Up Next.')
             self.snapshot = []
             return
-        self.snapshot = self._read_up_next()
+        if ours and self.snapshot:
+            self.log('Autoplay: continuing a run; keeping the Up Next order from its start.')
+            return
+        # Never list TMDb Helper here: it and Red Light are still handing off
+        # the stream. Freeze the newest background copy instead.
+        self.snapshot = list(self.latest)
         self.log('Autoplay: saved Up Next order ({} shows): {}'.format(
             len(self.snapshot),
             ', '.join(item['showtitle'] for item in self.snapshot[:12]) or 'empty'))
@@ -370,8 +444,6 @@ class UpNextAutoplay(object):
 
     def _play_url(self, target):
         params = _query(target.get('file'))
-        if params.get('info') == 'play' and params.get('tmdb_id'):
-            return target['file']
         tmdb_id = target.get('tmdb_id') or params.get('tmdb_id')
         if tmdb_id:
             return TMDBH_BASE + '?' + urlencode({
@@ -388,9 +460,11 @@ class UpNextAutoplay(object):
         self.chain += 1
         self.visited.add(_norm(target['showtitle']))
         self.last_fired = time.time()
-        self.log('Autoplay: playing {} (automatic play {} in a row) via {}'.format(
+        self.awaiting_start = self.last_fired
+        self.log('Autoplay: playing {} (automatic play {} in a row) via RunPlugin({})'.format(
             self._label(target), self.chain, url))
-        xbmc.executebuiltin('PlayMedia({})'.format(url))
+        # RunPlugin, not PlayMedia: see "Freeze fix" at the top of this file.
+        xbmc.executebuiltin('RunPlugin({})'.format(url))
 
     # ---- reading Kodi -----------------------------------------------------
 
@@ -401,9 +475,32 @@ class UpNextAutoplay(object):
         return (params.get('tmdb_id') or uid.get('tvshow.tmdb') or
                 uid.get('tmdb_tvshow') or '')
 
+    def _rpc(self, method, params, timeout):
+        # Runs JSON-RPC in a helper thread so a stuck add-on cannot stall the
+        # service loop. On timeout the thread is left to finish on its own.
+        box = {}
+
+        def worker():
+            box['result'] = self.jsonrpc(method, params)
+
+        thread = threading.Thread(target=worker, name='kodipersonal-autoplay-rpc')
+        thread.daemon = True
+        started = time.time()
+        thread.start()
+        thread.join(timeout)
+        if thread.is_alive():
+            self.log('Autoplay: {} did not answer within {}s; skipping it.'.format(
+                method, timeout), xbmc.LOGWARNING)
+            return {'error': 'timeout'}
+        took = time.time() - started
+        if took > 3:
+            self.log('Autoplay: {} took {:.1f}s.'.format(method, took))
+        return box.get('result') or {}
+
     def _directory(self, path):
-        response = self.jsonrpc('Files.GetDirectory', {
-            'directory': path, 'media': 'video', 'properties': DIRECTORY_PROPS})
+        response = self._rpc('Files.GetDirectory', {
+            'directory': path, 'media': 'video', 'properties': DIRECTORY_PROPS},
+            RPC_TIMEOUT_LISTING)
         if 'error' in response:
             self.log('Autoplay: could not list {}: {}'.format(
                 path, response['error']), xbmc.LOGWARNING)
@@ -433,13 +530,14 @@ class UpNextAutoplay(object):
         return ordered
 
     def _playing_episode(self):
-        players = (self.jsonrpc('Player.GetActivePlayers', {}).get('result') or [])
+        players = (self._rpc('Player.GetActivePlayers', {}, RPC_TIMEOUT_QUICK)
+                   .get('result') or [])
         video = next((p for p in players if p.get('type') == 'video'), None)
         if not video:
             return None
-        item = (self.jsonrpc('Player.GetItem', {
+        item = (self._rpc('Player.GetItem', {
             'playerid': video.get('playerid', 1),
-            'properties': PLAYER_PROPS}).get('result') or {}).get('item') or {}
+            'properties': PLAYER_PROPS}, RPC_TIMEOUT_QUICK).get('result') or {}).get('item') or {}
         season = _as_int(item.get('season'))
         episode = _as_int(item.get('episode'))
         showtitle = item.get('showtitle') or ''
