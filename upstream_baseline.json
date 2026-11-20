@@ -1,13 +1,13 @@
 {
   "_comment": "State for the daily KODI_PERSONAL upstream monitor (a scheduled task). Holds the upstream versions and source commits last reviewed against the build. The monitor compares live upstream against this, reports the difference, and moves the baseline forward after each run. This branch is never merged into main; devices never read it. Values of null mean the host could not be reached from the monitor's environment and must be checked on device.",
-  "last_run": "2026-11-19",
-  "build_version_reviewed": "0.9.5",
+  "last_run": "2026-11-20",
+  "build_version_reviewed": "0.9.6",
   "addons": {
-    "plugin.video.themoviedb.helper": "6.22.4",
-    "script.module.tmdbhelper.sync.trakt": "1.3.3",
+    "plugin.video.themoviedb.helper": "6.22.6",
+    "script.module.tmdbhelper.sync.trakt": "1.3.4",
     "script.module.tmdbhelper.sync.mdblist": "1.1.4",
-    "skin.arctic.fuse.3": "3.5.4",
-    "script.skinvariables": "2.3.3",
+    "skin.arctic.fuse.3": "3.5.6",
+    "script.skinvariables": "2.3.7",
     "script.module.jurialmunkey": "0.2.39",
     "script.module.infotagger": "0.1.0",
     "script.texturemaker": "0.2.11",
@@ -17,10 +17,10 @@
     "script.module.magneto": null
   },
   "source_commits": {
-    "jurialmunkey/plugin.video.themoviedb.helper": "d583f8f261a542a34fe6603832cdb8f7cd7a4c79",
-    "jurialmunkey/skin.arctic.fuse.3": "33e5fcac52a0abdd69bfa22912cb11d08b929807",
-    "jurialmunkey/script.skinvariables": "b6aed345405af46815bcf616eb0f6a569f930683",
-    "jurialmunkey/script.module.tmdbhelper.sync.trakt": "3225dee04b49b9b0895cf6ed3d10b25d46603e60",
+    "jurialmunkey/plugin.video.themoviedb.helper": "9de61da73d6688e79f91d57b6ce5daa5270f05d1",
+    "jurialmunkey/skin.arctic.fuse.3": "162767a4aeab8b5aa3803e9c65a74e5596b25249",
+    "jurialmunkey/script.skinvariables": "abae8866889ab0c4d6a45359e5bb8eafd2d8f4ab",
+    "jurialmunkey/script.module.tmdbhelper.sync.trakt": "5e0e4b642a0292d81f72feab462e44a4e3960f16",
     "jurialmunkey/script.module.jurialmunkey": "17ddb8f090daed77ff4631ab946d7b521002c96f"
   },
   "open_items": [
@@ -28,13 +28,15 @@
     "Red Light version and the oldmanjax redlight.auto.json player not verified (repo.redwizard.xyz and oldmanjax.github.io unreachable from the cloud workspace).",
     "Magneto: kodiyashimaru source dead since 2026-10-01; kodifitzwell.github.io/repo reported by TROYPOINT Aug 2026, unverified. Alternative: Gears Scrapers from The Red Repo.",
     "Optional features not yet adopted: Trakt module use_airtime, TMDb Helper browse next episodes and contextmenu_play_random, sync_currentlywatching row, sync_nextmovies, AF3 ranked/timeline/cards widget styles, TMDb Helper artwork_quality per device profile.",
-    "Resolved 2026-11-17: sync.trakt 1.3.0 released with the upstream identifiers fix (self.session()). Service 0.9.3 stub-tested against it: logs 'Trakt identifiers patch not needed: script.module.tmdbhelper.sync.trakt v1.3.0 no longer uses access.connection' and leaves the file alone. Check kodipersonal.log on the Shield for that line once sync.trakt updates; then the TRAKT_IDS_* patch can be retired in a later service version. 2026-11-19: still not needed on 1.3.3; retire TRAKT_IDS_* in the next service version that ships for another reason.",
+    "Resolved 2026-11-17: sync.trakt 1.3.0 released with the upstream identifiers fix (self.session()). Service 0.9.3 stub-tested against it: logs 'Trakt identifiers patch not needed: script.module.tmdbhelper.sync.trakt v1.3.0 no longer uses access.connection' and leaves the file alone. Check kodipersonal.log on the Shield for that line once sync.trakt updates; then the TRAKT_IDS_* patch can be retired in a later service version. 2026-11-19: still not needed on 1.3.3; retire TRAKT_IDS_* in the next service version that ships for another reason. 2026-11-20: still not needed on 1.3.4.",
     "Watch: TMDb Helper 6.22.0 SyncDataGetterAll refactor (c67ba549) is now live. Confirm Up Next and Trakt next episodes populate on the Shield once PR #2 is merged; that check was blocked by the sync.trakt break.",
     "Resolved 2026-11-16: AF3 3.5.1 requires SkinVariables 2.3.0 (in the omega index); SkinVariables 2.3.0 still writes skin.arctic.fuse.3-viewtypes.json; AF3 multisearch reads the build's searchwidgets menu and all three of its paths are defined.",
     "OPEN 2026-11-17: For You rows stale after 0.9.2. Jamel confirmed trakt.tv history shows a movie started 2026-11-17, so TMDb Helper's stored sync data is stale (read side), not Red Light. PR #2's impact note was too broad: trakt_ondeck / trakt_nextepisodes / trakt_calendar never use identifier lookups. PR #3 (service 0.9.3, traktsync-3 one-time invalidate_sync=watched rebuild) fast-forwarded to main at ad582b7 on Jamel's request 2026-11-17. Check kodipersonal.log for 'Trakt sync repair start (revision traktsync-3)' and that Continue Movies shows the movie started 2026-11-17. Root cause not confirmed: the 6.22.1 sync DB layer round-trips in a single-thread test. If rows go stale again after new watches, get a debug kodi.log from the Shield.",
-    "Watch: AF3 piers branch requires xbmc.gui 5.18.0 (Kodi 22); omega still 3.5.4 (5.17.0). Piers v3.5.5 (33e5fca) floors SkinVariables 2.3.3, which reached the omega index 2026-11-19, so the next omega AF3 will resolve.",
+    "Resolved 2026-11-20: AF3 3.5.6 reached omega (xbmc.gui 5.17.0 backport), floors SkinVariables 2.3.6 (2.3.7 published) and TMDb Helper 6.22.2; resolves. Piers stays Kodi 22 only.",
     "OPEN 2026-11-18: New From My Shows stuck on week-old episodes (sync.trakt calendar slice capped at 20 raw items because pagemulti_trakt caps pmax on non-cacheonly widgets). PR #4 (service 0.9.4, patch_trakt_calendar_limit) fast-forwarded to main at 26bb007 on Jamel's request 2026-11-18. Check kodipersonal.log for 'Calendar limit patch applied to script.module.tmdbhelper.sync.trakt v1.3.0' and that the row starts with yesterday. Each run: confirm the anchor still matches in new sync.trakt releases, and retire the patch if upstream defines its own calendar limit.",
     "Low 2026-11-18: viewtypes.json library.songs = 508 is not a view id AF3 defines (3.5.2 and 3.5.4). Harmless for video; fix opportunistically in a later service version.",
-    "Resolved 2026-11-19: sync.trakt 1.3.3 released; lists_calendar_base.py unchanged, calendar limit patch stub-tested (applies once, idempotent). Keep checking the anchor on each release."
+    "Resolved 2026-11-19: sync.trakt 1.3.3 released; lists_calendar_base.py unchanged, calendar limit patch stub-tested (applies once, idempotent). Keep checking the anchor on each release. 2026-11-20: 1.3.4 lists_calendar_base.py unchanged; patch stub-tested again.",
+    "Watch 2026-11-20: sync.trakt 1.3.4 deletes the stored Trakt authorization and shows a signed out dialog when the refresh token is rejected (invalid_grant). If Trakt rows go empty with that dialog on the Shield, re-authorise in the Trakt module; no build change needed.",
+    "Low 2026-11-20: AF3 3.5.6 shows info line details as pills by default (InfoTags.DisableTags reverts to plain text). Add to skin_settings.json only if Jamel prefers the old look."
   ]
 }
