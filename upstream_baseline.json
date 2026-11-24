@@ -1,13 +1,13 @@
 {
   "_comment": "State for the daily KODI_PERSONAL upstream monitor (a scheduled task). Holds the upstream versions and source commits last reviewed against the build. The monitor compares live upstream against this, reports the difference, and moves the baseline forward after each run. This branch is never merged into main; devices never read it. Values of null mean the host could not be reached from the monitor's environment and must be checked on device.",
-  "last_run": "2026-11-22",
+  "last_run": "2026-11-23",
   "build_version_reviewed": "0.9.6",
   "addons": {
     "plugin.video.themoviedb.helper": "6.22.7",
     "script.module.tmdbhelper.sync.trakt": "1.3.6",
     "script.module.tmdbhelper.sync.mdblist": "1.1.4",
     "skin.arctic.fuse.3": "3.5.7",
-    "script.skinvariables": "2.3.12",
+    "script.skinvariables": "2.3.14",
     "script.module.jurialmunkey": "0.2.39",
     "script.module.infotagger": "0.1.0",
     "script.texturemaker": "0.2.11",
@@ -17,9 +17,9 @@
     "script.module.magneto": null
   },
   "source_commits": {
-    "jurialmunkey/plugin.video.themoviedb.helper": "419cec0fd17fb3e4cccc3ecf1a7e43ecf061c750",
-    "jurialmunkey/skin.arctic.fuse.3": "5c8116eaad867c33b9a5e870789cd1412b40cdb3",
-    "jurialmunkey/script.skinvariables": "7b3b1e331b12a6af1986427a1edc42f44bdac048",
+    "jurialmunkey/plugin.video.themoviedb.helper": "9608e35b8ff719b7e9755725fb04c02e31cf1ab4",
+    "jurialmunkey/skin.arctic.fuse.3": "4fbed35c8aef635a2aac169e6187ae10860b9c8c",
+    "jurialmunkey/script.skinvariables": "096ac6e98d7f480b2d1a511fbdb4144e6a61ea4e",
     "jurialmunkey/script.module.tmdbhelper.sync.trakt": "fafa099df0cc4c394c7f831c204da9978c35d459",
     "jurialmunkey/script.module.jurialmunkey": "17ddb8f090daed77ff4631ab946d7b521002c96f"
   },
