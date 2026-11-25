@@ -80,7 +80,7 @@
     <platform>all</platform>
     <license>SIL Open Font License 1.1</license>
   </extension>
-</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.9.7" provider-name="AANOTHERWORLD">
+</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.9.8" provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
     <import addon="skin.arctic.fuse.3" version="0.0.1" />
@@ -104,7 +104,10 @@
     <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set and background, applies the curated AF3 skin settings and view types, and deploys the home menu (Discover, For You, and a page per provider: Netflix, Max, Apple TV+, Disney+, Prime Video) into Arctic Fuse 3 on every start so the look and menu self-heal after a skin update. Declares the build stack as dependencies so Kodi installs them automatically, and verifies them on startup, healing anything missing or disabled. Stores no secrets except the MDbList API key, by the owner's choice. Logs to its own profile folder.</description>
     <platform>all</platform>
     <license>MIT</license>
-    <news>v0.9.7
+    <news>v0.9.8
+- Fix Kodi hanging and then closing when browsing the hub pages after Max. It was running out of memory: TMDb Helper downloaded every background at original size (often 4K) and the full profile cached card art above Kodi's default size, so each page added 100 to 200 MB until Android closed Kodi. TMDb Helper artwork is now High instead of Highest, and full profile card art uses Kodi's default size (540 instead of 720). Measured on the Shield, Kodi now stays near 1 GB through every tab instead of passing 1.3 GB and being killed.
+- The art cache is cleared once on every device so all artwork re-caches at the new sizes. The first browse of each page afterwards is slower while art downloads again.
+v0.9.7
 - Disney+ and Prime Video are text tabs again. Arctic Fuse 3.5 shows only the first four hubs as tabs and turns the rest into icon buttons on the right of the top bar. The service now widens AF3's tab list to every active hub after each AF3 install or update, and forces the menu rebuild so it shows without a restart. AF3's original file is kept in the service's profile folder.
 - Disney+ and Prime Video open their own pages again. The service used to reset a hub's type to empty, and AF3's startup fills an empty type with its stock default for that slot (Next Aired for Disney+, Live TV for Prime Video), so those tabs showed a blank page, and Next Aired froze the interface, which also kept Right from reaching the Options tray. The type is now written as Custom.
 - Playback settings log: passthrough formats the audio output does not offer (E-AC3, DTS, TrueHD, DTS-HD) are reported once as not offered instead of as "changed" on every start, and a change is only logged when Kodi accepts it.

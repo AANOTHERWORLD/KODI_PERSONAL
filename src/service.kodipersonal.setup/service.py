@@ -52,12 +52,12 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.9.7'
+SERVICE_VERSION = '0.9.8'
 
 # Device-tier profiles. RAM is detected at startup and device profile is chosen
 # to balance texture quality against memory pressure. Lite profile is 2-3 GB devices
-# (imageres 405, fanartres 720); full profile is 3+ GB devices (imageres 720,
-# fanartres 1080, hub preloading, audio passthrough). The threshold is 2.8 GB
+# (imageres 405, fanartres 720); full profile is 3+ GB devices (imageres 540
+# since 0.9.8, was 720; fanartres 1080, audio passthrough). The threshold is 2.8 GB
 # (2899 MB to account for OS overhead); >= 2.8 GB chooses full, else lite.
 # Each profile has its own advancedsettings.xml (lite vs full) so texture caps
 # take effect after the next Kodi restart. When a device switches profiles, the
@@ -138,7 +138,10 @@ TRAKT_ATTEMPTS_PROPERTY = 'TMDbHelper.TraktRefreshAttempts'
 # per revision. Bump a revision only when that job genuinely needs to run again.
 # A device that already ran a job under the old per-version gate (any non-empty
 # marker) is treated as done and its marker is rewritten to the revision.
-TEXTURE_CLEAR_REVISION = 'caps-405-720'
+# caps-405-720 -> art-high-540 (0.9.8): full profile imageres 720 -> 540 and TMDb
+# Helper artwork from 'original' to High. Art cached under the old sizes would keep
+# its larger footprint, so every device clears once and re-caches.
+TEXTURE_CLEAR_REVISION = 'art-high-540'
 MAGNETO_INIT_REVISION = 'magneto-1'
 # traktsync-2 (0.8.9): rebuild once after Trakt became TMDb Helper's selected
 # sync provider through the new provider module.

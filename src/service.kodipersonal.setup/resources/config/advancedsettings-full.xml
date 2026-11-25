@@ -6,8 +6,10 @@
      Texture resolution caps (imageres, fanartres):
      Kodi caps decoded texture size, expressed as pixel height at a 16:9 area.
      Kodi 21 defaults are imageres 540 and fanartres 1080.
-       imageres 720: higher than default, trades memory for sharper art on large
-       screens and higher resolutions. Still safe on 3+ GB devices.
+       imageres 540: Kodi default. 0.8.8 to 0.9.7 used 720, which on the Shield
+       (3 GB, about 1.7 GB free with Kodi in front) pushed Kodi past 1.3 GB while
+       browsing the hub pages, and Android killed it (the "hang then crash" on
+       the pages after Max). 540 is sharp at 1080p and keeps Kodi near 1 GB.
        fanartres 1080: Kodi default; fanart and hero backgrounds can now be enabled
        in the skin for a richer visual presentation.
 
@@ -17,7 +19,7 @@
      <cache> blocks here. The setup service now sets them through JSON-RPC to
      100-150 MB (larger buffer for 3+ GB devices). -->
 <advancedsettings>
-    <imageres>720</imageres>
+    <imageres>540</imageres>
     <fanartres>1080</fanartres>
     <gui>
         <algorithmdirtyregions>3</algorithmdirtyregions>
