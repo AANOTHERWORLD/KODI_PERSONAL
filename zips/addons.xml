@@ -68,18 +68,19 @@
         <description lang="en">Hosts the personal lightweight build addons and aggregates the upstream repos it depends on, so every device installs and updates the whole stack from one source.</description>
         <platform>all</platform>
     </extension>
-</addon><addon id="resource.font.thoughtstream" name="ThoughtStream Fonts" version="0.1.0" provider-name="AANOTHERWORLD">
+</addon><addon id="resource.font.thoughtstream" name="ThoughtStream Fonts" version="0.1.1" provider-name="AANOTHERWORLD">
   <requires>
     <import addon="kodi.resource" version="1.0.0" />
   </requires>
-  <extension point="kodi.resource.fonts" />
+  
+  <extension point="kodi.resource.font" />
   <extension point="xbmc.addon.metadata">
     <summary lang="en_GB">ThoughtStream font set, Libre Baskerville and Inter</summary>
     <description lang="en_GB">Open licensed fonts for the ThoughtStream layer. Libre Baskerville 700 for titles, Inter 400 and 600 for UI. Referenced over resource:// in the same way Arctic Fuse 3 references its own font resource addon.</description>
     <platform>all</platform>
     <license>SIL Open Font License 1.1</license>
   </extension>
-</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.9.6" provider-name="AANOTHERWORLD">
+</addon><addon id="service.kodipersonal.setup" name="KODI Personal Setup" version="0.9.7" provider-name="AANOTHERWORLD">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
     <import addon="skin.arctic.fuse.3" version="0.0.1" />
@@ -103,7 +104,11 @@
     <description lang="en_GB">Applies the personal build defaults, TMDb Helper behavior and the source player slot, on first run and after each update so every device stays consistent. Copies the ThoughtStream colour set and background, applies the curated AF3 skin settings and view types, and deploys the home menu (Discover, For You, and a page per provider: Netflix, Max, Apple TV+, Disney+, Prime Video) into Arctic Fuse 3 on every start so the look and menu self-heal after a skin update. Declares the build stack as dependencies so Kodi installs them automatically, and verifies them on startup, healing anything missing or disabled. Stores no secrets except the MDbList API key, by the owner's choice. Logs to its own profile folder.</description>
     <platform>all</platform>
     <license>MIT</license>
-    <news>v0.9.6
+    <news>v0.9.7
+- Disney+ and Prime Video are text tabs again. Arctic Fuse 3.5 shows only the first four hubs as tabs and turns the rest into icon buttons on the right of the top bar. The service now widens AF3's tab list to every active hub after each AF3 install or update, and forces the menu rebuild so it shows without a restart. AF3's original file is kept in the service's profile folder.
+- Disney+ and Prime Video open their own pages again. The service used to reset a hub's type to empty, and AF3's startup fills an empty type with its stock default for that slot (Next Aired for Disney+, Live TV for Prime Video), so those tabs showed a blank page, and Next Aired froze the interface, which also kept Right from reaching the Options tray. The type is now written as Custom.
+- Playback settings log: passthrough formats the audio output does not offer (E-AC3, DTS, TrueHD, DTS-HD) are reported once as not offered instead of as "changed" on every start, and a change is only logged when Kodi accepts it.
+v0.9.6
 - Fix Up Next autoplay freezing Kodi at the end of the first episode. 0.9.5 started the next episode with PlayMedia on TMDb Helper's play path, which holds Kodi's main thread while TMDb Helper hands off to Red Light, and Red Light needs that same thread, so the app hung. Autoplay now starts plays with RunPlugin, the same way TMDb Helper's own Play menu does, which returns immediately.
 - Up Next is no longer read through TMDb Helper the moment an episode starts (while the stream is still being handed off). The service refreshes its copy of the row in the background every 15 minutes while nothing is playing and freezes that copy when an episode starts.
 - Every lookup autoplay makes has a time limit, so a stuck add-on cannot stall the service.

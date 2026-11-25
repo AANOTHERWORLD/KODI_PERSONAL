@@ -52,7 +52,7 @@ LOGFILE = os.path.join(PROFILE, 'kodipersonal.log')
 
 # Service version. addon.xml is authoritative (ADDON_VERSION above); this mirrors
 # it for logging and is bumped alongside it.
-SERVICE_VERSION = '0.9.6'
+SERVICE_VERSION = '0.9.7'
 
 # Device-tier profiles. RAM is detected at startup and device profile is chosen
 # to balance texture quality against memory pressure. Lite profile is 2-3 GB devices
@@ -686,6 +686,85 @@ def _is_managed_node(name):
     return core[:2] == '11' and core[:4].isdigit()
 
 
+# AF3 3.5 splits the top bar: hubs at menu positions 0-3 are text tabs on the left
+# and positions 4-7 become icon-only buttons on the right (next to the power /
+# Options tray button). With six provider hubs that turned Disney+ and Prime Video
+# into icons. The split lives in AF3's generator data file below; we rewrite its
+# left/right position lists so every active hub is a text tab. AF3 updates replace
+# the file, so this re-applies on every deploy (startup and the post-update heal).
+AF3_HUBS_DATA_RELPATH = os.path.join('shortcuts', 'generator', 'data', 'base', 'home_hubs.xml')
+AF3_HUB_POSITIONS = '01234567'
+AF3_STOCK_LEFT_TABS = 4
+AF3_HUBS_BACKUP = 'home_hubs.af3-original.xml'
+
+
+def _af3_hub_positions_re(name):
+    return re.compile(r'(<list name="{}">\s*<value name="positions">)([0-9]*)(</value>)'.format(name))
+
+
+def patch_af3_hub_tabs(hub_count):
+    # Returns True when the file was changed (caller forces a template rebuild).
+    af3_path = resolve_af3_path()
+    if not af3_path:
+        log('Hub tabs: {} is not installed; skipping.'.format(AF3_ID))
+        return False
+    path = os.path.join(af3_path, AF3_HUBS_DATA_RELPATH)
+    if not os.path.isfile(path):
+        log('Hub tabs: {} not found (AF3 before 3.5 has no left/right split); '
+            'nothing to patch.'.format(AF3_HUBS_DATA_RELPATH))
+        return False
+    data = _read_bytes(path)
+    if not data:
+        log('Hub tabs: could not read {} or it is empty; skipping.'.format(path), xbmc.LOGWARNING)
+        return False
+    text = data.decode('utf-8')
+    left_re, right_re = _af3_hub_positions_re('left'), _af3_hub_positions_re('right')
+    left_m, right_m = left_re.search(text), right_re.search(text)
+    if not left_m or not right_m:
+        log('Hub tabs: left/right position lists not found in {}; AF3 changed the '
+            'format, leaving it alone.'.format(AF3_HUBS_DATA_RELPATH), xbmc.LOGWARNING)
+        return False
+    tabs = max(AF3_STOCK_LEFT_TABS, min(len(AF3_HUB_POSITIONS), int(hub_count)))
+    want_left, want_right = AF3_HUB_POSITIONS[:tabs], AF3_HUB_POSITIONS[tabs:]
+    have_left, have_right = left_m.group(2), right_m.group(2)
+    if (have_left, have_right) == (want_left, want_right):
+        log('Hub tabs: AF3 already shows {} hubs as tabs (left {}, right {}); '
+            'nothing to change.'.format(tabs, have_left, have_right or 'none'))
+        return False
+    new_text = left_re.sub(lambda m: m.group(1) + want_left + m.group(3), text, count=1)
+    new_text = right_re.sub(lambda m: m.group(1) + want_right + m.group(3), new_text, count=1)
+    # Keep AF3's own file once per AF3 version for reference and manual rollback.
+    try:
+        backup = os.path.join(PROFILE, AF3_HUBS_BACKUP)
+        if _read_bytes(backup) != data and have_left == AF3_HUB_POSITIONS[:AF3_STOCK_LEFT_TABS]:
+            with open(backup, 'wb') as fh:
+                fh.write(data)
+            log('Hub tabs: saved AF3 original to {}'.format(backup))
+    except Exception as exc:
+        log('Hub tabs: could not save backup: {}'.format(exc), xbmc.LOGWARNING)
+    # Write through a temp file and swap it in, so an interrupted write can
+    # never leave AF3 with an empty data file (that drops the whole hub bar).
+    tmp = path + '.kodipersonal.tmp'
+    try:
+        with open(tmp, 'wb') as fh:
+            fh.write(new_text.encode('utf-8'))
+        if os.path.getsize(tmp) < len(new_text.encode('utf-8')) or os.path.getsize(tmp) == 0:
+            raise IOError('short write to {}'.format(tmp))
+        os.replace(tmp, path)
+    except Exception as exc:
+        log('Hub tabs: could not write {}: {}'.format(path, exc), xbmc.LOGERROR)
+        try:
+            if os.path.exists(tmp):
+                os.remove(tmp)
+        except Exception:
+            pass
+        return False
+    log('Hub tabs: AF3 left/right split changed from {}/{} to {}/{} so all {} hubs '
+        'are text tabs.'.format(have_left, have_right or 'none', want_left,
+                                want_right or 'none', hub_count))
+    return True
+
+
 def deploy_menu():
     # Runs on EVERY start, not version-gated. Deploys all skinvariables menu
     # files into the AF3 node folder, sets the HomeSwitcher slot strings, clears
@@ -784,18 +863,36 @@ def deploy_menu():
         if toggle == 'true':
             written = _set_skin_string('homeswitcher.{}.toggle'.format(slot), 'true') or written
         written = _set_skin_string('homeswitcher.{}.mode'.format(slot), 'Standard') or written
-        # Hub type: empty means Custom (widget rows). A slot repurposed from one
-        # of AF3's prebuilt types (NextAired, LiveTV, Addons) must be reset or it
-        # would render that hub instead of our rows.
-        if slot != 'home' and _skin_string('HomeSwitcher.{}.Type'.format(slot)) not in ('', 'Custom'):
-            written = _reset_skin_setting('HomeSwitcher.{}.Type'.format(slot)) or written
-            log('Reset HomeSwitcher slot {} type to Custom.'.format(slot))
+        # Hub type must be Custom (widget rows). Up to 0.9.6 a non-Custom type was
+        # reset to empty, but AF3's startup refills an EMPTY type with its stock
+        # default for that slot (1106 NextAired, 1107 LiveTV, 1108 Addons), so the
+        # Disney+ and Prime Video pages rendered AF3's Next Aired / Live TV hubs
+        # instead of our rows (Next Aired with no library also froze the GUI).
+        # Write Custom explicitly so the startup default never applies.
+        if slot != 'home':
+            type_sid = 'homeswitcher.{}.type'.format(slot)
+            previous = _skin_string(type_sid)
+            if _set_skin_string(type_sid, 'Custom'):
+                written = True
+                log('Set HomeSwitcher slot {} type to Custom (was {}).'.format(
+                    slot, previous or 'empty'))
         if written:
             changed = True
             log('Set HomeSwitcher slot {} ({}): Name{}, mode.'.format(
                 slot, name, ', toggle' if toggle == 'true' else ''))
         else:
             log('HomeSwitcher slot {} ({}) already current.'.format(slot, name))
+
+    # AF3 3.5+ shows only 4 hubs as text tabs; widen the tab list to every active
+    # hub. The generator hash ignores this data file, so a change here must also
+    # force the rebuild below.
+    hub_count = sum(1 for entry in active_slots
+                    if entry.get('slot') and entry.get('slot') != 'home')
+    try:
+        if patch_af3_hub_tabs(hub_count):
+            changed = True
+    except Exception as exc:
+        log('Hub tabs: patch failed: {}'.format(exc), xbmc.LOGERROR)
 
     # The home menu is compiled by SkinVariables into a generator includes file
     # (script-skinvariables-generator-includes-.xml); dropping node JSON alone
@@ -956,28 +1053,49 @@ def apply_playback_settings():
     if not settings:
         return
 
-    applied, skipped = 0, 0
+    # Kodi hides a passthrough format setting (E-AC3, DTS, TrueHD, DTS-HD) when
+    # the audio output does not report that format, and GetSettingValue then
+    # returns an error instead of a value. Up to 0.9.6 that missing value counted
+    # as "different", so those settings were logged as changed on every start
+    # while nothing was written. Unavailable settings are now skipped and logged
+    # once per start, and a write only counts when Kodi accepts it.
+    applied, skipped, unavailable, failed = 0, 0, [], 0
     for key, desired in settings.items():
         try:
-            actual = xbmc.executeJSONRPC(json.dumps({
+            resp = json.loads(xbmc.executeJSONRPC(json.dumps({
                 'jsonrpc': '2.0', 'id': 1, 'method': 'Settings.GetSettingValue',
-                'params': {'setting': key}}))
-            actual_data = json.loads(actual).get('result', {})
-            actual_value = actual_data.get('value')
+                'params': {'setting': key}})) or '{}')
+            if 'error' in resp or 'value' not in resp.get('result', {}):
+                unavailable.append(key)
+                continue
+            actual_value = resp['result']['value']
 
-            if actual_value != desired:
-                xbmc.executeJSONRPC(json.dumps({
-                    'jsonrpc': '2.0', 'id': 1, 'method': 'Settings.SetSettingValue',
-                    'params': {'setting': key, 'value': desired}}))
-                log('Playback setting {} changed to {}.'.format(key, desired))
-                applied += 1
-            else:
+            if actual_value == desired:
                 skipped += 1
+                continue
+            result = json.loads(xbmc.executeJSONRPC(json.dumps({
+                'jsonrpc': '2.0', 'id': 1, 'method': 'Settings.SetSettingValue',
+                'params': {'setting': key, 'value': desired}})) or '{}')
+            if 'error' in result or result.get('result') is False:
+                failed += 1
+                log('Playback setting {} could not be set to {} (was {}): {}'.format(
+                    key, desired, actual_value, result.get('error', result)), xbmc.LOGWARNING)
+                continue
+            log('Playback setting {} changed from {} to {}.'.format(key, actual_value, desired))
+            applied += 1
         except Exception as exc:
+            failed += 1
             log('Could not apply playback setting {}: {}'.format(key, exc), xbmc.LOGWARNING)
 
-    if applied > 0:
-        log('Playback settings applied: {} changed, {} already correct.'.format(applied, skipped))
+    if unavailable:
+        log('Playback settings not offered by this audio output, left as is: {}.'.format(
+            ', '.join(unavailable)))
+    if applied or failed:
+        log('Playback settings applied: {} changed, {} already correct, {} failed, '
+            '{} unavailable.'.format(applied, skipped, failed, len(unavailable)))
+    else:
+        log('Playback settings already correct ({} checked, {} unavailable).'.format(
+            skipped, len(unavailable)))
 
 
 def clear_texture_cache_once():
