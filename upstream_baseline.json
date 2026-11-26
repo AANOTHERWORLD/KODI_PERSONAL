@@ -1,6 +1,6 @@
 {
   "_comment": "State for the daily KODI_PERSONAL upstream monitor (a scheduled task). Holds the upstream versions and source commits last reviewed against the build. The monitor compares live upstream against this, reports the difference, and moves the baseline forward after each run. This branch is never merged into main; devices never read it. Values of null mean the host could not be reached from the monitor's environment and must be checked on device.",
-  "last_run": "2026-11-24",
+  "last_run": "2026-11-25",
   "build_version_reviewed": "0.9.8",
   "addons": {
     "plugin.video.themoviedb.helper": "6.22.7",
@@ -18,7 +18,7 @@
   },
   "source_commits": {
     "jurialmunkey/plugin.video.themoviedb.helper": "9608e35b8ff719b7e9755725fb04c02e31cf1ab4",
-    "jurialmunkey/skin.arctic.fuse.3": "9d836c7a27a32e7ea442d8ab8a2e659d0f671e11",
+    "jurialmunkey/skin.arctic.fuse.3": "9a4233fd6a8b56da9745dde313c07a2df82df266",
     "jurialmunkey/script.skinvariables": "096ac6e98d7f480b2d1a511fbdb4144e6a61ea4e",
     "jurialmunkey/script.module.tmdbhelper.sync.trakt": "fafa099df0cc4c394c7f831c204da9978c35d459",
     "jurialmunkey/script.module.jurialmunkey": "17ddb8f090daed77ff4631ab946d7b521002c96f"
@@ -37,10 +37,11 @@
     "Low 2026-11-18: viewtypes.json library.songs = 508 is not a view id AF3 defines (3.5.2 and 3.5.4). Harmless for video; fix opportunistically in a later service version.",
     "Resolved 2026-11-19: sync.trakt 1.3.3 released; lists_calendar_base.py unchanged, calendar limit patch stub-tested (applies once, idempotent). Keep checking the anchor on each release. 2026-11-20: 1.3.4 lists_calendar_base.py unchanged; patch stub-tested again. 2026-11-22: 1.3.6 lists_calendar_base.py byte-identical to 1.3.4.",
     "Watch 2026-11-20: sync.trakt 1.3.4 deletes the stored Trakt authorization and shows a signed out dialog when the refresh token is rejected (invalid_grant). If Trakt rows go empty with that dialog on the Shield, re-authorise in the Trakt module; no build change needed. 2026-11-22: 1.3.6 reads fresh credentials during token recovery, which should make this less likely.",
-    "Low 2026-11-20: AF3 3.5.6 shows info line details as pills by default (InfoTags.DisableTags reverts to plain text). Add to skin_settings.json only if Jamel prefers the old look.",
+    "Low 2026-11-20: AF3 3.5.6 shows info line details as pills by default (InfoTags.DisableTags reverts to plain text). Add to skin_settings.json only if Jamel prefers the old look. 2026-11-25: AF3 3.5.11 (piers, unreleased on omega) makes pills opt-in (InfoTags.EnablePills); resolves itself when it reaches omega.",
     "Resolved 2026-11-21: TMDb Helper 6.22.7 ships service_extrafanart_slots; all tmdbhelper_settings keys still valid.",
     "Low 2026-11-21: AF3 3.5.7 moved the ratings line to SkinVariables menus (ratingsmovies/ratingstvshows/ratingsepisodes) with a one-time migration from CustomRating.* strings. The build's customrating.* entries in skin_settings.json now only feed that migration (same Trakt, Metacritic order as the new defaults). Retire them in a later service version or ship a ratings menu if a different order is wanted. The service must keep leaving skinvariables-shortcut-ratings*.json nodes alone.",
-    "Watch 2026-11-24: service 0.9.7 rewrites AF3 shortcuts/generator/data/base/home_hubs.xml left/right positions. Each AF3 release: confirm the file and the positions regex still match (3.5.10: unchanged, stock 0123/4567).",
-    "Low 2026-11-24: AF3 3.5.10 ratings line is strict by default (no fallback to the next rating unless Ratings.EnablePreferences). Add ratings.enablepreferences to skin_settings.json bools if Jamel wants the old fallback. Also new: Skin.FlixArt.Visibility (Off/RowOnly) as a possible memory saver on hub pages; Simple hub layout (wait for piers fix #572)."
+    "Watch 2026-11-24: service 0.9.7 rewrites AF3 shortcuts/generator/data/base/home_hubs.xml left/right positions. Each AF3 release: confirm the file and the positions regex still match (3.5.10: unchanged, stock 0123/4567). 3.5.11 piers: unchanged.",
+    "Low 2026-11-24: AF3 3.5.10 ratings line is strict by default (no fallback to the next rating unless Ratings.EnablePreferences). Add ratings.enablepreferences to skin_settings.json bools if Jamel wants the old fallback. Also new: Skin.FlixArt.Visibility (Off/RowOnly) as a possible memory saver on hub pages; Simple hub layout (wait for piers fix #572).",
+    "Watch 2026-11-25: AF3 source baseline now points at piers 9a4233f (3.5.11, xbmc.gui 5.18.0), reviewed ahead of release. Released omega is still 3.5.10 at 9d836c7. When 3.5.11 lands in the omega index, check the omega diff against 9d836c7 for backport-only changes."
   ]
 }
