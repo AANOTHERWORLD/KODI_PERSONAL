@@ -1,6 +1,6 @@
 {
   "_comment": "State for the daily KODI_PERSONAL upstream monitor (a scheduled task). Holds the upstream versions and source commits last reviewed against the build. The monitor compares live upstream against this, reports the difference, and moves the baseline forward after each run. This branch is never merged into main; devices never read it. Values of null mean the host could not be reached from the monitor's environment and must be checked on device.",
-  "last_run": "2026-11-25",
+  "last_run": "2026-11-26",
   "build_version_reviewed": "0.9.8",
   "addons": {
     "plugin.video.themoviedb.helper": "6.22.7",
@@ -18,7 +18,7 @@
   },
   "source_commits": {
     "jurialmunkey/plugin.video.themoviedb.helper": "9608e35b8ff719b7e9755725fb04c02e31cf1ab4",
-    "jurialmunkey/skin.arctic.fuse.3": "9a4233fd6a8b56da9745dde313c07a2df82df266",
+    "jurialmunkey/skin.arctic.fuse.3": "45039adda1910482bd5116051d1a9a7a8fe4cfe3",
     "jurialmunkey/script.skinvariables": "096ac6e98d7f480b2d1a511fbdb4144e6a61ea4e",
     "jurialmunkey/script.module.tmdbhelper.sync.trakt": "fafa099df0cc4c394c7f831c204da9978c35d459",
     "jurialmunkey/script.module.jurialmunkey": "17ddb8f090daed77ff4631ab946d7b521002c96f"
@@ -40,8 +40,8 @@
     "Low 2026-11-20: AF3 3.5.6 shows info line details as pills by default (InfoTags.DisableTags reverts to plain text). Add to skin_settings.json only if Jamel prefers the old look. 2026-11-25: AF3 3.5.11 (piers, unreleased on omega) makes pills opt-in (InfoTags.EnablePills); resolves itself when it reaches omega.",
     "Resolved 2026-11-21: TMDb Helper 6.22.7 ships service_extrafanart_slots; all tmdbhelper_settings keys still valid.",
     "Low 2026-11-21: AF3 3.5.7 moved the ratings line to SkinVariables menus (ratingsmovies/ratingstvshows/ratingsepisodes) with a one-time migration from CustomRating.* strings. The build's customrating.* entries in skin_settings.json now only feed that migration (same Trakt, Metacritic order as the new defaults). Retire them in a later service version or ship a ratings menu if a different order is wanted. The service must keep leaving skinvariables-shortcut-ratings*.json nodes alone.",
-    "Watch 2026-11-24: service 0.9.7 rewrites AF3 shortcuts/generator/data/base/home_hubs.xml left/right positions. Each AF3 release: confirm the file and the positions regex still match (3.5.10: unchanged, stock 0123/4567). 3.5.11 piers: unchanged.",
+    "Watch 2026-11-24: service 0.9.7 rewrites AF3 shortcuts/generator/data/base/home_hubs.xml left/right positions. Each AF3 release: confirm the file and the positions regex still match (3.5.10: unchanged, stock 0123/4567). 3.5.11 piers: unchanged. 2026-11-26 omega 3.5.11 source: unchanged.",
     "Low 2026-11-24: AF3 3.5.10 ratings line is strict by default (no fallback to the next rating unless Ratings.EnablePreferences). Add ratings.enablepreferences to skin_settings.json bools if Jamel wants the old fallback. Also new: Skin.FlixArt.Visibility (Off/RowOnly) as a possible memory saver on hub pages; Simple hub layout (wait for piers fix #572).",
-    "Watch 2026-11-25: AF3 source baseline now points at piers 9a4233f (3.5.11, xbmc.gui 5.18.0), reviewed ahead of release. Released omega is still 3.5.10 at 9d836c7. When 3.5.11 lands in the omega index, check the omega diff against 9d836c7 for backport-only changes."
+    "Watch 2026-11-25 (updated 2026-11-26): AF3 source baseline now points at omega 45039ad (3.5.11 source, reviewed ahead of release). On 2026-11-26 the omega branch was rebuilt on top of piers (old omega 9d836c7 is gone); omega is now piers f8e3034 plus two backport commits (xbmc.gui 5.17.0, plot label instead of textbox). Released omega index is still 3.5.10. When 3.5.11 lands in the index, diff only against 45039ad."
   ]
 }
