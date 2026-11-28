@@ -1,6 +1,6 @@
 {
   "_comment": "State for the daily KODI_PERSONAL upstream monitor (a scheduled task). Holds the upstream versions and source commits last reviewed against the build. The monitor compares live upstream against this, reports the difference, and moves the baseline forward after each run. This branch is never merged into main; devices never read it. Values of null mean the host could not be reached from the monitor's environment and must be checked on device.",
-  "last_run": "2026-11-26",
+  "last_run": "2026-11-27",
   "build_version_reviewed": "0.9.8",
   "addons": {
     "plugin.video.themoviedb.helper": "6.22.7",
